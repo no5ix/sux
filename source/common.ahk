@@ -5,10 +5,10 @@
 
 global Xmax := 0	
 global Ymax := 0	
-WinGetPos, , , Xmax, Ymax, Program Manager 		; get desktop size
+WinGetPos, , , Xmax, Ymax, Program Manager  ; ,  get desktop size (`Program Manager` is the title of the desktop window)
 
-global RightEdge = Xmax -1
-global BottomEdge = Ymax -1
+global RightEdge = Xmax - 1
+global BottomEdge = Ymax - 1
 
 global CornerXOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
