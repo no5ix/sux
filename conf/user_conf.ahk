@@ -67,8 +67,6 @@
 ; global enable_double_click_capslock := 0  ; if 1, this may slow down capslock's first hit
 ; global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
-; global dark_theme := 0  ; 0 for light theme
-
 ; ; ; millisecond, the smaller the value, the faster you have to double-click
 ; global keyboard_double_click_timeout := 222
 ; global mouse_double_click_timeout := 288

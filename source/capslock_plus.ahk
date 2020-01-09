@@ -278,7 +278,7 @@ CapsLock & d::
 if getkeystate("shift") = 0
 Send, {Del}
 else
-Send, ^{Del}
+Send, {BS}
 return
 
 ;;==================================================================;;
