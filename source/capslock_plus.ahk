@@ -74,19 +74,24 @@ return                                                               ;|
 ;;=============================Navigator============================||
 ;===========================;U = PageDown
 ;===========================;H = Left
-CapsLock & v::
+CapsLock & f::
+if getkeystate("shift") = 0
+    Send, ^v
+else
 	PasteCompatibleWithAutoSelectionCopy()
-    ClickUpIfLbDown()
+ClickUpIfLbDown()
 return
 
-CapsLock & c::
+CapsLock & e::
+    Send, {Enter}
+return
+
+CapsLock & w::
+if getkeystate("shift") = 0
     Send, ^c
-    ClickUpIfLbDown()
-return
-
-CapsLock & x::
+else
     Send, ^x
-    ClickUpIfLbDown()
+ClickUpIfLbDown()
 return
 
 CapsLock & s::

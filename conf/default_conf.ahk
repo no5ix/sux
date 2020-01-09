@@ -29,8 +29,8 @@ global modern_shadow_type := 1
 ; ; dark theme
 global nox_width := 620
 global nox_text_color := cWhite
-global nox_margin_x := 1
-global nox_margin_y := 1
+global nox_margin_x := 0
+global nox_margin_y := 0
 global nox_bg_color := "424242"
 global nox_control_color := "616161"
 global nox_border_shadow_type := classic_shadow_type
@@ -38,8 +38,8 @@ global nox_border_shadow_type := classic_shadow_type
 ; ; ; light theme 
 ; global nox_width := 620
 ; global nox_text_color := cBlack
-; global nox_margin_x := 1
-; global nox_margin_y := 1
+; global nox_margin_x := 0
+; global nox_margin_y := 0
 ; global nox_bg_color := "ececec"
 ; global nox_control_color := "d9d9d9"
 ; global nox_border_shadow_type := modern_shadow_type
