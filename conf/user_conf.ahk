@@ -81,8 +81,8 @@
 ; {
 ; 	"aaaaaaaawesomeahk" : "please ignore this line and don't del this line"
 
-; 	,  "“”" : "「」"
-; 	,  "“”" : "「」"
+	; ,  "“”" : "「」"
+	; ,  "‘’" : "『』"
 ; 	,  "@@" : "xxxx@gmail.com"
 ; }
 ; )
