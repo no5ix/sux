@@ -2,35 +2,8 @@
 ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
-;-------------------------------------------------------------------------------
-; AUTO EXECUTE
-;-------------------------------------------------------------------------------
-gui_autoexecute:
-    ; Tomorrow Night Color Definitions:
-    cBackground := "c" . "1d1f21"
-    cCurrentLine := "c" . "282a2e"
-    cSelection := "c" . "373b41"
-    cForeground := "c" . "c5c8c6"
-    cComment := "c" . "969896"
-    cRed := "c" . "cc6666"
-    cOrange := "c" . "de935f"
-    cYellow := "c" . "f0c674"
-    cGreen := "c" . "b5bd68"
-    cAqua := "c" . "8abeb7"
-    cBlue := "c" . "81a2be"
-    cPurple := "c" . "b294bb"
-    cGray := "c" . "808080"
-    cWhite := "c" . "ffffff"
-    cBlack := "c" . "000000"
 
-    curGuiWidth := 620
-    curGuiTextColor := dark_theme ? cWhite : cBlack
-    gui_control_options := "xm w" . curGuiWidth . " " . curGuiTextColor . " -E0x200"
-    ; -E0x200 removes border around Edit controls
-
-    return
-
-
+global gui_control_options := "xm w" . nox_width . " c" . nox_text_color . " -E0x200"
 ; Initialize variable to keep track of the state of the GUI
 global gui_state := closed
 ; Initialize search_urls as a variable set to zero
@@ -59,19 +32,13 @@ gui_spawn:
 
     ; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
     Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
-
-    if dark_theme
-    {
-        Gui, Margin, 1, 1
-        Gui, Color, 424242, 616161 ; wox stype
+    
+    Gui, Margin, %nox_margin_x%, %nox_margin_y%
+    Gui, Color, %nox_bg_color%, %nox_control_color%
+    if (nox_border_shadow_type = classic_shadow_type)
         ShadowBorder(hMyGUI)
-    }
     else
-    {
-        Gui, Margin, 1, 1
-        Gui, Color, ececec, d9d9d9 ; utools stype
         FrameShadow(hMyGUI)
-    }
 
     Gui, Font, s22, Segoe UI
     ; Gui, Add, Text, %gui_control_options% vgui_main_title, ¯\_(ツ)_/¯
@@ -85,7 +52,7 @@ gui_spawn:
     MouseGetPos, MX
     If (MX > A_ScreenWidth)
         xMidScrn += A_ScreenWidth
-    xMidScrn -= curGuiWidth / 2
+    xMidScrn -= nox_width / 2
     yScrnOffset := A_ScreenHeight / 4
     Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
     ; Gui, Show, , myGUI

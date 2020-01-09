@@ -21,17 +21,3 @@ SetCapsLockState, AlwaysOff
 #Include %A_ScriptDir%\source\gui.ahk
 #Include %A_ScriptDir%\source\capslock_plus.ahk
 #Include %A_ScriptDir%\source\misc.ahk
-
-; #InstallKeybdHook
-
-;-------------------------------------------------------
-; AUTO EXECUTE SECTION FOR INCLUDED SCRIPTS
-; Scripts being included need to have their auto execute
-; section in a function or subroutine which is then
-; executed below.
-;-------------------------------------------------------
-Gosub, gui_autoexecute
-;-------------------------------------------------------
-; END AUTO EXECUTE SECTION
-return
-;--------------------------------

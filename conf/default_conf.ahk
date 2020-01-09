@@ -4,6 +4,48 @@
 
 
 ; ---------------------------------------------------------------------o
+; 					color code definitions default conf
+; ---------------------------------------------------------------------o
+
+global cRed := "cc6666"
+global cOrange := "de935f"
+global cYellow := "f0c674"
+global cGreen := "b5bd68"
+global cAqua := "8abeb7"
+global cBlue := "81a2be"
+global cPurple := "b294bb"
+global cGray := "808080"
+global cWhite := "ffffff"
+global cBlack := "000000"
+
+global classic_shadow_type := 0
+global modern_shadow_type := 1
+
+
+; ---------------------------------------------------------------------o
+; 			         theme default conf
+; ---------------------------------------------------------------------o
+
+; ; dark theme
+global nox_width := 620
+global nox_text_color := cWhite
+global nox_margin_x := 1
+global nox_margin_y := 1
+global nox_bg_color := "424242"
+global nox_control_color := "616161"
+global nox_border_shadow_type := classic_shadow_type
+
+; ; ; light theme 
+; global nox_width := 620
+; global nox_text_color := cBlack
+; global nox_margin_x := 1
+; global nox_margin_y := 1
+; global nox_bg_color := "ececec"
+; global nox_control_color := "d9d9d9"
+; global nox_border_shadow_type := modern_shadow_type
+
+
+; ---------------------------------------------------------------------o
 ; 					general conf 
 ; ---------------------------------------------------------------------o
 

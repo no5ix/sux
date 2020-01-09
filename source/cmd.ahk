@@ -58,13 +58,6 @@ else if Pedersen = dir ; Open the directory for this script
     gui_destroy()
     Run, %A_ScriptDir%
 }
-else if Pedersen = theme ; switch theme
-{
-    dark_theme := dark_theme ? 0 : 1
-    gui_destroy()
-    Gosub, gui_autoexecute
-    Gosub gui_spawn
-}
 
 ;-------------------------------------------------------------------------------
 ;;; web search ;;;
