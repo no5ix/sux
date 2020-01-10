@@ -30,10 +30,15 @@ else if Pedersen = cmd ; open a command prompt window on the current explorer pa
 else if Pedersen = proj ; open this proj with vs code
 {
     gui_destroy()
+    ; run as nox run as
     ; run, %comspec% /c Code "%A_ScriptDir%,,hide
     ; run, cmd /c Code "%A_ScriptDir%,,hide
     script_dir = %A_ScriptDir%
-    Run_AsUser("Code.exe", script_dir)
+    if vscode_path {
+        Run_AsUser(vscode_path, script_dir)  ;; call Microsoft VS Code\Code.exe
+    }else {
+        Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
+    }
 }
 else if Pedersen = touchpad ; switch touchpad mode
 {

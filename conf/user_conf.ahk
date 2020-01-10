@@ -2,6 +2,10 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+; ; git update-index --assume-unchanged <file>
+; ; git update-index --no-assume-unchanged <file>
+; ; git ls-files -v | grep '^h'. 
+
 
 ; ---------------------------------------------------------------------o
 ; 					override color code definitions default conf
@@ -70,6 +74,8 @@
 ; ; ; millisecond, the smaller the value, the faster you have to double-click
 ; global keyboard_double_click_timeout := 222
 ; global mouse_double_click_timeout := 288
+
+; global vscode_path := ""  ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 
 
 ; ---------------------------------------------------------------------o
