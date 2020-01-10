@@ -60,10 +60,13 @@ else if Pedersen = conf ; Edit user_conf
 }
 else if Pedersen = up ; update nox
 {
-    gui_destroy()
-    RunWait, cmd.exe /c git pull origin master,,hide
-    MsgBox,,, nox update finished. , 6
-    Reload
+    MsgBox, 4,, Would you like to update nox?
+    IfMsgBox Yes
+    {
+    	gui_destroy()
+        Gosub gui_spawn
+        UpdateNox()
+    }
 }
 
 ;-------------------------------------------------------------------------------

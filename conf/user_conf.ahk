@@ -58,10 +58,10 @@
 ; 					override general default conf 
 ; ---------------------------------------------------------------------o
 
-; global enable_hot_edges := 1  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
-; global use_touchpad := 1  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
+; global enable_hot_edges := 0  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
+; global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
-; global is_wgesture_on := 1  ; if u dont use wgesture, set this to 0
+; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
 ; global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`
 ; global enable_double_click_capslock := 0  ; if 1, this may slow down capslock's first hit

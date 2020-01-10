@@ -17,7 +17,7 @@ SetCapsLockState, AlwaysOff
 
 #Include %A_ScriptDir%\source\common.ahk
 
-#Include %A_ScriptDir%\source\hot_corners.ahk
+#Include %A_ScriptDir%\source\auto_exc.ahk
 #Include %A_ScriptDir%\source\gui.ahk
 #Include %A_ScriptDir%\source\capslock_plus.ahk
 #Include %A_ScriptDir%\source\misc.ahk
