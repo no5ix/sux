@@ -242,13 +242,14 @@ key_press_cnt = 0
 return
 
 singleKeyClick:
-	; if fake_lb_down
-	; {
-	; 	Send, ^c
-	; 	ToolTipWithTimer("copy selection finished.")
-	; 	fake_lb_down = 0
-	; 	; return
-	; }
+	if fake_lb_down
+	{
+		; Send, ^c
+		; ToolTipWithTimer("copy selection finished.")
+      Click Up
+		fake_lb_down = 0
+		return
+	}
 	if fake_rb_down
 	{
 		fake_rb_down = 0

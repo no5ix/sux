@@ -39,14 +39,14 @@
 ; global nox_control_color := "616161"
 ; global nox_border_shadow_type := classic_shadow_type
 
-; ; ; light theme 
-; global nox_width := 620
-; global nox_text_color := cBlack
-; global nox_margin_x := 0
-; global nox_margin_y := 0
-; global nox_bg_color := "ececec"
-; global nox_control_color := "d9d9d9"
-; global nox_border_shadow_type := modern_shadow_type
+; ; light theme 
+global nox_width := 620
+global nox_text_color := cBlack
+global nox_margin_x := 0
+global nox_margin_y := 0
+global nox_bg_color := "ececec"
+global nox_control_color := "d9d9d9"
+global nox_border_shadow_type := modern_shadow_type
 
 ; ; ; add your own theme here, for example :
 ; global nox_width := 666
@@ -62,10 +62,10 @@
 ; 					override general default conf 
 ; ---------------------------------------------------------------------o
 
-; global enable_hot_edges := 0  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
-; global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
+global enable_hot_edges := 1  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
+global use_touchpad := 1  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
-; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
+global is_wgesture_on := 1  ; if u dont use wgesture, set this to 0
 
 ; global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`
 ; global enable_double_click_capslock := 0  ; if 1, this may slow down capslock's first hit
@@ -77,7 +77,7 @@
 
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after open vsc.
-; global vscode_path := ""
+global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
 
 
 ; ---------------------------------------------------------------------o
