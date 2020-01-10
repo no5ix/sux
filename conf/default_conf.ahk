@@ -26,23 +26,23 @@ global modern_shadow_type := 1
 ; 			         theme default conf
 ; ---------------------------------------------------------------------o
 
-; ; dark theme
-global nox_width := 620
-global nox_text_color := cWhite
-global nox_margin_x := 0
-global nox_margin_y := 0
-global nox_bg_color := "424242"
-global nox_control_color := "616161"
-global nox_border_shadow_type := classic_shadow_type
-
-; ; ; light theme 
+; ; ; dark theme
 ; global nox_width := 620
-; global nox_text_color := cBlack
+; global nox_text_color := cWhite
 ; global nox_margin_x := 0
 ; global nox_margin_y := 0
-; global nox_bg_color := "ececec"
-; global nox_control_color := "d9d9d9"
-; global nox_border_shadow_type := modern_shadow_type
+; global nox_bg_color := "424242"
+; global nox_control_color := "616161"
+; global nox_border_shadow_type := classic_shadow_type
+
+; ; light theme 
+global nox_width := 620
+global nox_text_color := cBlack
+global nox_margin_x := 0
+global nox_margin_y := 0
+global nox_bg_color := "ececec"
+global nox_control_color := "d9d9d9"
+global nox_border_shadow_type := modern_shadow_type
 
 
 ; ---------------------------------------------------------------------o
@@ -76,8 +76,8 @@ global StrMap :=
 {
 	"aaaaaaaawesomeahk" : "please ignore this line and don't del this line"
 
-	,  "“”" : "「」"
-	,  "‘’" : "『』"
+	,  "[]" : "「」"
+	,  "{}" : "『』"
 }
 )
 
