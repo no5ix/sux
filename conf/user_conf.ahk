@@ -77,7 +77,7 @@ global nox_border_shadow_type := modern_shadow_type
 
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after open vsc.
-global vscode_path := ""
+; global vscode_path := ""
 
 
 ; ---------------------------------------------------------------------o
