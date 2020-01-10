@@ -74,16 +74,16 @@ else if Pedersen = conf ; Edit user_conf
     Run_AsUser("notepad.exe", param)
 
 }
-else if Pedersen = up ; update nox
-{
-    MsgBox, 4,, Would you like to update nox?
-    IfMsgBox Yes
-    {
-    	gui_destroy()
-        Gosub gui_spawn
-        UpdateNox()
-    }
-}
+; else if Pedersen = up ; update nox
+; {
+;     MsgBox, 4,, Would you like to update nox?
+;     IfMsgBox Yes
+;     {
+;     	gui_destroy()
+;         Gosub gui_spawn
+;         UpdateNox()
+;     }
+; }
 
 ;-------------------------------------------------------------------------------
 ;;; web search ;;;
