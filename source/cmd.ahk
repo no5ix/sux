@@ -27,20 +27,15 @@ else if Pedersen = cmd ; open a command prompt window on the current explorer pa
         run cmd.exe
     }
 }
-else if Pedersen = proj ; open this proj with vs code
-{
-    gui_destroy()
-    run, %comspec% /c Code "%A_ScriptDir%,,hide
-}
+; else if Pedersen = proj ; open this proj with vs code
+; {
+;     gui_destroy()
+;     run, %comspec% /c Code "%A_ScriptDir%,,hide
+; }
 else if Pedersen = touchpad ; switch touchpad mode
 {
     use_touchpad := use_touchpad ? 0 : 1
     gui_destroy()
-}
-else if Pedersen = conf ; Edit host script
-{
-    gui_destroy()
-    run, notepad.exe "%A_ScriptDir%\default_conf.ahk"
 }
 
 
@@ -57,6 +52,18 @@ else if Pedersen = dir ; Open the directory for this script
 {
     gui_destroy()
     Run, %A_ScriptDir%
+}
+else if Pedersen = conf ; Edit user_conf
+{
+    gui_destroy()
+    run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
+}
+else if Pedersen = up ; update nox
+{
+    gui_destroy()
+    RunWait, cmd.exe /c git pull origin master,,hide
+    MsgBox,,, nox update finished. , 6
+    Reload
 }
 
 ;-------------------------------------------------------------------------------
