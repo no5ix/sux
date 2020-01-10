@@ -27,11 +27,14 @@ else if Pedersen = cmd ; open a command prompt window on the current explorer pa
         run cmd.exe
     }
 }
-; else if Pedersen = proj ; open this proj with vs code
-; {
-;     gui_destroy()
-;     run, %comspec% /c Code "%A_ScriptDir%,,hide
-; }
+else if Pedersen = proj ; open this proj with vs code
+{
+    gui_destroy()
+    ; run, %comspec% /c Code "%A_ScriptDir%,,hide
+    ; run, cmd /c Code "%A_ScriptDir%,,hide
+    script_dir = %A_ScriptDir%
+    Run_AsUser("Code.exe", script_dir)
+}
 else if Pedersen = touchpad ; switch touchpad mode
 {
     use_touchpad := use_touchpad ? 0 : 1
@@ -56,7 +59,10 @@ else if Pedersen = dir ; Open the directory for this script
 else if Pedersen = conf ; Edit user_conf
 {
     gui_destroy()
-    run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
+    ; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
+    param = %A_ScriptDir%\conf\user_conf.ahk
+    Run_AsUser("notepad.exe", param)
+
 }
 else if Pedersen = up ; update nox
 {

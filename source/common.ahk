@@ -285,3 +285,9 @@ HotCorners() {				; Timer content
 		return
 	}
 }
+
+Run_AsUser(prms*) {
+    ComObjCreate("Shell.Application")
+    .Windows.FindWindowSW(0, 0, 0x08, 0, 0x01)  
+    .Document.Application.ShellExecute(prms*) 
+}
