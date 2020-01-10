@@ -62,7 +62,10 @@ global enable_hot_corners := 1  ; ; when cursor hover on the corner
 global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 288
 
-global vscode_path := ""  ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+; if blank, leave a ugly cmd window after open vsc.
+global vscode_path := ""
+
 
 ; ---------------------------------------------------------------------o
 ; 					replace str map conf  ( Capslock+Shift+U )
