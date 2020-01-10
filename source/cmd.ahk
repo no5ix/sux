@@ -8,6 +8,11 @@ if Pedersen = help ; Tooltip with list of commands
     GuiControl,, Pedersen, ; Clear the input box
     Gosub, gui_commandlibrary
 }
+else if Pedersen = os ; nox official site
+{
+    gui_destroy()
+    run "https://github.com/no5ix/nox"
+}
 else if Pedersen = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
 {
     gui_destroy()
