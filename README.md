@@ -16,7 +16,7 @@ Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank
 - **double click triggers** (include `Ctrl+8`/`right mouse`/`middle mouse`/`Capslock`/`Ctrl`/`Shift`) : see default_conf.ahk
 - **auto selection copy** : just like linux terminal
 - **custom theme.** : two default theme(dark/light), and u can add ur own theme
-- **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U
+- **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk
 
 
 # 设置everything始终以运行次数排序
