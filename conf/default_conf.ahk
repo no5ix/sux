@@ -92,6 +92,7 @@ global WebSearchUrlMap :=
 	"aaaaaaaawesomeahk" : ["please ignore this line and don't del this line", ""] 
 
     ,  "ahk" : ["AutoHotKey", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
+    ,  "py" : ["Python", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]
     ,  "gg" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
     ,  "yd" : ["Youdao", "http://www.youdao.com/w/REPLACEME"]
     ,  "bd" : ["Baidu", "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"]

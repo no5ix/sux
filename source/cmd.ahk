@@ -97,7 +97,8 @@ else
         ; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
         ; Using "for", both the index (or "key") and its associated value
         ; are provided, and the index can be *any* value of your choosing.
-        if Pedersen = %key%
+        trim_p := trim(Pedersen)
+        if trim_p = %key%
         {
             gui_search_title := arr[1]
             gui_search(arr[2])
