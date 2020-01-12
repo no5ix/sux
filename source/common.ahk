@@ -3,6 +3,10 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
+global fake_rb_down := 0
+global fake_lb_down := 0
+global IsTopXOffset := A_ScreenWidth / 3
+
 global Xmax := 0	
 global Ymax := 0	
 WinGetPos, , , Xmax, Ymax, Program Manager  ; ,  get desktop size (`Program Manager` is the title of the desktop window)
@@ -162,7 +166,7 @@ ClickUpIfLbDown()
 {
 	if fake_lb_down
 	{
-			; fake_lb_down = 0
+		fake_lb_down = 0
 		Click Up
 	}
 }

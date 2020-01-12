@@ -3,11 +3,6 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
-global fake_rb_down := 0
-global fake_lb_down := 0
-global IsTopXOffset := A_ScreenWidth / 3
-
-
 ; -----------------------------------------------------------------------------
 ~LShift::
 ClickUpIfLbDown()
@@ -48,8 +43,8 @@ ClickUpIfLbDown()
 ; }
 if (A_PriorHotkey <> "~LShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 {
-    ; Too much time between presses, so this isn't a double-press.
-    KeyWait, LShift
+	; Too much time between presses, so this isn't a double-press.
+	KeyWait, LShift
 	return
 }
 DoubleClickShiftTrigger()
@@ -58,15 +53,14 @@ return
 
 
 ~Ctrl::
-    if (use_touchpad)
-	    ClickUpIfLbDown()
-    if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-    {
-        ; Too much time between presses, so this isn't a double-press.
-        KeyWait, Ctrl
-        return
-    }
-    DoubleClickCtrlTrigger()
+	ClickUpIfLbDown()
+	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, Ctrl
+		return
+	}
+	DoubleClickCtrlTrigger()
 return
 
 ; -----------------------------------------------------------------------------
@@ -75,9 +69,9 @@ return
 ClickUpIfLbDown()
 if (A_PriorHotkey <> "~Ins" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 {
-    ; Too much time between presses, so this isn't a double-press.
-    KeyWait, Ins
-    return
+	; Too much time between presses, so this isn't a double-press.
+	KeyWait, Ins
+	return
 }
 Send, {F2}
 return
@@ -95,7 +89,7 @@ return
 ~LButton::
 fake_lb_down = 0
 if (!enable_auto_selection_copy)
-    return
+	return
 MouseGetPos, xx
 TimeButtonDown = %A_TickCount%
 ; Wait for it to be released
@@ -105,39 +99,39 @@ Loop
    GetKeyState, LButtonState, LButton, P
    if LButtonState = U  ; Button has been released.
    {
-      If WinActive("Crimson Editor") and (xx < 25) ; Single Click in the Selection Area of CE
-      {
-         Send, ^c
+	  If WinActive("Crimson Editor") and (xx < 25) ; Single Click in the Selection Area of CE
+	  {
+		 Send, ^c
 		ToolTipWithTimer("copy selection finished.")
-         return
-      }
-      break
+		 return
+	  }
+	  break
    }
    elapsed = %A_TickCount%
    elapsed -= %TimeButtonDown%
    if elapsed > 200  ; Button was held down too long, so assume it's not a double-click.
    {
-      MouseGetPos x0, y0            ; save start mouse position
-      Loop
+	  MouseGetPos x0, y0            ; save start mouse position
+	  Loop
    {
-     Sleep 20                    ; yield time to others
-     GetKeyState keystate, LButton
-     IfEqual keystate, U, {
-       MouseGetPos x, y          ; position when button released
-       break
-     }
+	 Sleep 20                    ; yield time to others
+	 GetKeyState keystate, LButton
+	 IfEqual keystate, U, {
+	   MouseGetPos x, y          ; position when button released
+	   break
+	 }
    }
    if (x-x0 > 5 or x-x0 < -5 or y-y0 > 5 or y-y0 < -5)
    {                             ; mouse has moved
-      clip0 := ClipBoardAll      ; save old clipboard
-      ;ClipBoard =
-      Send ^c                    ; selection -> clipboard
-	    ToolTipWithTimer("copy selection finished.")
+	  clip0 := ClipBoardAll      ; save old clipboard
+	  ;ClipBoard =
+	  Send ^c                    ; selection -> clipboard
+		ToolTipWithTimer("copy selection finished.")
 
-      ClipWait 1, 1              ; restore clipboard if no data
-      IfEqual ClipBoard,, SetEnv ClipBoard, %clip0%
+	  ClipWait 1, 1              ; restore clipboard if no data
+	  IfEqual ClipBoard,, SetEnv ClipBoard, %clip0%
    }
-      return
+	  return
    }
 }
 ; Otherwise, button was released quickly enough.  Wait to see if it's a double-click:
@@ -147,11 +141,11 @@ Loop
    Sleep 10
    GetKeyState, LButtonState, LButton, P
    if LButtonState = D  ; Button has been pressed down again.
-      break
+	  break
    elapsed = %A_TickCount%
    elapsed -= %TimeButtonUp%
    if elapsed > 350  ; No click has occurred within the allowed time, so assume it's not a double-click.
-      return
+	  return
 }
 
 ;Button pressed down again, it's at least a double-click
@@ -161,7 +155,7 @@ Loop
    Sleep 10
    GetKeyState, LButtonState2, LButton, P
    if LButtonState2 = U  ; Button has been released a 2nd time, let's see if it's a tripple-click.
-      break
+	  break
 }
 ;Button released a 2nd time
 TimeButtonUp3 = %A_TickCount%
@@ -170,15 +164,14 @@ Loop
    Sleep 10
    GetKeyState, LButtonState3, LButton, P
    if LButtonState3 = D  ; Button has been pressed down a 3rd time.
-      break
+	  break
    elapsed = %A_TickCount%
    elapsed -= %TimeButtonUp%
    if elapsed > 350  ; No click has occurred within the allowed time, so assume it's not a tripple-click.
    {  ;Double-click
-      Send, ^c
+		Send, ^c
 		ToolTipWithTimer("copy selection finished.")
-
-      return
+		return
    }
 }
 ;Tripple-click:
@@ -208,14 +201,14 @@ is_on_edge := HandleMouseOnEdges("Ctrl+8")
 if is_on_edge
    return
 if (!use_touchpad)
-    return
+	return
 SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 SetMouseDelay, 0
 Gosub singleKeyClick
 if key_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
 {
-    key_press_cnt += 1
-    return
+	key_press_cnt += 1
+	return
 }
 ; 否则，这是新一系列按键的首次按键。将计数设为 1 并启动定时器：
 key_press_cnt = 1
@@ -232,8 +225,8 @@ SetTimer, KeyTimerFunc, off
 ; else
 if key_press_cnt = 2 ; 该键已按过一次。
 {
-    ClickUpIfLbDown()
-    DoubleClickCtrl8Trigger()
+	ClickUpIfLbDown()
+	DoubleClickCtrl8Trigger()
 	; ToolTip, 28888
 }
 
@@ -242,31 +235,21 @@ key_press_cnt = 0
 return
 
 singleKeyClick:
-	if fake_lb_down
+   if fake_lb_down
 	{
-		; Send, ^c
-		; ToolTipWithTimer("copy selection finished.")
-      Click Up
-		fake_lb_down = 0
+		ClickUpIfLbDown()
 		return
 	}
 	if fake_rb_down
 	{
 		fake_rb_down = 0
 		Click Up Right
-        return
+		return
 	}
 	fake_lb_down = 1
 	Click Down
-    return
-
-; doubleClickKey:
-;     ; ClickUpIfLbDown()
-
-; 	Click Down Right
-; 	fake_rb_down = 1
-;     return
-
+	ToolTipWithTimer("Please ctrl+8 to simulate click up.", 2000)
+	return
 
 
 ; -----------------------------------------------------------------------------
@@ -279,10 +262,11 @@ if is_on_edge
    return
 if use_touchpad = 0
    return
+ClickUpIfLbDown()
 if rb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
 {
-    rb_press_cnt += 1
-    return
+	rb_press_cnt += 1
+	return
 }
 ; 否则，这是新一系列按键的首次按键。将计数设为 1 并启动定时器：
 rb_press_cnt = 1
@@ -296,6 +280,7 @@ if ((!is_wgesture_on and rb_press_cnt = 2) or (is_wgesture_on and rb_press_cnt =
 	; ToolTip, 44
 	Click Down Right
 	fake_rb_down = 1
+	ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2000)
 }
 ; 不论上面哪个动作被触发，将计数复位以备下一系列的按键：
 rb_press_cnt = 0
@@ -328,10 +313,11 @@ return
 is_on_edge := HandleMouseOnEdges("MButton")
 if is_on_edge
    return
+ClickUpIfLbDown()
 if mb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
 {
-    mb_press_cnt += 1
-    return
+	mb_press_cnt += 1
+	return
 }
 
 mb_press_cnt = 1
@@ -347,8 +333,8 @@ SetTimer, KeyMbuttonTimerFunc, off
 if ((!is_wgesture_on and mb_press_cnt = 2) or (is_wgesture_on and mb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
 {
 	; ToolTip, mb44
-    ; Gosub doubleClickMButton
-    DoubleClickMButtonTrigger()
+	; Gosub doubleClickMButton
+	DoubleClickMButtonTrigger()
 }
 mb_press_cnt = 0
 return
