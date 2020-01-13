@@ -74,7 +74,11 @@
 ~Ctrl::
 	if game_mode
 		return
-	ClickUpIfLbDown()
+	if fake_lb_down
+	{
+		; fake_lb_down = 0  ; 这里不能 = 0, 因为如果这里等于0了, ctrl+8会先触发这里, 然后 if fake_lb_down会有问题
+		Click Up
+	}
 	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
