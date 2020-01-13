@@ -33,6 +33,12 @@ else if trim_p = cmd ; open a command prompt window on the current explorer path
 		run cmd.exe
 	}
 }
+
+
+
+;-------------------------------------------------------------------------------
+;;; INTERACT WITH THIS AHK SCRIPT ;;;
+;-------------------------------------------------------------------------------
 else if trim_p = proj ; open this proj with vs code
 {
 	gui_destroy()
@@ -51,12 +57,6 @@ else if trim_p = touchpad ; switch touchpad mode
 	use_touchpad := use_touchpad ? 0 : 1
 	gui_destroy()
 }
-
-
-
-;-------------------------------------------------------------------------------
-;;; INTERACT WITH THIS AHK SCRIPT ;;;
-;-------------------------------------------------------------------------------
 else if trim_p = rd ; Reload this script
 {
 	gui_destroy() ; removes the GUI even when the reload fails
@@ -85,6 +85,19 @@ else if trim_p = conf ; Edit user_conf
 ;         UpdateNox()
 ;     }
 ; }
+else if trim_p = game ; turn on/off game mode
+{
+	msg_str := "Would you like to turn " . (game_mode ? "off" : "on") . " game mode?"
+    MsgBox, 4,, %msg_str%
+    IfMsgBox Yes
+    {
+		gui_destroy()
+		game_mode := game_mode ? 0 : 1
+		if game_mode
+			MsgBox, Double Alt is disabled in game mode`, you can CapsLock+Shift+X to open nox input box.
+    }
+}
+
 
 ;-------------------------------------------------------------------------------
 ;;; web search ;;;

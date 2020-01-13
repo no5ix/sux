@@ -9,18 +9,8 @@ global gui_state := closed
 ; Initialize search_urls as a variable set to zero
 global search_urls := 0
 
-;-------------------------------------------------------------------------------
-; LAUNCH GUI
-;-------------------------------------------------------------------------------
-~LAlt::
-ClickUpIfLbDown()
-if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > 400)
-{
-    ; Too much time between presses, so this isn't a double-press.
-    KeyWait, LAlt
-    return
-}
-gui_spawn:
+
+gui_spawn() {
     if gui_state != closed
     {
         ; If the GUI is already open, close it then reopen it.
@@ -57,7 +47,7 @@ gui_spawn:
     Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
     ; Gui, Show, , myGUI
     return
-return
+}
 
 
 ;-------------------------------------------------------------------------------

@@ -11,6 +11,16 @@
 
 ; CapsLock::Send, {ESC}                  ; Vimer's love	Capslock = {ESC}
 
+
+;-------------------------------------------------------------------------------
+; LAUNCH GUI
+;-------------------------------------------------------------------------------
+CapsLock & x::
+if getkeystate("shift")
+    gui_spawn()
+return
+
+
 #Persistent
 CapsLock::
 if enable_double_click_capslock = 0

@@ -3,56 +3,77 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
+;-------------------------------------------------------------------------------
+; LAUNCH GUI
+;-------------------------------------------------------------------------------
+~LAlt::
+    if game_mode
+        return
+    ClickUpIfLbDown()
+    if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > 400)
+    {
+        ; Too much time between presses, so this isn't a double-press.
+        KeyWait, LAlt
+        return
+    }
+    gui_spawn()
+    return
+	
+
 ; -----------------------------------------------------------------------------
 ~LShift::
-ClickUpIfLbDown()
-; TimeButtonDown = %A_TickCount%
-; ; Wait for it to be released
-; Loop
-; {
-; 	Sleep 10
-; 	GetKeyState, LshiftState, Lshift, P
-; 	if LshiftState = U  ; Button has been released.
-; 		break
-; 	elapsed = %A_TickCount%
-; 	elapsed -= %TimeButtonDown%
-; 	if elapsed > 200  ; Button was held down long enough
-; 	{
-; 		x0 = A_CaretX
-; 		y0 = A_CaretY
-; 		Loop
-; 		{
-; 			Sleep 20                    ; yield time to others
-; 			GetKeyState keystate, Lshift
-; 			IfEqual keystate, U, {
-; 			x = A_CaretX
-; 			y = A_CaretY
-; 			break
-; 			}
-; 		}
-; 		if (x-x0 > 5 or x-x0 < -5 or y-y0 > 5 or y-y0 < -5)
-; 		{                             ; Caret has moved
-; 			clip0 := ClipBoardAll      ; save old clipboard
-; 			;ClipBoard =
-; 			Send ^c                    ; selection -> clipboard
-; 			ClipWait 1, 1              ; restore clipboard if no data
-; 			IfEqual ClipBoard,, SetEnv ClipBoard, %clip0%
-; 		}
-; 		return
-; 	}
-; }
-if (A_PriorHotkey <> "~LShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-{
-	; Too much time between presses, so this isn't a double-press.
-	KeyWait, LShift
+	if game_mode
+		return
+	ClickUpIfLbDown()
+	; TimeButtonDown = %A_TickCount%
+	; ; Wait for it to be released
+	; Loop
+	; {
+	; 	Sleep 10
+	; 	GetKeyState, LshiftState, Lshift, P
+	; 	if LshiftState = U  ; Button has been released.
+	; 		break
+	; 	elapsed = %A_TickCount%
+	; 	elapsed -= %TimeButtonDown%
+	; 	if elapsed > 200  ; Button was held down long enough
+	; 	{
+	; 		x0 = A_CaretX
+	; 		y0 = A_CaretY
+	; 		Loop
+	; 		{
+	; 			Sleep 20                    ; yield time to others
+	; 			GetKeyState keystate, Lshift
+	; 			IfEqual keystate, U, {
+	; 			x = A_CaretX
+	; 			y = A_CaretY
+	; 			break
+	; 			}
+	; 		}
+	; 		if (x-x0 > 5 or x-x0 < -5 or y-y0 > 5 or y-y0 < -5)
+	; 		{                             ; Caret has moved
+	; 			clip0 := ClipBoardAll      ; save old clipboard
+	; 			;ClipBoard =
+	; 			Send ^c                    ; selection -> clipboard
+	; 			ClipWait 1, 1              ; restore clipboard if no data
+	; 			IfEqual ClipBoard,, SetEnv ClipBoard, %clip0%
+	; 		}
+	; 		return
+	; 	}
+	; }
+	if (A_PriorHotkey <> "~LShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, LShift
+		return
+	}
+	DoubleClickShiftTrigger()
 	return
-}
-DoubleClickShiftTrigger()
-return
 ; -----------------------------------------------------------------------------
 
 
 ~Ctrl::
+	if game_mode
+		return
 	ClickUpIfLbDown()
 	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
@@ -61,20 +82,20 @@ return
 		return
 	}
 	DoubleClickCtrlTrigger()
-return
+	return
 
 ; -----------------------------------------------------------------------------
 
 ~Ins::
-ClickUpIfLbDown()
-if (A_PriorHotkey <> "~Ins" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-{
-	; Too much time between presses, so this isn't a double-press.
-	KeyWait, Ins
+	ClickUpIfLbDown()
+	if (A_PriorHotkey <> "~Ins" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, Ins
+		return
+	}
+	Send, {F2}
 	return
-}
-Send, {F2}
-return
 
 
 ;---------------------------------------------------------------------o
@@ -257,6 +278,8 @@ singleKeyClick:
 ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
 #Persistent
 ~RButton::
+if game_mode
+	return
 is_on_edge := HandleMouseOnEdges("RButton")
 if is_on_edge
    return

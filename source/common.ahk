@@ -2,6 +2,7 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+global game_mode := 0
 
 global fake_rb_down := 0
 global fake_lb_down := 0
@@ -180,7 +181,7 @@ PasteCompatibleWithAutoSelectionCopy() {
 
 HandleMouseOnEdges(from) {
 	IsOnEdge := 0
-	if enable_hot_edges = 0
+	if (enable_hot_edges = 0) or game_mode
 		return IsOnEdge
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
@@ -230,6 +231,8 @@ UpdateNox() {
 }
 
 HotCorners() {				; Timer content 
+	if game_mode
+		return
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 
 	; if IsCorner("IsOnTop"){

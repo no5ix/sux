@@ -151,7 +151,7 @@ HotEdgesTopTrigger(from){
 HotEdgesBottomTrigger(from){
     if (from = "Ctrl+8") {
         Send, #e
-        Sleep, 666
+        Sleep, 1111
         WinGet,S,MinMax,A
         if S=0
             WinMaximize,A
