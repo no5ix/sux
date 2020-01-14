@@ -7,17 +7,17 @@
 ; LAUNCH GUI
 ;-------------------------------------------------------------------------------
 ~LAlt::
-    if game_mode
-        return
-    ClickUpIfLbDown()
-    if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > 400)
-    {
-        ; Too much time between presses, so this isn't a double-press.
-        KeyWait, LAlt
-        return
-    }
-    gui_spawn()
-    return
+	if game_mode
+		return
+	ClickUpIfLbDown()
+	if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > 400)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, LAlt
+		return
+	}
+	gui_spawn()
+	return
 	
 
 ; -----------------------------------------------------------------------------
@@ -120,88 +120,88 @@ TimeButtonDown = %A_TickCount%
 ; Wait for it to be released
 Loop
 {
-   Sleep 10
-   GetKeyState, LButtonState, LButton, P
-   if LButtonState = U  ; Button has been released.
-   {
-	  If WinActive("Crimson Editor") and (xx < 25) ; Single Click in the Selection Area of CE
-	  {
-		 Send, ^c
-		ToolTipWithTimer("copy selection finished.")
-		 return
-	  }
-	  break
-   }
-   elapsed = %A_TickCount%
-   elapsed -= %TimeButtonDown%
-   if elapsed > 200  ; Button was held down too long, so assume it's not a double-click.
-   {
-	  MouseGetPos x0, y0            ; save start mouse position
-	  Loop
-   {
-	 Sleep 20                    ; yield time to others
-	 GetKeyState keystate, LButton
-	 IfEqual keystate, U, {
-	   MouseGetPos x, y          ; position when button released
-	   break
-	 }
-   }
-   if (x-x0 > 5 or x-x0 < -5 or y-y0 > 5 or y-y0 < -5)
-   {                             ; mouse has moved
-	  clip0 := ClipBoardAll      ; save old clipboard
-	  ;ClipBoard =
-	  Send ^c                    ; selection -> clipboard
-		ToolTipWithTimer("copy selection finished.")
+	Sleep 10
+	GetKeyState, LButtonState, LButton, P
+	if LButtonState = U  ; Button has been released.
+	{
+		If WinActive("Crimson Editor") and (xx < 25) ; Single Click in the Selection Area of CE
+		{
+			Send, ^c
+			ToolTipWithTimer("copy selection finished.")
+			return
+		}
+		break
+	}
+	elapsed = %A_TickCount%
+	elapsed -= %TimeButtonDown%
+	if elapsed > 200  ; Button was held down too long, so assume it's not a double-click.
+	{
+		MouseGetPos x0, y0            ; save start mouse position
+		Loop
+	{
+		Sleep 20                    ; yield time to others
+		GetKeyState keystate, LButton
+		IfEqual keystate, U, {
+		MouseGetPos x, y          ; position when button released
+		break
+		}
+	}
+	if (x-x0 > 5 or x-x0 < -5 or y-y0 > 5 or y-y0 < -5)
+	{                             ; mouse has moved
+		clip0 := ClipBoardAll      ; save old clipboard
+		;ClipBoard =
+		Send ^c                    ; selection -> clipboard
+			ToolTipWithTimer("copy selection finished.")
 
-	  ClipWait 1, 1              ; restore clipboard if no data
-	  IfEqual ClipBoard,, SetEnv ClipBoard, %clip0%
-   }
-	  return
-   }
+		ClipWait 1, 1              ; restore clipboard if no data
+		IfEqual ClipBoard,, SetEnv ClipBoard, %clip0%
+	}
+		return
+	}
 }
 ; Otherwise, button was released quickly enough.  Wait to see if it's a double-click:
 TimeButtonUp = %A_TickCount%
 Loop
 {
-   Sleep 10
-   GetKeyState, LButtonState, LButton, P
-   if LButtonState = D  ; Button has been pressed down again.
-	  break
-   elapsed = %A_TickCount%
-   elapsed -= %TimeButtonUp%
-   if elapsed > 350  ; No click has occurred within the allowed time, so assume it's not a double-click.
-	  return
+	Sleep 10
+	GetKeyState, LButtonState, LButton, P
+	if LButtonState = D  ; Button has been pressed down again.
+		break
+	elapsed = %A_TickCount%
+	elapsed -= %TimeButtonUp%
+	if elapsed > 350  ; No click has occurred within the allowed time, so assume it's not a double-click.
+		return
 }
 
 ;Button pressed down again, it's at least a double-click
 TimeButtonUp2 = %A_TickCount%
 Loop
 {
-   Sleep 10
-   GetKeyState, LButtonState2, LButton, P
-   if LButtonState2 = U  ; Button has been released a 2nd time, let's see if it's a tripple-click.
-	  break
+	Sleep 10
+	GetKeyState, LButtonState2, LButton, P
+	if LButtonState2 = U  ; Button has been released a 2nd time, let's see if it's a tripple-click.
+		break
 }
 ;Button released a 2nd time
 TimeButtonUp3 = %A_TickCount%
 Loop
 {
-   Sleep 10
-   GetKeyState, LButtonState3, LButton, P
-   if LButtonState3 = D  ; Button has been pressed down a 3rd time.
-	  break
-   elapsed = %A_TickCount%
-   elapsed -= %TimeButtonUp%
-   if elapsed > 350  ; No click has occurred within the allowed time, so assume it's not a tripple-click.
-   {  ;Double-click
+	Sleep 10
+	GetKeyState, LButtonState3, LButton, P
+	if LButtonState3 = D  ; Button has been pressed down a 3rd time.
+		break
+	elapsed = %A_TickCount%
+	elapsed -= %TimeButtonUp%
+	if elapsed > 350  ; No click has occurred within the allowed time, so assume it's not a tripple-click.
+	{  ;Double-click
 		Send, ^c
 		ToolTipWithTimer("copy selection finished.")
 		return
-   }
+	}
 }
 ;Tripple-click:
-   Sleep, 100
-   Send, ^c
+	Sleep, 100
+	Send, ^c
 	ToolTipWithTimer("copy selection finished.")
 return
 ; ---------------------------------------------------------------------o
@@ -224,7 +224,7 @@ return
 ^8::
 is_on_edge := HandleMouseOnEdges("Ctrl+8")
 if is_on_edge
-   return
+	return
 if (!use_touchpad)
 	return
 SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
@@ -286,9 +286,9 @@ if game_mode
 	return
 is_on_edge := HandleMouseOnEdges("RButton")
 if is_on_edge
-   return
+	return
 if use_touchpad = 0
-   return
+	return
 ClickUpIfLbDown()
 if rb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
 {
@@ -339,7 +339,7 @@ return
 ~MButton::
 is_on_edge := HandleMouseOnEdges("MButton")
 if is_on_edge
-   return
+	return
 ClickUpIfLbDown()
 if mb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
 {

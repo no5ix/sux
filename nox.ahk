@@ -12,6 +12,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 SetCapsLockState, AlwaysOff
 -----------------------
 
+
 #Include %A_ScriptDir%\conf\default_conf.ahk
 #Include %A_ScriptDir%\conf\user_conf.ahk
 
