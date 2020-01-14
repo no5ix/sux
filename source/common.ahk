@@ -3,6 +3,7 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 global game_mode := 0
+global cur_selected_text := ""
 
 global fake_rb_down := 0
 global fake_lb_down := 0
@@ -297,4 +298,17 @@ Run_AsUser(prms*) {
     ComObjCreate("Shell.Application")
     .Windows.FindWindowSW(0, 0, 0x08, 0, 0x01)  
     .Document.Application.ShellExecute(prms*) 
+}
+
+
+SaveCurSelectedText() {
+	clipboardOld := ClipboardAll            ; backup clipboard
+	Send, ^c
+	Sleep, 66                             ; copy selected text to clipboard
+	if (Clipboard != clipboardOld) {
+		cur_selected_text := Clipboard                ; store selected text
+		Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+	}
+	return cur_selected_text
 }
