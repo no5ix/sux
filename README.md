@@ -1,9 +1,13 @@
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
 
-IMPORTANT : Please run as administrator.
-
 Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank u.
+
+
+# IMPORTANT
+  
+- Please run as administrator.
+- Please run in 32-bit mode.(Open with AutoHotKey Unicode 32-bit)
 
 
 # Features
