@@ -20,6 +20,12 @@ CapsLock & x::
 return
 
 
+CapsLock & c::
+	param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
+	DllCall(param)
+return
+
+
 #Persistent
 CapsLock::
 	if enable_double_click_capslock = 0
