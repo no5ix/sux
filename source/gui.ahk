@@ -126,8 +126,8 @@ gui_search(url) {
 		; if gui_state is "main", then we are coming from the main window and
 		; GUI elements for the search field have not yet been added.
 		Gosub, gui_search_add_elements
-		SendRaw, %cur_selected_text%
-		Send, ^a
+		; SendRaw, %cur_selected_text%
+		; Send, ^a
 	}
 
 	; Assign the url to a variable.
