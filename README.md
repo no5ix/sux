@@ -22,6 +22,8 @@ Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank
 - **custom theme.** : two default theme(dark/light), and u can add ur own theme
 - **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk
 - **screen capture** : `Capslock + C`
+- **game mode** : double Alt then input `game`
+
 
 # 设置Everything始终以运行次数排序
 
