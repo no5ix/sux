@@ -20,6 +20,7 @@ CapsLock & x::
 return
 
 
+; ; screen capture
 CapsLock & c::
 	param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
 	DllCall(param)
