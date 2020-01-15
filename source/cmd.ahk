@@ -67,14 +67,13 @@ else if trim_p = dir ; Open the directory for this script
 	gui_destroy()
 	Run, %A_ScriptDir%
 }
-else if trim_p = conf ; Edit user_conf
-{
-	gui_destroy()
-	; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
-	param = %A_ScriptDir%\conf\user_conf.ahk
-	Run_AsUser("notepad.exe", param)
-
-}
+; else if trim_p = conf ; Edit user_conf
+; {
+; 	gui_destroy()
+; 	; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
+; 	param = %A_ScriptDir%\conf\user_conf.ahk
+; 	Run_AsUser("notepad.exe", param)
+; }
 ; else if trim_p = up ; update nox
 ; {
 ;     MsgBox, 4,, Would you like to update nox?
