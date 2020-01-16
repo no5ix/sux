@@ -305,6 +305,7 @@ SetTimer, KeyRbuttonTimerFunc, off
 if ((!is_wgesture_on and rb_press_cnt = 2) or (is_wgesture_on and rb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
 {
 	; ToolTip, 44
+	Send, {Esc}
 	Click Down Right
 	fake_rb_down = 1
 	ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2000)
