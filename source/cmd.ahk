@@ -93,7 +93,7 @@ else if trim_p = game ; turn on/off game mode
 		gui_destroy()
 		game_mode := game_mode ? 0 : 1
 		if game_mode
-			MsgBox, Double Alt is disabled in game mode`, you can CapsLock+Shift+X to open nox input box.
+			MsgBox, Double Alt is disabled in game mode`, you can CapsLock+X to open nox input box.
     }
 }
 
