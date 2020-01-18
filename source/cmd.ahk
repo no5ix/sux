@@ -96,13 +96,13 @@ else if trim_p = dir ; Open the directory for this script
 ; }
 else if trim_p = game ; turn on/off game mode
 {
-	msg_str := "Would you like to turn " . (game_mode ? "off" : "on") . " game mode?"
+	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " game mode?"
     MsgBox, 4,, %msg_str%
     IfMsgBox Yes
     {
 		gui_destroy()
-		game_mode := game_mode ? 0 : 1
-		if game_mode
+		limit_mode := limit_mode ? 0 : 1
+		if limit_mode
 			MsgBox, Double Alt is disabled in game mode`, you can CapsLock+X to open nox input box.
     }
 }

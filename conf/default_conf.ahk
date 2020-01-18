@@ -54,6 +54,7 @@ global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / 
 
 global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
+global limit_mode_when_full_screen := 1  ;
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`
 global enable_double_click_capslock := 0  ; if 1, this may slow down capslock's first hit
 global enable_hot_corners := 1  ; ; when cursor hover on the corner

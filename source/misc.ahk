@@ -7,21 +7,16 @@
 ; LAUNCH GUI
 ;-------------------------------------------------------------------------------
 ~LAlt::
-	if game_mode
+	if limit_mode
 		return
 	ClickUpIfLbDown()
-	if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		KeyWait, LAlt
-		return
-	}
-	gui_spawn()
-	
+	If (A_PriorHotKey = "~LAlt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
+		gui_spawn()
+	return
 
 ; -----------------------------------------------------------------------------
 ~LShift::
-	if game_mode
+	if limit_mode
 		return
 	ClickUpIfLbDown()
 	; TimeButtonDown = %A_TickCount%
@@ -71,7 +66,7 @@
 
 
 ~Ctrl::
-	if game_mode
+	if limit_mode
 		return
 	if fake_lb_down
 	{
@@ -259,20 +254,22 @@ key_press_cnt = 0
 return
 
 singleKeyClick:
-   if fake_lb_down
+	if fake_lb_down
 	{
 		ClickUpIfLbDown()
+		ToolTipWithTimer("simulate click up finished.", 1111)
 		return
 	}
 	if fake_rb_down
 	{
 		fake_rb_down = 0
 		Click Up Right
+		ToolTipWithTimer("simulate click up right finished.", 1111)
 		return
 	}
 	fake_lb_down = 1
 	Click Down
-	ToolTipWithTimer("Please ctrl+8 to simulate click up.", 2000)
+	ToolTipWithTimer("Please ctrl+8 to simulate click up.", 2222)
 	return
 
 
@@ -281,7 +278,7 @@ singleKeyClick:
 ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
 #Persistent
 ~RButton::
-if game_mode
+if limit_mode
 	return
 is_on_edge := HandleMouseOnEdges("RButton")
 if is_on_edge
@@ -307,7 +304,7 @@ if ((!is_wgesture_on and rb_press_cnt = 2) or (is_wgesture_on and rb_press_cnt =
 	Send, {Esc}
 	Click Down Right
 	fake_rb_down = 1
-	ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2000)
+	ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2222)
 }
 ; 不论上面哪个动作被触发，将计数复位以备下一系列的按键：
 rb_press_cnt = 0

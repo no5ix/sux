@@ -18,3 +18,8 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 ; #Persistent 				; Keeps script running persisitantly 
 if enable_hot_corners
 	SetTimer, HotCorners, 66
+
+
+if limit_mode_when_full_screen
+	SetTimer, LimitModeWhenFullScreen, 1111
+
