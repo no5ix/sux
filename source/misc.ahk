@@ -17,28 +17,7 @@
 		return
 	}
 	gui_spawn()
-	return
-
-
-; ~LAlt::
-; 	if game_mode
-; 		return
-; 	ClickUpIfLbDown()
 	
-;    	p := Morse()
-; ;    If (p = "0")
-;     ;   MsgBox Short press
-; ;    Else 
-;    	If (p = "00")
-; 		gui_spawn()
-
-;     ;   MsgBox Two short presses
-; ;    Else If (p = "01")
-;     ;   MsgBox Short+Long press
-; ;    Else
-;     ;   MsgBox Press pattern %p%
-; Return
-
 
 ; -----------------------------------------------------------------------------
 ~LShift::
