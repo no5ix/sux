@@ -254,7 +254,7 @@ key_press_cnt = 0
 return
 
 singleKeyClick:
-	if fake_lb_down
+	if GetKeyState("LButton") ; 这里不用 `if fake_lb_down = 1 的原因是 ctrl 那里没有把 fake_rb_down 置为 1
 	{
 		ClickUpIfLbDown()
 		ToolTipWithTimer("simulate click up finished.", 1111)
