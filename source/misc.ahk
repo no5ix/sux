@@ -68,11 +68,7 @@
 ~Ctrl::
 	if limit_mode
 		return
-	if fake_lb_down
-	{
-		; fake_lb_down = 0  ; 这里不能 = 0, 因为如果这里等于0了, ctrl+8会先触发这里, 然后 if fake_lb_down会有问题
-		Click Up
-	}
+	ClickUpIfLbDown()
 	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
@@ -254,12 +250,6 @@ key_press_cnt = 0
 return
 
 singleKeyClick:
-	if GetKeyState("LButton") ; 这里不用 `if fake_lb_down = 1 的原因是 ctrl 那里没有把 fake_rb_down 置为 1
-	{
-		ClickUpIfLbDown()
-		ToolTipWithTimer("simulate click up finished.", 1111)
-		return
-	}
 	if fake_rb_down
 	{
 		fake_rb_down = 0
@@ -269,7 +259,7 @@ singleKeyClick:
 	}
 	fake_lb_down = 1
 	Click Down
-	ToolTipWithTimer("Please ctrl+8 to simulate click up.", 2222)
+	ToolTipWithTimer("simulate click down finished.", 2222)
 	return
 
 
@@ -301,7 +291,7 @@ SetTimer, KeyRbuttonTimerFunc, off
 if ((!is_wgesture_on and rb_press_cnt = 2) or (is_wgesture_on and rb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
 {
 	; ToolTip, 44
-	Send, {Esc}
+	; Send, {Esc}
 	Click Down Right
 	fake_rb_down = 1
 	ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2222)

@@ -172,6 +172,7 @@ ClickUpIfLbDown()
 	{
 		fake_lb_down = 0
 		Click Up
+		ToolTipWithTimer("simulate click up finished.", 1111)
 	}
 }
 
