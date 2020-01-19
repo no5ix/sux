@@ -128,7 +128,9 @@ DoubleClickCtrl8Trigger(){
 	; 会有副作用, 因为单击 ctrl+8 是按住鼠标左键 
 }
 DoubleClickShiftTrigger(){
-	; EverythingShortCut()
+	gui_spawn()
+}
+DoubleClickAltTrigger(){
 }
 DoubleClickMButtonTrigger(){
 }

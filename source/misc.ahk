@@ -21,7 +21,7 @@
 		KeyWait, LAlt
 		return
 	}
-	gui_spawn()
+	DoubleClickAltTrigger()
 	return
 
 ; -----------------------------------------------------------------------------

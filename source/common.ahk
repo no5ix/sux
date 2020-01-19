@@ -213,7 +213,7 @@ HandleMouseOnEdges(from) {
 		HotEdgesRightTrigger(from)
 	}
 
-	if is_wgesture_on  ; 为了防止触发两次
+	if is_wgesture_on and (from = "RButton" or from = "LButton")  ; 为了防止触发两次
 	{
 		Loop
 		{
