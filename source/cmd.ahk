@@ -2,19 +2,19 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
-trim_p := trim(Pedersen)
+ltrim_input := LTrim(Pedersen)
 
-if trim_p = help ; Tooltip with list of commands
+if ltrim_input = help ; Tooltip with list of commands
 {
-	GuiControl,, trim_p, ; Clear the input box
+	GuiControl,, ltrim_input, ; Clear the input box
 	Gosub, gui_commandlibrary
 }
-else if trim_p = os ; nox official site
+else if ltrim_input = os ; nox official site
 {
 	gui_destroy()
 	run "https://github.com/no5ix/nox"
 }
-else if trim_p = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
+else if ltrim_input = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
 {
 	msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
     MsgBox, 4,, %msg_str%
@@ -24,14 +24,15 @@ else if trim_p = url ; Open an URL from the clipboard (naive - will try to run w
 		run %ClipBoard%
 	}
 }
-else if trim_p = cmd ; open a command prompt window on the current explorer path 
+else if ltrim_input = cmd ; open a command prompt window on the current explorer path 
 {
 	gui_destroy()
 	IfWinActive, ahk_exe explorer.exe
 	{
 		Send, !d
-		SendRaw, cmd
-		Send, {Enter}
+		SendInput, cmd`n  ; 等同于下面这两句
+		; SendRaw, cmd
+		; Send, {Enter}
 	}
 	else
 	{
@@ -44,7 +45,7 @@ else if trim_p = cmd ; open a command prompt window on the current explorer path
 ;-------------------------------------------------------------------------------
 ;;; INTERACT WITH THIS AHK SCRIPT ;;;
 ;-------------------------------------------------------------------------------
-else if trim_p = proj ; open this proj with vs code
+else if ltrim_input = proj ; open this proj with vs code
 {
 	gui_destroy()
 	; run as nox run as
@@ -56,8 +57,9 @@ else if trim_p = proj ; open this proj with vs code
 	}else {
 		Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
 	}
+	MaximizeWindow("Code.exe")
 }
-else if trim_p = touchpad ; switch touchpad mode
+else if ltrim_input = touchpad ; switch touchpad mode
 {
 	msg_str := "Would you like to turn " . (use_touchpad ? "off" : "on") . " touchpad mode?"
     MsgBox, 4,, %msg_str%
@@ -67,24 +69,24 @@ else if trim_p = touchpad ; switch touchpad mode
 		gui_destroy()
     }
 }
-else if trim_p = rd ; Reload this script
+else if ltrim_input = rd ; Reload this script
 {
 	gui_destroy() ; removes the GUI even when the reload fails
 	Reload
 }
-else if trim_p = dir ; Open the directory for this script
+else if ltrim_input = dir ; Open the directory for this script
 {
 	gui_destroy()
 	Run, %A_ScriptDir%
 }
-; else if trim_p = conf ; Edit user_conf
+; else if ltrim_input = conf ; Edit user_conf
 ; {
 ; 	gui_destroy()
 ; 	; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
 ; 	param = %A_ScriptDir%\conf\user_conf.ahk
 ; 	Run_AsUser("notepad.exe", param)
 ; }
-; else if trim_p = up ; update nox
+; else if ltrim_input = up ; update nox
 ; {
 ;     MsgBox, 4,, Would you like to update nox?
 ;     IfMsgBox Yes
@@ -94,7 +96,7 @@ else if trim_p = dir ; Open the directory for this script
 ;         UpdateNox()
 ;     }
 ; }
-else if trim_p = game ; turn on/off game mode
+else if ltrim_input = game ; turn on/off game mode
 {
 	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " game mode?"
     MsgBox, 4,, %msg_str%
@@ -111,20 +113,44 @@ else if trim_p = game ; turn on/off game mode
 ;-------------------------------------------------------------------------------
 ;;; web search ;;;
 ;-------------------------------------------------------------------------------
+else if WebSearchUrlMap.HasKey(ltrim_input)
+{
+	; for key, arr in WebSearchUrlMap ; Enumeration is the recommended approach in most cases.
+	; {
+	; 	; Using "Loop", indices must be consecutive numbers from 1 to the number
+	; 	; of elements in the array (or they must be calculated within the loop).
+	; 	; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
+	; 	; Using "for", both the index (or "key") and its associated value
+	; 	; are provided, and the index can be *any* value of your choosing.
+	; 	if ltrim_input = %key%
+	; 	{
+	; 		gui_search_title := arr[1]
+	; 		gui_search(arr[2])
+	; 		Break
+	; 	}
+	; }
+
+	gui_search_title := WebSearchUrlMap[ltrim_input][1]
+	gui_search(WebSearchUrlMap[ltrim_input][2])
+}
+
+;-------------------------------------------------------------------------------
+;;; everything search(end with space) & default web search;;;
+;-------------------------------------------------------------------------------
 else
 {
-	for key, arr in WebSearchUrlMap ; Enumeration is the recommended approach in most cases.
+	trim_p := Trim(Pedersen)
+	if SubStr(ltrim_input, 0, 1) = A_Space
 	{
-		; Using "Loop", indices must be consecutive numbers from 1 to the number
-		; of elements in the array (or they must be calculated within the loop).
-		; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
-		; Using "for", both the index (or "key") and its associated value
-		; are provided, and the index can be *any* value of your choosing.
-		if trim_p = %key%
-		{
-			gui_search_title := arr[1]
-			gui_search(arr[2])
-			Break
-		}
+		gui_destroy()
+		EverythingShortCut()
+		WinWaitActive, ahk_exe Everything.exe, , 0.222
+		if ErrorLevel
+			DefaultWebSearch(trim_p)
+		else
+			SendRaw, %trim_p%
 	}
+	else
+		DefaultWebSearch(trim_p)
 }
+

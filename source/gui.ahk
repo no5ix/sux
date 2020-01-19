@@ -149,6 +149,7 @@ gui_SearchEnter:
 	search_urls := 0
 	return
 
+
 ;-------------------------------------------------------------------------------
 ; TOOLTIP
 ; The tooltip shows all defined commands, along with a description of what

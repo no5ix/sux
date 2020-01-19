@@ -190,28 +190,25 @@ HandleMouseOnEdges(from) {
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
+	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 	IsOnEdge := 0
 	if (MouseY = 0)
 	{
-        Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 		IsOnEdge = 1
 		HotEdgesTopTrigger(from)
 	}
 	else if (MouseY = BottomEdge)
 	{
-		Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 		IsOnEdge = 1
 		HotEdgesBottomTrigger(from)
 	}
 	else if (MouseX = 0)
 	{
-		Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 		IsOnEdge = 1
 		HotEdgesLeftTrigger(from)
 	}
 	else if (MouseX = RightEdge)
 	{
-		Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 		IsOnEdge = 1
 		HotEdgesRightTrigger(from)
 	}
@@ -406,4 +403,22 @@ LimitModeWhenFullScreen() {
 		ToolTipWithTimer("limit mode is " . (limit_mode ? "on" : "off"), 1111)
 		old_limit_mode := limit_mode
 	}
+}
+
+
+MaximizeWindow(exe_name, timeout=1111) {
+	WinWaitActive, ahk_exe %exe_name%, , %timeout%
+	if ErrorLevel
+		ToolTipWithTimer("WinWaitActive " . %exe_name% . " timed out.")
+	else
+		WinMaximize
+}
+
+
+DefaultWebSearch(user_input) {
+	gui_destroy()
+	query_safe := UriEncode(user_input)
+	default_search_url := WebSearchUrlMap["default"][2]
+	StringReplace, search_final_url, default_search_url, REPLACEME, %query_safe%
+	run %search_final_url%
 }

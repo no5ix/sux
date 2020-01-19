@@ -92,6 +92,8 @@ global WebSearchUrlMap :=
 {
 	"aaaaaaaawesomeahk" : ["please ignore this line and don't del this line", ""] 
 
+	,  "default" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
+
 	,  "ahk" : ["AutoHotKey", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
 	,  "py" : ["Python", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]
 	,  "gg" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
@@ -110,6 +112,15 @@ global WebSearchUrlMap :=
 
 
 ; ---------------------------------------------------------------------o
+; 					Everything shortCut conf  
+; ---------------------------------------------------------------------o
+
+EverythingShortCut()
+{
+	Send, ^!+e
+}
+
+; ---------------------------------------------------------------------o
 ; 					double click conf  
 ; ---------------------------------------------------------------------o
 
@@ -117,7 +128,7 @@ DoubleClickCtrl8Trigger(){
 	; 会有副作用, 因为单击 ctrl+8 是按住鼠标左键 
 }
 DoubleClickShiftTrigger(){
-	Send, ^!+e ; Everything
+	; EverythingShortCut()
 }
 DoubleClickMButtonTrigger(){
 }
@@ -153,10 +164,7 @@ HotEdgesTopTrigger(from){
 HotEdgesBottomTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #e
-		Sleep, 1111
-		WinGet,S,MinMax,A
-		if S=0
-			WinMaximize,A
+		MaximizeWindow("Explorer.exe")
 	}
 	else if (from = "RButton") {
 	}
