@@ -10,8 +10,18 @@
 	if limit_mode
 		return
 	ClickUpIfLbDown()
-	If (A_PriorHotKey = "~LAlt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
-		gui_spawn()
+	
+	; ; 不能这么写, 因为这样长按 alt 也会触发
+	; If (A_PriorHotKey = "~LAlt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
+	; 	gui_spawn()
+
+	if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, LAlt
+		return
+	}
+	gui_spawn()
 	return
 
 ; -----------------------------------------------------------------------------
@@ -205,8 +215,7 @@ return
 ;---------------------------------o-----------------------------------o
 
 ; 功能(主要用于笔记本触摸板): 
-; - 单击快捷键(如快捷键ctrl+alt+shift+L): 模拟鼠标左键按下, 在触摸板上拖动则可选中, 再次单击此快捷键则复制
-; - 双击快捷键: 模拟鼠标右键按下并按住不放, 打断用右键, 再次单击此快捷键则模拟鼠标右键放开
+; - 单击快捷键(如快捷键ctrl+alt+shift+L): 模拟鼠标左键按下, 在触摸板上拖动则可选中, 也可以打断按住的右键
 ;
 ; ~ 设置一个时钟，比如 keyboard_double_click_timeout 毫秒，
 ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位

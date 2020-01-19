@@ -92,19 +92,19 @@ global WebSearchUrlMap :=
 {
 	"aaaaaaaawesomeahk" : ["please ignore this line and don't del this line", ""] 
 
-    ,  "ahk" : ["AutoHotKey", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
-    ,  "py" : ["Python", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]
-    ,  "gg" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
-    ,  "bi" : ["Bing", "https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1"]
-    ,  "yd" : ["Youdao", "http://www.youdao.com/w/REPLACEME"]
-    ,  "bd" : ["Baidu", "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"]
-    ,  "bb" : ["Bilibili", "https://search.bilibili.com/all?keyword=REPLACEME"]
-    ,  "jd" : ["JD", "https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8"]
-    ,  "zh" : ["Zhihu", "https://www.zhihu.com/search?type=content&q=REPLACEME"]
-    ,  "gh" : ["GitHub", "https://github.com/search?q=REPLACEME"]
-    ,  "so" : ["StackOverflow", "https://stackoverflow.com/search?q=REPLACEME"]
-    ,  "yt" : ["Youtube", "https://www.youtube.com/results?search_query=REPLACEME"]
-    ,  "ph" : ["PornHub", "https://www.pornhub.com/video/search?search=REPLACEME"]
+	,  "ahk" : ["AutoHotKey", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
+	,  "py" : ["Python", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]
+	,  "gg" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
+	,  "bi" : ["Bing", "https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1"]
+	,  "yd" : ["Youdao", "http://www.youdao.com/w/REPLACEME"]
+	,  "bd" : ["Baidu", "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"]
+	,  "bb" : ["Bilibili", "https://search.bilibili.com/all?keyword=REPLACEME"]
+	,  "jd" : ["JD", "https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8"]
+	,  "zh" : ["Zhihu", "https://www.zhihu.com/search?type=content&q=REPLACEME"]
+	,  "gh" : ["GitHub", "https://github.com/search?q=REPLACEME"]
+	,  "so" : ["StackOverflow", "https://stackoverflow.com/search?q=REPLACEME"]
+	,  "yt" : ["Youtube", "https://www.youtube.com/results?search_query=REPLACEME"]
+	,  "ph" : ["PornHub", "https://www.pornhub.com/video/search?search=REPLACEME"]
 }
 )
 
@@ -114,9 +114,10 @@ global WebSearchUrlMap :=
 ; ---------------------------------------------------------------------o
 
 DoubleClickCtrl8Trigger(){
+	; 会有副作用, 因为单击 ctrl+8 是按住鼠标左键 
 }
 DoubleClickShiftTrigger(){
-    Send, ^!+e ; Everything
+	Send, ^!+e ; Everything
 }
 DoubleClickMButtonTrigger(){
 }
@@ -131,54 +132,54 @@ DoubleClickCtrlTrigger(){
 ; ---------------------------------------------------------------------o
 
 HotEdgesTopTrigger(from){
-    if (from = "Ctrl+8") {
-        ; ; OutputVar is made blank if no matching window exists; otherwise, it is set to one of the following numbers:
-        ; ; -1: The window is minimized (WinRestore can unminimize it).
-        ; ; 1: The window is maximized (WinRestore can unmaximize it).
-        ; ; 0: The window is neither minimized nor maximized.
-        WinGet,S,MinMax,A
-        if S=0
-            WinMaximize, A
-        else if S=1
-            WinMinimize, A
-        ; else if S=-1
-        ;     WinRestore, A
-    }
-    else if (from = "RButton") {
-    }
-    else if (from = "MButton") {
-    }
+	if (from = "Ctrl+8") {
+		; ; OutputVar is made blank if no matching window exists; otherwise, it is set to one of the following numbers:
+		; ; -1: The window is minimized (WinRestore can unminimize it).
+		; ; 1: The window is maximized (WinRestore can unmaximize it).
+		; ; 0: The window is neither minimized nor maximized.
+		WinGet,S,MinMax,A
+		if S=0
+			WinMaximize, A
+		else if S=1
+			WinMinimize, A
+		; else if S=-1
+		;     WinRestore, A
+	}
+	else if (from = "RButton") {
+	}
+	else if (from = "MButton") {
+	}
 }
 HotEdgesBottomTrigger(from){
-    if (from = "Ctrl+8") {
-        Send, #e
-        Sleep, 1111
-        WinGet,S,MinMax,A
-        if S=0
-            WinMaximize,A
-    }
-    else if (from = "RButton") {
-    }
-    else if (from = "MButton") {
-    }
+	if (from = "Ctrl+8") {
+		Send, #e
+		Sleep, 1111
+		WinGet,S,MinMax,A
+		if S=0
+			WinMaximize,A
+	}
+	else if (from = "RButton") {
+	}
+	else if (from = "MButton") {
+	}
 }
 HotEdgesLeftTrigger(from){
-    if (from = "Ctrl+8") {
-        Send, #{Tab}
-    }
-    else if (from = "RButton") {
-    }
-    else if (from = "MButton") {
-    }
+	if (from = "Ctrl+8") {
+		Send, #{Tab}
+	}
+	else if (from = "RButton") {
+	}
+	else if (from = "MButton") {
+	}
 }
 HotEdgesRightTrigger(from){
-    if (from = "Ctrl+8") {
-        Send, #a
-    }
-    else if (from = "RButton") {
-    }
-    else if (from = "MButton") {
-    }
+	if (from = "Ctrl+8") {
+		Send, #a
+	}
+	else if (from = "RButton") {
+	}
+	else if (from = "MButton") {
+	}
 }
 
 
@@ -187,14 +188,14 @@ HotEdgesRightTrigger(from){
 ; ---------------------------------------------------------------------o
 
 HotCornersTopLeftTrigger(){
-    Send, ^#{Left}
+	Send, ^#{Left}
 }
 HotCornersTopRightTrigger(){
-    Send, ^#{Right}
+	Send, ^#{Right}
 }
 HotCornersBottomLeftTrigger(){
-    ; Send, ^{Tab}
-    Send, {LWin}
+	; Send, ^{Tab}
+	Send, {LWin}
 }
 HotCornersBottomRightTrigger(){
 	Send, !{Tab}
