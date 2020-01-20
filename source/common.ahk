@@ -18,7 +18,7 @@ WinGetPos, , , Xmax, Ymax, Program Manager  ; ,  get desktop size (`Program Mana
 global RightEdge = Xmax - 1
 global BottomEdge = Ymax - 1
 
-global CornerXOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
+global CornerOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
 ; compatible with dual monitor
 IsCorner(cornerID)
@@ -26,10 +26,10 @@ IsCorner(cornerID)
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
 	; IsOnTop := (MouseY = 0 and ((MouseX > IsTopXOffset and MouseX < A_ScreenWidth - IsTopXOffset) Or ((MouseX > (A_ScreenWidth + IsTopXOffset) and (MouseX < Xmax - IsTopXOffset)))))  					; Boolean stores whether mouse cursor is in top left corner
-	CornerTopLeft := (MouseY < CornerXOffset and ((MouseX < CornerXOffset) Or ((MouseX < (A_ScreenWidth + CornerXOffset) and (MouseX >= A_ScreenWidth)))))  					; Boolean stores whether mouse cursor is in top left corner
-	CornerTopRight := (MouseY < CornerXOffset and ((MouseX > Xmax - CornerXOffset) Or ((MouseX > (A_ScreenWidth - CornerXOffset) and (MouseX < A_ScreenWidth))))) 			; Boolean stores whether mouse cursor is in top right corner
-	CornerBottomLeft := (((MouseX < CornerXOffset) Or ((MouseX < (A_ScreenWidth + CornerXOffset) and (MouseX >= A_ScreenWidth)))) and MouseY > Ymax - CornerXOffset) 			; Boolean stores whether mouse cursor is in bottom left corner
-	CornerBottomRight := (((MouseX > Xmax - CornerXOffset) Or ((MouseX > (A_ScreenWidth - CornerXOffset) and (MouseX < A_ScreenWidth)))) and MouseY > Ymax - CornerXOffset) 	; Boolean stores whether mouse cursor is in top left corner
+	CornerTopLeft := (MouseY < CornerOffset and ((MouseX < CornerOffset) Or ((MouseX < (A_ScreenWidth + CornerOffset) and (MouseX >= A_ScreenWidth)))))  					; Boolean stores whether mouse cursor is in top left corner
+	CornerTopRight := (MouseY < CornerOffset and ((MouseX > Xmax - CornerOffset) Or ((MouseX > (A_ScreenWidth - CornerOffset) and (MouseX < A_ScreenWidth))))) 			; Boolean stores whether mouse cursor is in top right corner
+	CornerBottomLeft := (((MouseX < CornerOffset) Or ((MouseX < (A_ScreenWidth + CornerOffset) and (MouseX >= A_ScreenWidth)))) and MouseY > Ymax - CornerOffset) 			; Boolean stores whether mouse cursor is in bottom left corner
+	CornerBottomRight := (((MouseX > Xmax - CornerOffset) Or ((MouseX > (A_ScreenWidth - CornerOffset) and (MouseX < A_ScreenWidth)))) and MouseY > Ymax - CornerOffset) 	; Boolean stores whether mouse cursor is in top left corner
 	
 	; if (cornerID = "IsOnTop"){
 	; 	return IsOnTop
