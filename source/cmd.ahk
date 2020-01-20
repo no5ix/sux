@@ -48,7 +48,6 @@ else if ltrim_input = cmd ; open a command prompt window on the current explorer
 else if ltrim_input = proj ; open this proj with vs code
 {
 	gui_destroy()
-	; run as nox run as
 	; run, %comspec% /c Code "%A_ScriptDir%,,hide
 	; run, cmd /c Code "%A_ScriptDir%,,hide
 	script_dir = %A_ScriptDir%
