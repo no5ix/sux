@@ -259,105 +259,123 @@ key_press_cnt = 0
 return
 
 singleKeyClick:
-	if fake_rb_down
-	{
-		fake_rb_down = 0
-		Click Up Right
-		ToolTipWithTimer("simulate click up right finished.", 1111)
-		return
-	}
+	; if fake_rb_down
+	; {
+	; 	fake_rb_down = 0
+	; 	Click Up Right
+	; 	ToolTipWithTimer("simulate click up right finished.", 1111)
+	; 	return
+	; }
 	fake_lb_down = 1
 	Click Down
 	ToolTipWithTimer("simulate click down finished.", 2222)
 	return
 
 
-; -----------------------------------------------------------------------------
-; ~ 设置一个时钟，比如 keyboard_double_click_timeout 毫秒，
-; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
-#Persistent
 ~RButton::
-if limit_mode
+	if limit_mode
+		return
+	is_on_edge := HandleMouseOnEdges("RButton")
+	if is_on_edge
+		return
+	if use_touchpad = 0
+		return
+	if (A_PriorHotkey <> "~RButton" or A_TimeSincePriorHotkey > mouse_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, RButton
+		return
+	}
+	DoubleClickRButtonTrigger()
 	return
-is_on_edge := HandleMouseOnEdges("RButton")
-if is_on_edge
-	return
-if use_touchpad = 0
-	return
-ClickUpIfLbDown()
-if rb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
-{
-	rb_press_cnt += 1
-	return
-}
-; 否则，这是新一系列按键的首次按键。将计数设为 1 并启动定时器：
-rb_press_cnt = 1
-SetTimer, KeyRbuttonTimerFunc, %mouse_double_click_timeout% ; 在 x 毫秒内等待更多的按键。
-return
-
-KeyRbuttonTimerFunc:
-SetTimer, KeyRbuttonTimerFunc, off
-if ((!is_wgesture_on and rb_press_cnt = 2) or (is_wgesture_on and rb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
-{
-	; ToolTip, 44
-	; Send, {Esc}
-	Click Down Right
-	fake_rb_down = 1
-	ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2222)
-}
-; 不论上面哪个动作被触发，将计数复位以备下一系列的按键：
-rb_press_cnt = 0
-return
-; -----------------------------------------------------------------------------
 
 
-; -----------------------------------------------------------------------------
-
-; ~F2::
-; If ((A_PriorHotkey = A_ThisHotkey) and  (A_TimeSincePriorHotkey < 300))
+; ; -----------------------------------------------------------------------------
+; ; ~ 设置一个时钟，比如 keyboard_double_click_timeout 毫秒，
+; ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
+; #Persistent
+; ~RButton::
+; if limit_mode
+; 	return
+; is_on_edge := HandleMouseOnEdges("RButton")
+; if is_on_edge
+; 	return
+; if use_touchpad = 0
+; 	return
+; ; ClickUpIfLbDown()
+; if rb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
 ; {
-;     Send, ^+{Esc}
-; 	SetTimer, WinMaxTaskMgr, keyboard_double_click_timeout
+; 	rb_press_cnt += 1
 ; 	return
-
-; 	WinMaxTaskMgr:
-; 	SetTimer, WinMaxTaskMgr, off
-;     WinGet,S,MinMax,A
-;     if S=0
-;         WinMaximize,A
-; 	return
-; }   
+; }
+; ; 否则，这是新一系列按键的首次按键。将计数设为 1 并启动定时器：
+; rb_press_cnt = 1
+; SetTimer, KeyRbuttonTimerFunc, %mouse_double_click_timeout% ; 在 x 毫秒内等待更多的按键。
 ; return
 
-
-; -----------------------------------------------------------------------------
-#Persistent
-~MButton::
-is_on_edge := HandleMouseOnEdges("MButton")
-if is_on_edge
-	return
-ClickUpIfLbDown()
-if mb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
-{
-	mb_press_cnt += 1
-	return
-}
-
-mb_press_cnt = 1
-SetTimer, KeyMbuttonTimerFunc, %mouse_double_click_timeout% ; 在 x 毫秒内等待更多的按键。
-return
-
-KeyMbuttonTimerFunc:
-SetTimer, KeyMbuttonTimerFunc, off
-; if mb_press_cnt = 2 ; 该键已按过2次, 如果开了wgesture, 则双击此处会检测到为2
+; KeyRbuttonTimerFunc:
+; SetTimer, KeyRbuttonTimerFunc, off
+; if ((!is_wgesture_on and rb_press_cnt = 2) or (is_wgesture_on and rb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
 ; {
-; 	ToolTip, mb22
+; 	; Click Down Right
+; 	; fake_rb_down = 1
+; 	; ToolTipWithTimer("Please ctrl+8 to simulate click right up.", 2222)
+
+; 	DoubleClickRButtonTrigger()
 ; }
-if ((!is_wgesture_on and mb_press_cnt = 2) or (is_wgesture_on and mb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
-{
-	; ToolTip, mb44
-	; Gosub doubleClickMButton
-	DoubleClickMButtonTrigger()
-}
-mb_press_cnt = 0
-return
+; ; 不论上面哪个动作被触发，将计数复位以备下一系列的按键：
+; rb_press_cnt = 0
+; return
+; ; -----------------------------------------------------------------------------
+
+
+; ; -----------------------------------------------------------------------------
+
+; ; ~F2::
+; ; If ((A_PriorHotkey = A_ThisHotkey) and  (A_TimeSincePriorHotkey < 300))
+; ; {
+; ;     Send, ^+{Esc}
+; ; 	SetTimer, WinMaxTaskMgr, keyboard_double_click_timeout
+; ; 	return
+
+; ; 	WinMaxTaskMgr:
+; ; 	SetTimer, WinMaxTaskMgr, off
+; ;     WinGet,S,MinMax,A
+; ;     if S=0
+; ;         WinMaximize,A
+; ; 	return
+; ; }   
+; ; return
+
+
+; ; -----------------------------------------------------------------------------
+; #Persistent
+; ~MButton::
+; is_on_edge := HandleMouseOnEdges("MButton")
+; if is_on_edge
+; 	return
+; ClickUpIfLbDown()
+; if mb_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
+; {
+; 	mb_press_cnt += 1
+; 	return
+; }
+
+; mb_press_cnt = 1
+; SetTimer, KeyMbuttonTimerFunc, %mouse_double_click_timeout% ; 在 x 毫秒内等待更多的按键。
+; return
+
+; KeyMbuttonTimerFunc:
+; SetTimer, KeyMbuttonTimerFunc, off
+; ; if mb_press_cnt = 2 ; 该键已按过2次, 如果开了wgesture, 则双击此处会检测到为2
+; ; {
+; ; 	ToolTip, mb22
+; ; }
+; if ((!is_wgesture_on and mb_press_cnt = 2) or (is_wgesture_on and mb_press_cnt = 4)) ; 该键已按过4次, 如果开了wgesture, 则双击此处会检测到为4
+; {
+; 	; ToolTip, mb44
+; 	; Gosub doubleClickMButton
+; 	DoubleClickMButtonTrigger()
+; }
+; mb_press_cnt = 0
+; return

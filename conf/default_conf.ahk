@@ -52,7 +52,7 @@ global nox_border_shadow_type := classic_shadow_type
 global enable_hot_edges := 0  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
 global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
-global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
+; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
 global limit_mode_when_full_screen := 1  ;
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`
@@ -61,7 +61,7 @@ global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
-global mouse_double_click_timeout := 288
+global mouse_double_click_timeout := 666
 
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after open vsc.
@@ -124,8 +124,7 @@ EverythingShortCut()
 ; 					double click conf  
 ; ---------------------------------------------------------------------o
 
-DoubleClickCtrl8Trigger(){
-	; 会有副作用, 因为单击 ctrl+8 是按住鼠标左键 
+DoubleClickCtrl8Trigger(){  ; 会有副作用, 因为单击 ctrl+8 是按住鼠标左键 
 }
 DoubleClickShiftTrigger(){
 	gui_spawn()
@@ -133,6 +132,9 @@ DoubleClickShiftTrigger(){
 DoubleClickAltTrigger(){
 }
 DoubleClickMButtonTrigger(){
+}
+DoubleClickRButtonTrigger(){
+	MaxMinWindow()
 }
 DoubleClickCapsTrigger(){
 }
@@ -146,17 +148,11 @@ DoubleClickCtrlTrigger(){
 
 HotEdgesTopTrigger(from){
 	if (from = "Ctrl+8") {
-		; ; OutputVar is made blank if no matching window exists; otherwise, it is set to one of the following numbers:
-		; ; -1: The window is minimized (WinRestore can unminimize it).
-		; ; 1: The window is maximized (WinRestore can unmaximize it).
-		; ; 0: The window is neither minimized nor maximized.
-		WinGet,S,MinMax,A
-		if S=0
-			WinMaximize, A
-		else if S=1
-			WinMinimize, A
-		; else if S=-1
-		;     WinRestore, A
+		Send, #e
+		ToolTipWithTimer("Launching File Explorer ...", 1111)
+		; MaximizeWindow("Explorer.exe")
+		MaximizeWindow(1111)
+		; MaxMinWindow()
 	}
 	else if (from = "RButton") {
 	}
@@ -165,8 +161,7 @@ HotEdgesTopTrigger(from){
 }
 HotEdgesBottomTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #e
-		MaximizeWindow("Explorer.exe")
+		Send, ^!+e
 	}
 	else if (from = "RButton") {
 	}

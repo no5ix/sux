@@ -56,7 +56,8 @@ else if ltrim_input = proj ; open this proj with vs code
 	}else {
 		Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
 	}
-	MaximizeWindow("Code.exe")
+	; MaximizeWindow("Code.exe")
+	MaximizeWindow(1111)
 }
 else if ltrim_input = touchpad ; switch touchpad mode
 {

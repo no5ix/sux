@@ -213,15 +213,15 @@ HandleMouseOnEdges(from) {
 		HotEdgesRightTrigger(from)
 	}
 
-	if is_wgesture_on and (from = "RButton" or from = "LButton")  ; 为了防止触发两次
-	{
-		Loop
-		{
-			MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
-			if !(MouseY = 0 or MouseY = BottomEdge or MouseX = 0 or MouseX = Right)
-				break ; exits loop when mouse is no longer in the edge
-		}	
-	}
+	; if is_wgesture_on and (from = "RButton" or from = "MButton")  ; 为了防止触发两次
+	; {
+	; 	Loop
+	; 	{
+	; 		MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+	; 		if !(MouseY = 0 or MouseY = BottomEdge or MouseX = 0 or MouseX = Right)
+	; 			break ; exits loop when mouse is no longer in the edge
+	; 	}	
+	; }
    return IsOnEdge
 }
 
@@ -406,12 +406,36 @@ LimitModeWhenFullScreen() {
 }
 
 
-MaximizeWindow(exe_name, timeout=1111) {
-	WinWaitActive, ahk_exe %exe_name%, , %timeout%
-	if ErrorLevel
-		ToolTipWithTimer("WinWaitActive " . %exe_name% . " timed out.")
+MaxMinWindow() {
+	; ; OutputVar is made blank if no matching window exists; otherwise, it is set to one of the following numbers:
+	; ; -1: The window is minimized (WinRestore can unminimize it).
+	; ; 1: The window is maximized (WinRestore can unmaximize it).
+	; ; 0: The window is neither minimized nor maximized.
+	WinGet,S,MinMax,A
+	if S=0
+		WinMaximize, A
+	else if S=1
+		WinMinimize, A
+	; else if S=-1
+	;     WinRestore, A
+}
+
+MaximizeWindow(timeout=2222, exe_name="") {
+	if !exe_name
+	{
+		Sleep, timeout
+		WinGet,S,MinMax,A
+		if S=0
+			WinMaximize, A
+	}
 	else
-		WinMaximize
+	{
+		WinWaitActive, ahk_exe %exe_name%, , %timeout%
+		if ErrorLevel
+			ToolTipWithTimer("WinWaitActive " . %exe_name% . " timed out.")
+		else
+			WinMaximize
+	}
 }
 
 
