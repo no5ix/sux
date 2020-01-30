@@ -140,7 +140,7 @@ DoubleClickCtrlTrigger(){
 
 HotEdgesTopTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, ^!+e
+		MaxMinWindow()
 	}
 }
 HotEdgesBottomTrigger(from){
