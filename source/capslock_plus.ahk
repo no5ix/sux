@@ -27,47 +27,8 @@ CapsLock & c::
 return
 
 
-#Persistent
 CapsLock::
-	if enable_double_click_capslock = 0
-	{
-		Send, {ESC}
-		return
-	}
-	if caps_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
-	{
-		caps_press_cnt += 1
-		return
-	}
-
-	; 否则，这是新一系列按键的首次按键。将计数设为 1 并启动定时器：
-	caps_press_cnt = 1
-	SetTimer, CapsTimerFunc, 200 ; 在 x 毫秒内等待更多的按键。
-	return
-
-CapsTimerFunc:
-	SetTimer, CapsTimerFunc, off
-	if caps_press_cnt = 1 ; 该键已按过一次。
-	{
-		Gosub singleCapsClick
-		; ToolTip, 1
-	}
-	else if caps_press_cnt = 2 ; 该键已按过一次。
-	{
-		Gosub doubleCapsClick
-		; ToolTip, 2
-	}
-
-	; 不论上面哪个动作被触发，将计数复位以备下一系列的按键：
-	caps_press_cnt = 0
-	return
-
-singleCapsClick:
 	Send, {ESC}
-	return
-
-doubleCapsClick:
-	DoubleClickCapsTrigger()
 	return
 
 

@@ -272,24 +272,6 @@ singleKeyClick:
 	return
 
 
-~RButton::
-	if limit_mode
-		return
-	is_on_edge := HandleMouseOnEdges("RButton")
-	if is_on_edge
-		return
-	if use_touchpad = 0
-		return
-	if (A_PriorHotkey <> "~RButton" or A_TimeSincePriorHotkey > mouse_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		KeyWait, RButton
-		return
-	}
-	DoubleClickRButtonTrigger()
-	return
-
-
 ; ; -----------------------------------------------------------------------------
 ; ; ~ 设置一个时钟，比如 keyboard_double_click_timeout 毫秒，
 ; ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位

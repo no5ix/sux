@@ -49,14 +49,13 @@ global nox_border_shadow_type := classic_shadow_type
 ; 					general conf 
 ; ---------------------------------------------------------------------o
 
-global enable_hot_edges := 0  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
+global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
 ; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
 global limit_mode_when_full_screen := 1  ;
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`
-global enable_double_click_capslock := 0  ; if 1, this may slow down capslock's first hit
 global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
@@ -131,13 +130,6 @@ DoubleClickShiftTrigger(){
 }
 DoubleClickAltTrigger(){
 }
-DoubleClickMButtonTrigger(){
-}
-DoubleClickRButtonTrigger(){
-	MaxMinWindow()
-}
-DoubleClickCapsTrigger(){
-}
 DoubleClickCtrlTrigger(){
 }
 
@@ -148,42 +140,26 @@ DoubleClickCtrlTrigger(){
 
 HotEdgesTopTrigger(from){
 	if (from = "Ctrl+8") {
+		Send, ^!+e
+	}
+}
+HotEdgesBottomTrigger(from){
+	if (from = "Ctrl+8") {
 		Send, #e
 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 		; MaximizeWindow("Explorer.exe")
 		MaximizeWindow(1111)
 		; MaxMinWindow()
 	}
-	else if (from = "RButton") {
-	}
-	else if (from = "MButton") {
-	}
-}
-HotEdgesBottomTrigger(from){
-	if (from = "Ctrl+8") {
-		Send, ^!+e
-	}
-	else if (from = "RButton") {
-	}
-	else if (from = "MButton") {
-	}
 }
 HotEdgesLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #{Tab}
 	}
-	else if (from = "RButton") {
-	}
-	else if (from = "MButton") {
-	}
 }
 HotEdgesRightTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #a
-	}
-	else if (from = "RButton") {
-	}
-	else if (from = "MButton") {
 	}
 }
 
