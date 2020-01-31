@@ -17,10 +17,23 @@ if SubStr(Pedersen, 0, 1) = A_Space
 }
 else if SubStr(Pedersen, 1, 1) = A_Space
 {
+	DefaultWebSearch(trim_p)
+}
+else
+{
 	if trim_p = help ; Tooltip with list of commands
 	{
 		GuiControl,, trim_p, ; Clear the input box
 		Gosub, gui_commandlibrary
+	}
+	else if trim_p = ev ; nox official site
+	{
+		;;; everything search(end with space) & default web search;;;
+		gui_destroy()
+		EverythingShortCut()
+		WinWaitActive, ahk_exe Everything.exe, , 2.222
+		if ErrorLevel
+			MsgBox, 4,, please install Everything and set its shortcut in user_conf.ahk
 	}
 	else if trim_p = os ; nox official site
 	{
@@ -142,6 +155,3 @@ else if SubStr(Pedersen, 1, 1) = A_Space
 		gui_search(WebSearchUrlMap[trim_p][2])
 	}
 }
-else
-	DefaultWebSearch(trim_p)
-
