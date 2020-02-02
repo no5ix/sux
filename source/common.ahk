@@ -172,7 +172,7 @@ ClickUpIfLbDown()
 	{
 		fake_lb_down = 0
 		Click Up
-		ToolTipWithTimer("simulate click up finished.", 1111)
+		ToolTipWithTimer("simulate click UP.", 1111)
 	}
 }
 
@@ -195,22 +195,34 @@ HandleMouseOnEdges(from) {
 	if (MouseY = 0)
 	{
 		IsOnEdge = 1
-		HotEdgesTopTrigger(from)
+		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
+			HotEdgesTopHalfLeftTrigger(from)
+		else
+			HotEdgesTopHalfRightTrigger(from)
 	}
 	else if (MouseY = BottomEdge)
 	{
 		IsOnEdge = 1
-		HotEdgesBottomTrigger(from)
+		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
+			HotEdgesBottomHalfLeftTrigger(from)
+		else
+			HotEdgesBottomHalfRightTrigger(from)
 	}
 	else if (MouseX = 0)
 	{
 		IsOnEdge = 1
-		HotEdgesLeftTrigger(from)
+		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight / 2)
+			HotEdgesLeftHalfUpTrigger(from)
+		else
+			HotEdgesLeftHalfDownTrigger(from)
 	}
 	else if (MouseX = RightEdge)
 	{
 		IsOnEdge = 1
-		HotEdgesRightTrigger(from)
+		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight/ 2)
+			HotEdgesRightHalfUpTrigger(from)
+		else
+			HotEdgesRightHalfDownTrigger(from)
 	}
 
 	; if is_wgesture_on and (from = "RButton" or from = "MButton")  ; 为了防止触发两次

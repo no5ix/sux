@@ -54,7 +54,7 @@ global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / 
 
 ; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
-global limit_mode_when_full_screen := 1  ;
+global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`
 global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
@@ -63,7 +63,7 @@ global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
 
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
-; if blank, leave a ugly cmd window after open vsc.
+; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
 global vscode_path := ""
 
 
@@ -138,12 +138,17 @@ DoubleClickCtrlTrigger(){
 ;                       hot edge conf 
 ; ---------------------------------------------------------------------o
 
-HotEdgesTopTrigger(from){
+HotEdgesTopHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		MaxMinWindow()
 	}
 }
-HotEdgesBottomTrigger(from){
+HotEdgesTopHalfRightTrigger(from){
+	if (from = "Ctrl+8") {
+		MaxMinWindow()
+	}
+}
+HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #e
 		ToolTipWithTimer("Launching File Explorer ...", 1111)
@@ -152,16 +157,57 @@ HotEdgesBottomTrigger(from){
 		; MaxMinWindow()
 	}
 }
-HotEdgesLeftTrigger(from){
+HotEdgesBottomHalfRightTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, ^+{Esc}
+		MaximizeWindow(1111, "taskmgr.exe")
+	}
+}
+HotEdgesLeftHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #{Tab}
 	}
 }
-HotEdgesRightTrigger(from){
+HotEdgesLeftHalfDownTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #i
+	}
+}
+HotEdgesRightHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #a
 	}
 }
+HotEdgesRightHalfDownTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #d
+	}
+}
+
+; HotEdgesTopTrigger(from){
+; 	if (from = "Ctrl+8") {
+; 		MaxMinWindow()
+; 	}
+; }
+; HotEdgesBottomTrigger(from){
+; 	if (from = "Ctrl+8") {
+; 		Send, #e
+; 		ToolTipWithTimer("Launching File Explorer ...", 1111)
+; 		; MaximizeWindow("Explorer.exe")
+; 		MaximizeWindow(1111)
+; 		; MaxMinWindow()
+; 	}
+; }
+; HotEdgesLeftTrigger(from){
+; 	if (from = "Ctrl+8") {
+; 		Send, #{Tab}
+; 	}
+; }
+; HotEdgesRightTrigger(from){
+; 	if (from = "Ctrl+8") {
+; 		Send, #a
+; 	}
+; }
 
 
 ; ---------------------------------------------------------------------o

@@ -128,7 +128,7 @@ else
 			gui_destroy()
 			limit_mode := limit_mode ? 0 : 1
 			if limit_mode
-				MsgBox, Double Alt is disabled in game mode`, you can CapsLock+X to open nox input box.
+				MsgBox, Double Shift is disabled in game mode`, you can CapsLock+X to open nox input box.
 		}
 	}
 	;-------------------------------------------------------------------------------

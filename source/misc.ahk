@@ -102,6 +102,14 @@
 	return
 
 
+~LWin::
+	ClickUpIfLbDown()
+	return
+
+~RWin::
+	ClickUpIfLbDown()
+	return
+
 ;---------------------------------------------------------------------o
 
 ;---------------------------------------------------------------------o
@@ -209,7 +217,6 @@ return
 ; ---------------------------------------------------------------------o
 
 
-
 ;=====================================================================o
 ;                       For Surface:                                 ;|
 ;---------------------------------o-----------------------------------o
@@ -221,44 +228,13 @@ return
 ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
 #Persistent
 ^8::
-is_on_edge := HandleMouseOnEdges("Ctrl+8")
-if is_on_edge
-	return
-if (!use_touchpad)
-	return
-SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
-SetMouseDelay, 0
-Gosub singleKeyClick
-if key_press_cnt > 0 ; SetTimer 已经启动，所以我们记录按键。
-{
-	key_press_cnt += 1
-	return
-}
-; 否则，这是新一系列按键的首次按键。将计数设为 1 并启动定时器：
-key_press_cnt = 1
-SetTimer, KeyTimerFunc, %keyboard_double_click_timeout% ; 在 x 毫秒内等待更多的按键。
-return
-
-KeyTimerFunc:
-SetTimer, KeyTimerFunc, off
-; if key_press_cnt = 1 ; 该键已按过一次。
-; {
-;     ; Gosub singleKeyClick
-; 	; ToolTip, 1
-; }
-; else
-if key_press_cnt = 2 ; 该键已按过一次。
-{
-	ClickUpIfLbDown()
-	DoubleClickCtrl8Trigger()
-	; ToolTip, 28888
-}
-
-; 不论上面哪个动作被触发，将计数复位以备下一系列的按键：
-key_press_cnt = 0
-return
-
-singleKeyClick:
+	is_on_edge := HandleMouseOnEdges("Ctrl+8")
+	if is_on_edge
+		return
+	if (!use_touchpad)
+		return
+	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
+	SetMouseDelay, 0
 	; if fake_rb_down
 	; {
 	; 	fake_rb_down = 0
@@ -268,7 +244,7 @@ singleKeyClick:
 	; }
 	fake_lb_down = 1
 	Click Down
-	ToolTipWithTimer("simulate click down finished.", 2222)
+	ToolTipWithTimer("simulate click DOWN.", 2222)
 	return
 
 
