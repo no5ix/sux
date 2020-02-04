@@ -160,6 +160,7 @@ HotEdgesBottomHalfLeftTrigger(from){
 HotEdgesBottomHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, ^+{Esc}
+		ToolTipWithTimer("Launching Task Manager ...", 1111)
 		MaximizeWindow(1111, "taskmgr.exe")
 	}
 }
