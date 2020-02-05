@@ -21,8 +21,10 @@ global BottomEdge = Ymax - 1
 global CornerOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
 ; compatible with dual monitor
-IsCorner(cornerID)
+IsCorner(cornerID="")
 {
+	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
 	; IsOnTop := (MouseY = 0 and ((MouseX > IsTopXOffset and MouseX < A_ScreenWidth - IsTopXOffset) Or ((MouseX > (A_ScreenWidth + IsTopXOffset) and (MouseX < Xmax - IsTopXOffset)))))  					; Boolean stores whether mouse cursor is in top left corner
@@ -46,6 +48,9 @@ IsCorner(cornerID)
 	}
 	else if  (cornerID = "BottomRight") {
 		return CornerBottomRight
+	}
+	else{
+		return (CornerTopLeft or CornerTopRight or CornerBottomLeft or CornerBottomRight)
 	}
 }
 
@@ -185,8 +190,19 @@ PasteCompatibleWithAutoSelectionCopy() {
 
 HandleMouseOnEdges(from) {
 	IsOnEdge := 0
-	if (enable_hot_edges = 0) or limit_mode
+	if (enable_hot_edges = 0){
+		ToolTipWithTimer("	conf.enable_hot_edges is 0, so do NOTHING by edge triggers.", 1111)
 		return IsOnEdge
+	}
+	if (limit_mode){
+		ToolTipWithTimer("	limit mode is on, so do NOTHING by edge triggers.", 1111)
+		return IsOnEdge
+	}
+	if IsCorner(){
+		IsOnEdge = 1
+		ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 1111)
+		return IsOnEdge
+	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
@@ -246,7 +262,6 @@ UpdateNox() {
 HotCorners() {				; Timer content 
 	if limit_mode
 		return
-	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 
 	; if IsCorner("IsOnTop"){
 	; 	LButtonDown := GetKeyState("LButton","P")

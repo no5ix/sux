@@ -237,8 +237,8 @@ CapsLock & n::
 	if getkeystate("shift") = 0
 	{
 		; Send, ^{BS}
-		Send, ^+{Left}
-		Send, {Del}
+		Send, ^{Left}
+		Send, ^{Del}
 	}
 	else
 		Send, +{Home}{Del}

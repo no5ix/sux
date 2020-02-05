@@ -79,8 +79,7 @@ else
 		}else {
 			Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
 		}
-		; MaximizeWindow("Code.exe")
-		MaximizeWindow(1111)
+		MaximizeWindow(1111, "Code.exe")
 	}
 	else if trim_p = touchpad ; switch touchpad mode
 	{

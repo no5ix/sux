@@ -123,8 +123,6 @@ EverythingShortCut()
 ; 					double click conf  
 ; ---------------------------------------------------------------------o
 
-DoubleClickCtrl8Trigger(){  ; 会有副作用, 因为单击 ctrl+8 是按住鼠标左键 
-}
 DoubleClickShiftTrigger(){
 	gui_spawn()
 }
@@ -152,9 +150,7 @@ HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #e
 		ToolTipWithTimer("Launching File Explorer ...", 1111)
-		; MaximizeWindow("Explorer.exe")
-		MaximizeWindow(1111)
-		; MaxMinWindow()
+		MaximizeWindow(1111, "Explorer.exe")
 	}
 }
 HotEdgesBottomHalfRightTrigger(from){
@@ -184,31 +180,6 @@ HotEdgesRightHalfDownTrigger(from){
 		Send, #d
 	}
 }
-
-; HotEdgesTopTrigger(from){
-; 	if (from = "Ctrl+8") {
-; 		MaxMinWindow()
-; 	}
-; }
-; HotEdgesBottomTrigger(from){
-; 	if (from = "Ctrl+8") {
-; 		Send, #e
-; 		ToolTipWithTimer("Launching File Explorer ...", 1111)
-; 		; MaximizeWindow("Explorer.exe")
-; 		MaximizeWindow(1111)
-; 		; MaxMinWindow()
-; 	}
-; }
-; HotEdgesLeftTrigger(from){
-; 	if (from = "Ctrl+8") {
-; 		Send, #{Tab}
-; 	}
-; }
-; HotEdgesRightTrigger(from){
-; 	if (from = "Ctrl+8") {
-; 		Send, #a
-; 	}
-; }
 
 
 ; ---------------------------------------------------------------------o
