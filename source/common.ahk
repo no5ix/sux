@@ -473,7 +473,7 @@ MaximizeWindow(timeout=2222, exe_name="") {
 DefaultWebSearch(user_input) {
 	gui_destroy()
 	last_search_str := user_input
-	safe_query := UriEncode(user_input)
+	safe_query := UriEncode(Trim(last_search_str))
 	default_search_url := WebSearchUrlMap["default"][2]
 	StringReplace, search_final_url, default_search_url, REPLACEME, %safe_query%
 	run %search_final_url%

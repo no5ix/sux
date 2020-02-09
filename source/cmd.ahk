@@ -6,7 +6,7 @@
 trim_p := Trim(Pedersen)
 if SubStr(Pedersen, 1, 1) = A_Space
 {
-	DefaultWebSearch(trim_p)
+	DefaultWebSearch(Pedersen)
 }
 else if SubStr(Pedersen, 0, 1) = A_Space
 {
@@ -15,9 +15,9 @@ else if SubStr(Pedersen, 0, 1) = A_Space
 	EverythingShortCut()
 	WinWaitActive, ahk_exe Everything.exe, , 0.222
 	if ErrorLevel
-		DefaultWebSearch(trim_p)
+		DefaultWebSearch(Pedersen)
 	else{
-		last_search_str := trim_p
+		last_search_str := Pedersen
 		SendRaw, %trim_p%
 	}
 }
@@ -157,6 +157,6 @@ else
 	}
 	else
 	{
-		DefaultWebSearch(trim_p)
+		DefaultWebSearch(Pedersen)
 	}
 }
