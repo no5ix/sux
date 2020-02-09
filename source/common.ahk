@@ -20,6 +20,10 @@ global BottomEdge = Ymax - 1
 
 global CornerOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
+global trim_p = ""
+global last_search_str = ""
+
+
 ; compatible with dual monitor
 IsCorner(cornerID="")
 {
@@ -468,8 +472,9 @@ MaximizeWindow(timeout=2222, exe_name="") {
 
 DefaultWebSearch(user_input) {
 	gui_destroy()
-	query_safe := UriEncode(user_input)
+	last_search_str := user_input
+	safe_query := UriEncode(user_input)
 	default_search_url := WebSearchUrlMap["default"][2]
-	StringReplace, search_final_url, default_search_url, REPLACEME, %query_safe%
+	StringReplace, search_final_url, default_search_url, REPLACEME, %safe_query%
 	run %search_final_url%
 }

@@ -4,7 +4,11 @@
 
 
 trim_p := Trim(Pedersen)
-if SubStr(Pedersen, 0, 1) = A_Space
+if SubStr(Pedersen, 1, 1) = A_Space
+{
+	DefaultWebSearch(trim_p)
+}
+else if SubStr(Pedersen, 0, 1) = A_Space
 {
 	;;; everything search(end with space) & default web search;;;
 	gui_destroy()
@@ -12,12 +16,10 @@ if SubStr(Pedersen, 0, 1) = A_Space
 	WinWaitActive, ahk_exe Everything.exe, , 0.222
 	if ErrorLevel
 		DefaultWebSearch(trim_p)
-	else
+	else{
+		last_search_str := trim_p
 		SendRaw, %trim_p%
-}
-else if SubStr(Pedersen, 1, 1) = A_Space
-{
-	DefaultWebSearch(trim_p)
+	}
 }
 else
 {

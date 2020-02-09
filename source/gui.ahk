@@ -11,7 +11,7 @@ global search_urls := 0
 
 
 gui_spawn() {
-	SaveCurSelectedText()
+	; SaveCurSelectedText()
 	if gui_state != closed
 	{
 		; If the GUI is already open, close it then reopen it.
@@ -47,6 +47,10 @@ gui_spawn() {
 	yScrnOffset := A_ScreenHeight / 4
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, , myGUI
+	if last_search_str {
+		SendRaw, %last_search_str%
+		Send, ^a
+	}
 	return
 }
 
@@ -116,6 +120,10 @@ gui_search_add_elements:
 	GuiControl, Disable, Pedersen
 	GuiControl, focus, gui_SearchEdit
 	Gui, Show, AutoSize
+	if last_search_str {
+		SendRaw, %last_search_str%
+		Send, ^a
+	}
 	return
 
 gui_search(url) {
@@ -140,10 +148,11 @@ gui_search(url) {
 gui_SearchEnter:
 	Gui, Submit
 	gui_destroy()
-	query_safe := UriEncode(gui_SearchEdit)
+	last_search_str := gui_SearchEdit
+	safe_query := UriEncode(gui_SearchEdit)
 	Loop, %search_urls%
 	{
-		StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %query_safe%
+		StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
 		run %search_final_url%
 	}
 	search_urls := 0
