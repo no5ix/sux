@@ -142,7 +142,6 @@ gui_search(url, should_uri_encode_this_time=1) {
 	should_uri_encode := should_uri_encode_this_time
 	; Assign the url to a variable.
 	; The variables will have names search_url1, search_url2, ...
-tooltip, %should_uri_encode%
 
 	search_urls := search_urls + 1
 	search_url%search_urls% := url
@@ -164,33 +163,6 @@ gui_SearchEnter:
 	gui_destroy()
 	return
 
-
-; gui_go_url_add_elements:
-; 	GuiControl,, Pedersen, %gui_search_title%
-; 	; Gui, Add, Text, %gui_control_options% %cGray%, %A_Space%%gui_search_title%
-; 	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn
-; 	Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
-; 	GuiControl, Disable, Pedersen
-; 	GuiControl, focus, gui_SearchEdit
-; 	Gui, Show, AutoSize
-; 	return
-
-; gui_go_url() {
-; 	global
-; 	if gui_state != search
-; 	{
-; 		gui_state = search
-; 		; if gui_state is "main", then we are coming from the main window and
-; 		; GUI elements for the search field have not yet been added.
-; 		Gosub, gui_search_add_elements
-		
-; 		if last_search_str {
-; 			SendRaw, %last_search_str%
-; 			Sleep, 66
-; 			Send, ^a
-; 		}
-; 	}
-; }
 
 ;-------------------------------------------------------------------------------
 ; TOOLTIP
