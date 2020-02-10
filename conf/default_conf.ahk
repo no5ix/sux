@@ -65,6 +65,7 @@ global mouse_double_click_timeout := 666
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
 global vscode_path := ""
+global music_app_path := ""
 
 
 ; ---------------------------------------------------------------------o
@@ -138,7 +139,8 @@ DoubleClickCtrlTrigger(){
 
 HotEdgesTopHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
-		MaxMinWindow()
+		; MaxMinWindow()
+		run %music_app_path%
 	}
 }
 HotEdgesTopHalfRightTrigger(from){

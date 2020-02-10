@@ -49,6 +49,7 @@ gui_spawn() {
 	; Gui, Show, , myGUI
 	if last_search_str {
 		SendRaw, %last_search_str%
+		Sleep, 66
 		Send, ^a
 	}
 	return
@@ -122,6 +123,7 @@ gui_search_add_elements:
 	Gui, Show, AutoSize
 	if last_search_str {
 		SendRaw, %last_search_str%
+		Sleep, 66
 		Send, ^a
 	}
 	return
