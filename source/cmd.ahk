@@ -44,13 +44,16 @@ else
 	}
 	else if trim_p = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
 	{
-		msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
-		MsgBox, 4,, %msg_str%
-		IfMsgBox Yes
-		{
-			gui_destroy()
-			run %ClipBoard%
-		}
+		; msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
+		; MsgBox, 4,, %msg_str%
+		; IfMsgBox Yes
+		; {
+		; 	gui_destroy()
+		; 	run %ClipBoard%
+		; }
+		
+		gui_search_title := "URL"
+		gui_search("http://REPLACEME", 0)
 	}
 	else if trim_p = cmd ; open a command prompt window on the current explorer path 
 	{

@@ -8,6 +8,7 @@ global gui_control_options := "xm w" . nox_width . " c" . nox_text_color . " -E0
 global gui_state := closed
 ; Initialize search_urls as a variable set to zero
 global search_urls := 0
+global should_uri_encode := 1
 
 
 gui_spawn() {
@@ -76,9 +77,9 @@ Findus:
 #WinActivateForce
 gui_destroy() {
 	global gui_state
-	global gui_search_title
 	
 	gui_state = closed
+	should_uri_encode = 1
 	; Forget search title variable so the next search does not re-use it
 	; in case the next search does not set its own:
 	gui_search_title =
@@ -121,14 +122,9 @@ gui_search_add_elements:
 	GuiControl, Disable, Pedersen
 	GuiControl, focus, gui_SearchEdit
 	Gui, Show, AutoSize
-	if last_search_str {
-		SendRaw, %last_search_str%
-		Sleep, 66
-		Send, ^a
-	}
 	return
 
-gui_search(url) {
+gui_search(url, should_uri_encode_this_time=1) {
 	global
 	if gui_state != search
 	{
@@ -136,12 +132,17 @@ gui_search(url) {
 		; if gui_state is "main", then we are coming from the main window and
 		; GUI elements for the search field have not yet been added.
 		Gosub, gui_search_add_elements
-		; SendRaw, %cur_selected_text%
-		; Send, ^a
+		
+		if last_search_str {
+			SendRaw, %last_search_str%
+			Sleep, 66
+			Send, ^a
+		}
 	}
-
+	should_uri_encode := should_uri_encode_this_time
 	; Assign the url to a variable.
 	; The variables will have names search_url1, search_url2, ...
+tooltip, %should_uri_encode%
 
 	search_urls := search_urls + 1
 	search_url%search_urls% := url
@@ -149,17 +150,47 @@ gui_search(url) {
 
 gui_SearchEnter:
 	Gui, Submit
-	gui_destroy()
 	last_search_str := gui_SearchEdit
-	safe_query := UriEncode(gui_SearchEdit)
+	if should_uri_encode
+		safe_query := UriEncode(gui_SearchEdit)
+	else
+		safe_query := gui_SearchEdit
 	Loop, %search_urls%
 	{
 		StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
 		run %search_final_url%
 	}
 	search_urls := 0
+	gui_destroy()
 	return
 
+
+; gui_go_url_add_elements:
+; 	GuiControl,, Pedersen, %gui_search_title%
+; 	; Gui, Add, Text, %gui_control_options% %cGray%, %A_Space%%gui_search_title%
+; 	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn
+; 	Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
+; 	GuiControl, Disable, Pedersen
+; 	GuiControl, focus, gui_SearchEdit
+; 	Gui, Show, AutoSize
+; 	return
+
+; gui_go_url() {
+; 	global
+; 	if gui_state != search
+; 	{
+; 		gui_state = search
+; 		; if gui_state is "main", then we are coming from the main window and
+; 		; GUI elements for the search field have not yet been added.
+; 		Gosub, gui_search_add_elements
+		
+; 		if last_search_str {
+; 			SendRaw, %last_search_str%
+; 			Sleep, 66
+; 			Send, ^a
+; 		}
+; 	}
+; }
 
 ;-------------------------------------------------------------------------------
 ; TOOLTIP
