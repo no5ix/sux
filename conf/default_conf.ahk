@@ -197,15 +197,16 @@ HotCornersTopLeftTrigger(){
 		Send, ^#{Left}
 }
 HotCornersTopRightTrigger(){
-	result := user_HotCornersTopLeftTrigger()
+	result := user_HotCornersTopRightTrigger()
 	if !result
 		Send, ^#{Right}
 }
 HotCornersBottomLeftTrigger(){
 	result := user_HotCornersBottomLeftTrigger()
 	if !result
-		; Send, ^{Tab}
-		Send, {LWin}
+		Send, ^{Tab}
+		; Send, !{Tab}
+		; Send, {LWin}
 }
 HotCornersBottomRightTrigger(){
 	result := user_HotCornersBottomRightTrigger()
