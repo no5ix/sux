@@ -37,3 +37,45 @@
 
 
 
+
+
+; ---------------------------------------------------------------------o
+; 					Everything shortCut conf  
+; ---------------------------------------------------------------------o
+
+EverythingShortCut(){
+	; Send, ^!+e
+	return 0
+}
+
+; ---------------------------------------------------------------------o
+; 					double click conf  
+; ---------------------------------------------------------------------o
+
+user_DoubleClickShiftTrigger(){
+	return 0
+}
+user_DoubleClickAltTrigger(){
+	return 0
+}
+user_DoubleClickCtrlTrigger(){
+	return 0
+}
+
+
+; ---------------------------------------------------------------------o
+; 					hot corners conf  
+; ---------------------------------------------------------------------o
+
+user_user_HotCornersTopLeftTrigger(){
+	return 0
+}
+user_user_HotCornersTopRightTrigger(){
+	return 0
+}
+user_HotCornersBottomLeftTrigger(){
+	return 0
+}
+user_HotCornersBottomRightTrigger(){
+	return 0
+}

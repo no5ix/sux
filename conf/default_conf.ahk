@@ -115,9 +115,8 @@ global WebSearchUrlMap :=
 ; 					Everything shortCut conf  
 ; ---------------------------------------------------------------------o
 
-EverythingShortCut()
-{
-	Send, ^!+e
+EverythingShortCut(){
+	user_EverythingShortCut()
 }
 
 ; ---------------------------------------------------------------------o
@@ -125,11 +124,15 @@ EverythingShortCut()
 ; ---------------------------------------------------------------------o
 
 DoubleClickShiftTrigger(){
-	gui_spawn()
+	result := user_DoubleClickShiftTrigger()
+	if !result
+		gui_spawn()
 }
 DoubleClickAltTrigger(){
+	user_DoubleClickAltTrigger()
 }
 DoubleClickCtrlTrigger(){
+	user_DoubleClickCtrlTrigger()
 }
 
 
@@ -189,15 +192,23 @@ HotEdgesRightHalfDownTrigger(from){
 ; ---------------------------------------------------------------------o
 
 HotCornersTopLeftTrigger(){
-	Send, ^#{Left}
+	result := user_HotCornersTopLeftTrigger()
+	if !result
+		Send, ^#{Left}
 }
 HotCornersTopRightTrigger(){
-	Send, ^#{Right}
+	result := user_HotCornersTopLeftTrigger()
+	if !result
+		Send, ^#{Right}
 }
 HotCornersBottomLeftTrigger(){
-	; Send, ^{Tab}
-	Send, {LWin}
+	result := user_HotCornersBottomLeftTrigger()
+	if !result
+		; Send, ^{Tab}
+		Send, {LWin}
 }
 HotCornersBottomRightTrigger(){
-	Send, !{Tab}
+	result := user_HotCornersBottomRightTrigger()
+	if !result
+		Send, !{Tab}
 }
