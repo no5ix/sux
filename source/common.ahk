@@ -264,8 +264,10 @@ UpdateNox() {
 }
 
 HotCorners() {				; Timer content 
-	if limit_mode
+	if (limit_mode){
+		ToolTipWithTimer("	limit mode is on, so do NOTHING by corner triggers.", 2000)
 		return
+	}
 
 	; if IsCorner("IsOnTop"){
 	; 	LButtonDown := GetKeyState("LButton","P")

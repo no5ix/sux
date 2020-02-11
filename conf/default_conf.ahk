@@ -117,6 +117,8 @@ global WebSearchUrlMap :=
 
 EverythingShortCut(){
 	user_EverythingShortCut()
+	if !result
+		Send, ^!+e
 }
 
 ; ---------------------------------------------------------------------o
@@ -143,23 +145,43 @@ DoubleClickCtrlTrigger(){
 HotEdgesTopHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		; MaxMinWindow()
+		ToolTipWithTimer("Launching Music App ...", 1111)
 		run %music_app_path%
+	}
+	else if(from = "RButton"){
+		Send, #e
+		ToolTipWithTimer("Launching File Explorer ...", 1111)
+		MaximizeWindow(1111, "Explorer.exe")
+		
 	}
 }
 HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
-		MaxMinWindow()
+		ToolTipWithTimer("Launching Music App ...", 1111)
+		run %music_app_path%
+		; MaxMinWindow()
 	}
-}
-HotEdgesBottomHalfLeftTrigger(from){
-	if (from = "Ctrl+8") {
+	else if(from = "RButton"){
 		Send, #e
 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 		MaximizeWindow(1111, "Explorer.exe")
 	}
 }
+HotEdgesBottomHalfLeftTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #d
+	}
+	else if(from = "RButton"){
+		Send, ^+{Esc}
+		ToolTipWithTimer("Launching Task Manager ...", 1111)
+		MaximizeWindow(1111, "taskmgr.exe")
+	}
+}
 HotEdgesBottomHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
+		Send, #d
+	}
+	else if(from = "RButton"){
 		Send, ^+{Esc}
 		ToolTipWithTimer("Launching Task Manager ...", 1111)
 		MaximizeWindow(1111, "taskmgr.exe")
@@ -169,20 +191,33 @@ HotEdgesLeftHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #{Tab}
 	}
+	else if(from = "RButton"){
+		Send, ^#{Left}
+	}
 }
 HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #i
+		Send, #{Tab}
+		; Send, #i
+	}
+	else if(from = "RButton"){
+		Send, ^#{Left}
 	}
 }
 HotEdgesRightHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #a
 	}
+	else if(from = "RButton"){
+		Send, ^#{Right}
+	}
 }
 HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #d
+		Send, #a
+	}
+	else if(from = "RButton"){
+		Send, ^#{Right}
 	}
 }
 
@@ -194,19 +229,19 @@ HotEdgesRightHalfDownTrigger(from){
 HotCornersTopLeftTrigger(){
 	result := user_HotCornersTopLeftTrigger()
 	if !result
-		Send, ^#{Left}
+		Send, ^+{Tab}
 }
 HotCornersTopRightTrigger(){
 	result := user_HotCornersTopRightTrigger()
 	if !result
-		Send, ^#{Right}
+		Send, ^{Tab}
 }
 HotCornersBottomLeftTrigger(){
 	result := user_HotCornersBottomLeftTrigger()
 	if !result
-		Send, ^{Tab}
+		; Send, ^{Tab}
 		; Send, !{Tab}
-		; Send, {LWin}
+		Send, {LWin}
 }
 HotCornersBottomRightTrigger(){
 	result := user_HotCornersBottomRightTrigger()

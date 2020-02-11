@@ -248,6 +248,22 @@ return
 	return
 
 
+RButton::
+	is_on_edge := HandleMouseOnEdges("RButton")
+	if is_on_edge
+		return
+	click right
+	return
+
+
+; MButton::
+; 	is_on_edge := HandleMouseOnEdges("MButton")
+; 	if is_on_edge
+; 		return
+; 	click middle
+; 	return
+
+
 ; ; -----------------------------------------------------------------------------
 ; ; ~ 设置一个时钟，比如 keyboard_double_click_timeout 毫秒，
 ; ; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
