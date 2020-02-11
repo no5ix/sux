@@ -43,7 +43,7 @@
 ; 					Everything shortCut conf  
 ; ---------------------------------------------------------------------o
 
-EverythingShortCut(){
+user_EverythingShortCut(){
 	; Send, ^!+e
 	return 0
 }
@@ -67,10 +67,10 @@ user_DoubleClickCtrlTrigger(){
 ; 					hot corners conf  
 ; ---------------------------------------------------------------------o
 
-user_user_HotCornersTopLeftTrigger(){
+user_HotCornersTopLeftTrigger(){
 	return 0
 }
-user_user_HotCornersTopRightTrigger(){
+user_HotCornersTopRightTrigger(){
 	return 0
 }
 user_HotCornersBottomLeftTrigger(){
