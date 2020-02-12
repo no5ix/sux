@@ -145,7 +145,7 @@ DoubleClickCtrlTrigger(){
 HotEdgesTopHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		; MaxMinWindow()
-		; ToolTipWithTimer("Launching Music App ...", 1111)
+		ToolTipWithTimer("To The Top ...", 1111)
 		; run %music_app_path%
 		Send, ^{Home}
 	}
@@ -160,6 +160,7 @@ HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
 		; ToolTipWithTimer("Launching Music App ...", 1111)
 		; run %music_app_path%
+		ToolTipWithTimer("To The Top ...", 1111)
 		Send, ^{Home}
 		; MaxMinWindow()
 	}
@@ -174,6 +175,7 @@ HotEdgesBottomHalfLeftTrigger(from){
 		; Send, #e
 		; ToolTipWithTimer("Launching File Explorer ...", 1111)
 		; MaximizeWindow(1111, "Explorer.exe")
+		ToolTipWithTimer("To The Bottom ...", 1111)
 		Send, ^{End}
 	}
 	; else if(from = "RButton"){
@@ -185,6 +187,7 @@ HotEdgesBottomHalfLeftTrigger(from){
 HotEdgesBottomHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
 		; Send, #d
+		ToolTipWithTimer("To The Bottom ...", 1111)
 		Send, ^{End}
 	}
 	; else if(from = "RButton"){
