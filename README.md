@@ -47,7 +47,7 @@ createobject("wscript.shell").run "D:\A.bat",0
     [x] 保存设置和数据到%APPDATA%\Everything目录  
     [x] 随系统自启动  
     [ ] 以管理员身份运行  
-    [x] Everything服务
+    [x] Everything服务  
     显示窗口快捷键: `Ctrl+Shift+Alt+E`
 1. 退出Everything
 2. 找到其配置文件 Everything.ini , 并在其文件末尾添加
