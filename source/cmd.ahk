@@ -14,8 +14,10 @@ else if SubStr(Pedersen, 0, 1) = A_Space
 	gui_destroy()
 	EverythingShortCut()
 	WinWaitActive, ahk_exe Everything.exe, , 0.222
-	if ErrorLevel
+	if ErrorLevel{
+		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
 		DefaultWebSearch(Pedersen)
+	}
 	else{
 		last_search_str := Pedersen
 		SendRaw, %trim_p%
@@ -35,7 +37,7 @@ else
 		EverythingShortCut()
 		WinWaitActive, ahk_exe Everything.exe, , 2.222
 		if ErrorLevel
-			MsgBox, 4,, please install Everything and set its shortcut in user_conf.ahk
+			MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
 	}
 	else if trim_p = os ; nox official site
 	{
