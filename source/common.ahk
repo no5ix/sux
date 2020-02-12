@@ -195,16 +195,16 @@ PasteCompatibleWithAutoSelectionCopy() {
 HandleMouseOnEdges(from) {
 	IsOnEdge := 0
 	if (enable_hot_edges = 0){
-		ToolTipWithTimer("	conf.enable_hot_edges is 0, so do NOTHING by edge triggers.", 2000)
+		; ToolTipWithTimer("	conf.enable_hot_edges is 0, so do NOTHING by edge triggers.", 2000)
 		return IsOnEdge
 	}
 	if (limit_mode){
-		ToolTipWithTimer("	limit mode is on, so do NOTHING by edge triggers.", 2000)
+		; ToolTipWithTimer("	limit mode is on, so do NOTHING by edge triggers.", 2000)
 		return IsOnEdge
 	}
 	if IsCorner(){
 		IsOnEdge = 1
-		ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
+		; ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
 		return IsOnEdge
 	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 

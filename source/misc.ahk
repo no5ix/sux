@@ -231,8 +231,8 @@ return
 	is_on_edge := HandleMouseOnEdges("Ctrl+8")
 	if is_on_edge
 		return
-	if (!use_touchpad)
-		return
+	; if (!use_touchpad)
+		; return
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 	SetMouseDelay, 0
 	; if fake_rb_down
@@ -246,22 +246,6 @@ return
 	Click Down
 	ToolTipWithTimer("simulate click DOWN.", 2222)
 	return
-
-
-RButton::
-	is_on_edge := HandleMouseOnEdges("RButton")
-	if is_on_edge
-		return
-	click right
-	return
-
-
-; MButton::
-; 	is_on_edge := HandleMouseOnEdges("MButton")
-; 	if is_on_edge
-; 		return
-; 	click middle
-; 	return
 
 
 ; ; -----------------------------------------------------------------------------

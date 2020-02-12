@@ -50,7 +50,7 @@ global nox_border_shadow_type := classic_shadow_type
 ; ---------------------------------------------------------------------o
 
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
-global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
+; global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
 ; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
@@ -148,12 +148,12 @@ HotEdgesTopHalfLeftTrigger(from){
 		ToolTipWithTimer("Launching Music App ...", 1111)
 		run %music_app_path%
 	}
-	else if(from = "RButton"){
-		Send, #e
-		ToolTipWithTimer("Launching File Explorer ...", 1111)
-		MaximizeWindow(1111, "Explorer.exe")
+	; else if(from = "RButton"){
+	; 	Send, #e
+	; 	ToolTipWithTimer("Launching File Explorer ...", 1111)
+	; 	MaximizeWindow(1111, "Explorer.exe")
 		
-	}
+	; }
 }
 HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
@@ -161,64 +161,64 @@ HotEdgesTopHalfRightTrigger(from){
 		run %music_app_path%
 		; MaxMinWindow()
 	}
-	else if(from = "RButton"){
-		Send, #e
-		ToolTipWithTimer("Launching File Explorer ...", 1111)
-		MaximizeWindow(1111, "Explorer.exe")
-	}
+	; else if(from = "RButton"){
+	; 	Send, #e
+	; 	ToolTipWithTimer("Launching File Explorer ...", 1111)
+	; 	MaximizeWindow(1111, "Explorer.exe")
+	; }
 }
 HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #d
 	}
-	else if(from = "RButton"){
-		Send, ^+{Esc}
-		ToolTipWithTimer("Launching Task Manager ...", 1111)
-		MaximizeWindow(1111, "taskmgr.exe")
-	}
+	; else if(from = "RButton"){
+	; 	Send, ^+{Esc}
+	; 	ToolTipWithTimer("Launching Task Manager ...", 1111)
+	; 	MaximizeWindow(1111, "taskmgr.exe")
+	; }
 }
 HotEdgesBottomHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #d
 	}
-	else if(from = "RButton"){
-		Send, ^+{Esc}
-		ToolTipWithTimer("Launching Task Manager ...", 1111)
-		MaximizeWindow(1111, "taskmgr.exe")
-	}
+	; else if(from = "RButton"){
+	; 	Send, ^+{Esc}
+	; 	ToolTipWithTimer("Launching Task Manager ...", 1111)
+	; 	MaximizeWindow(1111, "taskmgr.exe")
+	; }
 }
 HotEdgesLeftHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #{Tab}
 	}
-	else if(from = "RButton"){
-		Send, ^#{Left}
-	}
+	; else if(from = "RButton"){
+	; 	Send, ^#{Left}
+	; }
 }
 HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #{Tab}
 		; Send, #i
 	}
-	else if(from = "RButton"){
-		Send, ^#{Left}
-	}
+	; else if(from = "RButton"){
+	; 	Send, ^#{Left}
+	; }
 }
 HotEdgesRightHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #a
 	}
-	else if(from = "RButton"){
-		Send, ^#{Right}
-	}
+	; else if(from = "RButton"){
+	; 	Send, ^#{Right}
+	; }
 }
 HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #a
 	}
-	else if(from = "RButton"){
-		Send, ^#{Right}
-	}
+	; else if(from = "RButton"){
+	; 	Send, ^#{Right}
+	; }
 }
 
 
