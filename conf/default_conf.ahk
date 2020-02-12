@@ -145,8 +145,9 @@ DoubleClickCtrlTrigger(){
 HotEdgesTopHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
 		; MaxMinWindow()
-		ToolTipWithTimer("Launching Music App ...", 1111)
-		run %music_app_path%
+		; ToolTipWithTimer("Launching Music App ...", 1111)
+		; run %music_app_path%
+		Send, ^{Home}
 	}
 	; else if(from = "RButton"){
 	; 	Send, #e
@@ -157,8 +158,9 @@ HotEdgesTopHalfLeftTrigger(from){
 }
 HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
-		ToolTipWithTimer("Launching Music App ...", 1111)
-		run %music_app_path%
+		; ToolTipWithTimer("Launching Music App ...", 1111)
+		; run %music_app_path%
+		Send, ^{Home}
 		; MaxMinWindow()
 	}
 	; else if(from = "RButton"){
@@ -169,7 +171,10 @@ HotEdgesTopHalfRightTrigger(from){
 }
 HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #d
+		; Send, #e
+		; ToolTipWithTimer("Launching File Explorer ...", 1111)
+		; MaximizeWindow(1111, "Explorer.exe")
+		Send, ^{End}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^+{Esc}
@@ -179,7 +184,8 @@ HotEdgesBottomHalfLeftTrigger(from){
 }
 HotEdgesBottomHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #d
+		; Send, #d
+		Send, ^{End}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^+{Esc}
@@ -197,7 +203,9 @@ HotEdgesLeftHalfUpTrigger(from){
 }
 HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #{Tab}
+		; Send, #{Tab}
+		ToolTipWithTimer("Launching Music App ...", 1111)
+		run %music_app_path%
 		; Send, #i
 	}
 	; else if(from = "RButton"){
@@ -214,7 +222,7 @@ HotEdgesRightHalfUpTrigger(from){
 }
 HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #a
+		Send, #d
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Right}
@@ -229,19 +237,19 @@ HotEdgesRightHalfDownTrigger(from){
 HotCornersTopLeftTrigger(){
 	result := user_HotCornersTopLeftTrigger()
 	if !result
-		Send, ^+{Tab}
+		Send, #^{Left}
 }
 HotCornersTopRightTrigger(){
 	result := user_HotCornersTopRightTrigger()
 	if !result
-		Send, ^{Tab}
+		Send, #^{Right}
 }
 HotCornersBottomLeftTrigger(){
 	result := user_HotCornersBottomLeftTrigger()
 	if !result
-		; Send, ^{Tab}
+		Send, ^{Tab}
 		; Send, !{Tab}
-		Send, {LWin}
+		; Send, {LWin}
 }
 HotCornersBottomRightTrigger(){
 	result := user_HotCornersBottomRightTrigger()
