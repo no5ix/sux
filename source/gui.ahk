@@ -8,7 +8,7 @@ global gui_control_options := "xm w" . nox_width . " c" . nox_text_color . " -E0
 global gui_state := closed
 ; Initialize search_urls as a variable set to zero
 global search_urls := 0
-global should_uri_encode := 1
+global from_url_cmd := 0
 
 
 gui_spawn() {
@@ -49,7 +49,7 @@ gui_spawn() {
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, , myGUI
 	if last_search_str {
-		SendRaw, %last_search_str%
+		Send, {Blind}{Text}%last_search_str%
 		Sleep, 66
 		Send, ^a
 	}
@@ -79,7 +79,7 @@ gui_destroy() {
 	global gui_state
 	
 	gui_state = closed
-	should_uri_encode = 1
+	from_url_cmd = 0
 	; Forget search title variable so the next search does not re-use it
 	; in case the next search does not set its own:
 	gui_search_title =
@@ -124,7 +124,7 @@ gui_search_add_elements:
 	Gui, Show, AutoSize
 	return
 
-gui_search(url, should_uri_encode_this_time=1) {
+gui_search(pending_search_url, from_url_cmd_this_time=0) {
 	global
 	if gui_state != search
 	{
@@ -134,30 +134,33 @@ gui_search(url, should_uri_encode_this_time=1) {
 		Gosub, gui_search_add_elements
 		
 		if last_search_str {
-			SendRaw, %last_search_str%
+			Send, {Blind}{Text}%last_search_str%
 			Sleep, 66
 			Send, ^a
 		}
 	}
-	should_uri_encode := should_uri_encode_this_time
-	; Assign the url to a variable.
+	from_url_cmd := from_url_cmd_this_time
+	; Assign the pending_search_url to a variable.
 	; The variables will have names search_url1, search_url2, ...
 
 	search_urls := search_urls + 1
-	search_url%search_urls% := url
+	search_url%search_urls% := pending_search_url
 }
 
 gui_SearchEnter:
 	Gui, Submit
 	last_search_str := gui_SearchEdit
-	if should_uri_encode
-		safe_query := UriEncode(gui_SearchEdit)
-	else
-		safe_query := gui_SearchEdit
-	Loop, %search_urls%
-	{
-		StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
-		run %search_final_url%
+	if from_url_cmd And IsRawUrl(gui_SearchEdit)
+		run %gui_SearchEdit%
+	else{
+		if from_url_cmd
+			safe_query := gui_SearchEdit
+		else
+			safe_query := UriEncode(gui_SearchEdit)
+		Loop, %search_urls% {
+			StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
+			run %search_final_url%
+		}
 	}
 	search_urls := 0
 	gui_destroy()

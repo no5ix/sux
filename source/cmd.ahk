@@ -55,7 +55,7 @@ else
 		; }
 		
 		gui_search_title := "URL"
-		gui_search("http://REPLACEME", 0)
+		gui_search("http://REPLACEME", 1)
 	}
 	else if trim_p = cmd ; open a command prompt window on the current explorer path 
 	{
