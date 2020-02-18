@@ -11,8 +11,11 @@ global search_urls := 0
 global from_url_cmd := 0
 
 
-gui_spawn() {
-	; SaveCurSelectedText()
+gui_spawn(use_copy=0) {
+	if use_copy{
+		SaveCurSelectedText()
+		last_search_str := cur_selected_text
+	}
 	if gui_state != closed
 	{
 		; If the GUI is already open, close it then reopen it.

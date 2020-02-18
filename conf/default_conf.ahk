@@ -132,6 +132,8 @@ DoubleClickShiftTrigger(){
 }
 DoubleClickAltTrigger(){
 	user_DoubleClickAltTrigger()
+	if !result
+		gui_spawn(1)
 }
 DoubleClickCtrlTrigger(){
 	user_DoubleClickCtrlTrigger()
