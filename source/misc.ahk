@@ -6,19 +6,19 @@
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI
 ;-------------------------------------------------------------------------------
-~LAlt::
+~Alt::
 	if limit_mode
 		return
 	ClickUpIfLbDown()
 	
 	; ; 不能这么写, 因为这样长按 alt 也会触发
-	; If (A_PriorHotKey = "~LAlt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
+	; If (A_PriorHotKey = "~Alt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
 	; 	gui_spawn()
 
-	if (A_PriorHotkey <> "~LAlt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	if (A_PriorHotkey <> "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
-		KeyWait, LAlt
+		KeyWait, Alt
 		return
 	}
 	DoubleClickAltTrigger()
