@@ -55,7 +55,8 @@ gui_spawn(use_copy_this_time=0) {
 	; Gui, Show, , myGUI
 	if last_search_str {
 		Sleep, 66
-		SendRaw, %last_search_str%
+		; SendRaw, %last_search_str%
+		Send, {Blind}{Text}%last_search_str%
 		Sleep, 66
 		Send, ^a
 	}
@@ -142,7 +143,8 @@ gui_search(pending_search_url, from_url_cmd_this_time=0) {
 		
 		if last_search_str {
 			Sleep, 66
-			SendRaw, %last_search_str%
+			; SendRaw, %last_search_str% ; 这种写法当输入法为中文模式的时候会有问题
+			Send, {Blind}{Text}%last_search_str%
 			Sleep, 66
 			Send, ^a
 		}
