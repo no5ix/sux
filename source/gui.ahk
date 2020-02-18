@@ -9,10 +9,12 @@ global gui_state := closed
 ; Initialize search_urls as a variable set to zero
 global search_urls := 0
 global from_url_cmd := 0
+global use_copy := 0
 
 
-gui_spawn(use_copy=0) {
-	if use_copy{
+gui_spawn(use_copy_this_time=0) {
+	if use_copy_this_time{
+		use_copy := use_copy_this_time
 		SaveCurSelectedText()
 		last_search_str := cur_selected_text
 	}
@@ -84,6 +86,7 @@ gui_destroy() {
 	
 	gui_state = closed
 	from_url_cmd = 0
+	use_copy = 0
 	; Forget search title variable so the next search does not re-use it
 	; in case the next search does not set its own:
 	gui_search_title =

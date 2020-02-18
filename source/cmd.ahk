@@ -160,7 +160,7 @@ else
 		gui_search_title := WebSearchUrlMap[trim_p][1]
 		gui_search(WebSearchUrlMap[trim_p][2])
 	}
-	else
+	else if !use_copy
 	{
 		DefaultWebSearch(Pedersen)
 	}
