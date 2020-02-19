@@ -4,6 +4,7 @@
 
 
 trim_p := Trim(Pedersen)
+
 if SubStr(Pedersen, 1, 1) = A_Space
 {
 	DefaultWebSearch(Pedersen)
@@ -160,7 +161,7 @@ else
 		gui_search_title := WebSearchUrlMap[trim_p][1]
 		gui_search(WebSearchUrlMap[trim_p][2])
 	}
-	else if !use_copy
+	else if use_copy=0
 	{
 		DefaultWebSearch(Pedersen)
 	}

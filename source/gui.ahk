@@ -13,15 +13,15 @@ global use_copy := 0
 
 
 gui_spawn(use_copy_this_time=0) {
-	if use_copy_this_time{
-		use_copy := use_copy_this_time
-		SaveCurSelectedText()
-		last_search_str := cur_selected_text
-	}
 	if gui_state != closed
 	{
 		; If the GUI is already open, close it then reopen it.
 		gui_destroy()
+	}
+	if use_copy_this_time{
+		use_copy := use_copy_this_time
+		SaveCurSelectedText()
+		last_search_str := cur_selected_text
 	}
 	gui_state = main
 
