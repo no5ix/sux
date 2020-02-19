@@ -128,12 +128,12 @@ EverythingShortCut(){
 DoubleClickShiftTrigger(){
 	result := user_DoubleClickShiftTrigger()
 	if !result
-		gui_spawn()
+		gui_spawn(1)
 }
 DoubleClickAltTrigger(){
 	user_DoubleClickAltTrigger()
 	if !result
-		gui_spawn(1)
+		gui_spawn()
 }
 DoubleClickCtrlTrigger(){
 	user_DoubleClickCtrlTrigger()
