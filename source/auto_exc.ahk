@@ -21,5 +21,5 @@ if enable_hot_corners
 
 
 if limit_mode_when_full_screen
-	SetTimer, LimitModeWhenFullScreen, 1111
+	SetTimer, LimitModeWhenFullScreen, 88
 
