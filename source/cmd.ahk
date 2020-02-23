@@ -21,7 +21,8 @@ else if SubStr(Pedersen, 0, 1) = A_Space
 	}
 	else{
 		last_search_str := Pedersen
-		SendRaw, %trim_p%
+		; SendRaw, %trim_p%
+		Send, {Blind}{Text}%trim_p%
 	}
 }
 else
