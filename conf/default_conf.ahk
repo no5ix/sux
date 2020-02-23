@@ -128,12 +128,14 @@ EverythingShortCut(){
 DoubleClickShiftTrigger(){
 	result := user_DoubleClickShiftTrigger()
 	if !result
-		gui_spawn(1)
+		gui_spawn()
+		; gui_spawn(1)
+		; Send, ^!+e
 }
 DoubleClickAltTrigger(){
 	user_DoubleClickAltTrigger()
-	if !result
-		gui_spawn()
+	; if !result
+	; 	gui_spawn()
 }
 DoubleClickCtrlTrigger(){
 	user_DoubleClickCtrlTrigger()
