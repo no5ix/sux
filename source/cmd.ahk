@@ -5,28 +5,31 @@
 
 trim_p := Trim(Pedersen)
 
-if SubStr(Pedersen, 1, 1) = A_Space
+
+; if SubStr(Pedersen, 1, 1) = A_Space
+if SubStr(Pedersen, 0, 1) = A_Space
 {
-	DefaultWebSearch(Pedersen)
+	WebSearch(Pedersen, "default")
 }
-else if SubStr(Pedersen, 0, 1) = A_Space
-{
-	;;; everything search(end with space) & default web search;;;
-	gui_destroy()
-	EverythingShortCut()
-	WinWaitActive, ahk_exe Everything.exe, , 0.222
-	if ErrorLevel{
-		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-		DefaultWebSearch(Pedersen)
-	}
-	else{
-		last_search_str := Pedersen
-		Sleep, 88
-		SendRaw, %trim_p%
-		; Sleep, 88
-		; Send, {Blind}{Text}%trim_p%
-	}
-}
+; else if SubStr(Pedersen, 0, 1) = A_Space
+; {
+; 	;;; everything search(end with space) & default web search;;;
+; 	gui_destroy()
+; 	EverythingShortCut()
+; 	WinWaitActive, ahk_exe Everything.exe, , 0.222
+; 	if ErrorLevel{
+; 		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+; 		WebSearch(Pedersen, "default")
+; 	}
+; 	else{
+; 		last_search_str := Pedersen
+; 		; Sleep, 88
+; 		; SendRaw, %trim_p%
+; 		Sleep, 222
+; 		; SendRaw, %last_search_str%
+; 		Send, {Blind}{Text}%trim_p%
+; 	}
+; }
 else
 {
 	if trim_p = help ; Tooltip with list of commands
@@ -166,6 +169,10 @@ else
 	}
 	else
 	{
-		DefaultWebSearch(Pedersen)
+		word_array := StrSplit(trim_p, A_Space, ,2)
+		if WebSearchUrlMap.HasKey(word_array[1])
+			WebSearch(word_array[2], word_array[1])
+		else
+			WebSearch(Pedersen, "default")
 	}
 }

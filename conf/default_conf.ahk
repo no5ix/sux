@@ -134,8 +134,9 @@ DoubleClickShiftTrigger(){
 }
 DoubleClickAltTrigger(){
 	user_DoubleClickAltTrigger()
-	; if !result
-	; 	gui_spawn()
+	if !result
+		; gui_spawn(1)
+		EverythingShortCut()
 }
 DoubleClickCtrlTrigger(){
 	user_DoubleClickCtrlTrigger()

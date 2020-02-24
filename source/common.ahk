@@ -472,7 +472,7 @@ MaximizeWindow(timeout=2222, exe_name="") {
 }
 
 
-DefaultWebSearch(user_input) {
+WebSearch(user_input, search_key) {
 	gui_destroy()
 	last_search_str := user_input
 	if IsRawUrl(user_input){
@@ -480,7 +480,7 @@ DefaultWebSearch(user_input) {
 		return
 	}
 	safe_query := UriEncode(Trim(last_search_str))
-	default_search_url := WebSearchUrlMap["default"][2]
+	default_search_url := WebSearchUrlMap[search_key][2]
 	StringReplace, search_final_url, default_search_url, REPLACEME, %safe_query%
 	run %search_final_url%
 }

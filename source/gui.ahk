@@ -39,7 +39,7 @@ gui_spawn(use_copy_this_time=0) {
 	; Gui, Add, Text, %gui_control_options% vgui_main_title, ¯\_(ツ)_/¯
 	; Gui, Font, s10, Segoe UI
 	; Gui, Add, Edit, %gui_control_options% vPedersen gFindus
-	Gui, Add, Edit, %gui_control_options% vPedersen
+	Gui, Add, Edit, %gui_control_options% vPedersen, %last_search_str%
 	Gui, Add, Button, x-10 y-10 w1 h1 +default gFindus ; hidden button
 
 	xMidScrn :=  A_ScreenWidth / 2
@@ -51,13 +51,6 @@ gui_spawn(use_copy_this_time=0) {
 	yScrnOffset := A_ScreenHeight / 4
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, , myGUI
-	if last_search_str {
-		Sleep, 66
-		; SendRaw, %last_search_str%
-		Send, {Blind}{Text}%last_search_str%
-		Sleep, 66
-		Send, ^a
-	}
 	return
 }
 
@@ -137,14 +130,6 @@ gui_search(pending_search_url, from_url_cmd_this_time=0) {
 		; if gui_state is "main", then we are coming from the main window and
 		; GUI elements for the search field have not yet been added.
 		Gosub, gui_search_add_elements
-		
-		if last_search_str {
-			Sleep, 66
-			; SendRaw, %last_search_str% ; 这种写法当输入法为中文模式的时候会有问题
-			Send, {Blind}{Text}%last_search_str%
-			Sleep, 66
-			Send, ^a
-		}
 	}
 	from_url_cmd := from_url_cmd_this_time
 	; Assign the pending_search_url to a variable.
