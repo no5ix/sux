@@ -149,6 +149,8 @@ gui_SearchEnter:
 			safe_query := gui_SearchEdit
 		else
 			safe_query := UriEncode(gui_SearchEdit)
+		if !safe_query
+			safe_query := Clipboard
 		Loop, %search_urls% {
 			StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
 			run %search_final_url%

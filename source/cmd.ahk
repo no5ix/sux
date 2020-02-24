@@ -6,8 +6,12 @@
 trim_p := Trim(Pedersen)
 
 
+if !trim_p
+{
+	WebSearch(Clipboard, "default")
+}
 ; if SubStr(Pedersen, 1, 1) = A_Space
-if SubStr(Pedersen, 0, 1) = A_Space
+else if SubStr(Pedersen, 0, 1) = A_Space
 {
 	WebSearch(Pedersen, "default")
 }
