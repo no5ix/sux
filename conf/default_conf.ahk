@@ -250,11 +250,11 @@ HotCornersTopLeftTrigger(){
 	result := user_HotCornersTopLeftTrigger()
 	if !result
 		; Send, #^{Left}
-		Send, ^+{Tab}
-		; Send {LControl Down}{LShift Down}
-		; Send, {Tab}
-		; Sleep, 111
-		; Send {LControl Up}{LShift Up}
+		; Send, ^+{Tab}
+		Send {LControl Down}{LShift Down}
+		Send, {Tab}
+		Sleep, 111
+		Send {LControl Up}{LShift Up}
 }
 HotCornersTopRightTrigger(){
 	result := user_HotCornersTopRightTrigger()
