@@ -491,3 +491,14 @@ IsRawUrl(user_input){
 	https_str := "https://"
 	return InStr(user_input, http_str) or InStr(user_input, https_str)
 }
+
+
+DisableWin10AutoUpdate(){
+	; run, cmd /c sc delete wuauserv,,hide
+	run, cmd /c sc config wuauserv start= disabled,,hide
+	run, cmd /c net stop wuauserv,,hide
+	run, cmd /c sc config bits start= disabled,,hide
+	run, cmd /c net stop bits,,hide
+	run, cmd /c sc config dosvc start= disabled,,hide
+	run, cmd /c net stop dosvc,,hide
+}

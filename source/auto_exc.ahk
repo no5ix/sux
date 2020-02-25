@@ -23,3 +23,5 @@ if enable_hot_corners
 if limit_mode_when_full_screen
 	SetTimer, LimitModeWhenFullScreen, 88
 
+if disable_win10_auto_update
+    SetTimer, DisableWin10AutoUpdate, 66666
