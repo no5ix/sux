@@ -55,6 +55,8 @@ global nox_border_shadow_type := classic_shadow_type
 global vscode_path := ""
 global music_app_path := ""
 
+global disable_win10_auto_update := 1
+
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 ; global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
@@ -68,7 +70,6 @@ global enable_hot_corners := 1  ; ; when cursor hover on the corner
 global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
 
-global disable_win10_auto_update := 1
 
 ; ---------------------------------------------------------------------o
 ; 					replace str map conf  ( Capslock+Shift+U )
