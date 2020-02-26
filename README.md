@@ -17,7 +17,7 @@ Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank
 - **hot corners** : just like mac hot cornes
 - **web search** : just like Wox/Listary/Alfred
 - **enhanced capslock** : just like Capslock+
-- **double click triggers** (include `Ctrl+8`/`right mouse`/`middle mouse`/`Capslock`/`Ctrl`/`Shift`) : see default_conf.ahk
+- **double click triggers** (include `Ctrl+8`/`Ctrl`/`Shift`) : see default_conf.ahk
 - **auto selection copy** : just like linux terminal
 - **custom theme.** : two default theme(dark/light), and u can add ur own theme
 - **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk
