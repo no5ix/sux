@@ -195,17 +195,16 @@ PasteCompatibleWithAutoSelectionCopy() {
 HandleMouseOnEdges(from) {
 	IsOnEdge := 0
 	if (enable_hot_edges = 0){
-		; ToolTipWithTimer("	conf.enable_hot_edges is 0, so do NOTHING by edge triggers.", 2000)
-		return IsOnEdge
+		ToolTipWithTimer("	conf.enable_hot_edges is 0, so edge triggers are disabled.", 2000)
+		return -1
 	}
 	if (limit_mode){
-		; ToolTipWithTimer("	limit mode is on, so do NOTHING by edge triggers.", 2000)
-		return IsOnEdge
+		ToolTipWithTimer("	limit mode is on, edge triggers are disabled.", 2000)
+		return -1
 	}
 	if IsCorner(){
-		IsOnEdge = 1
-		; ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
-		return IsOnEdge
+		ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
+		return -1
 	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
@@ -265,7 +264,6 @@ UpdateNox() {
 
 HotCorners() {				; Timer content 
 	if (limit_mode){
-		ToolTipWithTimer("	limit mode is on, so do NOTHING by corner triggers.", 2000)
 		return
 	}
 
@@ -433,7 +431,7 @@ LimitModeWhenFullScreen() {
 	limit_mode := IsFullscreen() ? 1 : 0
 	if (old_limit_mode = 0 and limit_mode = 1) or (old_limit_mode = 1 and limit_mode = 0)
 	{
-		ToolTipWithTimer("limit mode is " . (limit_mode ? "on" : "off"), 1111)
+		ToolTipWithTimer("limit mode is " . (limit_mode ? "on. NOTICE: corner triggers is disabled." : "off"), 1111)
 		old_limit_mode := limit_mode
 	}
 }

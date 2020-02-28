@@ -7,8 +7,6 @@
 ; LAUNCH GUI
 ;-------------------------------------------------------------------------------
 ~Alt::
-	if limit_mode
-		return
 	ClickUpIfLbDown()
 	
 	; ; 不能这么写, 因为这样长按 alt 也会触发
@@ -21,13 +19,15 @@
 		KeyWait, Alt
 		return
 	}
+	if limit_mode {
+		ToolTipWithTimer("	limit mode is on, double Alt is disabled.", 2000)
+		return
+	}
 	DoubleClickAltTrigger()
 	return
 
 ; -----------------------------------------------------------------------------
 ~LShift::
-	if limit_mode
-		return
 	ClickUpIfLbDown()
 	; TimeButtonDown = %A_TickCount%
 	; ; Wait for it to be released
@@ -70,19 +70,25 @@
 		KeyWait, LShift
 		return
 	}
+	if limit_mode {
+		ToolTipWithTimer("	limit mode is on, double Shift is disabled.", 2000)
+		return
+	}
 	DoubleClickShiftTrigger()
 	return
 ; -----------------------------------------------------------------------------
 
 
 ~Ctrl::
-	if limit_mode
-		return
 	ClickUpIfLbDown()
 	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
 		KeyWait, Ctrl
+		return
+	}
+	if limit_mode {
+		ToolTipWithTimer("	limit mode is on, double Ctrl is disabled.", 2000)
 		return
 	}
 	DoubleClickCtrlTrigger()
@@ -229,7 +235,7 @@ return
 #Persistent
 ^8::
 	is_on_edge := HandleMouseOnEdges("Ctrl+8")
-	if is_on_edge
+	if is_on_edge != 0
 		return
 	; if (!use_touchpad)
 		; return
