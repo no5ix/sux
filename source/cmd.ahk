@@ -10,30 +10,30 @@ if !trim_p
 {
 	WebSearch(Clipboard, "default")
 }
-; if SubStr(Pedersen, 1, 1) = A_Space
-else if SubStr(Pedersen, 0, 1) = A_Space
+else if SubStr(Pedersen, 1, 1) = A_Space
+; else if SubStr(Pedersen, 0, 1) = A_Space
 {
 	WebSearch(Pedersen, "default")
 }
-; else if SubStr(Pedersen, 0, 1) = A_Space
-; {
-; 	;;; everything search(end with space) & default web search;;;
-; 	gui_destroy()
-; 	EverythingShortCut()
-; 	WinWaitActive, ahk_exe Everything.exe, , 0.222
-; 	if ErrorLevel{
-; 		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-; 		WebSearch(Pedersen, "default")
-; 	}
-; 	else{
-; 		last_search_str := Pedersen
-; 		; Sleep, 88
-; 		; SendRaw, %trim_p%
-; 		Sleep, 222
-; 		; SendRaw, %last_search_str%
-; 		Send, {Blind}{Text}%trim_p%
-; 	}
-; }
+else if SubStr(Pedersen, 0, 1) = A_Space
+{
+	;;; everything search(end with space) & default web search;;;
+	gui_destroy()
+	EverythingShortCut()
+	WinWaitActive, ahk_exe Everything.exe, , 0.666
+	if ErrorLevel{
+		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+		WebSearch(Pedersen, "default")
+	}
+	else{
+		last_search_str := Pedersen
+		; Sleep, 88
+		; SendRaw, %trim_p%
+		Sleep, 222
+		; SendRaw, %last_search_str%
+		Send, {Blind}{Text}%trim_p%
+	}
+}
 else
 {
 	if trim_p = help ; Tooltip with list of commands
@@ -146,6 +146,16 @@ else
 			limit_mode := limit_mode ? 0 : 1
 			if limit_mode
 				MsgBox, Double Shift is disabled in game mode`, you can CapsLock+X to open nox input box.
+		}
+	}
+	else if trim_p = wau ; turn on/off disable win10 auto update
+	{
+		msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
+		MsgBox, 4,, %msg_str%
+		IfMsgBox Yes
+		{
+			gui_destroy()
+			disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
 		}
 	}
 	;-------------------------------------------------------------------------------
