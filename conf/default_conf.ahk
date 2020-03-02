@@ -96,6 +96,7 @@ global WebSearchUrlMap :=
 	"aaaaaaaawesomeahk" : ["please ignore this line and don't del this line", ""] 
 
 	,  "default" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
+	,  "url" : ["URL", "http://REPLACEME", 1]
 
 	,  "ahk" : ["AutoHotKey", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
 	,  "py" : ["Python", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]

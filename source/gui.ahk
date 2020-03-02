@@ -115,7 +115,7 @@ gui_change_title(message,color = "") {
 gui_search_add_elements:
 	GuiControl,, Pedersen, %gui_search_title%
 	; Gui, Add, Text, %gui_control_options% %cGray%, %A_Space%%gui_search_title%
-	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn
+	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn, %last_search_str%
 	Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
 	GuiControl, Disable, Pedersen
 	GuiControl, focus, gui_SearchEdit

@@ -473,7 +473,8 @@ MaximizeWindow(timeout=2222, exe_name="") {
 WebSearch(user_input, search_key) {
 	gui_destroy()
 	last_search_str := user_input
-	if IsRawUrl(user_input){
+	from_url_cmd = WebSearchUrlMap[search_key][3]
+	if from_url_cmd and IsRawUrl(user_input){
 		run %user_input%
 		return
 	}
