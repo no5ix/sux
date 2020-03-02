@@ -55,19 +55,19 @@ else
 		gui_destroy()
 		run "https://github.com/no5ix/nox"
 	}
-	else if trim_p = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
-	{
-		; msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
-		; MsgBox, 4,, %msg_str%
-		; IfMsgBox Yes
-		; {
-		; 	gui_destroy()
-		; 	run %ClipBoard%
-		; }
+	; else if trim_p = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
+	; {
+	; 	; msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
+	; 	; MsgBox, 4,, %msg_str%
+	; 	; IfMsgBox Yes
+	; 	; {
+	; 	; 	gui_destroy()
+	; 	; 	run %ClipBoard%
+	; 	; }
 		
-		gui_search_title := "URL"
-		gui_search("http://REPLACEME", 1)
-	}
+	; 	gui_search_title := "URL"
+	; 	gui_search("http://REPLACEME", 1)
+	; }
 	else if trim_p = cmd ; open a command prompt window on the current explorer path 
 	{
 		gui_destroy()
@@ -161,31 +161,35 @@ else
 	;-------------------------------------------------------------------------------
 	;;; web search ;;;
 	;-------------------------------------------------------------------------------
-	else if WebSearchUrlMap.HasKey(trim_p)
-	{
-		; for key, arr in WebSearchUrlMap ; Enumeration is the recommended approach in most cases.
-		; {
-		; 	; Using "Loop", indices must be consecutive numbers from 1 to the number
-		; 	; of elements in the array (or they must be calculated within the loop).
-		; 	; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
-		; 	; Using "for", both the index (or "key") and its associated value
-		; 	; are provided, and the index can be *any* value of your choosing.
-		; 	if trim_p = %key%
-		; 	{
-		; 		gui_search_title := arr[1]
-		; 		gui_search(arr[2])
-		; 		Break
-		; 	}
-		; }
+	; else if WebSearchUrlMap.HasKey(trim_p)
+	; {
+	; 	; for key, arr in WebSearchUrlMap ; Enumeration is the recommended approach in most cases.
+	; 	; {
+	; 	; 	; Using "Loop", indices must be consecutive numbers from 1 to the number
+	; 	; 	; of elements in the array (or they must be calculated within the loop).
+	; 	; 	; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
+	; 	; 	; Using "for", both the index (or "key") and its associated value
+	; 	; 	; are provided, and the index can be *any* value of your choosing.
+	; 	; 	if trim_p = %key%
+	; 	; 	{
+	; 	; 		gui_search_title := arr[1]
+	; 	; 		gui_search(arr[2])
+	; 	; 		Break
+	; 	; 	}
+	; 	; }
 
-		gui_search_title := WebSearchUrlMap[trim_p][1]
-		gui_search(WebSearchUrlMap[trim_p][2])
-	}
+	; 	gui_search_title := WebSearchUrlMap[trim_p][1]
+	; 	gui_search(WebSearchUrlMap[trim_p][2])
+	; }
 	else
 	{
 		word_array := StrSplit(trim_p, A_Space, ,2)
-		if WebSearchUrlMap.HasKey(word_array[1])
-			WebSearch(word_array[2], word_array[1])
+		if WebSearchUrlMap.HasKey(word_array[1]){
+			if !word_array[2]
+				WebSearch(Clipboard, word_array[1])
+			else
+				WebSearch(word_array[2], word_array[1])
+		}
 		else
 			WebSearch(Pedersen, "default")
 	}
