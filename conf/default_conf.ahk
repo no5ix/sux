@@ -77,7 +77,7 @@ global mouse_double_click_timeout := 666
 global StrMap := 
 (join str map
 {
-	"aaaaaaaawesomeahk" : "please ignore this line and don't del this line"
+	"origin_str" : "new_str (don't del this line)"
 
 	,  "[]" : "「」"
 	,  "{}" : "『』"
@@ -89,13 +89,18 @@ global StrMap :=
 ; 					web search url conf  
 ; ---------------------------------------------------------------------o
 
+; special flags:
+; - MULTI : use multi existing web search key
+; - URL : raw url
+
 global WebSearchUrlMap := 
 (join web search url map
 {
-	"aaaaaaaawesomeahk" : ["please ignore this line and don't del this line", ""] 
+	"search_input_key" : ["search_flag", "extra_info (don't del this line)"] 
 
-	,  "default" : ["Google", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
-	,  "url" : ["URL", "http://REPLACEME", 1]
+	,  "default" : ["MULTI", "gg", "bd"]
+
+	,  "url" : ["URL", "http://REPLACEME"]
 
 	,  "ahk" : ["AutoHotKey", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
 	,  "py" : ["Python", "https://www.google.com/search?num=50&safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]

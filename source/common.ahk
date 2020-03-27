@@ -463,14 +463,24 @@ MaximizeWindow(timeout=2222, exe_name="") {
 WebSearch(user_input, search_key) {
 	gui_destroy()
 	last_search_str := user_input
-	from_url_cmd = WebSearchUrlMap[search_key][3]
-	if from_url_cmd and IsRawUrl(user_input){
-		run %user_input%
+	search_flag_index = 1
+	search_flag := WebSearchUrlMap[search_key][search_flag_index]
+	if (search_flag = "URL") {
+		if IsRawUrl(user_input) {
+			run %user_input%
+			return
+		}
+	} else if (search_flag = "MULTI") {
+		for _index, _elem in WebSearchUrlMap[search_key] {
+			if _index != search_flag_index
+				WebSearch(user_input, _elem)
+		}
 		return
 	}
+
 	safe_query := UriEncode(Trim(last_search_str))
-	default_search_url := WebSearchUrlMap[search_key][2]
-	StringReplace, search_final_url, default_search_url, REPLACEME, %safe_query%
+	search_url := WebSearchUrlMap[search_key][2]
+	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 	run %search_final_url%
 }
 
@@ -490,4 +500,9 @@ DisableWin10AutoUpdate(){
 	run, cmd /c net stop bits,,hide
 	run, cmd /c sc config dosvc start= disabled,,hide
 	run, cmd /c net stop dosvc,,hide
+}
+
+
+DebugPrintVal(val) {
+	MsgBox, 4,, %val%
 }
