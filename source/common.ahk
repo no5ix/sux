@@ -243,16 +243,6 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesRightHalfDownTrigger(from)
 	}
-
-	; if is_wgesture_on and (from = "RButton" or from = "MButton")  ; 为了防止触发两次
-	; {
-	; 	Loop
-	; 	{
-	; 		MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
-	; 		if !(MouseY = 0 or MouseY = BottomEdge or MouseX = 0 or MouseX = Right)
-	; 			break ; exits loop when mouse is no longer in the edge
-	; 	}	
-	; }
    return IsOnEdge
 }
 

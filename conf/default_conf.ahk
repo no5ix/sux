@@ -58,9 +58,7 @@ global music_app_path := ""
 global disable_win10_auto_update := 1
 
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
-; global use_touchpad := 0  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
 
-; global is_wgesture_on := 0  ; if u dont use wgesture, set this to 0
 
 global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+V`

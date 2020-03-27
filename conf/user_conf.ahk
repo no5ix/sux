@@ -8,46 +8,61 @@
 
 
 ; ---------------------------------------------------------------------o
-; 					override color code definitions default conf
+; 					override default override color code definitions conf
 ; ---------------------------------------------------------------------o
 
-; global enable_hot_edges := 1  ; when right/middle mouse click or ctrl+8 on the edge (useful for touchpad user)
-; global use_touchpad := 1  ; if u use touchpad, try ctrl+8(or double click it) / double click right mouse
+
+; ---------------------------------------------------------------------o
+; 					override default override theme conf
+; ---------------------------------------------------------------------o
+
+; ; ; dark theme
+; global nox_width := 620
+; global nox_text_color := cWhite
+; global nox_margin_x := 0
+; global nox_margin_y := 0
+; global nox_bg_color := "424242"
+; global nox_control_color := "616161"
+; global nox_border_shadow_type := classic_shadow_type
+
+; ; ; light theme 
+; global nox_width := 620
+; global nox_text_color := cBlack
+; global nox_margin_x := 0
+; global nox_margin_y := 0
+; global nox_bg_color := "ececec"
+; global nox_control_color := "d9d9d9"
+; global nox_border_shadow_type := modern_shadow_type
+
+
+; ---------------------------------------------------------------------o
+; 					override default override general conf 
+; ---------------------------------------------------------------------o
+
 
 ; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
-; ; if blank, leave a ugly cmd window after open vsc.
-; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
-; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
+; ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
+; global vscode_path := ""
+; global music_app_path := ""
 
+; global disable_win10_auto_update := 1
 
-; ---------------------------------------------------------------------o
-; 					override theme default conf
-; ---------------------------------------------------------------------o
-
-
-
-; ---------------------------------------------------------------------o
-; 					override general default conf 
-; ---------------------------------------------------------------------o
+; global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
 
 
 ; ---------------------------------------------------------------------o
-; 					override replace str map default conf  ( Capslock+Shift+U )
+; 					override default override replace str map conf  ( Capslock+Shift+U )
 ; ---------------------------------------------------------------------o
 
 
-
 ; ---------------------------------------------------------------------o
-; 					override web search url default conf  
+; 					override default override web search url conf  
 ; ---------------------------------------------------------------------o
-
-
-
 
 
 ; ---------------------------------------------------------------------o
-; 					Everything shortCut conf  
+; 					override default Everything shortCut conf  
 ; ---------------------------------------------------------------------o
 
 user_EverythingShortCut(){
@@ -56,7 +71,7 @@ user_EverythingShortCut(){
 }
 
 ; ---------------------------------------------------------------------o
-; 					double click conf  
+; 					override default double click conf  
 ; ---------------------------------------------------------------------o
 
 user_DoubleClickShiftTrigger(){
@@ -71,7 +86,7 @@ user_DoubleClickCtrlTrigger(){
 
 
 ; ---------------------------------------------------------------------o
-; 					hot corners conf  
+; 					override default hot corners conf  
 ; ---------------------------------------------------------------------o
 
 user_HotCornersTopLeftTrigger(){

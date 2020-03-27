@@ -99,16 +99,6 @@ else
 		}
 		MaximizeWindow(1111, "Code.exe")
 	}
-	; else if trim_p = touchpad ; switch touchpad mode
-	; {
-	; 	msg_str := "Would you like to turn " . (use_touchpad ? "off" : "on") . " touchpad mode?"
-	; 	MsgBox, 4,, %msg_str%
-	; 	IfMsgBox Yes
-	; 	{
-	; 		use_touchpad := use_touchpad ? 0 : 1
-	; 		gui_destroy()
-	; 	}
-	; }
 	else if trim_p = rd ; Reload this script
 	{
 		gui_destroy() ; removes the GUI even when the reload fails
