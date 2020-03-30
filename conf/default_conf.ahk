@@ -92,7 +92,6 @@ global StrMap :=
 ; special flags:
 ; - MULTI : use multi existing web search key
 ; - URL : raw url
-
 global WebSearchUrlMap := 
 (join web search url map
 {
