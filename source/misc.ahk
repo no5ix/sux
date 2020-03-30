@@ -127,7 +127,7 @@
 ; - 选中则复制
 ~LButton::
 fake_lb_down = 0
-if (!enable_auto_selection_copy)
+if (!enable_auto_selection_copy or limit_mode)
 	return
 MouseGetPos, xx
 TimeButtonDown = %A_TickCount%
@@ -224,14 +224,11 @@ return
 
 
 ;=====================================================================o
-;                       For Surface:                                 ;|
+;                       For Notebook:                                 ;|
 ;---------------------------------o-----------------------------------o
 
 ; 功能(主要用于笔记本触摸板): 
 ; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中, 也可以打断按住的右键
-;
-; ~ 设置一个时钟，比如 keyboard_double_click_timeout 毫秒，
-; ~ 设置一个计数器，press_cnt，按击次数，每次响应时钟把计数器清 0 复位
 #Persistent
 ^8::
 	is_on_edge := HandleMouseOnEdges("Ctrl+8")
