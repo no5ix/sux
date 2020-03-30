@@ -2,6 +2,7 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+global game_mode := 0
 global limit_mode := 0
 global old_limit_mode := limit_mode
 
