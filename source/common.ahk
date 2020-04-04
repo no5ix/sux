@@ -550,7 +550,7 @@ Set2thMonitorXY() {
 	; DebugPrintVal(second_monitor_min_y)
 	; DebugPrintVal(second_monitor_max_x)
 
-	monitor_xy_conf_str := "`;`; This file is generated, please do not modify `n`n"
+	monitor_xy_conf_str := "`;`; This file is generated, please do not modify`n`n"
 			. "global second_monitor_min_x := " . second_monitor_min_x . " `n"
 			. "global second_monitor_min_y := " . second_monitor_min_y . " `n"
 			. "global second_monitor_max_x := " . second_monitor_max_x . " `n"
