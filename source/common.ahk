@@ -7,23 +7,12 @@ global old_limit_mode := limit_mode
 
 global cur_selected_text := ""
 
-global fake_rb_down := 0
 global fake_lb_down := 0
-global IsTopXOffset := A_ScreenWidth / 3
-
 
 global second_monitor_min_x := 0	
 global second_monitor_min_y := 0	
 global second_monitor_max_x := 0	
 global second_monitor_max_y := 0	
-
-
-global Xmax := 0	
-global Ymax := 0	
-WinGetPos, , , Xmax, Ymax, Program Manager  ; ,  get desktop size (`Program Manager` is the title of the desktop window)
-
-global RightEdge = Xmax - 1
-global BottomEdge = Ymax - 1
 
 global CornerOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
@@ -45,13 +34,14 @@ IsAt_bottom(MouseY, cur_monitor_max_y) {
 	return MouseY > (cur_monitor_max_y - CornerOffset)
 }
 
-; compatible with dual monitor
-IsCorner(cornerID="")
-{
-	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
-
-	if (MouseX < 0 or MouseX >= A_ScreenWidth) {
+GetCurMonitorMinMaxXYArray(cur_mouse_x) {
+	if (cur_mouse_x < 0 or cur_mouse_x >= A_ScreenWidth) {
+		if (second_monitor_min_x == 0) {  ; means have 2 same resolution monitor
+			second_monitor_min_x := cur_mouse_x < 0 ? -A_ScreenWidth : A_ScreenWidth
+			second_monitor_max_x := cur_mouse_x < 0 ? 0 : (2 * A_ScreenWidth)
+			second_monitor_min_y := 0
+			second_monitor_max_y := A_ScreenHeight
+		}
 		cur_monitor_min_x := second_monitor_min_x	
 		cur_monitor_min_y := second_monitor_min_y	
 		cur_monitor_max_x := second_monitor_max_x	
@@ -62,24 +52,34 @@ IsCorner(cornerID="")
 		cur_monitor_max_x := A_ScreenWidth	
 		cur_monitor_max_y := A_ScreenHeight
 	}
+	return [cur_monitor_min_x, cur_monitor_max_x, cur_monitor_min_y, cur_monitor_max_y]
+}
+
+; compatible with dual monitor
+IsCorner(cornerID="")
+{
+	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+
+	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
 
 	if (cornerID = "TopLeft"){
-		return IsAt_left(MouseX, cur_monitor_min_x) and IsAt_top(MouseY, cur_monitor_min_y) 
+		return IsAt_left(MouseX, min_max_xy_arr[1]) and IsAt_top(MouseY, min_max_xy_arr[3]) 
 	}
 	else if (cornerID = "TopRight"){
-		return IsAt_right(MouseX, cur_monitor_max_x) and IsAt_top(MouseY, cur_monitor_min_y) 
+		return IsAt_right(MouseX, min_max_xy_arr[2]) and IsAt_top(MouseY, min_max_xy_arr[3]) 
 	}
 	else if (cornerID = "BottomLeft"){
-		return IsAt_left(MouseX, cur_monitor_min_x) and IsAt_bottom(MouseY, cur_monitor_max_y)
+		return IsAt_left(MouseX, min_max_xy_arr[1]) and IsAt_bottom(MouseY, min_max_xy_arr[4])
 	}
 	else if  (cornerID = "BottomRight") {
-		return IsAt_right(MouseX, cur_monitor_max_x) and IsAt_bottom(MouseY, cur_monitor_max_y)
+		return IsAt_right(MouseX, min_max_xy_arr[2]) and IsAt_bottom(MouseY, min_max_xy_arr[4])
 	}
 	else{
-		CornerTopLeft := MouseY < (cur_monitor_min_y + CornerOffset) and MouseX < (cur_monitor_min_x + CornerOffset)	
-		CornerTopRight := MouseY < (cur_monitor_min_y + CornerOffset) and MouseX > (cur_monitor_max_x - CornerOffset)  
-		CornerBottomLeft := MouseY > (cur_monitor_max_y - CornerOffset) and MouseX < (cur_monitor_min_x + CornerOffset)
-		CornerBottomRight := MouseY > (cur_monitor_max_y - CornerOffset) and MouseX > (cur_monitor_max_x - CornerOffset) 
+		CornerTopLeft := IsAt_top(MouseY, min_max_xy_arr[3]) and IsAt_left(MouseX, min_max_xy_arr[1])	
+		CornerTopRight := IsAt_top(MouseY, min_max_xy_arr[3]) and IsAt_right(MouseX, min_max_xy_arr[2])  
+		CornerBottomLeft := IsAt_bottom(MouseY, min_max_xy_arr[4]) and IsAt_left(MouseX, min_max_xy_arr[1])
+		CornerBottomRight := IsAt_bottom(MouseY, min_max_xy_arr[4]) and IsAt_right(MouseX, min_max_xy_arr[2]) 
 		return (CornerTopLeft or CornerTopRight or CornerBottomLeft or CornerBottomRight)
 	}
 }
@@ -235,9 +235,11 @@ HandleMouseOnEdges(from) {
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
+	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
+
 	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 	IsOnEdge := 0
-	if (MouseY = 0)
+	if (MouseY = min_max_xy_arr[3])
 	{
 		IsOnEdge = 1
 		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
@@ -245,7 +247,7 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesTopHalfRightTrigger(from)
 	}
-	else if (MouseY = BottomEdge)
+	else if (MouseY = min_max_xy_arr[4] - 1)
 	{
 		IsOnEdge = 1
 		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
@@ -253,7 +255,7 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesBottomHalfRightTrigger(from)
 	}
-	else if (MouseX = 0)
+	else if (MouseX = min_max_xy_arr[1])
 	{
 		IsOnEdge = 1
 		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight / 2)
@@ -261,7 +263,7 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesLeftHalfDownTrigger(from)
 	}
-	else if (MouseX = RightEdge)
+	else if (MouseX = min_max_xy_arr[2] - 1)
 	{
 		IsOnEdge = 1
 		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight/ 2)

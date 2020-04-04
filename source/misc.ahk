@@ -236,13 +236,6 @@ return
 		return
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 	SetMouseDelay, 0
-	; if fake_rb_down
-	; {
-	; 	fake_rb_down = 0
-	; 	Click Up Right
-	; 	ToolTipWithTimer("simulate click up right finished.", 1111)
-	; 	return
-	; }
 	fake_lb_down = 1
 	Click Down
 	ToolTipWithTimer("simulate click DOWN.", 2222)

@@ -174,8 +174,11 @@ HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
 		; ToolTipWithTimer("To The Top ...", 1111)
 		; Send, ^{Home}
-		ToolTipWithTimer("Launching Music App ...", 1111)
-		run %music_app_path%
+		; ToolTipWithTimer("Launching Music App ...", 1111)
+		; run %music_app_path%
+		Send, #e
+		ToolTipWithTimer("Launching File Explorer ...", 1111)
+		MaximizeWindow(1111, "Explorer.exe")
 	}
 	; else if(from = "RButton"){
 	; 	Send, #e
@@ -190,7 +193,10 @@ HotEdgesBottomHalfLeftTrigger(from){
 		; MaximizeWindow(1111, "Explorer.exe")
 		; ToolTipWithTimer("To The Bottom ...", 1111)
 		; Send, ^{End}
-		Send, #m
+		; Send, #i
+		Send, ^+{Esc}
+		ToolTipWithTimer("Launching Task Manager ...", 1111)
+		MaximizeWindow(1111, "taskmgr.exe")
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^+{Esc}
@@ -220,10 +226,7 @@ HotEdgesLeftHalfUpTrigger(from){
 }
 HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #{Tab}
-		; ToolTipWithTimer("Launching Music App ...", 1111)
-		; run %music_app_path%
-		; Send, #i
+		Send, #{Left}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Left}
@@ -239,7 +242,7 @@ HotEdgesRightHalfUpTrigger(from){
 }
 HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #a
+		Send, #{Right}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Right}
