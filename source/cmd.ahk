@@ -126,25 +126,25 @@ else
 	;         UpdateNox()
 	;     }
 	; }
-	else if trim_p = game ; turn on/off game mode
-	{
-		msg_str := "Would you like to turn " . (game_mode ? "off" : "on") . " game mode?"
-		MsgBox, 4,, %msg_str%
-		IfMsgBox Yes
-		{
-			gui_destroy()
-			game_mode := game_mode ? 0 : 1
-			limit_mode := game_mode
-			if game_mode {
-				if enable_hot_corners
-					SetTimer, LimitModeWhenFullScreen, Off
-				MsgBox, Double Shift is disabled in game mode`, you can CapsLock+X to open nox input box.
-			} else {
-				if enable_hot_corners
-					SetTimer, LimitModeWhenFullScreen, 88
-			}
-		}
-	}
+	; else if trim_p = game ; turn on/off game mode
+	; {
+	; 	msg_str := "Would you like to turn " . (game_mode ? "off" : "on") . " game mode?"
+	; 	MsgBox, 4,, %msg_str%
+	; 	IfMsgBox Yes
+	; 	{
+	; 		gui_destroy()
+	; 		game_mode := game_mode ? 0 : 1
+	; 		limit_mode := game_mode
+	; 		if game_mode {
+	; 			if enable_hot_corners
+	; 				SetTimer, LimitModeWhenFullScreen, Off
+	; 			MsgBox, Double Shift is disabled in game mode`, you can CapsLock+X to open nox input box.
+	; 		} else {
+	; 			if enable_hot_corners
+	; 				SetTimer, LimitModeWhenFullScreen, 88
+	; 		}
+	; 	}
+	; }
 	else if trim_p = wau ; turn on/off disable win10 auto update
 	{
 		msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
