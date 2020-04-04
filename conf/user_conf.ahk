@@ -43,13 +43,12 @@
 ; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
 ; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
-; global music_app_path := ""
+
+; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 
 ; global disable_win10_auto_update := 1
 
 ; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
-
-
 
 ; ---------------------------------------------------------------------o
 ; 					override default override replace str map conf  ( Capslock+Shift+U )

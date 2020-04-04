@@ -60,10 +60,14 @@ global disable_win10_auto_update := 1
 
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
+global enable_hot_corners := 1  ; ; when cursor hover on the corner
+global second_monitor_min_x := 0	
+global second_monitor_min_y := 0	
+global second_monitor_max_x := 0	
+global second_monitor_max_y := 0	
 
 global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
-global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
@@ -226,7 +230,11 @@ HotEdgesLeftHalfUpTrigger(from){
 }
 HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #{Left}
+		; Send, #{Left}
+		Send {LWin Down}
+		Send, {Left}
+		Sleep, 111
+		Send {LWin Up}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Left}
@@ -242,7 +250,11 @@ HotEdgesRightHalfUpTrigger(from){
 }
 HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #{Right}
+		; Send, #{Right}
+		Send {LWin Down}
+		Send, {Right}
+		Sleep, 111
+		Send {LWin Up}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Right}

@@ -9,12 +9,7 @@ global cur_selected_text := ""
 
 global fake_lb_down := 0
 
-global second_monitor_min_x := 0	
-global second_monitor_min_y := 0	
-global second_monitor_max_x := 0	
-global second_monitor_max_y := 0	
-
-global CornerOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
+global CornerEdgeOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
 global trim_p = ""
 global last_search_str = ""
@@ -22,16 +17,16 @@ global last_search_str = ""
 
 
 IsAt_left(MouseX, cur_monitor_min_x) {
-	return MouseX < (cur_monitor_min_x + CornerOffset)
+	return MouseX < (cur_monitor_min_x + CornerEdgeOffset)
 }
 IsAt_right(MouseX, cur_monitor_max_x) {
-	return MouseX > (cur_monitor_max_x - CornerOffset)  
+	return MouseX > (cur_monitor_max_x - CornerEdgeOffset)  
 }
 IsAt_top(MouseY, cur_monitor_min_y) {
-	return MouseY < (cur_monitor_min_y + CornerOffset)
+	return MouseY < (cur_monitor_min_y + CornerEdgeOffset)
 }
 IsAt_bottom(MouseY, cur_monitor_max_y) {
-	return MouseY > (cur_monitor_max_y - CornerOffset)
+	return MouseY > (cur_monitor_max_y - CornerEdgeOffset)
 }
 
 GetCurMonitorMinMaxXYArray(cur_mouse_x) {
@@ -239,7 +234,7 @@ HandleMouseOnEdges(from) {
 
 	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 	IsOnEdge := 0
-	if (MouseY = min_max_xy_arr[3])
+	if (MouseY < min_max_xy_arr[3] + CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
@@ -247,7 +242,7 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesTopHalfRightTrigger(from)
 	}
-	else if (MouseY = min_max_xy_arr[4] - 1)
+	else if (MouseY > min_max_xy_arr[4] - CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
@@ -255,7 +250,7 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesBottomHalfRightTrigger(from)
 	}
-	else if (MouseX = min_max_xy_arr[1])
+	else if (MouseX < min_max_xy_arr[1] + CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight / 2)
@@ -263,7 +258,7 @@ HandleMouseOnEdges(from) {
 		else
 			HotEdgesLeftHalfDownTrigger(from)
 	}
-	else if (MouseX = min_max_xy_arr[2] - 1)
+	else if (MouseX > min_max_xy_arr[2] - CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight/ 2)
@@ -555,6 +550,17 @@ Set2thMonitorXY() {
 	; DebugPrintVal(second_monitor_min_y)
 	; DebugPrintVal(second_monitor_max_x)
 
+	monitor_xy_conf_str := "`;`; This file is generated, please do not modify `n`n"
+			. "global second_monitor_min_x := " . second_monitor_min_x . " `n"
+			. "global second_monitor_min_y := " . second_monitor_min_y . " `n"
+			. "global second_monitor_max_x := " . second_monitor_max_x . " `n"
+			. "global second_monitor_max_y := " . second_monitor_max_y
+
+	FTPCommandFile := A_ScriptDir "\conf\monitor_xy_conf.ahk"
+	FileDelete %FTPCommandFile%  ; In case previous run was terminated prematurely.
+	FileAppend, %monitor_xy_conf_str%, %FTPCommandFile%
+
+	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
 	gui_destroy()
 	SetTimer, HotCorners, 66
 }

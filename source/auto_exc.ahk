@@ -23,8 +23,10 @@ if enable_hot_corners {
 		MsgBox,,, %msg_str%        
     }
     else {
-        if (monitor_cnt == 2) {
-            msg_str := "You have 2 monitors, if they have two different resolution, please use cmd 'xy' to set the 2th monitor resolustion config. `n`n Would you like to set it later?"
+        if (monitor_cnt == 2 and second_monitor_min_x == 0) {
+            msg_str := "You have 2 monitors, if they have two different resolution,"
+                . " you can use cmd 'xy' to set the 2th monitor resolustion config. `n`n"
+                . " Would you like to set it later(Yes) or now(No)?"
             MsgBox, 4,, %msg_str%   
             IfMsgBox No
                 Set2thMonitorXY()
