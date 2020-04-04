@@ -50,6 +50,7 @@
 
 ; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
 
+
 ; ---------------------------------------------------------------------o
 ; 					override default override replace str map conf  ( Capslock+Shift+U )
 ; ---------------------------------------------------------------------o
