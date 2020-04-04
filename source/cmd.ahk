@@ -126,19 +126,18 @@ else
 	;         UpdateNox()
 	;     }
 	; }
-	; else if trim_p = game ; turn on/off game mode
+	; else if trim_p = limit ; turn on/off limit mode
 	; {
-	; 	msg_str := "Would you like to turn " . (game_mode ? "off" : "on") . " game mode?"
+	; 	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " limit mode?"
 	; 	MsgBox, 4,, %msg_str%
 	; 	IfMsgBox Yes
 	; 	{
 	; 		gui_destroy()
-	; 		game_mode := game_mode ? 0 : 1
-	; 		limit_mode := game_mode
-	; 		if game_mode {
+	; 		limit_mode := limit_mode ? 0 : 1
+	; 		if limit_mode {
 	; 			if enable_hot_corners
 	; 				SetTimer, LimitModeWhenFullScreen, Off
-	; 			MsgBox, Double Shift is disabled in game mode`, you can CapsLock+X to open nox input box.
+	; 			MsgBox, Double Shift is disabled in limit mode`, you can CapsLock+X to open nox input box.
 	; 		} else {
 	; 			if enable_hot_corners
 	; 				SetTimer, LimitModeWhenFullScreen, 88
@@ -154,6 +153,10 @@ else
 			gui_destroy()
 			disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
 		}
+	}
+	else if trim_p = xy ; set second monitor xy for detecting IsCorner()
+	{
+		Set2thMonitorXY()
 	}
 	;-------------------------------------------------------------------------------
 	;;; web search ;;;

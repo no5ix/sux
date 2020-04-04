@@ -11,6 +11,13 @@ global fake_rb_down := 0
 global fake_lb_down := 0
 global IsTopXOffset := A_ScreenWidth / 3
 
+
+global second_monitor_min_x := 0	
+global second_monitor_min_y := 0	
+global second_monitor_max_x := 0	
+global second_monitor_max_y := 0	
+
+
 global Xmax := 0	
 global Ymax := 0	
 WinGetPos, , , Xmax, Ymax, Program Manager  ; ,  get desktop size (`Program Manager` is the title of the desktop window)
@@ -24,36 +31,55 @@ global trim_p = ""
 global last_search_str = ""
 
 
+
+IsAt_left(MouseX, cur_monitor_min_x) {
+	return MouseX < (cur_monitor_min_x + CornerOffset)
+}
+IsAt_right(MouseX, cur_monitor_max_x) {
+	return MouseX > (cur_monitor_max_x - CornerOffset)  
+}
+IsAt_top(MouseY, cur_monitor_min_y) {
+	return MouseY < (cur_monitor_min_y + CornerOffset)
+}
+IsAt_bottom(MouseY, cur_monitor_max_y) {
+	return MouseY > (cur_monitor_max_y - CornerOffset)
+}
+
 ; compatible with dual monitor
 IsCorner(cornerID="")
 {
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
-	; IsOnTop := (MouseY = 0 and ((MouseX > IsTopXOffset and MouseX < A_ScreenWidth - IsTopXOffset) Or ((MouseX > (A_ScreenWidth + IsTopXOffset) and (MouseX < Xmax - IsTopXOffset)))))  					; Boolean stores whether mouse cursor is in top left corner
-	CornerTopLeft := (MouseY < CornerOffset and ((MouseX < CornerOffset) Or ((MouseX < (A_ScreenWidth + CornerOffset) and (MouseX >= A_ScreenWidth)))))  					; Boolean stores whether mouse cursor is in top left corner
-	CornerTopRight := (MouseY < CornerOffset and ((MouseX > Xmax - CornerOffset) Or ((MouseX > (A_ScreenWidth - CornerOffset) and (MouseX < A_ScreenWidth))))) 			; Boolean stores whether mouse cursor is in top right corner
-	CornerBottomLeft := (((MouseX < CornerOffset) Or ((MouseX < (A_ScreenWidth + CornerOffset) and (MouseX >= A_ScreenWidth)))) and MouseY > Ymax - CornerOffset) 			; Boolean stores whether mouse cursor is in bottom left corner
-	CornerBottomRight := (((MouseX > Xmax - CornerOffset) Or ((MouseX > (A_ScreenWidth - CornerOffset) and (MouseX < A_ScreenWidth)))) and MouseY > Ymax - CornerOffset) 	; Boolean stores whether mouse cursor is in top left corner
-	
-	; if (cornerID = "IsOnTop"){
-	; 	return IsOnTop
-	; }
-	; else 
+	if (MouseX < 0 or MouseX >= A_ScreenWidth) {
+		cur_monitor_min_x := second_monitor_min_x	
+		cur_monitor_min_y := second_monitor_min_y	
+		cur_monitor_max_x := second_monitor_max_x	
+		cur_monitor_max_y := second_monitor_max_y	
+	} else {
+		cur_monitor_min_x := 0	
+		cur_monitor_min_y := 0	
+		cur_monitor_max_x := A_ScreenWidth	
+		cur_monitor_max_y := A_ScreenHeight
+	}
+
 	if (cornerID = "TopLeft"){
-		return CornerTopLeft
+		return IsAt_left(MouseX, cur_monitor_min_x) and IsAt_top(MouseY, cur_monitor_min_y) 
 	}
 	else if (cornerID = "TopRight"){
-		return CornerTopRight
+		return IsAt_right(MouseX, cur_monitor_max_x) and IsAt_top(MouseY, cur_monitor_min_y) 
 	}
 	else if (cornerID = "BottomLeft"){
-		return CornerBottomLeft
+		return IsAt_left(MouseX, cur_monitor_min_x) and IsAt_bottom(MouseY, cur_monitor_max_y)
 	}
 	else if  (cornerID = "BottomRight") {
-		return CornerBottomRight
+		return IsAt_right(MouseX, cur_monitor_max_x) and IsAt_bottom(MouseY, cur_monitor_max_y)
 	}
 	else{
+		CornerTopLeft := MouseY < (cur_monitor_min_y + CornerOffset) and MouseX < (cur_monitor_min_x + CornerOffset)	
+		CornerTopRight := MouseY < (cur_monitor_min_y + CornerOffset) and MouseX > (cur_monitor_max_x - CornerOffset)  
+		CornerBottomLeft := MouseY > (cur_monitor_max_y - CornerOffset) and MouseX < (cur_monitor_min_x + CornerOffset)
+		CornerBottomRight := MouseY > (cur_monitor_max_y - CornerOffset) and MouseX > (cur_monitor_max_x - CornerOffset) 
 		return (CornerTopLeft or CornerTopRight or CornerBottomLeft or CornerBottomRight)
 	}
 }
@@ -280,8 +306,7 @@ HotCorners() {				; Timer content
 		}
 		return
 	}
-
-	if IsCorner("TopRight")
+	else if IsCorner("TopRight")
 	{	
 		HotCornersTopRightTrigger()
 		Loop
@@ -291,8 +316,7 @@ HotCorners() {				; Timer content
 		}	
 		return
 	}
-
-	if IsCorner("BottomLeft")
+	else if IsCorner("BottomLeft")
 	{	
 		HotCornersBottomLeftTrigger()
 		Loop
@@ -302,8 +326,7 @@ HotCorners() {				; Timer content
 		}	
 		return
 	}
-
-	if IsCorner("BottomRight")
+	else if IsCorner("BottomRight")
 	{	
 		HotCornersBottomRightTrigger()
 		Loop
@@ -504,5 +527,32 @@ DisableWin10AutoUpdate(){
 
 
 DebugPrintVal(val) {
-	MsgBox, 4,, %val%
+	MsgBox,,, %val%
+}
+
+
+Set2thMonitorXY() {
+	SetTimer, HotCorners, Off
+	
+	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+	msg_str := "Please move mouse to the second monitor left-bottom corner, press enter when u are ready."
+	MsgBox,,, %msg_str%
+	MouseGetPos, lbX, lbY
+
+	second_monitor_min_x := lbX
+	second_monitor_max_y := lbY	
+	; DebugPrintVal(second_monitor_min_x)
+	; DebugPrintVal(second_monitor_max_y)
+
+	msg_str := "Please move mouse to the second monitor right-top corner, press enter when u are ready."
+	MsgBox,,, %msg_str%
+	MouseGetPos, rtX, rtY 	
+	
+	second_monitor_min_y := rtY	
+	second_monitor_max_x := rtX
+	; DebugPrintVal(second_monitor_min_y)
+	; DebugPrintVal(second_monitor_max_x)
+
+	gui_destroy()
+	SetTimer, HotCorners, 66
 }
