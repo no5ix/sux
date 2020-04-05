@@ -509,7 +509,7 @@ WebSearch(user_input, search_key) {
 	safe_query := UriEncode(Trim(last_search_str))
 	search_url := WebSearchUrlMap[search_key][2]
 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-	run %search_final_url%
+	RunWait, %search_final_url%
 }
 
 
