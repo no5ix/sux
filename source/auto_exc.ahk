@@ -35,6 +35,7 @@ if enable_hot_corners {
 		MsgBox,,, %msg_str%        
     }
     else {
+	    #IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
         if (monitor_cnt == 2 and second_monitor_min_x == 0) {
             msg_str := "You have 2 monitors, if they have two different resolution,"
                 . " you can use cmd 'xy' to set the 2th monitor resolustion config. `n`n"

@@ -19,7 +19,6 @@ SetCapsLockState, AlwaysOff
 
 
 #Include %A_ScriptDir%\source\common.ahk
-#Include *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
 
 #Include %A_ScriptDir%\source\auto_exc.ahk
 #Include %A_ScriptDir%\source\gui.ahk
