@@ -694,104 +694,104 @@ IncludeUserConfIFExist() {
 	if !FileExist(user_conf_file) {
 		FileAppend, 
 		(
-		; ; Note: Save with encoding UTF-8 with BOM if possible.
-		; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
-		; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
+; ; Note: Save with encoding UTF-8 with BOM if possible.
+; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
+; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
-		; ; git update-index --assume-unchanged <file>
-		; ; git update-index --no-assume-unchanged <file>
-		; ; git ls-files -v | grep '^h'. 
-
-
-		; ---------------------------------------------------------------------o
-		; 					override default override color code definitions conf
-		; ---------------------------------------------------------------------o
+; ; git update-index --assume-unchanged <file>
+; ; git update-index --no-assume-unchanged <file>
+; ; git ls-files -v | grep '^h'. 
 
 
-		; ---------------------------------------------------------------------o
-		; 					override default override theme conf
-		; ---------------------------------------------------------------------o
-
-		; ; ; dark theme
-		; global nox_width := 620
-		; global nox_text_color := cWhite
-		; global nox_margin_x := 0
-		; global nox_margin_y := 0
-		; global nox_bg_color := "424242"
-		; global nox_control_color := "616161"
-		; global nox_border_shadow_type := classic_shadow_type
-
-		; ; ; light theme 
-		; global nox_width := 620
-		; global nox_text_color := cBlack
-		; global nox_margin_x := 0
-		; global nox_margin_y := 0
-		; global nox_bg_color := "ececec"
-		; global nox_control_color := "d9d9d9"
-		; global nox_border_shadow_type := modern_shadow_type
+; ---------------------------------------------------------------------o
+; 					override default override color code definitions conf
+; ---------------------------------------------------------------------o
 
 
-		; ---------------------------------------------------------------------o
-		; 					override default override general conf 
-		; ---------------------------------------------------------------------o
+; ---------------------------------------------------------------------o
+; 					override default override theme conf
+; ---------------------------------------------------------------------o
+
+; ; ; dark theme
+; global nox_width := 620
+; global nox_text_color := cWhite
+; global nox_margin_x := 0
+; global nox_margin_y := 0
+; global nox_bg_color := "424242"
+; global nox_control_color := "616161"
+; global nox_border_shadow_type := classic_shadow_type
+
+; ; ; light theme 
+; global nox_width := 620
+; global nox_text_color := cBlack
+; global nox_margin_x := 0
+; global nox_margin_y := 0
+; global nox_bg_color := "ececec"
+; global nox_control_color := "d9d9d9"
+; global nox_border_shadow_type := modern_shadow_type
 
 
-		; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
-		; ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
-		; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
-
-		; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
-
-		; global disable_win10_auto_update := 1
-
-		; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
-
-		; global EverythingShortCutFunc := "User_EverythingShortCut"
-		; global DoubleClickShiftTriggerFunc := ""
-		; global DoubleClickAltTriggerFunc := ""
-		; global EverythingShortCutFunc := ""
-		; global DoubleClickCtrlTriggerFunc := ""
-		; global HotEdgesTopHalfLeftTriggerFunc := ""
-		; global HotEdgesTopHalfRightTriggerFunc := ""
-		; global HotEdgesBottomHalfLeftTriggerFunc := ""
-		; global HotEdgesBottomHalfRightTriggerFunc := ""
-		; global HotEdgesLeftHalfUpTriggerFunc := ""
-		; global HotEdgesLeftHalfDownTriggerFunc := ""
-		; global HotEdgesRightHalfUpTriggerFunc := ""
-		; global HotEdgesRightHalfDownTriggerFunc := ""
-		; global HotCornersTopLeftTriggerFunc := ""
-		; global HotCornersTopRightTriggerFunc := ""
-		; global HotCornersBottomLeftTriggerFunc := ""
-		; global HotCornersBottomRightTriggerFunc := ""
+; ---------------------------------------------------------------------o
+; 					override default override general conf 
+; ---------------------------------------------------------------------o
 
 
-		; global enable_hot_corners := 1  ; ; when cursor hover on the corner
+; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+; ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
+; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
 
-		; global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
-		; global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
+; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 
-		; ; millisecond, the smaller the value, the faster you have to double-click
-		; global keyboard_double_click_timeout := 222
-		; global mouse_double_click_timeout := 666
+; global disable_win10_auto_update := 1
+
+; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
+
+; global EverythingShortCutFunc := "User_EverythingShortCut"
+; global DoubleClickShiftTriggerFunc := ""
+; global DoubleClickAltTriggerFunc := ""
+; global EverythingShortCutFunc := ""
+; global DoubleClickCtrlTriggerFunc := ""
+; global HotEdgesTopHalfLeftTriggerFunc := ""
+; global HotEdgesTopHalfRightTriggerFunc := ""
+; global HotEdgesBottomHalfLeftTriggerFunc := ""
+; global HotEdgesBottomHalfRightTriggerFunc := ""
+; global HotEdgesLeftHalfUpTriggerFunc := ""
+; global HotEdgesLeftHalfDownTriggerFunc := ""
+; global HotEdgesRightHalfUpTriggerFunc := ""
+; global HotEdgesRightHalfDownTriggerFunc := ""
+; global HotCornersTopLeftTriggerFunc := ""
+; global HotCornersTopRightTriggerFunc := ""
+; global HotCornersBottomLeftTriggerFunc := ""
+; global HotCornersBottomRightTriggerFunc := ""
 
 
-		; ---------------------------------------------------------------------o
-		; 					override default override replace str map conf  ( Capslock+Shift+U )
-		; ---------------------------------------------------------------------o
+; global enable_hot_corners := 1  ; ; when cursor hover on the corner
+
+; global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
+; global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
+
+; ; millisecond, the smaller the value, the faster you have to double-click
+; global keyboard_double_click_timeout := 222
+; global mouse_double_click_timeout := 666
 
 
-		; ---------------------------------------------------------------------o
-		; 					override default override web search url conf  
-		; ---------------------------------------------------------------------o
+; ---------------------------------------------------------------------o
+; 					override default override replace str map conf  ( Capslock+Shift+U )
+; ---------------------------------------------------------------------o
 
 
-		; ---------------------------------------------------------------------o
-		; 					override default TriggerFunc conf  
-		; ---------------------------------------------------------------------o
+; ---------------------------------------------------------------------o
+; 					override default override web search url conf  
+; ---------------------------------------------------------------------o
 
-		; User_EverythingShortCut() {
-		; 	; u can set your own Everything shortcut here, like ` Send, ^!+e `
-		; }
+
+; ---------------------------------------------------------------------o
+; 					override default TriggerFunc conf  
+; ---------------------------------------------------------------------o
+
+; User_EverythingShortCut() {
+; 	; u can set your own Everything shortcut here, like ` Send, ^!+e `
+; }
 
 		), %user_conf_file%
 	}
