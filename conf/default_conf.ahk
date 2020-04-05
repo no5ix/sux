@@ -60,11 +60,27 @@ global disable_win10_auto_update := 1
 
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
+
+global EverythingShortCutFunc := "Default_EverythingShortCut"
+global DoubleClickShiftTriggerFunc := "Default_DoubleClickShiftTrigger"
+global DoubleClickAltTriggerFunc := "Default_DoubleClickAltTrigger"
+global EverythingShortCutFunc := "Default_EverythingShortCut"
+global DoubleClickCtrlTriggerFunc := "Default_DoubleClickCtrlTrigger"
+global HotEdgesTopHalfLeftTriggerFunc := "Default_HotEdgesTopHalfLeftTrigger"
+global HotEdgesTopHalfRightTriggerFunc := "Default_HotEdgesTopHalfRightTrigger"
+global HotEdgesBottomHalfLeftTriggerFunc := "Default_HotEdgesBottomHalfLeftTrigger"
+global HotEdgesBottomHalfRightTriggerFunc := "Default_HotEdgesBottomHalfRightTrigger"
+global HotEdgesLeftHalfUpTriggerFunc := "Default_HotEdgesLeftHalfUpTrigger"
+global HotEdgesLeftHalfDownTriggerFunc := "Default_HotEdgesLeftHalfDownTrigger"
+global HotEdgesRightHalfUpTriggerFunc := "Default_HotEdgesRightHalfUpTrigger"
+global HotEdgesRightHalfDownTriggerFunc := "Default_HotEdgesRightHalfDownTrigger"
+global HotCornersTopLeftTriggerFunc := "Default_HotCornersTopLeftTrigger"
+global HotCornersTopRightTriggerFunc := "Default_HotCornersTopRightTrigger"
+global HotCornersBottomLeftTriggerFunc := "Default_HotCornersBottomLeftTrigger"
+global HotCornersBottomRightTriggerFunc := "Default_HotCornersBottomRightTrigger"
+
+
 global enable_hot_corners := 1  ; ; when cursor hover on the corner
-global second_monitor_min_x := 0	
-global second_monitor_min_y := 0	
-global second_monitor_max_x := 0	
-global second_monitor_max_y := 0	
 
 global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
@@ -121,182 +137,3 @@ global WebSearchUrlMap :=
 	,  "db" : ["Douban", "https://www.douban.com/search?q=REPLACEME"]
 }
 )
-
-
-; ---------------------------------------------------------------------o
-; 					Everything shortCut conf  
-; ---------------------------------------------------------------------o
-
-EverythingShortCut(){
-	user_EverythingShortCut()
-	if !result
-		Send, ^!+e
-}
-
-; ---------------------------------------------------------------------o
-; 					double click conf  
-; ---------------------------------------------------------------------o
-
-DoubleClickShiftTrigger(){
-	result := user_DoubleClickShiftTrigger()
-	if !result
-		gui_spawn()
-		; gui_spawn(1)
-		; Send, ^!+e
-}
-DoubleClickAltTrigger(){
-	user_DoubleClickAltTrigger()
-	if !result
-		; gui_spawn(1)
-		EverythingShortCut()
-}
-DoubleClickCtrlTrigger(){
-	user_DoubleClickCtrlTrigger()
-}
-
-
-; ---------------------------------------------------------------------o
-;                       hot edge conf 
-; ---------------------------------------------------------------------o
-
-HotEdgesTopHalfLeftTrigger(from){
-	if (from = "Ctrl+8") {
-		; MaxMinWindow()
-		; ToolTipWithTimer("To The Top ...", 1111)
-		; Send, ^{Home}
-		ToolTipWithTimer("Launching Music App ...", 1111)
-		run %music_app_path%
-	}
-	; else if(from = "RButton"){
-	; 	Send, #e
-	; 	ToolTipWithTimer("Launching File Explorer ...", 1111)
-	; 	MaximizeWindow(1111, "Explorer.exe")
-		
-	; }
-}
-HotEdgesTopHalfRightTrigger(from){
-	if (from = "Ctrl+8") {
-		; ToolTipWithTimer("To The Top ...", 1111)
-		; Send, ^{Home}
-		; ToolTipWithTimer("Launching Music App ...", 1111)
-		; run %music_app_path%
-		Send, #e
-		ToolTipWithTimer("Launching File Explorer ...", 1111)
-		MaximizeWindow(1111, "Explorer.exe")
-	}
-	; else if(from = "RButton"){
-	; 	Send, #e
-	; 	ToolTipWithTimer("Launching File Explorer ...", 1111)
-	; 	MaximizeWindow(1111, "Explorer.exe")
-	; }
-}
-HotEdgesBottomHalfLeftTrigger(from){
-	if (from = "Ctrl+8") {
-		; Send, #e
-		; ToolTipWithTimer("Launching File Explorer ...", 1111)
-		; MaximizeWindow(1111, "Explorer.exe")
-		; ToolTipWithTimer("To The Bottom ...", 1111)
-		; Send, ^{End}
-		; Send, #i
-		Send, ^+{Esc}
-		ToolTipWithTimer("Launching Task Manager ...", 1111)
-		MaximizeWindow(1111, "taskmgr.exe")
-	}
-	; else if(from = "RButton"){
-	; 	Send, ^+{Esc}
-	; 	ToolTipWithTimer("Launching Task Manager ...", 1111)
-	; 	MaximizeWindow(1111, "taskmgr.exe")
-	; }
-}
-HotEdgesBottomHalfRightTrigger(from){
-	if (from = "Ctrl+8") {
-		Send, #m
-		; ToolTipWithTimer("To The Bottom ...", 1111)
-		; Send, ^{End}
-	}
-	; else if(from = "RButton"){
-	; 	Send, ^+{Esc}
-	; 	ToolTipWithTimer("Launching Task Manager ...", 1111)
-	; 	MaximizeWindow(1111, "taskmgr.exe")
-	; }
-}
-HotEdgesLeftHalfUpTrigger(from){
-	if (from = "Ctrl+8") {
-		; Send, #{Left}
-		Send {LWin Down}
-		Send, {Left}
-		Sleep, 111
-		Send {LWin Up}
-
-	}
-	; else if(from = "RButton"){
-	; 	Send, ^#{Left}
-	; }
-}
-HotEdgesLeftHalfDownTrigger(from){
-	if (from = "Ctrl+8") {
-		Send, #{Tab}
-	}
-	; else if(from = "RButton"){
-	; 	Send, ^#{Left}
-	; }
-}
-HotEdgesRightHalfUpTrigger(from){
-	if (from = "Ctrl+8") {
-		; Send, #{Right}
-		Send {LWin Down}
-		Send, {Right}
-		Sleep, 111
-		Send {LWin Up}
-	}
-	; else if(from = "RButton"){
-	; 	Send, ^#{Right}
-	; }
-}
-HotEdgesRightHalfDownTrigger(from){
-	if (from = "Ctrl+8") {
-		Send, #a
-	}
-	; else if(from = "RButton"){
-	; 	Send, ^#{Right}
-	; }
-}
-
-
-; ---------------------------------------------------------------------o
-; 					hot corners conf  
-; ---------------------------------------------------------------------o
-
-HotCornersTopLeftTrigger(){
-	result := user_HotCornersTopLeftTrigger()
-	if !result
-		; Send, #^{Left}
-		; Send, ^+{Tab}
-		Send {LControl Down}{LShift Down}
-		Send, {Tab}
-		Sleep, 111
-		Send {LControl Up}{LShift Up}
-}
-HotCornersTopRightTrigger(){
-	result := user_HotCornersTopRightTrigger()
-	if !result
-	{
-		; Send, ^{Tab}
-		Send {LControl Down}
-		Send, {Tab}
-		Sleep, 111
-		Send {LControl Up}
-	}
-}
-HotCornersBottomLeftTrigger(){
-	result := user_HotCornersBottomLeftTrigger()
-	if !result
-		; Send, ^{Tab}
-		; Send, !{Tab}
-		Send, {LWin}
-}
-HotCornersBottomRightTrigger(){
-	result := user_HotCornersBottomRightTrigger()
-	if !result
-		Send, !{Tab}
-}

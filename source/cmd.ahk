@@ -19,7 +19,7 @@ else if SubStr(Pedersen, 0, 1) = A_Space
 {
 	;;; everything search(end with space) & default web search;;;
 	gui_destroy()
-	EverythingShortCut()
+	%EverythingShortCutFunc%()
 	WinWaitActive, ahk_exe Everything.exe, , 0.666
 	if ErrorLevel{
 		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
@@ -45,7 +45,7 @@ else
 	{
 		;;; everything search(end with space) & default web search;;;
 		gui_destroy()
-		EverythingShortCut()
+		%EverythingShortCutFunc%()
 		WinWaitActive, ahk_exe Everything.exe, , 2.222
 		if ErrorLevel
 			MsgBox,,, please install Everything and set its shortcut in user_conf.ahk

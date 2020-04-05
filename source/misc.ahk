@@ -23,7 +23,7 @@
 		ToolTipWithTimer("	limit mode is on, double Alt is disabled.", 2000)
 		return
 	}
-	DoubleClickAltTrigger()
+	%DoubleClickAltTriggerFunc%()
 	return
 
 ; -----------------------------------------------------------------------------
@@ -74,7 +74,7 @@
 		ToolTipWithTimer("	limit mode is on, double Shift is disabled.", 2000)
 		return
 	}
-	DoubleClickShiftTrigger()
+	%DoubleClickShiftTriggerFunc%()
 	return
 ; -----------------------------------------------------------------------------
 
@@ -91,7 +91,7 @@
 		ToolTipWithTimer("	limit mode is on, double Ctrl is disabled.", 2000)
 		return
 	}
-	DoubleClickCtrlTrigger()
+	%DoubleClickCtrlTriggerFunc%()
 	return
 
 ; -----------------------------------------------------------------------------

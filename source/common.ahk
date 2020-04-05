@@ -14,6 +14,10 @@ global CornerEdgeOffset := 10  ; adjust tolerance value (pixels to corner) if de
 global trim_p = ""
 global last_search_str = ""
 
+global second_monitor_min_x := 0
+global second_monitor_min_y := 0
+global second_monitor_max_x := 0
+global second_monitor_max_y := 0
 
 
 
@@ -45,33 +49,33 @@ HandleMouseOnEdges(from) {
 	{
 		IsOnEdge = 1
 		if mod(MouseX, cur_monitor_max_x) < (cur_monitor_max_x / 2)
-			HotEdgesTopHalfLeftTrigger(from)
+			%HotEdgesTopHalfLeftTriggerFunc%(from)
 		else
-			HotEdgesTopHalfRightTrigger(from)
+			%HotEdgesTopHalfRightTriggerFunc%(from)
 	}
 	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseX, cur_monitor_max_x) < (cur_monitor_max_x / 2)
-			HotEdgesBottomHalfLeftTrigger(from)
+			%HotEdgesBottomHalfLeftTriggerFunc%(from)
 		else
-			HotEdgesBottomHalfRightTrigger(from)
+			%HotEdgesBottomHalfRightTriggerFunc%(from)
 	}
 	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseY, cur_monitor_max_y) < (cur_monitor_max_y / 2)
-			HotEdgesLeftHalfUpTrigger(from)
+			%HotEdgesLeftHalfUpTriggerFunc%(from)
 		else
-			HotEdgesLeftHalfDownTrigger(from)
+			%HotEdgesLeftHalfDownTriggerFunc%(from)
 	}
 	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
 	{
 		IsOnEdge = 1
 		if mod(MouseY, cur_monitor_max_y) < (cur_monitor_max_y/ 2)
-			HotEdgesRightHalfUpTrigger(from)
+			%HotEdgesRightHalfUpTriggerFunc%(from)
 		else
-			HotEdgesRightHalfDownTrigger(from)
+			%HotEdgesRightHalfDownTriggerFunc%(from)
 	}
    return IsOnEdge
 }
@@ -97,7 +101,7 @@ HotCorners() {				; Timer content
 
 	if IsCorner("TopLeft")
 	{
-		HotCornersTopLeftTrigger()
+		%HotCornersTopLeftTriggerFunc%()
 		Loop 
 		{
 			if ! IsCorner("TopLeft")
@@ -107,7 +111,7 @@ HotCorners() {				; Timer content
 	}
 	else if IsCorner("TopRight")
 	{	
-		HotCornersTopRightTrigger()
+		%HotCornersTopRightTriggerFunc%()
 		Loop
 		{
 			if ! IsCorner("TopRight")
@@ -117,7 +121,7 @@ HotCorners() {				; Timer content
 	}
 	else if IsCorner("BottomLeft")
 	{	
-		HotCornersBottomLeftTrigger()
+		%HotCornersBottomLeftTriggerFunc%()
 		Loop
 		{
 			if ! IsCorner("BottomLeft")
@@ -127,7 +131,7 @@ HotCorners() {				; Timer content
 	}
 	else if IsCorner("BottomRight")
 	{	
-		HotCornersBottomRightTrigger()
+		%HotCornersBottomRightTriggerFunc%()
 		Loop
 		{
 			if ! IsCorner("BottomRight")
@@ -575,4 +579,224 @@ UpdateNox() {
 	RunWait, cmd.exe /c git pull origin master,,hide
 	MsgBox,,, nox update finished. , 6
 	Reload
+}
+
+
+
+
+
+; ---------------------------------------------------------------------o
+; 					Everything shortCut conf  
+; ---------------------------------------------------------------------o
+
+Default_EverythingShortCut(){
+	Send, ^!+e
+}
+
+; ---------------------------------------------------------------------o
+; 					double click conf  
+; ---------------------------------------------------------------------o
+
+Default_DoubleClickShiftTrigger(){
+	gui_spawn()
+}
+Default_DoubleClickAltTrigger(){
+	Default_EverythingShortCut()
+}
+Default_DoubleClickCtrlTrigger(){
+}
+
+
+; ---------------------------------------------------------------------o
+;                       hot edge conf 
+; ---------------------------------------------------------------------o
+
+Default_HotEdgesTopHalfLeftTrigger(from){
+	if (from = "Ctrl+8") {
+		ToolTipWithTimer("Launching Music App ...", 1111)
+		run %music_app_path%
+	}
+}
+Default_HotEdgesTopHalfRightTrigger(from){
+	if (from = "Ctrl+8") {						
+		Send, #e
+		ToolTipWithTimer("Launching File Explorer ...", 1111)
+		MaximizeWindow(1111, "Explorer.exe")
+	}					
+}
+Default_HotEdgesBottomHalfLeftTrigger(from){
+	if (from = "Ctrl+8") {												
+		Send, ^+{Esc}
+		ToolTipWithTimer("Launching Task Manager ...", 1111)
+		MaximizeWindow(1111, "taskmgr.exe")
+	}					
+}
+Default_HotEdgesBottomHalfRightTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #m				
+	}					
+}
+Default_HotEdgesLeftHalfUpTrigger(from){
+	if (from = "Ctrl+8") {		
+		Send {LWin Down}
+		Send, {Left}
+		Sleep, 111
+		Send {LWin Up}
+
+	}			
+}
+Default_HotEdgesLeftHalfDownTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #{Tab}
+	}			
+}
+Default_HotEdgesRightHalfUpTrigger(from){
+	if (from = "Ctrl+8") {		
+		Send {LWin Down}
+		Send, {Right}
+		Sleep, 111
+		Send {LWin Up}
+	}			
+}
+Default_HotEdgesRightHalfDownTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #a
+	}			
+}
+
+
+; ---------------------------------------------------------------------o
+; 					hot corners conf  
+; ---------------------------------------------------------------------o
+
+Default_HotCornersTopLeftTrigger(){
+	Send {LControl Down}{LShift Down}
+	Send, {Tab}
+	Sleep, 111
+	Send {LControl Up}{LShift Up}
+}
+Default_HotCornersTopRightTrigger(){
+	Send {LControl Down}
+	Send, {Tab}
+	Sleep, 111
+	Send {LControl Up}
+}
+Default_HotCornersBottomLeftTrigger(){
+		Send, {LWin}
+}
+Default_HotCornersBottomRightTrigger(){
+		Send, !{Tab}
+}
+
+
+IncludeUserConfIFExist() {
+	user_conf_file := A_ScriptDir "\conf\user_conf.ahk"
+	if !FileExist(user_conf_file) {
+		FileAppend, 
+		(
+		; ; Note: Save with encoding UTF-8 with BOM if possible.
+		; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
+		; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
+
+		; ; git update-index --assume-unchanged <file>
+		; ; git update-index --no-assume-unchanged <file>
+		; ; git ls-files -v | grep '^h'. 
+
+
+		; ---------------------------------------------------------------------o
+		; 					override default override color code definitions conf
+		; ---------------------------------------------------------------------o
+
+
+		; ---------------------------------------------------------------------o
+		; 					override default override theme conf
+		; ---------------------------------------------------------------------o
+
+		; ; ; dark theme
+		; global nox_width := 620
+		; global nox_text_color := cWhite
+		; global nox_margin_x := 0
+		; global nox_margin_y := 0
+		; global nox_bg_color := "424242"
+		; global nox_control_color := "616161"
+		; global nox_border_shadow_type := classic_shadow_type
+
+		; ; ; light theme 
+		; global nox_width := 620
+		; global nox_text_color := cBlack
+		; global nox_margin_x := 0
+		; global nox_margin_y := 0
+		; global nox_bg_color := "ececec"
+		; global nox_control_color := "d9d9d9"
+		; global nox_border_shadow_type := modern_shadow_type
+
+
+		; ---------------------------------------------------------------------o
+		; 					override default override general conf 
+		; ---------------------------------------------------------------------o
+
+
+		; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
+		; ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
+		; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
+
+		; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
+
+		; global disable_win10_auto_update := 1
+
+		; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
+
+		; global EverythingShortCutFunc := "User_EverythingShortCut"
+		; global DoubleClickShiftTriggerFunc := ""
+		; global DoubleClickAltTriggerFunc := ""
+		; global EverythingShortCutFunc := ""
+		; global DoubleClickCtrlTriggerFunc := ""
+		; global HotEdgesTopHalfLeftTriggerFunc := ""
+		; global HotEdgesTopHalfRightTriggerFunc := ""
+		; global HotEdgesBottomHalfLeftTriggerFunc := ""
+		; global HotEdgesBottomHalfRightTriggerFunc := ""
+		; global HotEdgesLeftHalfUpTriggerFunc := ""
+		; global HotEdgesLeftHalfDownTriggerFunc := ""
+		; global HotEdgesRightHalfUpTriggerFunc := ""
+		; global HotEdgesRightHalfDownTriggerFunc := ""
+		; global HotCornersTopLeftTriggerFunc := ""
+		; global HotCornersTopRightTriggerFunc := ""
+		; global HotCornersBottomLeftTriggerFunc := ""
+		; global HotCornersBottomRightTriggerFunc := ""
+
+
+		; global enable_hot_corners := 1  ; ; when cursor hover on the corner
+
+		; global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
+		; global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
+
+		; ; millisecond, the smaller the value, the faster you have to double-click
+		; global keyboard_double_click_timeout := 222
+		; global mouse_double_click_timeout := 666
+
+
+		; ---------------------------------------------------------------------o
+		; 					override default override replace str map conf  ( Capslock+Shift+U )
+		; ---------------------------------------------------------------------o
+
+
+		; ---------------------------------------------------------------------o
+		; 					override default override web search url conf  
+		; ---------------------------------------------------------------------o
+
+
+		; ---------------------------------------------------------------------o
+		; 					override default TriggerFunc conf  
+		; ---------------------------------------------------------------------o
+
+		; User_EverythingShortCut() {
+		; 	; u can set your own Everything shortcut here, like ` Send, ^!+e `
+		; }
+
+		), %user_conf_file%
+	}
+	else {
+		#IncludeAgain *i %A_ScriptDir%\conf\user_conf.ahk
+		SetTimer, IncludeUserConfIFExist, off
+	}
 }

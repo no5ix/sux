@@ -16,6 +16,18 @@ if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
 }
 
 
+monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
+if !FileExist(monitor_xy_conf_file) {
+	FileAppend, 
+	(
+	;; This file is generated, please do not modify
+	), %monitor_xy_conf_file%
+}
+
+
+SetTimer, IncludeUserConfIFExist, 66
+
+
 if enable_hot_corners {
     SysGet, monitor_cnt, MonitorCount
     if (monitor_cnt > 2) {
@@ -39,5 +51,7 @@ if enable_hot_corners {
 if limit_mode_when_full_screen
 	SetTimer, LimitModeWhenFullScreen, 88
 
+
 if disable_win10_auto_update
     SetTimer, DisableWin10AutoUpdate, 66666
+
