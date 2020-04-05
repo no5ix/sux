@@ -790,7 +790,7 @@ IncludeUserConfIFExist() {
 ; ---------------------------------------------------------------------o
 
 ; User_EverythingShortCut() {
-; 	; u can set your own Everything shortcut here, like ` Send, ^!+e `
+; 	; u can set your own Everything shortcut here, just like `` Send, ^!+e ``
 ; }
 
 		), %user_conf_file%
