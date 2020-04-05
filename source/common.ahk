@@ -24,16 +24,13 @@ global second_monitor_max_y := 0
 HandleMouseOnEdges(from) {
 	IsOnEdge := 0
 	if (enable_hot_edges = 0){
-		ToolTipWithTimer("	conf.enable_hot_edges is 0, so edge triggers are disabled.", 2000)
-		return IsOnEdge
+		return [IsOnEdge, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
 	}
 	if (limit_mode){
-		ToolTipWithTimer("	limit mode is on, edge triggers are disabled.", 2000)
-		return IsOnEdge
+		return [IsOnEdge, "Notice: limit mode is on, edge triggers are disabled."]
 	}
 	if IsCorner(){
-		ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
-		return IsOnEdge
+		return [IsOnEdge, "Notice: Is Corner, so do NOTHING by edge triggers."]
 	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
@@ -77,7 +74,7 @@ HandleMouseOnEdges(from) {
 		else
 			%HotEdgesRightHalfDownTriggerFunc%(from)
 	}
-   return IsOnEdge
+   return [IsOnEdge, ""]
 }
 
 

@@ -231,12 +231,12 @@ return
 ; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
 #Persistent
 ^8::
-	is_on_edge := HandleMouseOnEdges("Ctrl+8")
-	if is_on_edge = 1
+	result_arr := HandleMouseOnEdges("Ctrl+8")
+	if result_arr[1] = 1
 		return
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 	SetMouseDelay, 0
 	fake_lb_down = 1
 	Click Down
-	ToolTipWithTimer("simulate click DOWN.", 2222)
+	ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
 	return
