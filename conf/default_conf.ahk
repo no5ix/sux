@@ -222,7 +222,12 @@ HotEdgesBottomHalfRightTrigger(from){
 }
 HotEdgesLeftHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #{Tab}
+		; Send, #{Left}
+		Send {LWin Down}
+		Send, {Left}
+		Sleep, 111
+		Send {LWin Up}
+
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Left}
@@ -230,11 +235,7 @@ HotEdgesLeftHalfUpTrigger(from){
 }
 HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		; Send, #{Left}
-		Send {LWin Down}
-		Send, {Left}
-		Sleep, 111
-		Send {LWin Up}
+		Send, #{Tab}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Left}
@@ -242,7 +243,11 @@ HotEdgesLeftHalfDownTrigger(from){
 }
 HotEdgesRightHalfUpTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #a
+		; Send, #{Right}
+		Send {LWin Down}
+		Send, {Right}
+		Sleep, 111
+		Send {LWin Up}
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Right}
@@ -250,11 +255,7 @@ HotEdgesRightHalfUpTrigger(from){
 }
 HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
-		; Send, #{Right}
-		Send {LWin Down}
-		Send, {Right}
-		Sleep, 111
-		Send {LWin Up}
+		Send, #a
 	}
 	; else if(from = "RButton"){
 	; 	Send, ^#{Right}

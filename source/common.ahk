@@ -16,6 +16,128 @@ global last_search_str = ""
 
 
 
+
+HandleMouseOnEdges(from) {
+	IsOnEdge := 0
+	if (enable_hot_edges = 0){
+		ToolTipWithTimer("	conf.enable_hot_edges is 0, so edge triggers are disabled.", 2000)
+		return IsOnEdge
+	}
+	if (limit_mode){
+		ToolTipWithTimer("	limit mode is on, edge triggers are disabled.", 2000)
+		return IsOnEdge
+	}
+	if IsCorner(){
+		ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
+		return IsOnEdge
+	}
+	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+
+	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
+	cur_monitor_min_x := min_max_xy_arr[1]
+	cur_monitor_max_x := min_max_xy_arr[2]
+	cur_monitor_min_y := min_max_xy_arr[3]
+	cur_monitor_max_y := min_max_xy_arr[4]
+
+	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
+	if (MouseY < cur_monitor_min_y + CornerEdgeOffset)
+	{
+		IsOnEdge = 1
+		if mod(MouseX, cur_monitor_max_x) < (cur_monitor_max_x / 2)
+			HotEdgesTopHalfLeftTrigger(from)
+		else
+			HotEdgesTopHalfRightTrigger(from)
+	}
+	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
+	{
+		IsOnEdge = 1
+		if mod(MouseX, cur_monitor_max_x) < (cur_monitor_max_x / 2)
+			HotEdgesBottomHalfLeftTrigger(from)
+		else
+			HotEdgesBottomHalfRightTrigger(from)
+	}
+	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
+	{
+		IsOnEdge = 1
+		if mod(MouseY, cur_monitor_max_y) < (cur_monitor_max_y / 2)
+			HotEdgesLeftHalfUpTrigger(from)
+		else
+			HotEdgesLeftHalfDownTrigger(from)
+	}
+	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
+	{
+		IsOnEdge = 1
+		if mod(MouseY, cur_monitor_max_y) < (cur_monitor_max_y/ 2)
+			HotEdgesRightHalfUpTrigger(from)
+		else
+			HotEdgesRightHalfDownTrigger(from)
+	}
+   return IsOnEdge
+}
+
+
+HotCorners() {				; Timer content 
+	if (limit_mode){
+		return
+	}
+
+	; if IsCorner("IsOnTop"){
+	; 	LButtonDown := GetKeyState("LButton","P")
+	; 	if LButtonDown
+	; 		return
+	; 	HotEdgesTopTrigger()
+	; 	Loop 
+	; 	{
+	; 		if ! IsCorner("IsOnTop")
+	; 			break ; exits loop when mouse is no longer in the corner
+	; 	}
+	; 	return
+	; }
+
+	if IsCorner("TopLeft")
+	{
+		HotCornersTopLeftTrigger()
+		Loop 
+		{
+			if ! IsCorner("TopLeft")
+				break ; exits loop when mouse is no longer in the corner
+		}
+		return
+	}
+	else if IsCorner("TopRight")
+	{	
+		HotCornersTopRightTrigger()
+		Loop
+		{
+			if ! IsCorner("TopRight")
+				break ; exits loop when mouse is no longer in the corner
+		}	
+		return
+	}
+	else if IsCorner("BottomLeft")
+	{	
+		HotCornersBottomLeftTrigger()
+		Loop
+		{
+			if ! IsCorner("BottomLeft")
+				break ; exits loop when mouse is no longer in the corner
+		}	
+		return
+	}
+	else if IsCorner("BottomRight")
+	{	
+		HotCornersBottomRightTrigger()
+		Loop
+		{
+			if ! IsCorner("BottomRight")
+				break ; exits loop when mouse is no longer in the corner
+		}	
+		return
+	}
+}
+
+
 IsAt_left(MouseX, cur_monitor_min_x) {
 	return MouseX < (cur_monitor_min_x + CornerEdgeOffset)
 }
@@ -185,6 +307,7 @@ Morse(timeout = 200) { ;
    }
 }
 
+
 ToolTipWithTimer(msg, delay_for_remove=600)
 {
 	ToolTip, %msg%
@@ -196,6 +319,7 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 	return
 }
 
+
 ClickUpIfLbDown()
 {
 	if fake_lb_down
@@ -206,6 +330,7 @@ ClickUpIfLbDown()
 	}
 }
 
+
 PasteCompatibleWithAutoSelectionCopy() {
     if (enable_auto_selection_copy)
         Send, #v
@@ -213,127 +338,6 @@ PasteCompatibleWithAutoSelectionCopy() {
         Send, ^v
 }
 
-HandleMouseOnEdges(from) {
-	IsOnEdge := 0
-	if (enable_hot_edges = 0){
-		ToolTipWithTimer("	conf.enable_hot_edges is 0, so edge triggers are disabled.", 2000)
-		return -1
-	}
-	if (limit_mode){
-		ToolTipWithTimer("	limit mode is on, edge triggers are disabled.", 2000)
-		return -1
-	}
-	if IsCorner(){
-		ToolTipWithTimer("	Is Corner, so do NOTHING by edge triggers.", 2000)
-		return -1
-	}
-	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
-
-	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
-
-	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
-	IsOnEdge := 0
-	if (MouseY < min_max_xy_arr[3] + CornerEdgeOffset)
-	{
-		IsOnEdge = 1
-		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
-			HotEdgesTopHalfLeftTrigger(from)
-		else
-			HotEdgesTopHalfRightTrigger(from)
-	}
-	else if (MouseY > min_max_xy_arr[4] - CornerEdgeOffset)
-	{
-		IsOnEdge = 1
-		if mod(MouseX, A_ScreenWidth) < (A_ScreenWidth / 2)
-			HotEdgesBottomHalfLeftTrigger(from)
-		else
-			HotEdgesBottomHalfRightTrigger(from)
-	}
-	else if (MouseX < min_max_xy_arr[1] + CornerEdgeOffset)
-	{
-		IsOnEdge = 1
-		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight / 2)
-			HotEdgesLeftHalfUpTrigger(from)
-		else
-			HotEdgesLeftHalfDownTrigger(from)
-	}
-	else if (MouseX > min_max_xy_arr[2] - CornerEdgeOffset)
-	{
-		IsOnEdge = 1
-		if mod(MouseY, A_ScreenHeight) < (A_ScreenHeight/ 2)
-			HotEdgesRightHalfUpTrigger(from)
-		else
-			HotEdgesRightHalfDownTrigger(from)
-	}
-   return IsOnEdge
-}
-
-UpdateNox() {
-	RunWait, cmd.exe /c git pull origin master,,hide
-	MsgBox,,, nox update finished. , 6
-	Reload
-}
-
-HotCorners() {				; Timer content 
-	if (limit_mode){
-		return
-	}
-
-	; if IsCorner("IsOnTop"){
-	; 	LButtonDown := GetKeyState("LButton","P")
-	; 	if LButtonDown
-	; 		return
-	; 	HotEdgesTopTrigger()
-	; 	Loop 
-	; 	{
-	; 		if ! IsCorner("IsOnTop")
-	; 			break ; exits loop when mouse is no longer in the corner
-	; 	}
-	; 	return
-	; }
-
-	if IsCorner("TopLeft")
-	{
-		HotCornersTopLeftTrigger()
-		Loop 
-		{
-			if ! IsCorner("TopLeft")
-				break ; exits loop when mouse is no longer in the corner
-		}
-		return
-	}
-	else if IsCorner("TopRight")
-	{	
-		HotCornersTopRightTrigger()
-		Loop
-		{
-			if ! IsCorner("TopRight")
-				break ; exits loop when mouse is no longer in the corner
-		}	
-		return
-	}
-	else if IsCorner("BottomLeft")
-	{	
-		HotCornersBottomLeftTrigger()
-		Loop
-		{
-			if ! IsCorner("BottomLeft")
-				break ; exits loop when mouse is no longer in the corner
-		}	
-		return
-	}
-	else if IsCorner("BottomRight")
-	{	
-		HotCornersBottomRightTrigger()
-		Loop
-		{
-			if ! IsCorner("BottomRight")
-				break ; exits loop when mouse is no longer in the corner
-		}	
-		return
-	}
-}
 
 Run_AsUser(prms*) {
     ComObjCreate("Shell.Application")
@@ -556,11 +560,19 @@ Set2thMonitorXY() {
 			. "global second_monitor_max_x := " . second_monitor_max_x . " `n"
 			. "global second_monitor_max_y := " . second_monitor_max_y
 
-	FTPCommandFile := A_ScriptDir "\conf\monitor_xy_conf.ahk"
-	FileDelete %FTPCommandFile%  ; In case previous run was terminated prematurely.
-	FileAppend, %monitor_xy_conf_str%, %FTPCommandFile%
+	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
+	FileDelete %monitor_xy_conf_file%  ; In case previous run was terminated prematurely.
+	FileAppend, %monitor_xy_conf_str%, %monitor_xy_conf_file%
+	#IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
 
 	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
 	gui_destroy()
 	SetTimer, HotCorners, 66
+}
+
+
+UpdateNox() {
+	RunWait, cmd.exe /c git pull origin master,,hide
+	MsgBox,,, nox update finished. , 6
+	Reload
 }

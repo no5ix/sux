@@ -228,11 +228,11 @@ return
 ;---------------------------------o-----------------------------------o
 
 ; 功能(主要用于笔记本触摸板): 
-; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中, 也可以打断按住的右键
+; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
 #Persistent
 ^8::
 	is_on_edge := HandleMouseOnEdges("Ctrl+8")
-	if is_on_edge != 0
+	if is_on_edge = 1
 		return
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 	SetMouseDelay, 0
