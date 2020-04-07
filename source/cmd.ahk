@@ -152,6 +152,15 @@ else
 		{
 			gui_destroy()
 			disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
+			if (disable_win10_auto_update == 0) {
+				SetTimer, DisableWin10AutoUpdate, off
+				run, cmd /c sc config wuauserv start= auto,,hide
+				run, cmd /c net start wuauserv,,hide
+			} else {
+				DisableWin10AutoUpdate()
+				SetTimer, DisableWin10AutoUpdate, 66666
+			}
+		
 		}
 	}
 	else if trim_p = xy ; set second monitor xy for detecting IsCorner()
