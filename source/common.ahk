@@ -159,6 +159,7 @@ GetCurMonitorMinMaxXYArray(cur_mouse_x) {
 			second_monitor_max_x := cur_mouse_x < 0 ? 0 : (2 * A_ScreenWidth)
 			second_monitor_min_y := 0
 			second_monitor_max_y := A_ScreenHeight
+			SaveMonitorXyConfToFile()
 		}
 		cur_monitor_min_x := second_monitor_min_x	
 		cur_monitor_min_y := second_monitor_min_y	
@@ -533,6 +534,20 @@ DebugPrintVal(val) {
 }
 
 
+SaveMonitorXyConfToFile() {
+	monitor_xy_conf_str := "`;`; This file is generated, please do not modify`n`n"
+			. "global second_monitor_min_x := " . second_monitor_min_x . " `n"
+			. "global second_monitor_min_y := " . second_monitor_min_y . " `n"
+			. "global second_monitor_max_x := " . second_monitor_max_x . " `n"
+			. "global second_monitor_max_y := " . second_monitor_max_y
+
+	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
+	FileDelete %monitor_xy_conf_file%  ; In case previous run was terminated prematurely.
+	FileAppend, %monitor_xy_conf_str%, %monitor_xy_conf_file%
+	#IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
+}
+
+
 Set2thMonitorXY() {
 	SetTimer, HotCorners, Off
 	
@@ -555,16 +570,7 @@ Set2thMonitorXY() {
 	; DebugPrintVal(second_monitor_min_y)
 	; DebugPrintVal(second_monitor_max_x)
 
-	monitor_xy_conf_str := "`;`; This file is generated, please do not modify`n`n"
-			. "global second_monitor_min_x := " . second_monitor_min_x . " `n"
-			. "global second_monitor_min_y := " . second_monitor_min_y . " `n"
-			. "global second_monitor_max_x := " . second_monitor_max_x . " `n"
-			. "global second_monitor_max_y := " . second_monitor_max_y
-
-	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
-	FileDelete %monitor_xy_conf_file%  ; In case previous run was terminated prematurely.
-	FileAppend, %monitor_xy_conf_str%, %monitor_xy_conf_file%
-	#IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
+	SaveMonitorXyConfToFile()
 
 	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
 	gui_destroy()
