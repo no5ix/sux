@@ -740,7 +740,7 @@ IncludeUserConfIFExist() {
 
 
 ; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
-; ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
+; ; if blank, leave a ugly cmd window after input cmd ``proj``(open nox project with vscode).
 ; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
 
 ; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
@@ -771,7 +771,7 @@ IncludeUserConfIFExist() {
 ; global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
 ; global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
-; global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
+; global enable_auto_selection_copy := 0  ; should use with ``Win+V`` or ``CapsLock+Shift+F``
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 ; global keyboard_double_click_timeout := 222
