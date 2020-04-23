@@ -770,7 +770,7 @@ IncludeUserConfIFExist() {
 
 ; global enable_hot_corners := 1  ; ; when cursor hover on the corner
 
-; global limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
+; global auto_limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 ; global enable_auto_selection_copy := 0  ; should use with ``Win+V`` or ``CapsLock+Shift+F``
 
 ; ; millisecond, the smaller the value, the faster you have to double-click

@@ -49,7 +49,7 @@ if enable_hot_corners {
 }
 
 
-if limit_mode_when_full_screen
+if auto_limit_mode_when_full_screen
 	SetTimer, LimitModeWhenFullScreen, 88
 
 
