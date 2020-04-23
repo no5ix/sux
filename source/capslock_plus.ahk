@@ -3,14 +3,6 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
-;;==================================================================;;
-;;=========================CapsLock's Stuff=========================;;
-;;==================================================================;;
-;; 请某些忽略注释, 代码重新写了, 某些注释是旧的
-; SetCapsLockState, AlwaysOff  ; 如果是跟Host.ahk一起用, 不能写这里, 要写Host.ahk里
-
-; CapsLock::Send, {ESC}                  ; Vimer's love	Capslock = {ESC}
-
 
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI
