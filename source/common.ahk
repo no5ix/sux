@@ -41,11 +41,14 @@ HandleMouseOnEdges(from) {
 	cur_monitor_min_y := min_max_xy_arr[3]
 	cur_monitor_max_y := min_max_xy_arr[4]
 
+	cur_monitor_width := abs(cur_monitor_max_x-cur_monitor_min_x)
+	cur_monitor_height := abs(cur_monitor_max_y-cur_monitor_min_y)
+
 	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 	if (MouseY < cur_monitor_min_y + CornerEdgeOffset)
 	{
 		IsOnEdge = 1
-		if mod(MouseX, cur_monitor_max_x) < (cur_monitor_max_x / 2)
+		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
 			%HotEdgesTopHalfLeftTriggerFunc%(from)
 		else
 			%HotEdgesTopHalfRightTriggerFunc%(from)
@@ -53,7 +56,7 @@ HandleMouseOnEdges(from) {
 	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
 	{
 		IsOnEdge = 1
-		if mod(MouseX, cur_monitor_max_x) < (cur_monitor_max_x / 2)
+		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
 			%HotEdgesBottomHalfLeftTriggerFunc%(from)
 		else
 			%HotEdgesBottomHalfRightTriggerFunc%(from)
@@ -61,7 +64,7 @@ HandleMouseOnEdges(from) {
 	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
 	{
 		IsOnEdge = 1
-		if mod(MouseY, cur_monitor_max_y) < (cur_monitor_max_y / 2)
+		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
 			%HotEdgesLeftHalfUpTriggerFunc%(from)
 		else
 			%HotEdgesLeftHalfDownTriggerFunc%(from)
@@ -69,7 +72,7 @@ HandleMouseOnEdges(from) {
 	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
 	{
 		IsOnEdge = 1
-		if mod(MouseY, cur_monitor_max_y) < (cur_monitor_max_y/ 2)
+		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
 			%HotEdgesRightHalfUpTriggerFunc%(from)
 		else
 			%HotEdgesRightHalfDownTriggerFunc%(from)
