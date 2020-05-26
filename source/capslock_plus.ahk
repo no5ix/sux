@@ -23,7 +23,7 @@ CapsLock::
 	Send, {ESC}
 	return
 
-
+; Capslock::Esc
 
 ;=====================================================================o
 ;                       CapsLock Switcher:                           ;|
@@ -36,7 +36,7 @@ CapsLock & Tab::                                                       ;|
 		SetCapsLockState, AlwaysOff                                      ;|
 	else                                                                 ;|
 		SetCapsLockState, AlwaysOn                                       ;|
-	KeyWait, ``                                                          ;|
+	; KeyWait, ``                                                          ;|
 	return                                                               ;|
 ;---------------------------------------------------------------------o
 
