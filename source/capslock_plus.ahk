@@ -7,13 +7,14 @@
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI
 ;-------------------------------------------------------------------------------
-CapsLock & x::
-	gui_spawn()
-return
+; CapsLock & x::
+; 	gui_spawn()
+; return
 
 
 ; ; screen capture
-CapsLock & c::
+; CapsLock & c::
+^!a::
 	param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
 	DllCall(param)
 return
@@ -30,12 +31,12 @@ CapsLock::
 ;---------------------------------o-----------------------------------o
 ;                    CapsLock + ` | {CapsLock}                       ;|
 ;---------------------------------o-----------------------------------o
-CapsLock & Tab::                                                       ;|
+CapsLock & BackSpace:: 
 	GetKeyState, CapsLockState, CapsLock, T                              ;|
 	if CapsLockState = D                                                 ;|
 		SetCapsLockState, AlwaysOff                                      ;|
 	else                                                                 ;|
-		SetCapsLockState, AlwaysOn                                       ;|
+		SetCapsLockState, AlwaysOn  
 	; KeyWait, ``                                                          ;|
 	return                                                               ;|
 ;---------------------------------------------------------------------o
@@ -43,33 +44,58 @@ CapsLock & Tab::                                                       ;|
 ;;=============================Navigator============================||
 ;===========================;U = PageDown
 ;===========================;H = Left
-CapsLock & f::
-	if getkeystate("shift") = 0
-		Send, ^v
-	else
-		PasteCompatibleWithAutoSelectionCopy()
-	ClickUpIfLbDown()
+; CapsLock & f::
+; 	if getkeystate("shift") = 0
+; 		Send, ^v
+; 	else
+; 		PasteCompatibleWithAutoSelectionCopy()
+; 	ClickUpIfLbDown()
+; 	return
+
+; CapsLock & e::
+; 	if getkeystate("shift") = 0
+; 		Send, {Enter}
+; 	else
+; 		Send, ^a
+; 	ClickUpIfLbDown()
+; 	return
+
+; CapsLock & w::
+; 	if getkeystate("shift") = 0
+; 		Send, ^c
+; 	else
+; 		Send, ^x
+; 	ClickUpIfLbDown()
+; 	return
+
+; CapsLock & s::
+; 	Send, ^s
+; 	ClickUpIfLbDown()
+; 	return
+
+; CapsLock & r::  ; redo/undo
+; 	if getkeystate("shift") = 0
+; 		Send, ^z
+; 	else
+; 		Send, ^y
+; 	return
+
+; CapsLock & d:: 
+; 	if getkeystate("shift") = 0
+; 		Send, {Del}
+; 	else
+; 		Send, {BS}
+; 	return
+
+^+z::
+	Send, ^y
 	return
 
-CapsLock & e::
+CapsLock & `::
 	if getkeystate("shift") = 0
 		Send, {Enter}
 	else
-		Send, ^a
-	ClickUpIfLbDown()
-	return
-
-CapsLock & w::
-	if getkeystate("shift") = 0
-		Send, ^c
-	else
-		Send, ^x
-	ClickUpIfLbDown()
-	return
-
-CapsLock & s::
-	Send, ^s
-	ClickUpIfLbDown()
+		Send, {Del}
 	return
 
 CapsLock & u::
@@ -159,13 +185,6 @@ CapsLock & .::
 		Send, +{End}
 	return
 
-CapsLock & r::  ; redo/undo
-	if getkeystate("shift") = 0
-		Send, ^z
-	else
-		Send, ^y
-	return
-
 CapsLock & p::
 	if getkeystate("shift") = 0
 		Send, +7
@@ -246,13 +265,6 @@ CapsLock & m::
 		Send, ^{Del}
 	else
 		Send, +{End}{Del}
-	return
-
-CapsLock & d:: 
-	if getkeystate("shift") = 0
-		Send, {Del}
-	else
-		Send, {BS}
 	return
 
 ;;==================================================================;;
