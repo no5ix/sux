@@ -31,7 +31,7 @@ CapsLock::
 ;---------------------------------o-----------------------------------o
 ;                    CapsLock + ` | {CapsLock}                       ;|
 ;---------------------------------o-----------------------------------o
-CapsLock & BackSpace:: 
+CapsLock & Esc:: 
 	GetKeyState, CapsLockState, CapsLock, T                              ;|
 	if CapsLockState = D                                                 ;|
 		SetCapsLockState, AlwaysOff                                      ;|
