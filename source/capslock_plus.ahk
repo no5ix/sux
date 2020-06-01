@@ -11,32 +11,30 @@
 ; 	gui_spawn()
 ; return
 
-
-; ; screen capture
-; CapsLock & c::
-#!a::
-	param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
-	DllCall(param)
-return
-
-
 CapsLock::
 	Send, {ESC}
 	return
-
-; Capslock::Esc
 
 ;=====================================================================o
 ;                       CapsLock Switcher:                           ;|
 ;---------------------------------o-----------------------------------o
 ;                    CapsLock + ` | {CapsLock}                       ;|
 ;---------------------------------o-----------------------------------o
-CapsLock & Esc:: 
-	GetKeyState, CapsLockState, CapsLock, T                              ;|
-	if CapsLockState = D                                                 ;|
-		SetCapsLockState, AlwaysOff                                      ;|
-	else                                                                 ;|
-		SetCapsLockState, AlwaysOn  
+CapsLock & `:: 
+	if getkeystate("ctrl") = 0
+	{
+		; ; screen capture
+		param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
+		DllCall(param)
+	}
+	else
+	{
+		GetKeyState, CapsLockState, CapsLock, T                              ;|
+		if CapsLockState = D                                                 ;|
+			SetCapsLockState, AlwaysOff                                      ;|
+		else                                                                 ;|
+			SetCapsLockState, AlwaysOn  
+	}
 	; KeyWait, ``                                                          ;|
 	return                                                               ;|
 ;---------------------------------------------------------------------o
@@ -52,13 +50,13 @@ CapsLock & Esc::
 ; 	ClickUpIfLbDown()
 ; 	return
 
-; CapsLock & e::
-; 	if getkeystate("ctrl") = 0
-; 		Send, {Enter}
-; 	else
-; 		Send, ^a
-; 	ClickUpIfLbDown()
-; 	return
+CapsLock & e::
+	if getkeystate("ctrl") = 0
+		Send, {Enter}
+	else
+		Send, ^y
+	ClickUpIfLbDown()
+	return
 
 ; CapsLock & w::
 ; 	if getkeystate("ctrl") = 0
@@ -80,19 +78,19 @@ CapsLock & Esc::
 ; 		Send, ^y
 ; 	return
 
-; CapsLock & d:: 
-; 	if getkeystate("ctrl") = 0
-; 		Send, {Del}
-; 	else
-; 		Send, {BS}
-; 	return
-
-CapsLock & `::
+CapsLock & d:: 
 	if getkeystate("ctrl") = 0
-		Send, {Enter}
-	else
 		Send, {Del}
+	else
+		Send, {BS}
 	return
+
+; CapsLock & `::
+; 	if getkeystate("ctrl") = 0
+; 		Send, {Enter}
+; 	else
+; 		Send, {Del}
+; 	return
 
 CapsLock & u::
 	if getkeystate("ctrl") = 0
