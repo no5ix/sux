@@ -14,7 +14,7 @@
 
 ; ; screen capture
 ; CapsLock & c::
-^!a::
+#!a::
 	param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
 	DllCall(param)
 return
@@ -45,7 +45,7 @@ CapsLock & BackSpace::
 ;===========================;U = PageDown
 ;===========================;H = Left
 ; CapsLock & f::
-; 	if getkeystate("shift") = 0
+; 	if getkeystate("ctrl") = 0
 ; 		Send, ^v
 ; 	else
 ; 		PasteCompatibleWithAutoSelectionCopy()
@@ -53,7 +53,7 @@ CapsLock & BackSpace::
 ; 	return
 
 ; CapsLock & e::
-; 	if getkeystate("shift") = 0
+; 	if getkeystate("ctrl") = 0
 ; 		Send, {Enter}
 ; 	else
 ; 		Send, ^a
@@ -61,7 +61,7 @@ CapsLock & BackSpace::
 ; 	return
 
 ; CapsLock & w::
-; 	if getkeystate("shift") = 0
+; 	if getkeystate("ctrl") = 0
 ; 		Send, ^c
 ; 	else
 ; 		Send, ^x
@@ -74,32 +74,28 @@ CapsLock & BackSpace::
 ; 	return
 
 ; CapsLock & r::  ; redo/undo
-; 	if getkeystate("shift") = 0
+; 	if getkeystate("ctrl") = 0
 ; 		Send, ^z
 ; 	else
 ; 		Send, ^y
 ; 	return
 
 ; CapsLock & d:: 
-; 	if getkeystate("shift") = 0
+; 	if getkeystate("ctrl") = 0
 ; 		Send, {Del}
 ; 	else
 ; 		Send, {BS}
 ; 	return
 
-^+z::
-	Send, ^y
-	return
-
 CapsLock & `::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {Enter}
 	else
 		Send, {Del}
 	return
 
 CapsLock & u::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, ^{Space}
 	else
 	{
@@ -137,119 +133,119 @@ CapsLock & u::
 	return
 
 CapsLock & Ins::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, +``
 	else
 		Send, +8
 	return
 
 CapsLock & h::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {Left}
 	else
 		Send, +{Left}
 	return
 
 CapsLock & j::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {Down}
 	else
 		Send, +{Down}
 	return
 
 CapsLock & k::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {Up}
 	else
 		Send, +{Up}
 	return
 
 CapsLock & l::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {Right}
 	else
 		Send, +{Right}
 	return
 
 CapsLock & ,::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {Home}
 	else
 		Send, +{Home}
 	return
 
 CapsLock & .::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, {End}
 	else
 		Send, +{End}
 	return
 
 CapsLock & p::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, +7
 	else
 		Send, +3
 	return
 
 CapsLock & y::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, +1
 	else
 		Send, +2
 	return
 
 CapsLock & i::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, ^{Left}
 	else
 		Send, +^{Left}
 	return
 
 CapsLock & o::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, ^{Right}
 	else
 		Send, +^{Right}
 	return
 
 CapsLock & `;::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, _
 	else
 		Send, -
 	return
 
 CapsLock & '::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, =
 	else
 		Send, +=
 	return
 
 CapsLock & /::
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, \
 	else
 		Send, +\
 	return
 
 CapsLock & 9:: 
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, [
 	else
 		Send, {{}
 	return
 
 CapsLock & 0:: 
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, ]
 	else
 		Send, {}}
 	return
 
 CapsLock & n:: 
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 	{
 		; Send, ^{BS}
 		Send, ^+{Left}
@@ -261,7 +257,7 @@ CapsLock & n::
 	return
 
 CapsLock & m:: 
-	if getkeystate("shift") = 0
+	if getkeystate("ctrl") = 0
 		Send, ^{Del}
 	else
 		Send, +{End}{Del}

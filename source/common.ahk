@@ -604,12 +604,12 @@ Default_EverythingShortCut(){
 ; ---------------------------------------------------------------------o
 
 Default_DoubleClickShiftTrigger(){
-	gui_spawn()
 }
 Default_DoubleClickAltTrigger(){
 	Default_EverythingShortCut()
 }
 Default_DoubleClickCtrlTrigger(){
+	gui_spawn()
 }
 
 
