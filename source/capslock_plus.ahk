@@ -51,7 +51,7 @@ CapsLock & `::
 ; 	return
 
 CapsLock & e::
-	if getkeystate("ctrl") = 0
+	if getkeystate("ctrl") = 1
 		Send, {Enter}
 	; else
 	; 	Send, ^y
@@ -79,7 +79,7 @@ CapsLock & e::
 ; 	return
 
 CapsLock & d:: 
-	if getkeystate("ctrl") = 0
+	if getkeystate("ctrl") = 1
 		Send, {Del}
 	; else
 	; 	Send, {BS}
