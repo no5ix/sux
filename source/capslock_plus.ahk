@@ -53,8 +53,8 @@ CapsLock & `::
 CapsLock & e::
 	if getkeystate("ctrl") = 0
 		Send, {Enter}
-	else
-		Send, ^y
+	; else
+	; 	Send, ^y
 	ClickUpIfLbDown()
 	return
 
@@ -81,8 +81,8 @@ CapsLock & e::
 CapsLock & d:: 
 	if getkeystate("ctrl") = 0
 		Send, {Del}
-	else
-		Send, {BS}
+	; else
+	; 	Send, {BS}
 	return
 
 ; CapsLock & `::
