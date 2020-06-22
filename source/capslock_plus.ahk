@@ -45,41 +45,49 @@ CapsLock & `::
 ;;=============================Navigator============================||
 ;===========================;U = PageDown
 ;===========================;H = Left
-; CapsLock & f::
-; 	if getkeystate("shift") = 0
-; 		Send, ^v
-; 	else
-; 		PasteCompatibleWithAutoSelectionCopy()
-; 	ClickUpIfLbDown()
-; 	return
+CapsLock & v::
+	if getkeystate("shift") = 0
+		Send, ^v
+	else
+		PasteCompatibleWithAutoSelectionCopy()
+	ClickUpIfLbDown()
+	return
+
+CapsLock & f::
+	if getkeystate("shift") = 0
+		Send, ^f
+	else
+		Send, ^+f
+	ClickUpIfLbDown()
+	return
 
 CapsLock & e::
 	if getkeystate("shift") = 0
 		Send, {Enter}
 	else
 		Send, ^y
-	; ClickUpIfLbDown()
+	ClickUpIfLbDown()
 	return
 
-; CapsLock & w::
-; 	if getkeystate("shift") = 0
-; 		Send, ^c
-; 	else
-; 		Send, ^x
-; 	ClickUpIfLbDown()
-; 	return
+CapsLock & c::
+	if getkeystate("shift") = 0
+		Send, ^c
+	else
+		Send, ^x
+	ClickUpIfLbDown()
+	return
 
-; CapsLock & s::
-; 	Send, ^s
-; 	ClickUpIfLbDown()
-; 	return
+CapsLock & s::
+	Send, ^s
+	ClickUpIfLbDown()
+	return
 
-; CapsLock & r::  ; redo/undo
-; 	if getkeystate("shift") = 0
-; 		Send, ^z
-; 	else
-; 		Send, ^y
-; 	return
+CapsLock & r::  ; redo/undo
+	if getkeystate("shift") = 0
+		Send, ^z
+	else
+		Send, ^y
+	return
 
 CapsLock & d:: 
 	if getkeystate("shift") = 0
@@ -87,13 +95,6 @@ CapsLock & d::
 	else
 		Send, {BS}
 	return
-
-; CapsLock & `::
-; 	if getkeystate("shift") = 0
-; 		Send, {Enter}
-; 	else
-; 		Send, {Del}
-; 	return
 
 CapsLock & u::
 	if getkeystate("shift") = 0
@@ -253,10 +254,10 @@ CapsLock & 0::
 CapsLock & n:: 
 	if getkeystate("shift") = 0
 	{
-		Send, ^{BS}
-		; Send, ^+{Left}
-		; Sleep, 66
-		; Send, {Del}
+		; Send, ^{BS}
+		Send, ^+{Left}
+		Sleep, 66
+		Send, {Del}
 	}
 	else
 		Send, +{Home}{Del}
