@@ -18,14 +18,15 @@ Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank
 - **web search** : just like Wox/Listary/Alfred
 - **enhanced capslock** : just like Capslock+
 - **double click triggers** (include `Alt`/`Ctrl`/`Shift`) : see default_conf.ahk
-- **auto selection copy** : just like linux terminal
+<!-- - **auto selection copy** : just like linux terminal -->
 - **custom theme.** : two default theme(dark/light), and u can add ur own theme
-- **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk
-- **screen capture** : `Capslock + C`
+<!-- - **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
+- **screen capture** : `Capslock + ```
 <!-- - **game mode** : double Alt then input `game` -->
 - **disable win10 auto update**: see default_conf.ahk `disable_win10_auto_update`
 
-# 设置开机以管理员权限启动
+
+<!-- # 设置开机以管理员权限启动
 
 1. 对“A.exe”创建快捷方式, 然后将这个快捷方式改名为“A” (不用改名为A.lnk, 因为windows的快捷方式默认扩展名就是lnk)
 2. 右键这个快捷方式-> 高级，勾选用管理员身份运行； 
@@ -38,15 +39,15 @@ start C:\Users\b\Desktop\A.lnk
 ```
 createobject("wscript.shell").run "D:\A.bat",0
 ```
-5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中
+5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中 -->
 
 
 # 设置Everything始终以运行次数排序
 
 0. Everything设置如下:  
-    [x] 保存设置和数据到%APPDATA%\Everything目录  
+    [ ] 保存设置和数据到%APPDATA%\Everything目录  
     [x] 随系统自启动  
-    [ ] 以管理员身份运行  
+    [x] 以管理员身份运行  
     [x] Everything服务  
     显示窗口快捷键: `Ctrl+Shift+Alt+E`
 1. 退出Everything
