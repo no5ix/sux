@@ -256,13 +256,13 @@ CapsLock & n::
 	{
 		; Send, ^{BS}
 
-		; Send, ^+{Left}
+		Send, ^+{Left}
 		; Sleep, 66
-		; Send, {Del}
+		Send, {Del}
 		
-		Send, ^{Left}
+		; Send, ^{Left}
 		; Sleep, 66
-		Send, ^{Del}
+		; Send, ^{Del}
 	}
 	else
 		Send, +{Home}{Del}
