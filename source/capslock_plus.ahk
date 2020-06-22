@@ -65,7 +65,12 @@ CapsLock & e::
 	if getkeystate("shift") = 0
 		Send, {Enter}
 	else
-		Send, ^y
+		Send, ^a
+	ClickUpIfLbDown()
+	return
+
+CapsLock & x::
+	Send, ^x
 	ClickUpIfLbDown()
 	return
 
