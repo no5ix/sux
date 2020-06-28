@@ -3,8 +3,6 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
-trim_p := Trim(Pedersen)
-
 
 
 WebSearch(user_input, search_key) {
@@ -30,6 +28,9 @@ WebSearch(user_input, search_key) {
 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 	RunWait, %search_final_url%
 }
+
+
+trim_p := Trim(Pedersen)
 
 
 if !trim_p
