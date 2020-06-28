@@ -140,7 +140,7 @@ else
 	; 			MsgBox, Double Shift is disabled in limit mode`, you can CapsLock+X to open nox input box.
 	; 		} else {
 	; 			if enable_hot_corners
-	; 				SetTimer, LimitModeWhenFullScreen, 88
+	; 				SetTimer, LimitModeWhenFullScreen, 888
 	; 		}
 	; 	}
 	; }

@@ -50,7 +50,7 @@ if enable_hot_corners {
 
 
 if auto_limit_mode_when_full_screen
-	SetTimer, LimitModeWhenFullScreen, 88
+	SetTimer, LimitModeWhenFullScreen, 888
 
 
 if disable_win10_auto_update

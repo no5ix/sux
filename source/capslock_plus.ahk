@@ -55,7 +55,7 @@ CapsLock & e::
 		Send, {Enter}
 	; else
 	; 	Send, ^y
-	ClickUpIfLbDown()
+	; ClickUpIfLbDown()
 	return
 
 ; CapsLock & w::
