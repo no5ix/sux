@@ -489,31 +489,6 @@ MaximizeWindow(timeout=2222, exe_name="") {
 }
 
 
-WebSearch(user_input, search_key) {
-	gui_destroy()
-	last_search_str := user_input
-	search_flag_index = 1
-	search_flag := WebSearchUrlMap[search_key][search_flag_index]
-	if (search_flag = "URL") {
-		if IsRawUrl(user_input) {
-			run %user_input%
-			return
-		}
-	} else if (search_flag = "MULTI") {
-		for _index, _elem in WebSearchUrlMap[search_key] {
-			if _index != search_flag_index
-				WebSearch(user_input, _elem)
-		}
-		return
-	}
-
-	safe_query := UriEncode(Trim(last_search_str))
-	search_url := WebSearchUrlMap[search_key][2]
-	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-	RunWait, %search_final_url%
-}
-
-
 IsRawUrl(user_input){
 	http_str := "http://"
 	https_str := "https://"
@@ -552,8 +527,9 @@ SaveMonitorXyConfToFile() {
 
 
 Set2thMonitorXY() {
-	SetTimer, HotCorners, Off
-	
+	if (enable_hot_corners){
+		SetTimer, HotCorners, Off
+	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	msg_str := "Please move mouse to the second monitor left-bottom corner, press enter when u are ready."
 	MsgBox,,, %msg_str%
@@ -576,8 +552,9 @@ Set2thMonitorXY() {
 	SaveMonitorXyConfToFile()
 
 	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
-	gui_destroy()
-	SetTimer, HotCorners, 66
+	if (enable_hot_corners){
+		SetTimer, HotCorners, %hot_corners_detect_interval%
+	}
 }
 
 
@@ -772,8 +749,9 @@ IncludeUserConfIFExist() {
 
 
 ; global enable_hot_corners := 1  ; ; when cursor hover on the corner
+; global hot_corners_detect_interval := 88
 
-; global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
+; global auto_limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 ; global enable_auto_selection_copy := 0  ; should use with ``Win+V`` or ``CapsLock+Shift+F``
 
 ; ; millisecond, the smaller the value, the faster you have to double-click

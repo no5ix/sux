@@ -6,6 +6,32 @@
 trim_p := Trim(Pedersen)
 
 
+
+WebSearch(user_input, search_key) {
+	gui_destroy()
+	last_search_str := user_input
+	search_flag_index = 1
+	search_flag := WebSearchUrlMap[search_key][search_flag_index]
+	if (search_flag = "URL") {
+		if IsRawUrl(user_input) {
+			run %user_input%
+			return
+		}
+	} else if (search_flag = "MULTI") {
+		for _index, _elem in WebSearchUrlMap[search_key] {
+			if _index != search_flag_index
+				WebSearch(user_input, _elem)
+		}
+		return
+	}
+
+	safe_query := UriEncode(Trim(last_search_str))
+	search_url := WebSearchUrlMap[search_key][2]
+	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+	RunWait, %search_final_url%
+}
+
+
 if !trim_p
 {
 	WebSearch(Clipboard, "default")
@@ -166,6 +192,7 @@ else
 	else if trim_p = xy ; set second monitor xy for detecting IsCorner()
 	{
 		Set2thMonitorXY()
+		gui_destroy()
 	}
 	;-------------------------------------------------------------------------------
 	;;; web search ;;;

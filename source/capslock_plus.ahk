@@ -4,6 +4,8 @@
 
 
 
+SetCapsLockState, AlwaysOff
+
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI
 ;-------------------------------------------------------------------------------
@@ -250,10 +252,10 @@ CapsLock & 0::
 CapsLock & n:: 
 	if getkeystate("ctrl") = 0
 	{
-		; Send, ^{BS}
-		Send, ^+{Left}
-		Sleep, 66
-		Send, {Del}
+		Send, ^{BS}
+		; Send, ^+{Left}
+		; Sleep, 66
+		; Send, {Del}
 	}
 	else
 		Send, +{Home}{Del}

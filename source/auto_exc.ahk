@@ -44,13 +44,13 @@ if enable_hot_corners {
             IfMsgBox No
                 Set2thMonitorXY()
         }
-    	SetTimer, HotCorners, 66
+    	SetTimer, HotCorners, %hot_corners_detect_interval%
     }
 }
 
 
 if auto_limit_mode_when_full_screen
-	SetTimer, LimitModeWhenFullScreen, 888
+	SetTimer, LimitModeWhenFullScreen, 88
 
 
 if disable_win10_auto_update

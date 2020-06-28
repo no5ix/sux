@@ -5,11 +5,10 @@
 
 #NoEnv  ; Recommended for performance and compatibility with future AutoHotkey releases.
 ; #Warn  ; Enable warnings to assist with detecting common errors.
-SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
+; SendMode Input  ; 发现这一行会导致pycharm一直把caps弄得一直处于按住状态, 所以注释了. Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance
 
-SetCapsLockState, AlwaysOff
 -----------------------
 
 
