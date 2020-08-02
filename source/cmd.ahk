@@ -7,7 +7,7 @@
 
 WebSearch(user_input, search_key) {
 	gui_destroy()
-	last_search_str := user_input
+	; last_search_str := user_input
 	search_flag_index = 1
 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
 	if (search_flag = "URL") {
@@ -23,7 +23,7 @@ WebSearch(user_input, search_key) {
 		return
 	}
 
-	safe_query := UriEncode(Trim(last_search_str))
+	safe_query := UriEncode(Trim(user_input))
 	search_url := WebSearchUrlMap[search_key][2]
 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 	RunWait, %search_final_url%
@@ -31,7 +31,7 @@ WebSearch(user_input, search_key) {
 
 
 trim_p := Trim(Pedersen)
-
+last_search_str := trim_p
 
 if !trim_p
 {

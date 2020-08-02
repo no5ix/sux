@@ -11,15 +11,11 @@ global search_urls := 0
 global from_url_cmd := 0
 
 
-gui_spawn(use_copy_this_time=0) {
+gui_spawn() {
 	if gui_state != closed
 	{
 		; If the GUI is already open, close it then reopen it.
 		gui_destroy()
-	}
-	if use_copy_this_time{
-		SaveCurSelectedText()
-		last_search_str := cur_selected_text
 	}
 	gui_state = main
 
@@ -92,19 +88,19 @@ gui_destroy() {
 	WinActivate
 }
 
-gui_change_title(message,color = "") {
-	; If parameter color is omitted, the message is assumed to be an error
-	; message, and given the color red.
-	If color =
-	{
-		global cRed
-		color := cRed
-	}
-	GuiControl,, gui_main_title, %message%
-	Gui, Font, s11 %color%
-	GuiControl, Font, gui_main_title
-	Gui, Font, s10 cffffff ; reset
-}
+; gui_change_title(message,color = "") {
+; 	; If parameter color is omitted, the message is assumed to be an error
+; 	; message, and given the color red.
+; 	If color =
+; 	{
+; 		global cRed
+; 		color := cRed
+; 	}
+; 	GuiControl,, gui_main_title, %message%
+; 	Gui, Font, s11 %color%
+; 	GuiControl, Font, gui_main_title
+; 	Gui, Font, s10 cffffff ; reset
+; }
 
 ;-------------------------------------------------------------------------------
 ; SEARCH ENGINES
@@ -112,53 +108,53 @@ gui_change_title(message,color = "") {
 ;
 ; gui_search_add_elements: Add GUI controls to allow typing of a search query.
 ;
-gui_search_add_elements:
-	GuiControl,, Pedersen, %gui_search_title%
-	; Gui, Add, Text, %gui_control_options% %cGray%, %A_Space%%gui_search_title%
-	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn, %last_search_str%
-	Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
-	GuiControl, Disable, Pedersen
-	GuiControl, focus, gui_SearchEdit
-	Gui, Show, AutoSize
-	return
+; gui_search_add_elements:
+; 	GuiControl,, Pedersen, %gui_search_title%
+; 	; Gui, Add, Text, %gui_control_options% %cGray%, %A_Space%%gui_search_title%
+; 	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn, %last_search_str%
+; 	Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
+; 	GuiControl, Disable, Pedersen
+; 	GuiControl, focus, gui_SearchEdit
+; 	Gui, Show, AutoSize
+; 	return
 
-gui_search(pending_search_url, from_url_cmd_this_time=0) {
-	global
-	if gui_state != search
-	{
-		gui_state = search
-		; if gui_state is "main", then we are coming from the main window and
-		; GUI elements for the search field have not yet been added.
-		Gosub, gui_search_add_elements
-	}
-	from_url_cmd := from_url_cmd_this_time
-	; Assign the pending_search_url to a variable.
-	; The variables will have names search_url1, search_url2, ...
+; gui_search(pending_search_url, from_url_cmd_this_time=0) {
+; 	global
+; 	if gui_state != search
+; 	{
+; 		gui_state = search
+; 		; if gui_state is "main", then we are coming from the main window and
+; 		; GUI elements for the search field have not yet been added.
+; 		Gosub, gui_search_add_elements
+; 	}
+; 	from_url_cmd := from_url_cmd_this_time
+; 	; Assign the pending_search_url to a variable.
+; 	; The variables will have names search_url1, search_url2, ...
 
-	search_urls := search_urls + 1
-	search_url%search_urls% := pending_search_url
-}
+; 	search_urls := search_urls + 1
+; 	search_url%search_urls% := pending_search_url
+; }
 
-gui_SearchEnter:
-	Gui, Submit
-	last_search_str := gui_SearchEdit
-	if from_url_cmd And IsRawUrl(gui_SearchEdit)
-		run %gui_SearchEdit%
-	else{
-		if from_url_cmd
-			safe_query := gui_SearchEdit
-		else
-			safe_query := UriEncode(gui_SearchEdit)
-		if !safe_query
-			safe_query := Clipboard
-		Loop, %search_urls% {
-			StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
-			run %search_final_url%
-		}
-	}
-	search_urls := 0
-	gui_destroy()
-	return
+; gui_SearchEnter:
+; 	Gui, Submit
+; 	last_search_str := gui_SearchEdit
+; 	if from_url_cmd And IsRawUrl(gui_SearchEdit)
+; 		run %gui_SearchEdit%
+; 	else{
+; 		if from_url_cmd
+; 			safe_query := gui_SearchEdit
+; 		else
+; 			safe_query := UriEncode(gui_SearchEdit)
+; 		if !safe_query
+; 			safe_query := Clipboard
+; 		Loop, %search_urls% {
+; 			StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
+; 			run %search_final_url%
+; 		}
+; 	}
+; 	search_urls := 0
+; 	gui_destroy()
+; 	return
 
 
 ;-------------------------------------------------------------------------------
