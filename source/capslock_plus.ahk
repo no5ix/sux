@@ -65,12 +65,15 @@ CapsLock & e::
 	if getkeystate("shift") = 0
 		Send, {Enter}
 	else
-		Send, ^a
+		Send, +8
 	ClickUpIfLbDown()
 	return
 
 CapsLock & x::
-	Send, ^x
+	if getkeystate("shift") = 0
+		Send, ^x
+	else
+		Send, +4
 	ClickUpIfLbDown()
 	return
 
@@ -78,12 +81,16 @@ CapsLock & c::
 	if getkeystate("shift") = 0
 		Send, ^c
 	else
-		Send, ^x
+		; Send, ^x
+		Send, +6
 	ClickUpIfLbDown()
 	return
 
 CapsLock & s::
-	Send, ^s
+	if getkeystate("shift") = 0
+		Send, ^s
+	else
+		Send, +^s
 	ClickUpIfLbDown()
 	return
 
@@ -92,6 +99,21 @@ CapsLock & r::  ; redo/undo
 		Send, ^z
 	else
 		Send, ^y
+	return
+
+CapsLock & Tab:: 
+	if getkeystate("shift") = 0
+		Send, +{Ins}
+	else
+		Send, {Ins}
+	return
+
+CapsLock & w:: 
+	if getkeystate("shift") = 0
+		; Send, +``
+		Send, ^a
+	else
+		Send, +``
 	return
 
 CapsLock & d:: 
@@ -144,12 +166,12 @@ CapsLock & u::
 	; }
 	; return
 
-CapsLock & Ins::
-	if getkeystate("shift") = 0
-		Send, +``
-	else
-		Send, +8
-	return
+; CapsLock & Ins::
+; 	if getkeystate("shift") = 0
+; 		Send, +``
+; 	else
+; 		Send, +8
+; 	return
 
 CapsLock & h::
 	if getkeystate("shift") = 0
