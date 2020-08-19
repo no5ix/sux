@@ -49,7 +49,8 @@ CapsLock & v::
 	if getkeystate("shift") = 0
 		Send, ^v
 	else
-		PasteCompatibleWithAutoSelectionCopy()
+		; PasteCompatibleWithAutoSelectionCopy()
+		Send, +6
 	ClickUpIfLbDown()
 	return
 
@@ -82,7 +83,7 @@ CapsLock & c::
 		Send, ^c
 	else
 		; Send, ^x
-		Send, +6
+		Send, ^/
 	ClickUpIfLbDown()
 	return
 
