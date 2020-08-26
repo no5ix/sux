@@ -81,17 +81,16 @@ CapsLock & e::
 CapsLock & x::
 	if getkeystate("shift") = 0
 		Send, ^x
-	; else
-	; 	Send, +4
+	else
+		Send, +6
 	ClickUpIfLbDown()
 	return
 
 CapsLock & c::
 	if getkeystate("shift") = 0
 		Send, ^c
-	; else
-	; 	; Send, ^x
-	; 	Send, ^/
+	else
+		Send, +4
 	ClickUpIfLbDown()
 	return
 
@@ -126,16 +125,16 @@ CapsLock & d::
 
 CapsLock & y::
 	if getkeystate("shift") = 0
-		Send, +1
+		Send, +8
 	else
-		Send, +2
+		Send, +5
 	return
 
 CapsLock & u::
 	if getkeystate("shift") = 0
-		Send, +8
+		Send, +1
 	else
-		Send, +5
+		Send, +2
 	return
 
 	; if getkeystate("shift") = 0
