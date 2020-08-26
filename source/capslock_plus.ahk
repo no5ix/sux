@@ -48,9 +48,9 @@ CapsLock & `::
 CapsLock & v::
 	if getkeystate("shift") = 0
 		Send, ^v
-	else
+	; else
 		; PasteCompatibleWithAutoSelectionCopy()
-		Send, +6
+		; Send, +6
 	ClickUpIfLbDown()
 	return
 
@@ -62,28 +62,36 @@ CapsLock & f::
 	ClickUpIfLbDown()
 	return
 
+CapsLock & w:: 
+	if getkeystate("shift") = 0
+		Send, ^a
+	else
+		Send, +``
+	return
+
 CapsLock & e::
 	if getkeystate("shift") = 0
 		Send, {Enter}
 	else
-		Send, +8
+		; Send, +4
+		Send, ^/
 	ClickUpIfLbDown()
 	return
 
 CapsLock & x::
 	if getkeystate("shift") = 0
 		Send, ^x
-	else
-		Send, +4
+	; else
+	; 	Send, +4
 	ClickUpIfLbDown()
 	return
 
 CapsLock & c::
 	if getkeystate("shift") = 0
 		Send, ^c
-	else
-		; Send, ^x
-		Send, ^/
+	; else
+	; 	; Send, ^x
+	; 	Send, ^/
 	ClickUpIfLbDown()
 	return
 
@@ -109,14 +117,6 @@ CapsLock & Tab::
 		Send, {Ins}
 	return
 
-CapsLock & w:: 
-	if getkeystate("shift") = 0
-		; Send, +``
-		Send, ^a
-	else
-		Send, +``
-	return
-
 CapsLock & d:: 
 	if getkeystate("shift") = 0
 		Send, {Del}
@@ -124,12 +124,20 @@ CapsLock & d::
 		Send, {BS}
 	return
 
+CapsLock & y::
+	if getkeystate("shift") = 0
+		Send, +1
+	else
+		Send, +2
+	return
+
 CapsLock & u::
 	if getkeystate("shift") = 0
 		Send, +5
 	else
-		Send, +6
+		Send, +8
 	return
+
 	; if getkeystate("shift") = 0
 	; 	Send, ^{Space}
 	; else
@@ -166,13 +174,6 @@ CapsLock & u::
 	; 	ClipSaved := ""   ; Free the memory in case the clipboard was very large.
 	; }
 	; return
-
-; CapsLock & Ins::
-; 	if getkeystate("shift") = 0
-; 		Send, +``
-; 	else
-; 		Send, +8
-; 	return
 
 CapsLock & h::
 	if getkeystate("shift") = 0
@@ -221,13 +222,6 @@ CapsLock & p::
 		Send, +7
 	else
 		Send, +3
-	return
-
-CapsLock & y::
-	if getkeystate("shift") = 0
-		Send, +1
-	else
-		Send, +2
 	return
 
 CapsLock & i::
