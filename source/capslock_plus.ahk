@@ -66,7 +66,7 @@ CapsLock & w::
 	if getkeystate("shift") = 0
 		Send, ^a
 	else
-		Send, +``
+		Send, +``  ; wave line : w
 	return
 
 CapsLock & e::
@@ -74,7 +74,7 @@ CapsLock & e::
 		Send, {Enter}
 	else
 		; Send, +4
-		Send, ^/
+		Send, ^/  ; comment : e
 	ClickUpIfLbDown()
 	return
 
@@ -133,9 +133,9 @@ CapsLock & y::
 
 CapsLock & u::
 	if getkeystate("shift") = 0
-		Send, +5
-	else
 		Send, +8
+	else
+		Send, +5
 	return
 
 	; if getkeystate("shift") = 0
