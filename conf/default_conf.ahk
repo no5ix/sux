@@ -137,5 +137,6 @@ global WebSearchUrlMap :=
 	,  "ph" : ["PornHub", "https://www.pornhub.com/video/search?search=REPLACEME"]
 	,  "db" : ["Douban", "https://www.douban.com/search?q=REPLACEME"]
 	,  "qm" : ["QiMai", "https://www.qimai.cn/search/index/country/cn/search/REPLACEME"]
+	,  "yk" : ["YouKu", "https://so.youku.com/search_video/q_REPLACEME?searchfrom=1"]
 }
 )
