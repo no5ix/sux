@@ -238,7 +238,7 @@ CapsLock & o::
 	return
 
 CapsLock & `;::
-	if GetKeyState("Shift", "P");
+	if GetKeyState("Shift", "P")
  		Send, -
 	else
 		Send, _
