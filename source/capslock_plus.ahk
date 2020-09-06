@@ -22,13 +22,7 @@ CapsLock::
 ;                    CapsLock + ` | {CapsLock}                       ;|
 ;---------------------------------o-----------------------------------o
 CapsLock & `:: 
-	if getkeystate("shift") = 0
-	{
-		; ; screen capture
-		param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
-		DllCall(param)
-	}
-	else
+	if GetKeyState("Shift", "P")
 	{
 		GetKeyState, CapsLockState, CapsLock, T                              ;|
 		if CapsLockState = D                                                 ;|
@@ -38,6 +32,12 @@ CapsLock & `::
 			SetCapsLockState, AlwaysOn
 		}
 	}
+	else
+	{
+		; ; screen capture
+		param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
+		DllCall(param)
+	}
 	; KeyWait, ``                                                          ;|
 	return                                                               ;|
 ;---------------------------------------------------------------------o
@@ -46,7 +46,7 @@ CapsLock & `::
 ;===========================;U = PageDown
 ;===========================;H = Left
 CapsLock & v::
-	if getkeystate("shift") = 0
+	; if GetKeyState("Shift", "P")
 		Send, ^v
 	; else
 		; PasteCompatibleWithAutoSelectionCopy()
@@ -55,89 +55,89 @@ CapsLock & v::
 	return
 
 CapsLock & f::
-	if getkeystate("shift") = 0
-		Send, ^f
-	else
+	if GetKeyState("Shift", "P")
 		Send, ^+f
+	else
+		Send, ^f
 	ClickUpIfLbDown()
 	return
 
 CapsLock & w:: 
-	if getkeystate("shift") = 0
-		Send, ^a
-	else
+	if GetKeyState("Shift", "P")
 		Send, +``  ; wave line : w
+	else
+		Send, ^a
 	return
 
 CapsLock & e::
-	if getkeystate("shift") = 0
-		Send, {Enter}
-	else
-		; Send, +4
+	if GetKeyState("Shift", "P")
 		Send, ^/  ; comment : e
+	else
+		Send, {Enter}
+		; Send, +4
 	ClickUpIfLbDown()
 	return
 
 CapsLock & x::
-	if getkeystate("shift") = 0
-		Send, ^x
-	else
+	if GetKeyState("Shift", "P")
 		Send, +6
+	else
+		Send, ^x
 	ClickUpIfLbDown()
 	return
 
 CapsLock & c::
-	if getkeystate("shift") = 0
-		Send, ^c
-	else
+	if GetKeyState("Shift", "P")
 		Send, +4
+	else
+		Send, ^c
 	ClickUpIfLbDown()
 	return
 
 CapsLock & s::
-	if getkeystate("shift") = 0
-		Send, ^s
-	else
+	if GetKeyState("Shift", "P")
 		Send, +^s
+	else
+		Send, ^s
 	ClickUpIfLbDown()
 	return
 
 CapsLock & r::  ; redo/undo
-	if getkeystate("shift") = 0
-		Send, ^z
-	else
+	if GetKeyState("Shift", "P")
 		Send, ^y
+	else
+		Send, ^z
 	return
 
 CapsLock & Tab:: 
-	if getkeystate("shift") = 0
-		Send, +{Ins}
-	else
+	if GetKeyState("Shift", "P")
 		Send, {Ins}
+	else
+		Send, +{Ins}
 	return
 
 CapsLock & d:: 
-	if getkeystate("shift") = 0
-		Send, {Del}
-	else
+	if GetKeyState("Shift", "P")
 		Send, {BS}
+	else
+		Send, {Del}
 	return
 
 CapsLock & y::
-	if getkeystate("shift") = 0
-		Send, +8
-	else
+	if GetKeyState("Shift", "P")
 		Send, +5
+	else
+		Send, +8
 	return
 
 CapsLock & u::
-	if getkeystate("shift") = 0
-		Send, +1
-	else
+	if GetKeyState("Shift", "P")
 		Send, +2
+	else
+		Send, +1
 	return
 
-	; if getkeystate("shift") = 0
+	; if GetKeyState("Shift", "P")
 	; 	Send, ^{Space}
 	; else
 	; {
@@ -175,105 +175,107 @@ CapsLock & u::
 	; return
 
 CapsLock & h::
-	if getkeystate("shift") = 0
-		Send, {Left}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{Left}
+	else
+		Send, {Left}
 	return
 
 CapsLock & j::
-	if getkeystate("shift") = 0
-		Send, {Down}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{Down}
+	else
+		Send, {Down}
 	return
 
 CapsLock & k::
-	if getkeystate("shift") = 0
-		Send, {Up}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{Up}
+	else
+		Send, {Up}
 	return
 
 CapsLock & l::
-	if getkeystate("shift") = 0
-		Send, {Right}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{Right}
+	else
+		Send, {Right}
 	return
 
 CapsLock & ,::
-	if getkeystate("shift") = 0
-		Send, {Home}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{Home}
+	else
+		Send, {Home}
 	return
 
 CapsLock & .::
-	if getkeystate("shift") = 0
-		Send, {End}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{End}
+	else
+		Send, {End}
 	return
 
 CapsLock & p::
-	if getkeystate("shift") = 0
-		Send, +7
-	else
+	if GetKeyState("Shift", "P")
 		Send, +3
+	else
+		Send, +7
 	return
 
 CapsLock & i::
-	if getkeystate("shift") = 0
-		Send, ^{Left}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +^{Left}
+	else
+		Send, ^{Left}
 	return
 
 CapsLock & o::
-	if getkeystate("shift") = 0
-		Send, ^{Right}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +^{Right}
+	else
+		Send, ^{Right}
 	return
 
 CapsLock & `;::
-	if getkeystate("shift") = 0
-		Send, _
+	if GetKeyState("Shift", "P");
+ 		Send, -
 	else
-		Send, -
+		Send, _
 	return
 
 CapsLock & '::
-	if getkeystate("shift") = 0
-		Send, =
-	else
+	if GetKeyState("Shift", "P")
 		Send, +=
+	else
+		Send, =
 	return
 
 CapsLock & /::
-	if getkeystate("shift") = 0
-		Send, \
-	else
+	if GetKeyState("Shift", "P")
 		Send, +\
+	else
+		Send, \
 	return
 
 CapsLock & 9:: 
-	if getkeystate("shift") = 0
-		Send, [
-	else
+	if GetKeyState("Shift", "P")
 		Send, {{}
+	else
+		Send, [
 	return
 
 CapsLock & 0:: 
-	if getkeystate("shift") = 0
-		Send, ]
-	else
+	if GetKeyState("Shift", "P")
 		Send, {}}
+	else
+		Send, ]
 	return
 
 CapsLock & n:: 
-	if getkeystate("shift") = 0
+	if GetKeyState("Shift", "P")
+		Send, +{Home}{Del}
+	else
 	{
 		; Send, ^{BS}
 
@@ -285,15 +287,13 @@ CapsLock & n::
 		; Sleep, 66
 		; Send, ^{Del}
 	}
-	else
-		Send, +{Home}{Del}
 	return
 
 CapsLock & m:: 
-	if getkeystate("shift") = 0
-		Send, ^{Del}
-	else
+	if GetKeyState("Shift", "P")
 		Send, +{End}{Del}
+	else
+		Send, ^{Del}
 	return
 
 ;;==================================================================;;
