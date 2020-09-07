@@ -62,7 +62,7 @@ global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad use
 
 
 global EverythingShortCutFunc := "Default_EverythingShortCut"
-global DoubleClickShiftTriggerFunc := "Default_DoubleClickShiftTrigger"
+; global DoubleClickShiftTriggerFunc := "Default_DoubleClickShiftTrigger"
 global DoubleClickAltTriggerFunc := "Default_DoubleClickAltTrigger"
 global DoubleClickCtrlTriggerFunc := "Default_DoubleClickCtrlTrigger"
 global EverythingShortCutFunc := "Default_EverythingShortCut"

@@ -585,7 +585,9 @@ Default_DoubleClickShiftTrigger(){
 	%gui_spawn_func%()
 }
 Default_DoubleClickAltTrigger(){
-	Default_EverythingShortCut()
+	; Default_EverythingShortCut()
+	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
+	%gui_spawn_func%()
 }
 Default_DoubleClickCtrlTrigger(){
 }
