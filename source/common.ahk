@@ -599,8 +599,12 @@ Default_DoubleClickCtrlTrigger(){
 
 Default_HotEdgesTopHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {
-		ToolTipWithTimer("Launching Music App ...", 1111)
-		run %music_app_path%
+		; ToolTipWithTimer("Launching Music App ...", 1111)
+		; run %music_app_path%
+		Send, #e
+		ToolTipWithTimer("Launching File Explorer ...", 1111)
+		MaximizeWindow(1111, "Explorer.exe")
+
 	}
 }
 Default_HotEdgesTopHalfRightTrigger(from){
@@ -612,14 +616,17 @@ Default_HotEdgesTopHalfRightTrigger(from){
 }
 Default_HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {												
-		Send, ^+{Esc}
-		ToolTipWithTimer("Launching Task Manager ...", 1111)
-		MaximizeWindow(1111, "taskmgr.exe")
+		; Send, ^+{Esc}
+		; ToolTipWithTimer("Launching Task Manager ...", 1111)
+		; MaximizeWindow(1111, "taskmgr.exe")
+		Send, !{F4}
 	}					
 }
 Default_HotEdgesBottomHalfRightTrigger(from){
 	if (from = "Ctrl+8") {
-		Send, #m				
+		; Send, #m				
+		; Send, #{Up}				
+		Send, !{F4}
 	}					
 }
 Default_HotEdgesLeftHalfUpTrigger(from){
@@ -628,7 +635,6 @@ Default_HotEdgesLeftHalfUpTrigger(from){
 		Send, {Left}
 		Sleep, 111
 		Send {LWin Up}
-
 	}			
 }
 Default_HotEdgesLeftHalfDownTrigger(from){

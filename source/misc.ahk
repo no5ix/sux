@@ -26,6 +26,7 @@
 	%DoubleClickAltTriggerFunc%()
 	return
 
+
 ; -----------------------------------------------------------------------------
 ; ~LShift::
 ; 	ClickUpIfLbDown()
@@ -96,25 +97,27 @@
 
 ; -----------------------------------------------------------------------------
 
-~Ins::
-	ClickUpIfLbDown()
-	if (A_PriorHotkey <> "~Ins" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		KeyWait, Ins
-		return
-	}
-	Send, {F2}
-	return
+; ~Ins::
+; 	ClickUpIfLbDown()
+; 	if (A_PriorHotkey <> "~Ins" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+; 	{
+; 		; Too much time between presses, so this isn't a double-press.
+; 		KeyWait, Ins
+; 		return
+; 	}
+; 	Send, {F2}
+; 	return
 
 
 ~LWin::
 	ClickUpIfLbDown()
 	return
 
+
 ~RWin::
 	ClickUpIfLbDown()
 	return
+
 
 ;---------------------------------------------------------------------o
 
