@@ -9,6 +9,10 @@ WebSearch(user_input, search_key) {
 	gui_destroy()
 	; last_search_str := user_input
 
+	if IsRawUrl(user_input) {
+		search_key := "url"
+	}
+
 	search_flag_index = 1
 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
 	if (search_flag = "URL") {
@@ -231,7 +235,6 @@ else
 				MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
 			else if word_array[2]
 			{
-				
 				last_search_str := Pedersen
 				; Sleep, 88
 				; SendRaw, %trim_p%
