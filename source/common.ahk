@@ -489,12 +489,21 @@ MaximizeWindow(timeout=2222, exe_name="") {
 }
 
 
-IsRawUrl(user_input){
+IsStandardRawUrl(user_input){
 	http_str := "http://"
 	https_str := "https://"
 	return InStr(user_input, http_str) or InStr(user_input, https_str)
 }
 
+
+IsRawUrl(user_input){
+	com_str := ".com"
+	net_str := ".net"
+	cn_str := ".cn"
+	www_str := "www."
+	io_str := ".io"
+	return InStr(user_input, com_str) or InStr(user_input, net_str) or InStr(user_input, cn_str) or InStr(user_input, www_str) or InStr(user_input, io_str) 
+}
 
 DisableWin10AutoUpdate(){
 	; run, cmd /c sc delete wuauserv,,hide

@@ -21,7 +21,7 @@ Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank
 <!-- - **auto selection copy** : just like linux terminal -->
 - **custom theme.** : two default theme(dark/light), and u can add ur own theme
 <!-- - **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
-- **screen capture** : `Capslock + ```
+- **screen capture** : `Capslock + ~`
 <!-- - **game mode** : double Alt then input `game` -->
 - **disable win10 auto update**: see default_conf.ahk `disable_win10_auto_update`
 

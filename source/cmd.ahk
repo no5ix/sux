@@ -8,10 +8,11 @@
 WebSearch(user_input, search_key) {
 	gui_destroy()
 	; last_search_str := user_input
+
 	search_flag_index = 1
 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
 	if (search_flag = "URL") {
-		if IsRawUrl(user_input) {
+		if IsStandardRawUrl(user_input) {
 			run %user_input%
 			return
 		}
@@ -37,30 +38,30 @@ if !trim_p
 {
 	WebSearch(Clipboard, "default")
 }
-else if SubStr(Pedersen, 1, 1) = A_Space
+; else if SubStr(Pedersen, 1, 1) = A_Space
+; ; else if SubStr(Pedersen, 0, 1) = A_Space
+; {
+; 	WebSearch(Pedersen, "default")
+; }
 ; else if SubStr(Pedersen, 0, 1) = A_Space
-{
-	WebSearch(Pedersen, "default")
-}
-else if SubStr(Pedersen, 0, 1) = A_Space
-{
-	;;; everything search(end with space) & default web search;;;
-	gui_destroy()
-	%EverythingShortCutFunc%()
-	WinWaitActive, ahk_exe Everything.exe, , 0.666
-	if ErrorLevel{
-		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-		WebSearch(Pedersen, "default")
-	}
-	else{
-		last_search_str := Pedersen
-		; Sleep, 88
-		; SendRaw, %trim_p%
-		Sleep, 222
-		; SendRaw, %last_search_str%
-		Send, {Blind}{Text}%trim_p%
-	}
-}
+; {
+; 	;;; everything search(end with space) & default web search;;;
+; 	gui_destroy()
+; 	%EverythingShortCutFunc%()
+; 	WinWaitActive, ahk_exe Everything.exe, , 0.666
+; 	if ErrorLevel{
+; 		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+; 		WebSearch(Pedersen, "default")
+; 	}
+; 	else{
+; 		last_search_str := Pedersen
+; 		; Sleep, 88
+; 		; SendRaw, %trim_p%
+; 		Sleep, 222
+; 		; SendRaw, %last_search_str%
+; 		Send, {Blind}{Text}%trim_p%
+; 	}
+; }
 else
 {
 	if trim_p = help ; Tooltip with list of commands
@@ -68,15 +69,15 @@ else
 		GuiControl,, trim_p, ; Clear the input box
 		Gosub, gui_commandlibrary
 	}
-	else if trim_p = ev ; nox official site
-	{
-		;;; everything search(end with space) & default web search;;;
-		gui_destroy()
-		%EverythingShortCutFunc%()
-		WinWaitActive, ahk_exe Everything.exe, , 2.222
-		if ErrorLevel
-			MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-	}
+	; else if trim_p = ev ; Everything
+	; {
+	; 	;;; everything search(end with space) & default web search;;;
+	; 	gui_destroy()
+	; 	%EverythingShortCutFunc%()
+	; 	WinWaitActive, ahk_exe Everything.exe, , 2.222
+	; 	if ErrorLevel
+	; 		MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+	; }
 	else if trim_p = os ; nox official site
 	{
 		gui_destroy()
@@ -221,7 +222,27 @@ else
 	else
 	{
 		word_array := StrSplit(trim_p, A_Space, ,2)
-		if WebSearchUrlMap.HasKey(word_array[1]){
+		if (word_array[1] == "ev") {
+			;;; everything search(end with space) & default web search;;;
+			gui_destroy()
+			%EverythingShortCutFunc%()
+			WinWaitActive, ahk_exe Everything.exe, , 2.222
+			if ErrorLevel
+				MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+			else if word_array[2]
+			{
+				
+				last_search_str := Pedersen
+				; Sleep, 88
+				; SendRaw, %trim_p%
+				Sleep, 222
+				; SendRaw, %last_search_str%
+				ev_search_str := word_array[2]
+				Send, {Blind}{Text}%ev_search_str%
+			}
+
+		}
+		else if WebSearchUrlMap.HasKey(word_array[1]){
 			if !word_array[2]
 				WebSearch(Clipboard, word_array[1])
 			else

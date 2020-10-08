@@ -138,7 +138,7 @@ gui_destroy() {
 ; gui_SearchEnter:
 ; 	Gui, Submit
 ; 	last_search_str := gui_SearchEdit
-; 	if from_url_cmd And IsRawUrl(gui_SearchEdit)
+; 	if from_url_cmd And IsStandardRawUrl(gui_SearchEdit)
 ; 		run %gui_SearchEdit%
 ; 	else{
 ; 		if from_url_cmd
