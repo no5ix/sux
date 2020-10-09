@@ -521,6 +521,37 @@ DebugPrintVal(val) {
 }
 
 
+HandleMonitorConfWhenFirstRun() {
+	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
+	if !FileExist(monitor_xy_conf_file) {
+		FileAppend, 
+		(
+		;; This file is generated, please do not modify
+		), %monitor_xy_conf_file%
+	}
+
+	if enable_hot_corners {
+		SysGet, monitor_cnt, MonitorCount
+		if (monitor_cnt > 2) {
+			msg_str := "You have more than 2 monitors, hot corners will not perform exactly at none primary monitor, so we disable it."
+			MsgBox,,, %msg_str%        
+		}
+		else {
+			#IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
+			if (monitor_cnt == 2 and second_monitor_min_x == 0) {
+				msg_str := "You have 2 monitors, if they have two different resolution,"
+					. " you can use cmd 'xy' to set the 2th monitor resolustion config. `n`n"
+					. " Would you like to set it later(Yes) or now(No)?"
+				MsgBox, 4,, %msg_str%   
+				IfMsgBox No
+					Set2thMonitorXY()
+			}
+			SetTimer, HotCorners, %hot_corners_detect_interval%
+		}
+	}
+}
+
+
 SaveMonitorXyConfToFile() {
 	monitor_xy_conf_str := "`;`; This file is generated, please do not modify`n`n"
 			. "global second_monitor_min_x := " . second_monitor_min_x . " `n"
@@ -801,4 +832,61 @@ IncludeUserConfIFExist() {
 		#IncludeAgain *i %A_ScriptDir%\conf\user_conf.ahk
 		SetTimer, IncludeUserConfIFExist, off
 	}
+}
+
+
+StartNoxWithWindows() {
+	; Clipboard =    ; Empties Clipboard
+	; Send, ^c        ; Copies filename and path
+	; ClipWait 0      ; Waits for copy
+	; SplitPath, Clipboard, Name, Dir, Ext, Name_no_ext, Drive
+
+	msg_str := "Would you like to start nox with windows?"
+	MsgBox, 4,, %msg_str%
+	
+	Name_no_ext := "nox"
+	Name := "nox.ahk"
+	Dir = %A_ScriptDir%
+	nox_ahk_file_path =  %A_ScriptFullPath%
+
+	IfExist, %A_Startup%\%Name_no_ext%.lnk
+	{
+		IfMsgBox No
+		{
+			FileDelete, %A_Startup%\%Name_no_ext%.lnk
+			MsgBox, %Name% removed from the Startup folder.
+		}
+	}
+	Else
+	{
+		IfMsgBox Yes
+		{
+			FileCreateShortcut, "%nox_ahk_file_path%"
+				, %A_Startup%\%Name_no_ext%.lnk
+				, %Dir%   ; Line wrapped using line continuation
+			MsgBox, %Name% added to Startup folder for auto-launch with Windows.
+		}
+	}
+}
+
+
+RunAsAdmin() {
+	full_command_line := DllCall("GetCommandLine", "str")
+	if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
+	{
+		try
+		{
+			if A_IsCompiled
+				Run *RunAs "%A_ScriptFullPath%" /restart
+			else
+				Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
+		}
+		ExitApp
+	}
+}
+
+
+IsFirstTimeRunNox() {
+	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
+	return !FileExist(monitor_xy_conf_file)
 }

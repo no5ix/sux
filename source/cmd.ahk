@@ -196,6 +196,11 @@ else
 		Set2thMonitorXY()
 		gui_destroy()
 	}
+	else if trim_gui_user_input = nw ; start nox with windows
+	{
+		StartNoxWithWindows()
+		gui_destroy()
+	}
 	;-------------------------------------------------------------------------------
 	;;; web search ;;;
 	;-------------------------------------------------------------------------------

@@ -15,15 +15,34 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **personalized configuration** : u can modify user_conf.ahk to override the default configuration
 * **hot edges** : right/middle mouse click or `Ctrl+8` on the edge (useful for touchpad user)
 * **hot corners** : just like mac hot cornes
-* **web search** : just like Wox/Listary/Alfred
+* **web search** : just like Wox/Listary/Alfred, see default_conf.ahk `WebSearchUrlMap`
 * **enhanced capslock** : just like Capslock+
-* **double click triggers** (include `Alt`/`Ctrl`) : see default_conf.ahk, try double click `Alt` to open web search window.
+* **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: `Ctrl+Shift+Alt+E`, see default_conf.ahk : `EverythingShortCutFunc`
+* **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see default_conf.ahk : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
 <!-- * **auto selection copy** : just like linux terminal -->
 * **custom theme.** : two default theme(dark/light), and u can add ur own theme
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
 * **screen capture** : try `Capslock + ~`
 <!-- * **game mode** : double Alt then input `game` -->
-* **disable win10 auto update**: see default_conf.ahk `disable_win10_auto_update`
+* **disable win10 auto update**: see default_conf.ahk : `disable_win10_auto_update`
+* **start with windows support**
+
+
+# CMDs
+
+* `os` : nox official site
+* `nw` : start nox with windows
+* `ev` : run Everything
+* `url` : open an URL
+* `cmd` : open a command prompt window on the current explorer path 
+* `proj` : open this proj with vs code
+* `rd` : reload this script
+* `dir` : open the directory for this script
+<!-- * `conf` : Edit user_conf -->
+* `up` : update nox
+<!-- * `limit` : turn on/off limit mode -->
+* `wau` : turn on/off disable win10 auto update
+* `xy` : set second monitor xy for detecting IsCorner()
 
 
 # How do I put my hotkeys and hotstrings into effect automatically every time I start my PC?
