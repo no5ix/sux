@@ -35,19 +35,19 @@ WebSearch(user_input, search_key) {
 }
 
 
-trim_p := Trim(Pedersen)
-last_search_str := trim_p
+trim_gui_user_input := Trim(GuiUserInput)
+last_search_str := trim_gui_user_input
 
-if !trim_p
+if !trim_gui_user_input
 {
 	WebSearch(Clipboard, "default")
 }
-; else if SubStr(Pedersen, 1, 1) = A_Space
-; ; else if SubStr(Pedersen, 0, 1) = A_Space
+; else if SubStr(GuiUserInput, 1, 1) = A_Space
+; ; else if SubStr(GuiUserInput, 0, 1) = A_Space
 ; {
-; 	WebSearch(Pedersen, "default")
+; 	WebSearch(GuiUserInput, "default")
 ; }
-; else if SubStr(Pedersen, 0, 1) = A_Space
+; else if SubStr(GuiUserInput, 0, 1) = A_Space
 ; {
 ; 	;;; everything search(end with space) & default web search;;;
 ; 	gui_destroy()
@@ -55,25 +55,25 @@ if !trim_p
 ; 	WinWaitActive, ahk_exe Everything.exe, , 0.666
 ; 	if ErrorLevel{
 ; 		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-; 		WebSearch(Pedersen, "default")
+; 		WebSearch(GuiUserInput, "default")
 ; 	}
 ; 	else{
-; 		last_search_str := Pedersen
+; 		last_search_str := GuiUserInput
 ; 		; Sleep, 88
-; 		; SendRaw, %trim_p%
+; 		; SendRaw, %trim_gui_user_input%
 ; 		Sleep, 222
 ; 		; SendRaw, %last_search_str%
-; 		Send, {Blind}{Text}%trim_p%
+; 		Send, {Blind}{Text}%trim_gui_user_input%
 ; 	}
 ; }
 else
 {
-	if trim_p = help ; Tooltip with list of commands
-	{
-		GuiControl,, trim_p, ; Clear the input box
-		Gosub, gui_commandlibrary
-	}
-	; else if trim_p = ev ; Everything
+	; if trim_gui_user_input = help ; Tooltip with list of commands
+	; {
+	; 	GuiControl,, trim_gui_user_input, ; Clear the input box
+	; 	Gosub, gui_commandlibrary
+	; }
+	; else if trim_gui_user_input = ev ; Everything
 	; {
 	; 	;;; everything search(end with space) & default web search;;;
 	; 	gui_destroy()
@@ -82,12 +82,13 @@ else
 	; 	if ErrorLevel
 	; 		MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
 	; }
-	else if trim_p = os ; nox official site
+	; else
+	if trim_gui_user_input = os ; nox official site
 	{
 		gui_destroy()
 		run "https://github.com/no5ix/nox"
 	}
-	; else if trim_p = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
+	; else if trim_gui_user_input = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
 	; {
 	; 	; msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
 	; 	; MsgBox, 4,, %msg_str%
@@ -100,13 +101,13 @@ else
 	; 	gui_search_title := "URL"
 	; 	gui_search("http://REPLACEME", 1)
 	; }
-	else if trim_p = cmd ; open a command prompt window on the current explorer path 
+	else if trim_gui_user_input = cmd ; open a command prompt window on the current explorer path 
 	{
 		gui_destroy()
 		IfWinActive, ahk_exe explorer.exe
 		{
 			Send, !d
-			SendInput, cmd`n  ; 等同于下面这两句
+			SendInput, cmd.exe`n  ; 等同于下面这两句
 			; SendRaw, cmd
 			; Send, {Enter}
 		}
@@ -118,7 +119,7 @@ else
 	;-------------------------------------------------------------------------------
 	;;; INTERACT WITH THIS AHK SCRIPT ;;;
 	;-------------------------------------------------------------------------------
-	else if trim_p = proj ; open this proj with vs code
+	else if trim_gui_user_input = proj ; open this proj with vs code
 	{
 		gui_destroy()
 		; run, %comspec% /c Code "%A_ScriptDir%,,hide
@@ -131,24 +132,24 @@ else
 		}
 		MaximizeWindow(1111, "Code.exe")
 	}
-	else if trim_p = rd ; Reload this script
+	else if trim_gui_user_input = rd ; Reload this script
 	{
 		gui_destroy() ; removes the GUI even when the reload fails
 		Reload
 	}
-	else if trim_p = dir ; Open the directory for this script
+	else if trim_gui_user_input = dir ; Open the directory for this script
 	{
 		gui_destroy()
 		Run, %A_ScriptDir%
 	}
-	; else if trim_p = conf ; Edit user_conf
+	; else if trim_gui_user_input = conf ; Edit user_conf
 	; {
 	; 	gui_destroy()
 	; 	; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
 	; 	param = %A_ScriptDir%\conf\user_conf.ahk
 	; 	Run_AsUser("notepad.exe", param)
 	; }
-	; else if trim_p = up ; update nox
+	; else if trim_gui_user_input = up ; update nox
 	; {
 	;     MsgBox, 4,, Would you like to update nox?
 	;     IfMsgBox Yes
@@ -158,7 +159,7 @@ else
 	;         UpdateNox()
 	;     }
 	; }
-	; else if trim_p = limit ; turn on/off limit mode
+	; else if trim_gui_user_input = limit ; turn on/off limit mode
 	; {
 	; 	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " limit mode?"
 	; 	MsgBox, 4,, %msg_str%
@@ -176,7 +177,7 @@ else
 	; 		}
 	; 	}
 	; }
-	else if trim_p = wau ; turn on/off disable win10 auto update
+	else if trim_gui_user_input = wau ; turn on/off disable win10 auto update
 	{
 		msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
 		MsgBox, 4,, %msg_str%
@@ -195,7 +196,7 @@ else
 		
 		}
 	}
-	else if trim_p = xy ; set second monitor xy for detecting IsCorner()
+	else if trim_gui_user_input = xy ; set second monitor xy for detecting IsCorner()
 	{
 		Set2thMonitorXY()
 		gui_destroy()
@@ -203,7 +204,7 @@ else
 	;-------------------------------------------------------------------------------
 	;;; web search ;;;
 	;-------------------------------------------------------------------------------
-	; else if WebSearchUrlMap.HasKey(trim_p)
+	; else if WebSearchUrlMap.HasKey(trim_gui_user_input)
 	; {
 	; 	; for key, arr in WebSearchUrlMap ; Enumeration is the recommended approach in most cases.
 	; 	; {
@@ -212,7 +213,7 @@ else
 	; 	; 	; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
 	; 	; 	; Using "for", both the index (or "key") and its associated value
 	; 	; 	; are provided, and the index can be *any* value of your choosing.
-	; 	; 	if trim_p = %key%
+	; 	; 	if trim_gui_user_input = %key%
 	; 	; 	{
 	; 	; 		gui_search_title := arr[1]
 	; 	; 		gui_search(arr[2])
@@ -220,14 +221,14 @@ else
 	; 	; 	}
 	; 	; }
 
-	; 	gui_search_title := WebSearchUrlMap[trim_p][1]
-	; 	gui_search(WebSearchUrlMap[trim_p][2])
+	; 	gui_search_title := WebSearchUrlMap[trim_gui_user_input][1]
+	; 	gui_search(WebSearchUrlMap[trim_gui_user_input][2])
 	; }
 	else
 	{
-		word_array := StrSplit(trim_p, A_Space, ,2)
+		word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 		if (word_array[1] == "ev") {
-			;;; everything search(end with space) & default web search;;;
+			;;; everything search
 			gui_destroy()
 			%EverythingShortCutFunc%()
 			WinWaitActive, ahk_exe Everything.exe, , 2.222
@@ -235,9 +236,9 @@ else
 				MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
 			else if word_array[2]
 			{
-				last_search_str := Pedersen
+				last_search_str := GuiUserInput
 				; Sleep, 88
-				; SendRaw, %trim_p%
+				; SendRaw, %trim_gui_user_input%
 				Sleep, 222
 				; SendRaw, %last_search_str%
 				ev_search_str := word_array[2]
@@ -252,6 +253,6 @@ else
 				WebSearch(word_array[2], word_array[1])
 		}
 		else
-			WebSearch(Pedersen, "default")
+			WebSearch(GuiUserInput, "default")
 	}
 }

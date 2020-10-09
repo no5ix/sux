@@ -6,9 +6,6 @@
 global gui_control_options := "xm w" . nox_width . " c" . nox_text_color . " -E0x200"
 ; Initialize variable to keep track of the state of the GUI
 global gui_state := closed
-; Initialize search_urls as a variable set to zero
-global search_urls := 0
-global from_url_cmd := 0
 
 
 gui_spawn() {
@@ -18,8 +15,6 @@ gui_spawn() {
 		gui_destroy()
 	}
 	gui_state = main
-
-	search_urls := 0
 
 	; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
@@ -32,11 +27,10 @@ gui_spawn() {
 		FrameShadow(hMyGUI)
 
 	Gui, Font, s22, Segoe UI
-	; Gui, Add, Text, %gui_control_options% vgui_main_title, ¯\_(ツ)_/¯
 	; Gui, Font, s10, Segoe UI
-	; Gui, Add, Edit, %gui_control_options% vPedersen gFindus
-	Gui, Add, Edit, %gui_control_options% vPedersen, %last_search_str%
-	Gui, Add, Button, x-10 y-10 w1 h1 +default gFindus ; hidden button
+	; Gui, Add, Edit, %gui_control_options% vGuiUserInput gIncludeCmd
+	Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
+	Gui, Add, Button, x-10 y-10 w1 h1 +default gIncludeCmd ; hidden button
 
 	xMidScrn :=  A_ScreenWidth / 2
 	CoordMode, Mouse, Screen
@@ -60,7 +54,7 @@ GuiEscape:
 	return
 
 ; The callback function when the text changes in the input field.
-Findus:
+IncludeCmd:
 	Gui, Submit, NoHide
 	#Include %A_ScriptDir%\source\cmd.ahk
 	return
@@ -73,13 +67,6 @@ gui_destroy() {
 	global gui_state
 	
 	gui_state = closed
-	from_url_cmd = 0
-	; Forget search title variable so the next search does not re-use it
-	; in case the next search does not set its own:
-	gui_search_title =
-
-	; Clear the tooltip
-	Gosub, gui_tooltip_clear
 
 	; Hide GUI
 	Gui, Destroy
@@ -87,137 +74,3 @@ gui_destroy() {
 	; Bring focus back to another window found on the desktop
 	WinActivate
 }
-
-; gui_change_title(message,color = "") {
-; 	; If parameter color is omitted, the message is assumed to be an error
-; 	; message, and given the color red.
-; 	If color =
-; 	{
-; 		global cRed
-; 		color := cRed
-; 	}
-; 	GuiControl,, gui_main_title, %message%
-; 	Gui, Font, s11 %color%
-; 	GuiControl, Font, gui_main_title
-; 	Gui, Font, s10 cffffff ; reset
-; }
-
-;-------------------------------------------------------------------------------
-; SEARCH ENGINES
-;-------------------------------------------------------------------------------
-;
-; gui_search_add_elements: Add GUI controls to allow typing of a search query.
-;
-; gui_search_add_elements:
-; 	GuiControl,, Pedersen, %gui_search_title%
-; 	; Gui, Add, Text, %gui_control_options% %cGray%, %A_Space%%gui_search_title%
-; 	Gui, Add, Edit, %gui_control_options% vgui_SearchEdit -WantReturn, %last_search_str%
-; 	Gui, Add, Button, x-10 y-10 w1 h1 +default ggui_SearchEnter ; hidden button
-; 	GuiControl, Disable, Pedersen
-; 	GuiControl, focus, gui_SearchEdit
-; 	Gui, Show, AutoSize
-; 	return
-
-; gui_search(pending_search_url, from_url_cmd_this_time=0) {
-; 	global
-; 	if gui_state != search
-; 	{
-; 		gui_state = search
-; 		; if gui_state is "main", then we are coming from the main window and
-; 		; GUI elements for the search field have not yet been added.
-; 		Gosub, gui_search_add_elements
-; 	}
-; 	from_url_cmd := from_url_cmd_this_time
-; 	; Assign the pending_search_url to a variable.
-; 	; The variables will have names search_url1, search_url2, ...
-
-; 	search_urls := search_urls + 1
-; 	search_url%search_urls% := pending_search_url
-; }
-
-; gui_SearchEnter:
-; 	Gui, Submit
-; 	last_search_str := gui_SearchEdit
-; 	if from_url_cmd And IsStandardRawUrl(gui_SearchEdit)
-; 		run %gui_SearchEdit%
-; 	else{
-; 		if from_url_cmd
-; 			safe_query := gui_SearchEdit
-; 		else
-; 			safe_query := UriEncode(gui_SearchEdit)
-; 		if !safe_query
-; 			safe_query := Clipboard
-; 		Loop, %search_urls% {
-; 			StringReplace, search_final_url, search_url%A_Index%, REPLACEME, %safe_query%
-; 			run %search_final_url%
-; 		}
-; 	}
-; 	search_urls := 0
-; 	gui_destroy()
-; 	return
-
-
-;-------------------------------------------------------------------------------
-; TOOLTIP
-; The tooltip shows all defined commands, along with a description of what
-; each command does. It gets the description from the comments in cmd.ahk.
-; The code was improved and fixed for Windows 10 with the help of schmimae.
-;-------------------------------------------------------------------------------
-gui_tooltip_clear:
-	ToolTip
-	return
-
-gui_commandlibrary:
-	; hidden GUI used to pass font options to tooltip:
-	CoordMode, Tooltip, Screen ; To make sure the tooltip coordinates is displayed according to the screen and not active window
-	Gui, 2:Font,s10, Lucida Console
-	Gui, 2:Add, Text, HwndhwndStatic
-
-	tooltiptext =
-	maxpadding = 0
-	StringCaseSense, Off ; Matching to both if/If in the IfInString command below
-	Loop, read, %A_ScriptDir%/source/cmd.ahk
-	{
-		; search for the string If Pedersen =, but search for each word individually because spacing between words might not be consistent. (might be improved with regex)
-		If Substr(A_LoopReadLine, 1, 1) != ";" ; Do not display commented commands
-		{
-			If A_LoopReadLine contains if
-			{
-				IfInString, A_LoopReadLine, Pedersen
-					IfInString, A_LoopReadLine, =
-					{
-						StringGetPos, setpos, A_LoopReadLine,=
-						StringTrimLeft, trimmed, A_LoopReadLine, setpos+1 ; trim everything that comes before the = sign
-						StringReplace, trimmed, trimmed, `%A_Space`%,{space}, All
-						tooltiptext .= trimmed
-						tooltiptext .= "`n"
-
-						; The following is used to correct padding:
-						StringGetPos, commentpos, trimmed,`;
-						if (maxpadding < commentpos)
-							maxpadding := commentpos
-					}
-			}
-		}
-	}
-	tooltiptextpadded =
-	Loop, Parse, tooltiptext,`n
-	{
-		line = %A_LoopField%
-		StringGetPos, commentpos, line, `;
-		spaces_to_insert := maxpadding - commentpos
-		Loop, %spaces_to_insert%
-		{
-			StringReplace, line, line,`;,%A_Space%`;
-		}
-		tooltiptextpadded .= line
-		tooltiptextpadded .= "`n"
-	}
-	Sort, tooltiptextpadded
-	for key, arr in WebSearchUrlMap
-	{
-		tooltiptextpadded .= key . "    `; Search " . arr[1]
-		tooltiptextpadded .= "`n"
-	}
-	ToolTip %tooltiptextpadded%, 3, 3, 1
-	return

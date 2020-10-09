@@ -1,7 +1,7 @@
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
 
-Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank u.
+Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
 
 # IMPORTANT
@@ -12,18 +12,27 @@ Inspired by Alfred/Wox/Listary/Public-AutoHotKey-Scripts/Capslock+/utools, thank
 
 # Features
 
-- **personalized configuration** : u can modify user_conf.ahk to override the default configuration
-- **hot edges** : right/middle mouse click or `Ctrl+8` on the edge (useful for touchpad user)
-- **hot corners** : just like mac hot cornes
-- **web search** : just like Wox/Listary/Alfred
-- **enhanced capslock** : just like Capslock+
-- **double click triggers** (include `Alt`/`Ctrl`/`Shift`) : see default_conf.ahk
-<!-- - **auto selection copy** : just like linux terminal -->
-- **custom theme.** : two default theme(dark/light), and u can add ur own theme
-<!-- - **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
-- **screen capture** : `Capslock + ~`
-<!-- - **game mode** : double Alt then input `game` -->
-- **disable win10 auto update**: see default_conf.ahk `disable_win10_auto_update`
+* **personalized configuration** : u can modify user_conf.ahk to override the default configuration
+* **hot edges** : right/middle mouse click or `Ctrl+8` on the edge (useful for touchpad user)
+* **hot corners** : just like mac hot cornes
+* **web search** : just like Wox/Listary/Alfred
+* **enhanced capslock** : just like Capslock+
+* **double click triggers** (include `Alt`/`Ctrl`) : see default_conf.ahk, try double click `Alt` to open web search window.
+<!-- * **auto selection copy** : just like linux terminal -->
+* **custom theme.** : two default theme(dark/light), and u can add ur own theme
+<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
+* **screen capture** : `Capslock + ~`
+<!-- * **game mode** : double Alt then input `game` -->
+* **disable win10 auto update**: see default_conf.ahk `disable_win10_auto_update`
+
+
+# How do I put my hotkeys and hotstrings into effect automatically every time I start my PC?
+
+There are several ways to make a script (or any program) launch automatically every time you start your PC. The easiest is to place a shortcut to the script in the Startup folder:
+
+Find the script file, select it, and press `Control+C`.
+Press `Win+R` to open the Run dialog, then enter shell:startup and click OK or `Enter`. This will open the Startup folder for the current user. To instead open the folder for all users, enter shell:common startup (however, in that case you must be an administrator to proceed).
+Right click inside the window, and click "Paste Shortcut". The shortcut to the script should now be in the Startup folder.
 
 
 <!-- # 设置开机以管理员权限启动

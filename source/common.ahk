@@ -11,7 +11,7 @@ global fake_lb_down := 0
 
 global CornerEdgeOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
-global trim_p = ""
+global trim_gui_user_input = ""
 global last_search_str = ""
 
 global second_monitor_min_x := 0
