@@ -25,7 +25,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **screen capture** : try `Capslock + ~`
 <!-- * **game mode** : double Alt then input `game` -->
 * **disable win10 auto update**: see default_conf.ahk : `disable_win10_auto_update`
-* **start with windows support**
+* **start nox with windows support**
 
 
 # CMDs
@@ -43,15 +43,6 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <!-- * `limit` : turn on/off limit mode -->
 * `wau` : turn on/off disable win10 auto update
 * `xy` : set second monitor xy for detecting IsCorner()
-
-
-# How do I put my hotkeys and hotstrings into effect automatically every time I start my PC?
-
-There are several ways to make a script (or any program) launch automatically every time you start your PC. The easiest is to place a shortcut to the script in the Startup folder:
-
-Find the script file, select it, and press `Control+C`.
-Press `Win+R` to open the Run dialog, then enter shell:startup and click OK or `Enter`. This will open the Startup folder for the current user. To instead open the folder for all users, enter shell:common startup (however, in that case you must be an administrator to proceed).
-Right click inside the window, and click "Paste Shortcut". The shortcut to the script should now be in the Startup folder.
 
 
 <!-- # 设置开机以管理员权限启动
@@ -75,7 +66,8 @@ createobject("wscript.shell").run "D:\A.bat",0
 0. Everything设置如下:  
     [ ] 保存设置和数据到%APPDATA%\Everything目录  
     [x] 随系统自启动  
-    [x] 以管理员身份运行  
+    [x]
+     以管理员身份运行  
     [x] Everything服务  
     显示窗口快捷键: `Ctrl+Shift+Alt+E`
 1. 退出Everything
@@ -86,3 +78,10 @@ createobject("wscript.shell").run "D:\A.bat",0
     always_keep_sort=1
     ```
 3. 运行Everything
+
+
+# Update Log
+
+## 2020.10.09
+
+* start nox with windows support, try cmd `nw`

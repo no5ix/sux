@@ -15,6 +15,8 @@ if auto_limit_mode_when_full_screen
 if disable_win10_auto_update
     SetTimer, DisableWin10AutoUpdate, 66666
 
-if IsFirstTimeRunNox() {
+if IsFirstTimeRunNox()
     StartNoxWithWindows()
-}
+
+if auto_update_when_launch_nox
+    UpdateNox()

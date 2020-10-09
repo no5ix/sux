@@ -599,7 +599,8 @@ Set2thMonitorXY() {
 
 
 UpdateNox() {
-	RunWait, cmd.exe /c git pull origin master,,hide
+	; RunWait, cmd.exe /c git pull origin master,,hide
+	RunWait, cmd.exe /c git pull origin master,,
 	MsgBox,,, nox update finished. , 6
 	Reload
 }
@@ -775,6 +776,8 @@ IncludeUserConfIFExist() {
 ; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 
 ; global disable_win10_auto_update := 1
+
+; global auto_update_when_launch_nox := 1
 
 ; global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 

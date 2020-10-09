@@ -58,6 +58,8 @@ global music_app_path := ""
 
 global disable_win10_auto_update := 1
 
+global auto_update_when_launch_nox := 1
+
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
 
@@ -89,6 +91,7 @@ global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+S
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
+
 
 
 ; ---------------------------------------------------------------------o
