@@ -32,7 +32,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 # CMDs
 
 * `os` : nox official site
-* `nw` : start nox with windows
+* `nw` : start nox with windows or not
 * `ev` : run Everything
 * `url` : open an URL
 * `cmd` : open a command prompt window on the current explorer path 

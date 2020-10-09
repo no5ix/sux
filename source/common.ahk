@@ -846,9 +846,11 @@ StartNoxWithWindows() {
 	; ClipWait 0      ; Waits for copy
 	; SplitPath, Clipboard, Name, Dir, Ext, Name_no_ext, Drive
 
-	msg_str := "Would you like to start nox with windows?"
-	MsgBox, 4,, %msg_str%
-	
+	msg_str := "Would you like to start nox with windows? Yes(Enable) or No(Disable)"
+	MsgBox, 3,, %msg_str%
+	IfMsgBox Cancel
+		return
+
 	Name_no_ext := "nox"
 	Name := "nox.ahk"
 	Dir = %A_ScriptDir%
