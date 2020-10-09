@@ -7,7 +7,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 # IMPORTANT
   
 - Please run as administrator.
-- Please run in 32-bit mode(Open with AutoHotKey Unicode 32-bit).
+- Please run in 32-bit mode (Open with AutoHotKey Unicode 32-bit).
 
 
 # Features
