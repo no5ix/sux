@@ -542,7 +542,7 @@ HandleMonitorConfWhenFirstRun() {
 				msg_str := "You have 2 monitors, if they have two different resolution,"
 					. " you can use cmd 'xy' to set the 2th monitor resolustion config. `n`n"
 					. " Would you like to set it later(Yes) or now(No)?"
-				MsgBox, 4,, %msg_str%   
+				MsgBox, 4,, %msg_str%
 				IfMsgBox No
 					Set2thMonitorXY()
 			}
@@ -599,9 +599,13 @@ Set2thMonitorXY() {
 
 
 UpdateNox() {
-	; RunWait, cmd.exe /c git pull origin master,,hide
-	RunWait, cmd.exe /c git pull origin master,,
-	MsgBox,,, nox update finished. , 6
+	ToolTipWithTimer("nox background updating, please wait...", 2222)
+	RunWait, cmd.exe /c git pull origin master,,hide
+	; MsgBox,,, nox update finished. , 6
+	msg_str := "nox update finished, would you like to see update log?"
+	MsgBox, 4,, %msg_str%, 6
+	IfMsgBox Yes
+		Run	"https://github.com/no5ix/nox#update-log"
 	Reload
 }
 
