@@ -68,11 +68,6 @@ if !trim_gui_user_input
 ; }
 else
 {
-	; if trim_gui_user_input = help ; Tooltip with list of commands
-	; {
-	; 	GuiControl,, trim_gui_user_input, ; Clear the input box
-	; 	Gosub, gui_commandlibrary
-	; }
 	; else if trim_gui_user_input = ev ; Everything
 	; {
 	; 	;;; everything search(end with space) & default web search;;;
@@ -149,16 +144,16 @@ else
 	; 	param = %A_ScriptDir%\conf\user_conf.ahk
 	; 	Run_AsUser("notepad.exe", param)
 	; }
-	; else if trim_gui_user_input = up ; update nox
-	; {
-	;     MsgBox, 4,, Would you like to update nox?
-	;     IfMsgBox Yes
-	;     {
-	;     	gui_destroy()
-	;         Gosub gui_spawn
-	;         UpdateNox()
-	;     }
-	; }
+	else if trim_gui_user_input = up ; update nox
+	{
+	    MsgBox, 4,, Would you like to update nox?
+	    IfMsgBox Yes
+	    {
+	    	gui_destroy()
+	        ; Gosub gui_spawn
+	        UpdateNox()
+	    }
+	}
 	; else if trim_gui_user_input = limit ; turn on/off limit mode
 	; {
 	; 	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " limit mode?"
