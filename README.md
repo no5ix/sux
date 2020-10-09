@@ -26,7 +26,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <!-- * **game mode** : double Alt then input `game` -->
 * **disable win10 auto update**: see default_conf.ahk : `disable_win10_auto_update`
 * **start nox with windows support**
-* **auto update when launch nox support** : see default_conf.ahk : `auto_update_when_launch_nox` 
+<!-- * **auto update when launch nox support** : see default_conf.ahk : `auto_update_when_launch_nox`  -->
 
 
 # CMDs
@@ -83,7 +83,8 @@ createobject("wscript.shell").run "D:\A.bat",0
 
 # Update Log
 
+<!-- I'm so lazy...maybe u could see [nox commits](https://github.com/no5ix/nox/commits/master) -->
+
 ## 2020.10.09
 
 * start nox with windows support, try cmd `nw`
-* add conf: auto update when launch nox, see default_conf.ahk : `auto_update_when_launch_nox` 

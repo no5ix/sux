@@ -777,8 +777,6 @@ IncludeUserConfIFExist() {
 
 ; global disable_win10_auto_update := 1
 
-; global auto_update_when_launch_nox := 1
-
 ; global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
 ; global EverythingShortCutFunc := "User_EverythingShortCut"
