@@ -125,7 +125,7 @@ else
 		}else {
 			Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
 		}
-		MaximizeWindow(1111, "Code.exe")
+		MaximizeWindow(6666, "Code.exe")
 	}
 	else if trim_gui_user_input = rd ; Reload this script
 	{
