@@ -46,11 +46,12 @@ CapsLock & `::
 ;===========================;U = PageDown
 ;===========================;H = Left
 CapsLock & v::
-	; if GetKeyState("Shift", "P")
-		Send, ^v
-	; else
+	if GetKeyState("Shift", "P")
+		Send, +6  ; ^ like reverse V
+	else
 		; PasteCompatibleWithAutoSelectionCopy()
 		; Send, +6
+		Send, ^v
 	ClickUpIfLbDown()
 	return
 
@@ -79,9 +80,9 @@ CapsLock & e::
 	return
 
 CapsLock & x::
-	if GetKeyState("Shift", "P")
-		Send, +6
-	else
+	; if GetKeyState("Shift", "P")
+	; 	Send, +6
+	; else
 		Send, ^x
 	ClickUpIfLbDown()
 	return
