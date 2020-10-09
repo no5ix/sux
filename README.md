@@ -20,7 +20,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: `Ctrl+Shift+Alt+E`, see default_conf.ahk : `EverythingShortCutFunc`
 * **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see default_conf.ahk : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
 <!-- * **auto selection copy** : just like linux terminal -->
-* **custom theme.** : two default theme(dark/light), and u can add ur own theme
+* **custom theme** : two default theme(dark/light), and u can add ur own theme
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
 * **screen capture** : try `Capslock + ~`
 <!-- * **game mode** : double Alt then input `game` -->
