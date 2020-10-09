@@ -15,18 +15,18 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **personalized configuration** : u can modify user_conf.ahk to override the default configuration
 * **hot edges** : right/middle mouse click or `Ctrl+8` on the edge (useful for touchpad user)
 * **hot corners** : just like mac hot cornes
-* **web search** : just like Wox/Listary/Alfred, see default_conf.ahk `WebSearchUrlMap`
-* **enhanced capslock** : just like Capslock+
-* **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: `Ctrl+Shift+Alt+E`, see default_conf.ahk : `EverythingShortCutFunc`
-* **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see default_conf.ahk : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
+* **web search** : just like Wox/Listary/Alfred, see `default_conf.ahk` `WebSearchUrlMap`
+* **enhanced capslock** : just like Capslock+, see `capslock_plus.ahk`
+* **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: `Ctrl+Shift+Alt+E`, see `default_conf.ahk` : `EverythingShortCutFunc`
+* **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see `default_conf.ahk` : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
 <!-- * **auto selection copy** : just like linux terminal -->
 * **custom theme** : two default theme(dark/light), and u can add ur own theme
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
 * **screen capture** : try `Capslock + ~`
 <!-- * **game mode** : double Alt then input `game` -->
-* **disable win10 auto update**: see default_conf.ahk : `disable_win10_auto_update`
+* **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
 * **start nox with windows support**
-<!-- * **auto update when launch nox support** : see default_conf.ahk : `auto_update_when_launch_nox`  -->
+<!-- * **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`  -->
 
 
 # CMDs
