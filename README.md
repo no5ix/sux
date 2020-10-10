@@ -1,4 +1,3 @@
-
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
