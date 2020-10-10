@@ -61,7 +61,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `CapsLock` & `L` :
 	* with shift : `Shift`+`Right`
 	* `Right`
-* `CapsLock` & `\`` :
+* `CapsLock` & `~` :
     * with shift : `CapsLock`
     * screen capture
 * `CapsLock` & `V` :
