@@ -646,7 +646,7 @@ RunWaitOne(command, hide_window) {
 }
 
 
-UpdateNox(from_launch=1) {
+UpdateNox(from_launch) {
 	; ToolTipWithTimer("nox background updating, please wait...", 2222)
 	; RunWait, cmd.exe /c git pull origin master,,hide
 	run_result := RunWaitOne("git pull origin master", from_launch)

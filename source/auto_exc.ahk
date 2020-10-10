@@ -19,6 +19,5 @@ if IsFirstTimeRunNox()
     StartNoxWithWindows()
 
 if auto_update_when_launch_nox {
-    SetTimer, UpdateNox, -66
-    ; UpdateNox(1)
+    UpdateNox(1)
 }
