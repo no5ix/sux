@@ -26,11 +26,11 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
 * **start nox with windows support**
 * **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
-
+* **custom command line map support**:  see `default_conf.ahk` : `CustomCommandLineMap`
 
 # CMDs
 
-* `os` : nox official site
+* `nox` : nox official site
 * `nw` : start nox with windows or not
 * `ev` : run Everything
 * `url` : open an URL
@@ -175,6 +175,10 @@ createobject("wscript.shell").run "D:\A.bat",0
 # Update Log
 
 <!-- I'm so lazy...maybe u could see [nox commits](https://github.com/no5ix/nox/commits/master) -->
+
+## 2020.10.11
+
+* custom command line map,  see `default_conf.ahk` : `CustomCommandLineMap`
 
 ## 2020.10.10
 

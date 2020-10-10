@@ -3,6 +3,7 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
+
 ; ---------------------------------------------------------------------o
 ; 					color code definitions default conf
 ; ---------------------------------------------------------------------o
@@ -122,8 +123,8 @@ global WebSearchUrlMap :=
 	"search_input_key" : ["search_flag", "extra_info (don't del this line)"] 
 
 	,  "default" : ["MULTI", "gg", "bd"]
-
 	,  "url" : ["URL", "http://REPLACEME"]
+	,  "nox" : ["Nox", "https://github.com/no5ix/nox"]
 
 	,  "ahk" : ["AutoHotKey", "https://www.google.com.hk/search?safe=off&site=&source=hp&q=autohotkey%20REPLACEME&btnG=Search&oq=&gs_l="]
 	,  "py" : ["Python", "https://www.google.com.hk/search?safe=off&site=&source=hp&q=python%20REPLACEME&btnG=Search&oq=&gs_l="]
@@ -141,5 +142,21 @@ global WebSearchUrlMap :=
 	,  "db" : ["Douban", "https://www.douban.com/search?q=REPLACEME"]
 	,  "qm" : ["QiMai", "https://www.qimai.cn/search/index/country/cn/search/REPLACEME"]
 	,  "yk" : ["YouKu", "https://so.youku.com/search_video/q_REPLACEME?searchfrom=1"]
+}
+)
+
+
+; ---------------------------------------------------------------------o
+; 					custom command line conf  
+; ---------------------------------------------------------------------o
+
+global CustomCommandLineMap := 
+(join custom command line map
+{
+	"command_line_key" : "command_line_info (dont del this line)"
+
+	; ,  "proj" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\no5ix\Documents\github\example_proj"]
+	; ,  "test.go" : ["notepad.exe", "C:\Users\b\Desktop\test.go"]
+	; ,  "test.py" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\b\Desktop\test.py"]
 }
 )

@@ -78,11 +78,11 @@ else
 	; 		MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
 	; }
 	; else
-	if trim_gui_user_input = os ; nox official site
-	{
-		gui_destroy()
-		run "https://github.com/no5ix/nox"
-	}
+	; if trim_gui_user_input = os ; nox official site
+	; {
+	; 	gui_destroy()
+	; 	run "https://github.com/no5ix/nox"
+	; }
 	; else if trim_gui_user_input = url ; Open an URL from the clipboard (naive - will try to run whatever is in the clipboard)
 	; {
 	; 	; msg_str := "This is your clipboard url content : `n`n" . ClipBoard . " `n`n Would you like to open it ?"
@@ -96,7 +96,8 @@ else
 	; 	gui_search_title := "URL"
 	; 	gui_search("http://REPLACEME", 1)
 	; }
-	else if trim_gui_user_input = cmd ; open a command prompt window on the current explorer path 
+	; else
+	if trim_gui_user_input = cmd ; open a command prompt window on the current explorer path 
 	{
 		gui_destroy()
 		IfWinActive, ahk_exe explorer.exe
@@ -114,19 +115,19 @@ else
 	;-------------------------------------------------------------------------------
 	;;; INTERACT WITH THIS AHK SCRIPT ;;;
 	;-------------------------------------------------------------------------------
-	else if trim_gui_user_input = proj ; open this proj with vs code
-	{
-		gui_destroy()
-		; run, %comspec% /c Code "%A_ScriptDir%,,hide
-		; run, cmd /c Code "%A_ScriptDir%,,hide
-		script_dir = %A_ScriptDir%
-		if vscode_path {
-			Run_AsUser(vscode_path, script_dir)  ;; call Microsoft VS Code\Code.exe
-		}else {
-			Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
-		}
-		MaximizeWindow(6666, "Code.exe")
-	}
+	; else if trim_gui_user_input = proj ; open this proj with vs code
+	; {
+	; 	gui_destroy()
+	; 	; run, %comspec% /c Code "%A_ScriptDir%,,hide
+	; 	; run, cmd /c Code "%A_ScriptDir%,,hide
+	; 	script_dir = %A_ScriptDir%
+	; 	if vscode_path {
+	; 		Run_AsUser(vscode_path, script_dir)  ;; call Microsoft VS Code\Code.exe
+	; 	}else {
+	; 		Run_AsUser("code", script_dir)  ;; call Microsoft VS Code\bin\code , has a ugly cmd window
+	; 	}
+	; 	MaximizeWindow(6666, "Code.exe")
+	; }
 	else if trim_gui_user_input = rd ; Reload this script
 	{
 		gui_destroy() ; removes the GUI even when the reload fails
@@ -223,6 +224,15 @@ else
 	; 	gui_search_title := WebSearchUrlMap[trim_gui_user_input][1]
 	; 	gui_search(WebSearchUrlMap[trim_gui_user_input][2])
 	; }
+
+	;-------------------------------------------------------------------------------
+	;;; custom command line ;;;
+	;-------------------------------------------------------------------------------
+	else if CustomCommandLineMap.HasKey(trim_gui_user_input)
+	{
+		gui_destroy()
+		Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
+	}
 	else
 	{
 		word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
