@@ -26,7 +26,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <!-- * **game mode** : double Alt then input `game` -->
 * **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
 * **start nox with windows support**
-* **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox` 
+* **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
 
 
 # CMDs
