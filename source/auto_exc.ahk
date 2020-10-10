@@ -18,5 +18,7 @@ if disable_win10_auto_update
 if IsFirstTimeRunNox()
     StartNoxWithWindows()
 
-if auto_update_when_launch_nox
-    UpdateNox(1)
+if auto_update_when_launch_nox {
+    SetTimer, UpdateNox, -66
+    ; UpdateNox(1)
+}

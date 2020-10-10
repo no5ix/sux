@@ -635,7 +635,10 @@ RunWaitOne(command, hide_window) {
 	; Run the console program hidden, redirecting its output to
 	; the temp. file (with a program other than powershell.exe or cmd.exe,
 	; prepend %ComSpec% /c; use 2> to redirect error output), and wait for it to exit.
-	RunWait, cmd.exe /c %command% > %tempFile%,, hide_window ? hide : UseErrorLevel
+	if hide_window
+		RunWait, cmd.exe /c %command% > %tempFile%,, hide
+	else
+		RunWait, cmd.exe /c %command% > %tempFile%
 	; Read the temp file into a variable and then delete it.
 	FileRead, content, %tempFile%
 	FileDelete, %tempFile%
@@ -643,7 +646,7 @@ RunWaitOne(command, hide_window) {
 }
 
 
-UpdateNox(from_launch) {
+UpdateNox(from_launch=1) {
 	; ToolTipWithTimer("nox background updating, please wait...", 2222)
 	; RunWait, cmd.exe /c git pull origin master,,hide
 	run_result := RunWaitOne("git pull origin master", from_launch)
