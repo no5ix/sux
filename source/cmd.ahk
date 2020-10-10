@@ -151,7 +151,7 @@ else
 	    {
 	    	gui_destroy()
 	        ; Gosub gui_spawn
-	        UpdateNox()
+	        UpdateNox(0)
 	    }
 	}
 	; else if trim_gui_user_input = limit ; turn on/off limit mode
@@ -188,7 +188,6 @@ else
 				DisableWin10AutoUpdate()
 				SetTimer, DisableWin10AutoUpdate, 66666
 			}
-		
 		}
 	}
 	else if trim_gui_user_input = xy ; set second monitor xy for detecting IsCorner()

@@ -316,12 +316,12 @@ Morse(timeout = 200) { ;
 ToolTipWithTimer(msg, delay_for_remove=600)
 {
 	ToolTip, %msg%
-	SetTimer, RemoveToolTip, %delay_for_remove%
+	SetTimer, RemoveToolTip, -%delay_for_remove%
 	return
 
 	RemoveToolTip:
-	ToolTip
-	return
+		ToolTip
+		return
 }
 
 
@@ -598,15 +598,68 @@ Set2thMonitorXY() {
 }
 
 
-UpdateNox() {
-	ToolTipWithTimer("nox background updating, please wait...", 2222)
-	RunWait, cmd.exe /c git pull origin master,,hide
-	; MsgBox,,, nox update finished. , 6
-	msg_str := "nox update finished, would you like to see update log?"
-	MsgBox, 4,, %msg_str%, 6
-	IfMsgBox Yes
-		Run	"https://github.com/no5ix/nox#update-log"
-	Reload
+; ; run single command and retrieve their output, but cannot hide window
+; RunWaitOne(command) {
+;     ; WshShell object: http://msdn.microsoft.com/en-us/library/aew9yb99
+;     shell := ComObjCreate("WScript.Shell")
+;     ; Execute a single command via cmd.exe
+;     exec := shell.Exec(ComSpec " /C " command)
+;     ; Read and return the command's output
+;     return exec.StdOut.ReadAll()
+; }
+
+
+; run multiple commands in one go and retrieve their output, but cannot hide window
+; for example: 
+; 	MsgBox % RunWaitMany("
+; 	(
+; 	echo Put your commands here,
+; 	echo each one will be run,
+; 	echo and you'll get the output.
+; 	)")
+RunWaitMany(commands) {
+    shell := ComObjCreate("WScript.Shell")
+    ; Open cmd.exe with echoing of commands disabled
+    exec := shell.Exec(ComSpec " /Q /K echo off")
+    ; Send the commands to execute, separated by newline
+    exec.StdIn.WriteLine(commands "`nexit")  ; Always exit at the end!
+    ; Read and return the output of all commands
+    return exec.StdOut.ReadAll()
+}
+
+
+; ; run single command and retrieve their output
+RunWaitOne(command, hide_window) {
+	; Get a temporary file path
+	tempFile := A_Temp "\" DllCall("GetCurrentProcessId") ".txt"                           ; "
+	; Run the console program hidden, redirecting its output to
+	; the temp. file (with a program other than powershell.exe or cmd.exe,
+	; prepend %ComSpec% /c; use 2> to redirect error output), and wait for it to exit.
+	RunWait, cmd.exe /c %command% > %tempFile%,, hide_window ? hide : UseErrorLevel
+	; Read the temp file into a variable and then delete it.
+	FileRead, content, %tempFile%
+	FileDelete, %tempFile%
+	return content
+}
+
+
+UpdateNox(from_launch) {
+	; ToolTipWithTimer("nox background updating, please wait...", 2222)
+	; RunWait, cmd.exe /c git pull origin master,,hide
+	run_result := RunWaitOne("git pull origin master", from_launch)
+	if (InStr(run_result, "Already up to date")) {
+		if from_launch
+			return
+		MsgBox,,, nox is already up to date. , 6
+	}
+	else {
+		; MsgBox,,, nox update finished. , 6
+		msg_str := "nox update finished, would you like to see update log?"
+		MsgBox, 4,, %msg_str%, 6
+		IfMsgBox Yes
+			Run	"https://github.com/no5ix/nox#update-log"
+		Reload
+	}
 }
 
 
@@ -781,6 +834,8 @@ IncludeUserConfIFExist() {
 
 ; global disable_win10_auto_update := 1
 
+; global auto_update_when_launch_nox := 0
+
 ; global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
 ; global EverythingShortCutFunc := "User_EverythingShortCut"
@@ -805,7 +860,7 @@ IncludeUserConfIFExist() {
 ; global enable_hot_corners := 1  ; ; when cursor hover on the corner
 ; global hot_corners_detect_interval := 88
 
-; global auto_limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
+; global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 ; global enable_auto_selection_copy := 0  ; should use with ``Win+V`` or ``CapsLock+Shift+F``
 
 ; ; millisecond, the smaller the value, the faster you have to double-click

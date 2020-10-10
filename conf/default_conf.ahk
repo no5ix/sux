@@ -58,6 +58,8 @@ global music_app_path := ""
 
 global disable_win10_auto_update := 1
 
+global auto_update_when_launch_nox := 0
+
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
 
@@ -83,7 +85,7 @@ global HotCornersBottomRightTriggerFunc := "Default_HotCornersBottomRightTrigger
 global enable_hot_corners := 1  ; ; when cursor hover on the corner
 global hot_corners_detect_interval := 88
 
-global auto_limit_mode_when_full_screen := 1  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
+global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
