@@ -45,6 +45,98 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `xy` : set second monitor xy for detecting IsCorner()
 
 
+# CapsLock+
+
+* `CapsLock` :
+    *  `Esc`
+* `CapsLock` & `H` :
+	* with shift : `Shift`+`Left`
+	* `Left`
+* `CapsLock` & `J` :
+	* with shift : `Shift`+`Down`
+	* `Down`
+* `CapsLock` & `K` :
+	* with shift : `Shift`+`Up`
+	* `Up`
+* `CapsLock` & `L` :
+	* with shift : `Shift`+`Right`
+	* `Right`
+* `CapsLock` & `\`` :
+    * with shift : `CapsLock`
+    * screen capture
+* `CapsLock` & `V` :
+    * with shift : `^`
+    * `Ctrl`+`V`
+* `CapsLock` & `F` :
+	* with shift : `Ctrl`+`Shift`+`F`
+	* `Ctrl`+`F`
+* `CapsLock` & `W` :
+	* with shift : `~`
+	* `Ctrl`+`A`
+* `CapsLock` & `E` :
+	* with shift : `Ctrl`+`/`
+	* Enter
+* `CapsLock` & `X` :
+    *  `Ctrl`+`
+* `CapsLock` & `C` :
+	* with shift : `$`
+	* `Ctrl`+`C`
+* `CapsLock` & `S` :
+	* with shift : `Ctrl`+`Shift`+`S`
+	* `Ctrl`+`S`
+* `CapsLock` & `R` :
+	* with shift : `Ctrl`+`Y`
+	* `Ctrl`+`Z`
+* `CapsLock` & `Tab` :
+	* with shift : `Ins`
+	* `Shift`+`Ins`
+* `CapsLock` & `d` :
+	* with shift : `BS`
+	* `Del`
+* `CapsLock` & `Y` :
+	* with shift : `%`
+	* `*`
+* `CapsLock` & `U` :
+	* with shift : `@`
+	* `!`
+* `CapsLock` & `,` :
+	* with shift : `Shift`+`Home`
+	* `Home`
+* `CapsLock` & `.` :
+	* with shift : `Shift`+`End`
+	* `End`
+* `CapsLock` & `P` :
+	* with shift : `#`
+	* `&`
+* `CapsLock` & `I` :
+	* with shift : `Ctrl`+`Shift`+`Left`
+	* `Ctrl`+`Left`
+* `CapsLock` & `O` :
+	* with shift : `Ctrl`+`Shift`+`Right`
+	* `Ctrl`+`Right`
+* `CapsLock` & `;` :
+	* with shift : `-`
+	* `_`
+* `CapsLock` & `'` :
+	* with shift : `+`
+	* `=`
+* `CapsLock` & `/` :
+	* with shift : `|`
+	* `\`
+* `CapsLock` & `9` :
+	* with shift : ``
+	* `[`
+* `CapsLock` & `0` :
+	* with shift : `}`
+	* `]`
+* `CapsLock` & `N` :
+	* with shift : `Ctrl`+`Shift`+`Backspace`
+	* `Ctrl`+`Backspace`
+* `CapsLock` & `M` :
+	* with shift : `Shift`+`End`+`Del`
+	* `Ctrl`+`Del`
+
+
 <!-- # 设置开机以管理员权限启动
 
 1. 对“A.exe”创建快捷方式, 然后将这个快捷方式改名为“A” (不用改名为A.lnk, 因为windows的快捷方式默认扩展名就是lnk)
