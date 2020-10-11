@@ -336,12 +336,12 @@ ClickUpIfLbDown()
 }
 
 
-PasteCompatibleWithAutoSelectionCopy() {
-    if (enable_auto_selection_copy)
-        Send, #v
-    else
-        Send, ^v
-}
+; PasteCompatibleWithAutoSelectionCopy() {
+;     if (enable_auto_selection_copy)
+;         Send, #v
+;     else
+;         Send, ^v
+; }
 
 
 Run_AsUser(prms*) {
@@ -699,14 +699,14 @@ Default_DoubleClickCtrlTrigger(){
 ; ---------------------------------------------------------------------o
 
 Default_HotEdgesTopHalfLeftTrigger(from){
-	if (from = "Ctrl+8") {
-		ToolTipWithTimer("Launching Music App ...", 1111)
-		run %music_app_path%
-		; Send, #e
-		; ToolTipWithTimer("Launching File Explorer ...", 1111)
-		; MaximizeWindow(1111, "Explorer.exe")
+	; if (from = "Ctrl+8") {
+	; 	ToolTipWithTimer("Launching Music App ...", 1111)
+	; 	run %music_app_path%
+	; 	; Send, #e
+	; 	; ToolTipWithTimer("Launching File Explorer ...", 1111)
+	; 	; MaximizeWindow(1111, "Explorer.exe")
 
-	}
+	; }
 }
 Default_HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {						
@@ -717,22 +717,23 @@ Default_HotEdgesTopHalfRightTrigger(from){
 }
 Default_HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {												
-		; Send, ^+{Esc}
-		; ToolTipWithTimer("Launching Task Manager ...", 1111)
-		; MaximizeWindow(1111, "taskmgr.exe")
-		ToolTipWithTimer("Launching WeChat ...", 1111)
-		run %im_path%
-		; MaximizeWindow(1111, "WeChat.exe")
+		Send, ^+{Esc}
+		ToolTipWithTimer("Launching Task Manager ...", 1111)
+		MaximizeWindow(1111, "taskmgr.exe")
 
 		; Send, !{F4}
 	}					
 }
 Default_HotEdgesBottomHalfRightTrigger(from){
-	if (from = "Ctrl+8") {
-		Send, #m				
-		; Send, #{Up}				
-		; Send, !{F4}
-	}					
+	; if (from = "Ctrl+8") {
+	; 	; Send, #m				
+	; 	; Send, #{Up}				
+	; 	; Send, !{F4}
+
+	; 	ToolTipWithTimer("Launching WeChat ...", 1111)
+	; 	run %im_path%
+	; 	; MaximizeWindow(1111, "WeChat.exe")
+	; }					
 }
 Default_HotEdgesLeftHalfUpTrigger(from){
 	if (from = "Ctrl+8") {		
@@ -835,25 +836,22 @@ IncludeUserConfIFExist() {
 
 ; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; ; if blank, leave a ugly cmd window after input cmd ``proj``(open nox project with vscode).
-; global im_path := "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
-
-; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 
 ; global disable_win10_auto_update := 1
 
-; global auto_update_when_launch_nox := 0
+; global auto_update_when_launch_nox := 1
 
-; global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
+; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
 
 ; global EverythingShortCutFunc := "User_EverythingShortCut"
 ; global DoubleClickShiftTriggerFunc := ""
 ; global DoubleClickAltTriggerFunc := ""
 ; global DoubleClickCtrlTriggerFunc := ""
 ; global EverythingShortCutFunc := ""
-; global HotEdgesTopHalfLeftTriggerFunc := ""
+; global HotEdgesTopHalfLeftTriggerFunc := "User_HotEdgesTopHalfLeftTrigger"
 ; global HotEdgesTopHalfRightTriggerFunc := ""
 ; global HotEdgesBottomHalfLeftTriggerFunc := ""
-; global HotEdgesBottomHalfRightTriggerFunc := ""
+; global HotEdgesBottomHalfRightTriggerFunc := "User_HotEdgesBottomHalfRightTrigger"
 ; global HotEdgesLeftHalfUpTriggerFunc := ""
 ; global HotEdgesLeftHalfDownTriggerFunc := ""
 ; global HotEdgesRightHalfUpTriggerFunc := ""
@@ -868,7 +866,6 @@ IncludeUserConfIFExist() {
 ; global hot_corners_detect_interval := 88
 
 ; global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
-; global enable_auto_selection_copy := 0  ; should use with ``Win+V`` or ``CapsLock+Shift+F``
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 ; global keyboard_double_click_timeout := 222
@@ -898,14 +895,35 @@ IncludeUserConfIFExist() {
 ; 	; u can set your own Everything shortcut here, just like `` Send, ^!+e ``
 ; }
 
+; User_HotEdgesTopHalfLeftTrigger(from){
+; 	if (from = "Ctrl+8") {
+; 		ToolTipWithTimer("Launching Music App ...", 1111)
+; 		run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
+; 	}
+; }
+
+; User_HotEdgesBottomHalfRightTrigger(from){
+; 	if (from = "Ctrl+8") {
+; 		ToolTipWithTimer("Launching WeChat ...", 1111)
+; 		run "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
+; 		; MaximizeWindow(1111, "WeChat.exe")
+; 	}					
+; }
+
 		), %user_conf_file%
+		
+		SetTimer, ReloadForIncludingUserConf, -66
 	}
-	else {
-		#IncludeAgain *i %A_ScriptDir%\conf\user_conf.ahk
-		SetTimer, IncludeUserConfIFExist, off
-	}
+	; else {
+	; 	; #IncludeAgain *i %A_ScriptDir%\conf\user_conf.ahk
+	; 	; SetTimer, IncludeUserConfIFExist, off
+	; }
 }
 
+
+ReloadForIncludingUserConf() {
+	Reload
+}
 
 StartNoxWithWindows() {
 	; Clipboard =    ; Empties Clipboard

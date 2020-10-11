@@ -7,7 +7,8 @@ RunAsAdmin()
 
 HandleMonitorConfWhenFirstRun()
 
-SetTimer, IncludeUserConfIFExist, 66
+; SetTimer, IncludeUserConfIFExist, 66
+IncludeUserConfIFExist()
 
 if auto_limit_mode_when_full_screen
 	SetTimer, LimitModeWhenFullScreen, 88

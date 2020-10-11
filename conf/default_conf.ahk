@@ -53,9 +53,6 @@ global nox_border_shadow_type := classic_shadow_type
 
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
-global im_path := ""
-
-global music_app_path := ""
 
 global disable_win10_auto_update := 1
 
@@ -87,7 +84,6 @@ global enable_hot_corners := 1  ; ; when cursor hover on the corner
 global hot_corners_detect_interval := 88
 
 global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
-global enable_auto_selection_copy := 0  ; should use with `Win+V` or `CapsLock+Shift+F`
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
@@ -95,19 +91,19 @@ global mouse_double_click_timeout := 666
 
 
 
-; ---------------------------------------------------------------------o
-; 					replace str map conf  ( Capslock+Shift+U )
-; ---------------------------------------------------------------------o
+; ; ---------------------------------------------------------------------o
+; ; 					replace str map conf  ( Capslock+Shift+U )
+; ; ---------------------------------------------------------------------o
 
-global StrMap := 
-(join str map
-{
-	"origin_str" : "new_str (don't del this line)"
+; global StrMap := 
+; (join str map
+; {
+; 	"origin_str" : "new_str (don't del this line)"
 
-	,  "[]" : "「」"
-	,  "{}" : "『』"
-}
-)
+; 	,  "[]" : "「」"
+; 	,  "{}" : "『』"
+; }
+; )
 
 
 ; ---------------------------------------------------------------------o
