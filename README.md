@@ -35,7 +35,6 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `ev` : run Everything
 * `url` : open an URL
 * `cmd` : open a command prompt window on the current explorer path 
-* `proj` : open this proj with vs code
 * `rd` : reload this script
 * `dir` : open the directory for this script
 <!-- * `conf` : Edit user_conf -->
