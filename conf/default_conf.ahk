@@ -53,7 +53,7 @@ global nox_border_shadow_type := classic_shadow_type
 
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
-global vscode_path := ""
+global im_path := ""
 
 global music_app_path := ""
 

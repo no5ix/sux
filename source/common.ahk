@@ -717,9 +717,13 @@ Default_HotEdgesTopHalfRightTrigger(from){
 }
 Default_HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {												
-		Send, ^+{Esc}
-		ToolTipWithTimer("Launching Task Manager ...", 1111)
-		MaximizeWindow(1111, "taskmgr.exe")
+		; Send, ^+{Esc}
+		; ToolTipWithTimer("Launching Task Manager ...", 1111)
+		; MaximizeWindow(1111, "taskmgr.exe")
+		ToolTipWithTimer("Launching WeChat ...", 1111)
+		run %im_path%
+		; MaximizeWindow(1111, "WeChat.exe")
+
 		; Send, !{F4}
 	}					
 }
@@ -831,7 +835,7 @@ IncludeUserConfIFExist() {
 
 ; ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; ; if blank, leave a ugly cmd window after input cmd ``proj``(open nox project with vscode).
-; global vscode_path := "C:\Program Files\Microsoft VS Code\Code.exe"
+; global im_path := "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
 
 ; global music_app_path := "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 
