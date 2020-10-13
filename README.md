@@ -38,11 +38,11 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `cmd` : open a command prompt window on the current explorer path 
 * `rd` : reload this script
 * `dir` : open the directory for this script
-<!-- * `conf` : Edit user_conf -->
 * `up` : update nox
-<!-- * `limit` : turn on/off limit mode -->
 * `wau` : turn on/off disable win10 auto update
 * `xy` : set second monitor xy for detecting IsCorner()
+<!-- * `conf` : Edit user_conf -->
+<!-- * `limit` : turn on/off limit mode -->
 
 
 # CapsLock+
