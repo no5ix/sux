@@ -18,15 +18,16 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **enhanced capslock** : just like Capslock+, see `capslock_plus.ahk`
 * **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: `Ctrl+Shift+Alt+E`, see `default_conf.ahk` : `EverythingShortCutFunc`
 * **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see `default_conf.ahk` : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
-<!-- * **auto selection copy** : just like linux terminal -->
 * **custom theme** : two default theme(dark/light), and u can add ur own theme
-<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
 * **screen capture** : try `Capslock + ~`
-<!-- * **game mode** : double Alt then input `game` -->
 * **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
 * **start nox with windows support**
 * **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
 * **custom command line map support**:  see `default_conf.ahk` : `CustomCommandLineMap`
+<!-- * **auto selection copy** : just like linux terminal -->
+<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
+<!-- * **game mode** : double Alt then input `game` -->
+
 
 # CMDs
 
@@ -49,91 +50,91 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `CapsLock` :
     *  `Esc`
 * `CapsLock` & `H` :
-	* with shift : `Shift`+`Left`
 	* `Left`
+	* with shift : `Shift`+`Left`
 * `CapsLock` & `J` :
-	* with shift : `Shift`+`Down`
 	* `Down`
+	* with shift : `Shift`+`Down`
 * `CapsLock` & `K` :
-	* with shift : `Shift`+`Up`
 	* `Up`
+	* with shift : `Shift`+`Up`
 * `CapsLock` & `L` :
-	* with shift : `Shift`+`Right`
 	* `Right`
+	* with shift : `Shift`+`Right`
 * `CapsLock` & `~` :
-    * with shift : `CapsLock`
     * screen capture
+	* with shift : `CapsLock`
 * `CapsLock` & `V` :
-    * with shift : `^`
     * `Ctrl`+`V`
+	* with shift : `^`
 * `CapsLock` & `F` :
-	* with shift : `Ctrl`+`Shift`+`F`
 	* `Ctrl`+`F`
+	* with shift : `Ctrl`+`Shift`+`F`
 * `CapsLock` & `W` :
-	* with shift : `~`
 	* `Ctrl`+`A`
+	* with shift : `~`
 * `CapsLock` & `E` :
-	* with shift : `Ctrl`+`/`
 	* Enter
+	* with shift : `Ctrl`+`/`
 * `CapsLock` & `X` :
     *  `Ctrl`+`
 * `CapsLock` & `C` :
-	* with shift : `$`
 	* `Ctrl`+`C`
+	* with shift : `$`
 * `CapsLock` & `S` :
-	* with shift : `Ctrl`+`Shift`+`S`
 	* `Ctrl`+`S`
+	* with shift : `Ctrl`+`Shift`+`S`
 * `CapsLock` & `R` :
-	* with shift : `Ctrl`+`Y`
 	* `Ctrl`+`Z`
+	* with shift : `Ctrl`+`Y`
 * `CapsLock` & `Tab` :
-	* with shift : `Ins`
 	* `Shift`+`Ins`
+	* with shift : `Ins`
 * `CapsLock` & `d` :
-	* with shift : `BS`
 	* `Del`
+	* with shift : `BS`
 * `CapsLock` & `Y` :
-	* with shift : `%`
 	* `*`
+	* with shift : `%`
 * `CapsLock` & `U` :
-	* with shift : `@`
 	* `!`
+	* with shift : `@`
 * `CapsLock` & `,` :
-	* with shift : `Shift`+`Home`
 	* `Home`
+	* with shift : `Shift`+`Home`
 * `CapsLock` & `.` :
-	* with shift : `Shift`+`End`
 	* `End`
+	* with shift : `Shift`+`End`
 * `CapsLock` & `P` :
-	* with shift : `#`
 	* `&`
+	* with shift : `#`
 * `CapsLock` & `I` :
-	* with shift : `Ctrl`+`Shift`+`Left`
 	* `Ctrl`+`Left`
+	* with shift : `Ctrl`+`Shift`+`Left`
 * `CapsLock` & `O` :
-	* with shift : `Ctrl`+`Shift`+`Right`
 	* `Ctrl`+`Right`
+	* with shift : `Ctrl`+`Shift`+`Right`
 * `CapsLock` & `;` :
-	* with shift : `-`
 	* `_`
+	* with shift : `-`
 * `CapsLock` & `'` :
-	* with shift : `+`
 	* `=`
+	* with shift : `+`
 * `CapsLock` & `/` :
-	* with shift : `|`
 	* `\`
+	* with shift : `|`
 * `CapsLock` & `9` :
-	* with shift : ``
 	* `[`
+	* with shift : ``
 * `CapsLock` & `0` :
-	* with shift : `}`
 	* `]`
+	* with shift : `}`
 * `CapsLock` & `N` :
-	* with shift : `Ctrl`+`Shift`+`Backspace`
 	* `Ctrl`+`Backspace`
+	* with shift : `Ctrl`+`Shift`+`Backspace`
 * `CapsLock` & `M` :
-	* with shift : `Shift`+`End`+`Del`
 	* `Ctrl`+`Del`
+	* with shift : `Shift`+`End`+`Del`
 
 
 <!-- # 设置开机以管理员权限启动
