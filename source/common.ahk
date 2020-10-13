@@ -885,7 +885,16 @@ IncludeUserConfIFExist() {
 ; ---------------------------------------------------------------------o
 ; 					override custom command line conf  
 ; ---------------------------------------------------------------------o
+; global CustomCommandLineMap := 
+; (join custom command line map
+; {
+; 	"command_line_key" : "command_line_info (dont del this line)"
 
+; 	; ,  "proj" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\no5ix\Documents\github\example_proj"]
+; 	; ,  "test.go" : ["notepad.exe", "C:\Users\b\Desktop\test.go"]
+; 	; ,  "test.py" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\b\Desktop\test.py"]
+; }
+; )
 
 ; ---------------------------------------------------------------------o
 ; 					override default TriggerFunc conf  
