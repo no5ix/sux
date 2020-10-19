@@ -45,7 +45,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <!-- * `limit` : turn on/off limit mode -->
 
 
-# CapsLock+
+<!-- # CapsLock+
 
 * `CapsLock` :
     *  `Esc`
@@ -134,7 +134,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 	* with shift : `Ctrl`+`Shift`+`Backspace`
 * `CapsLock` & `M` :
 	* `Ctrl`+`Del`
-	* with shift : `Shift`+`End`+`Del`
+	* with shift : `Shift`+`End`+`Del` -->
 
 
 <!-- # 设置开机以管理员权限启动

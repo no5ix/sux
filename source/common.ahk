@@ -873,7 +873,7 @@ IncludeUserConfIFExist() {
 
 
 ; ---------------------------------------------------------------------o
-; 					override default override replace str map conf  ( Capslock+Shift+U )
+; 					override default override replace str map conf
 ; ---------------------------------------------------------------------o
 
 
@@ -990,4 +990,34 @@ RunAsAdmin() {
 IsFirstTimeRunNox() {
 	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
 	return !FileExist(monitor_xy_conf_file)
+}
+
+
+WebSearch(user_input, search_key="default") {
+	; gui_destroy()
+	; last_search_str := user_input
+
+	if IsRawUrl(user_input) {
+		search_key := "url"
+	}
+
+	search_flag_index = 1
+	search_flag := WebSearchUrlMap[search_key][search_flag_index]
+	if (search_flag = "URL") {
+		if IsStandardRawUrl(user_input) {
+			run %user_input%
+			return
+		}
+	} else if (search_flag = "MULTI") {
+		for _index, _elem in WebSearchUrlMap[search_key] {
+			if _index != search_flag_index
+				WebSearch(user_input, _elem)
+		}
+		return
+	}
+
+	safe_query := UriEncode(Trim(user_input))
+	search_url := WebSearchUrlMap[search_key][2]
+	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+	RunWait, %search_final_url%
 }
