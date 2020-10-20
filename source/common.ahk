@@ -1010,8 +1010,10 @@ WebSearch(user_input, search_key="default") {
 		}
 	} else if (search_flag = "MULTI") {
 		for _index, _elem in WebSearchUrlMap[search_key] {
-			if _index != search_flag_index
+			if (_index != search_flag_index) {
 				WebSearch(user_input, _elem)
+				Sleep, 666
+			}
 		}
 		return
 	}
@@ -1019,5 +1021,5 @@ WebSearch(user_input, search_key="default") {
 	safe_query := UriEncode(Trim(user_input))
 	search_url := WebSearchUrlMap[search_key][2]
 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-	RunWait, %search_final_url%
+	Run, %search_final_url%
 }
