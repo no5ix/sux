@@ -351,7 +351,7 @@ Run_AsUser(prms*) {
 }
 
 
-SaveCurSelectedText() {
+GetCurSelectedText() {
 	clipboardOld := ClipboardAll            ; backup clipboard
 	Send, ^c
 	Sleep, 66                             ; copy selected text to clipboard
@@ -993,9 +993,16 @@ IsFirstTimeRunNox() {
 }
 
 
+gui_destroy() {
+	; Hide GUI
+	Gui, Destroy
+}
+
+
 WebSearch(user_input, search_key="default") {
 	; gui_destroy()
 	; last_search_str := user_input
+	; Gui, Destroy
 
 	if IsRawUrl(user_input) {
 		search_key := "url"

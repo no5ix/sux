@@ -125,14 +125,9 @@ CapsLock & x::
 		ClipSaved := ""   ; Free the memory in case the clipboard was very large.
 	}
 	else {
-	; 	Send, {End}
-	; 	Send, ^v
-		ClipSaved := ClipboardAll   ; Save the entire clipboard to a variable of your choice.
-		; ... here make temporary use of the clipboard, such as for pasting Unicode text via Transform Unicode ...		
-		Send, ^c
-		WebSearch(Clipboard)
-		Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-		ClipSaved := ""   ; Free the memory in case the clipboard was very large.
+		; WebSearch(Clipboard)
+		gui_spawn_func := "gui_spawn"
+		%gui_spawn_func%(GetCurSelectedText())
 	}
 	ClickUpIfLbDown()
 	return
