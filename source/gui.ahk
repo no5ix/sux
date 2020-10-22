@@ -260,18 +260,17 @@ HandleGuiUserInput:
 		else if CustomCommandLineMap.HasKey(trim_gui_user_input)
 		{
 			gui_destroy()
-			; Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
-			p_cmd := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"]
-			use_cur_path := 0
-			Loop % p_cmd.Length()
-    			if (p_cmd[A_Index] == trim_gui_user_input) {
-					use_cur_path := 1
-					Break
-				}
-			if use_cur_path
+			; p_cmd := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"]
+			; use_cur_path := 0
+			; Loop % p_cmd.Length()
+    		; 	if (p_cmd[A_Index] == trim_gui_user_input) {
+			; 		use_cur_path := 1
+			; 		Break
+			; 	}
+			use_cur_path := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"].HasKey(trim_gui_user_input)
+			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
 			{
-				IfWinActive, ahk_exe explorer.exe
-				{
+				if (use_cur_path) {
 					Send, !d
 					final_cmd_str := StringJoin(" ", CustomCommandLineMap[trim_gui_user_input]*) . "`n"
 					SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
@@ -280,7 +279,23 @@ HandleGuiUserInput:
 					return
 				}
 			}
+			; is_on_desktop := 0
+			; IfWinActive, ahk_exe explorer.exe ahk_class WorkerW  ; from desktop
+			; {
+			; 	is_on_desktop := 1
+			; }
 			Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
+			if (use_cur_path) {
+				file_path_str := CustomCommandLineMap[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+				; DebugPrintVal(file_path_str)
+				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+$", file_name)  ; file_name just like: "bash.exe""
+				; DebugPrintVal(file_name)
+				WinWaitActive, ahk_exe %file_name%,, 2222
+				if !ErrorLevel {
+					cd_user_desktop_cmd_input := "cd " . CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"][trim_gui_user_input] . "`n"
+					SendInput, %cd_user_desktop_cmd_input%
+				}
+			}
 		}
 		else
 		{

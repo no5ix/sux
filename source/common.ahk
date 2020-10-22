@@ -890,7 +890,7 @@ IncludeUserConfIFExist() {
 ; {
 ; 	"command_line_key" : "command_line_info (dont del this line)"
 
-;	,  "USE_CURRENT_DIRECTORY_PATH_CMDs": ["cmd", "git"]
+;	,  "USE_CURRENT_DIRECTORY_PATH_CMDs": {"cmd" : "%UserProfile%\Desktop", "git" : "~/Desktop"}
 ;	,  "cmd" : ["cmd.exe"]
 
 ;	; ,  "git" : ["C:\Program Files\Git\bin\bash.exe", "--login"]
