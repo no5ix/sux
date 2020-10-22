@@ -890,6 +890,10 @@ IncludeUserConfIFExist() {
 ; {
 ; 	"command_line_key" : "command_line_info (dont del this line)"
 
+;	,  "USE_CURRENT_DIRECTORY_PATH_CMDs": ["cmd", "git"]
+;	,  "cmd" : ["cmd.exe"]
+
+;	; ,  "git" : ["C:\Program Files\Git\bin\bash.exe", "--login"]
 ; 	; ,  "proj" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\no5ix\Documents\github\example_proj"]
 ; 	; ,  "test.go" : ["notepad.exe", "C:\Users\b\Desktop\test.go"]
 ; 	; ,  "test.py" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\b\Desktop\test.py"]
@@ -1029,4 +1033,16 @@ WebSearch(user_input, search_key="default") {
 	search_url := WebSearchUrlMap[search_key][2]
 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 	Run, %search_final_url%
+}
+
+; Which can be used like this:
+; Code: Select all - Toggle Line numbers
+
+; MsgBox % Join("`n", "one", "two", "three") 
+; substrings := ["one", "two", "three"]
+; MsgBox % Join("-", substrings*)
+StringJoin(sep, params*) {
+    for index,param in params
+        str .= sep . param
+    return SubStr(str, StrLen(sep)+1)
 }

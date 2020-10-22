@@ -124,22 +124,6 @@ HandleGuiUserInput:
 		; 	gui_search_title := "URL"
 		; 	gui_search("http://REPLACEME", 1)
 		; }
-		; else
-		if trim_gui_user_input = cmd ; open a command prompt window on the current explorer path 
-		{
-			gui_destroy()
-			IfWinActive, ahk_exe explorer.exe
-			{
-				Send, !d
-				SendInput, cmd.exe`n  ; 等同于下面这两句
-				; SendRaw, cmd
-				; Send, {Enter}
-			}
-			else
-			{
-				run cmd.exe
-			}
-		}
 		;-------------------------------------------------------------------------------
 		;;; INTERACT WITH THIS AHK SCRIPT ;;;
 		;-------------------------------------------------------------------------------
@@ -156,7 +140,8 @@ HandleGuiUserInput:
 		; 	}
 		; 	MaximizeWindow(6666, "Code.exe")
 		; }
-		else if trim_gui_user_input = rd ; Reload this script
+		; else 
+		if trim_gui_user_input = rd ; Reload this script
 		{
 			gui_destroy() ; removes the GUI even when the reload fails
 			Reload
@@ -256,9 +241,45 @@ HandleGuiUserInput:
 		;-------------------------------------------------------------------------------
 		;;; custom command line ;;;
 		;-------------------------------------------------------------------------------
+		
+		; if trim_gui_user_input = cmd ; open a command prompt window on the current explorer path 
+		; {
+		; 	gui_destroy()
+		; 	IfWinActive, ahk_exe explorer.exe
+		; 	{
+		; 		Send, !d
+		; 		SendInput, cmd.exe`n  ; 等同于下面这两句
+		; 		; SendRaw, cmd
+		; 		; Send, {Enter}
+		; 	}
+		; 	else
+		; 	{
+		; 		run cmd.exe
+		; 	}
+		; }
 		else if CustomCommandLineMap.HasKey(trim_gui_user_input)
 		{
 			gui_destroy()
+			; Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
+			p_cmd := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"]
+			use_cur_path := 0
+			Loop % p_cmd.Length()
+    			if (p_cmd[A_Index] == trim_gui_user_input) {
+					use_cur_path := 1
+					Break
+				}
+			if use_cur_path
+			{
+				IfWinActive, ahk_exe explorer.exe
+				{
+					Send, !d
+					final_cmd_str := StringJoin(" ", CustomCommandLineMap[trim_gui_user_input]*) . "`n"
+					SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
+					; SendRaw, cmd
+					; Send, {Enter}
+					return
+				}
+			}
 			Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
 		}
 		else
