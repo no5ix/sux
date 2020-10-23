@@ -497,12 +497,19 @@ IsStandardRawUrl(user_input){
 
 
 IsRawUrl(user_input){
-	com_str := ".com"
-	net_str := ".net"
-	cn_str := ".cn"
-	www_str := "www."
-	io_str := ".io"
-	return InStr(user_input, com_str) or InStr(user_input, net_str) or InStr(user_input, cn_str) or InStr(user_input, www_str) or InStr(user_input, io_str) 
+	; com_str := ".com"
+	; net_str := ".net"
+	; cn_str := ".cn"
+	; www_str := "www."
+	; io_str := ".io"
+	; return InStr(user_input, com_str) or InStr(user_input, net_str) or InStr(user_input, cn_str) or InStr(user_input, www_str) or InStr(user_input, io_str) 
+
+	raw_url_str_arr := ["http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
+	Loop % raw_url_str_arr.Length()
+		if InStr(user_input, raw_url_str_arr[A_Index]) {
+			return 1
+		}
+	return 0
 }
 
 DisableWin10AutoUpdate(){
