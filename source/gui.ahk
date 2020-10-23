@@ -300,29 +300,30 @@ HandleGuiUserInput:
 		else
 		{
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			if !word_array[2]
-				pending_search_str := Clipboard
-			else
-				pending_search_str := word_array[2]
 				
-			if (word_array[1] == "ev") {
+			if (word_array[1] == "ev"){
 				;;; everything search
 				gui_destroy()
 				%EverythingShortCutFunc%()
 				WinWaitActive, ahk_exe Everything.exe, , 2.222
 				if ErrorLevel
 					MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-				else
-				{
+				else if (word_array[2]){
+					
+					pending_search_str := word_array[2]
 					; last_search_str := GuiUserInput
 					; Sleep, 88
 					; SendRaw, %trim_gui_user_input%
-					Sleep, 222
+					; Sleep, 222
 					; SendRaw, %last_search_str%
 					Send, {Blind}{Text}%pending_search_str%
 				}
 			}
 			else if WebSearchUrlMap.HasKey(word_array[1]){
+				if !word_array[2]
+					pending_search_str := Clipboard
+				else
+					pending_search_str := word_array[2]
 				WebSearch(pending_search_str, word_array[1])
 				gui_destroy()
 			}

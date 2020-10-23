@@ -854,7 +854,6 @@ IncludeUserConfIFExist() {
 ; global DoubleClickShiftTriggerFunc := ""
 ; global DoubleClickAltTriggerFunc := ""
 ; global DoubleClickCtrlTriggerFunc := ""
-; global EverythingShortCutFunc := ""
 ; global HotEdgesTopHalfLeftTriggerFunc := "User_HotEdgesTopHalfLeftTrigger"
 ; global HotEdgesTopHalfRightTriggerFunc := ""
 ; global HotEdgesBottomHalfLeftTriggerFunc := ""
