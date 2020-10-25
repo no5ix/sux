@@ -8,6 +8,7 @@
 
 
 gui_spawn(curr_select_text="") {
+	gui_destroy()
 	; curr_select_text := GetCurSelectedText()
 	; if (StrLen(curr_select_text) >= 60 || str)
 	; 	curr_select_text := ""
