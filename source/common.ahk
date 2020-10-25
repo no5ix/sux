@@ -638,7 +638,7 @@ RunWaitMany(commands) {
 ; ; run single command and retrieve their output
 RunWaitOne(command, hide_window) {
 	; Get a temporary file path
-	tempFile := A_Temp "\" DllCall("GetCurrentProcessId") ".txt"                           ; "
+	tempFile := A_Temp "\" DllCall("GetCurrentProcessId") "_nox_temp.txt"                           ; "
 	; Run the console program hidden, redirecting its output to
 	; the temp. file (with a program other than powershell.exe or cmd.exe,
 	; prepend %ComSpec% /c; use 2> to redirect error output), and wait for it to exit.
@@ -661,6 +661,10 @@ UpdateNox(from_launch) {
 		if from_launch
 			return
 		MsgBox,,, nox is already up to date. , 6
+	}
+	else if (!run_result || Instr(run_result, "FATAL:") || Instr(run_result, "fatal:") || Instr(run_result, "error:")){
+		msg_str := "nox update failed, " . (run_result ? "this is the error log: " . run_result : "please `git pull` to check.")
+		MsgBox,,, %msg_str%
 	}
 	else {
 		; MsgBox,,, nox update finished. , 6
