@@ -477,77 +477,79 @@ class LinkList:
 
 def linklist_reverse(head):
     
+    
 
+if __name__ == "__main__":
+        
+    sort_algo_func_list = [
+        insert_sort,
+        merge_sort, merge_sort_bottom_up, merge_sort_bottom_up_optimize, 
+        quick_sort, quick_sort_optimize, quick_sort_3_ways,
+        heap_sort,
+    ]
+    test_arr_list = [
+        [4, 3, 5, 1, 88, 0, -7, 2, 66, -58],
+        [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        [4, 3, 5, 1, 88, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, -7, 2, 66, -58],
+        [4, 3, 5, 1, 88, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, -7, 2, 66, -58],
+        [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, -7, 2, 66, -58, 4, 3, 5, 1, 88],
+        [0, -7, 2, 66, -58, 4, 3, 5, 1, 884, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+        [-3, -7, 1, 2, 3, 4, 5, 6, 7, 8, 21, 42, 87, 99, 66, 32, 91, 19, 28],
+        [8, 7, 6, 5, 4, 3, 2, 1, 0, -1, 21, 42, 87, 99, 66, 32, 91, 19, 28],
+    ]
+    for _sort_algo in sort_algo_func_list:
+        print _sort_algo.__name__
+        is_test_pass = True
+        for _test_arr in test_arr_list:
+            _copy_test_arr = copy.deepcopy(_test_arr)
+            _sort_algo(_copy_test_arr, 0, len(_copy_test_arr)-1)
+            # print _copy_test_arr
+            pre_elem = _copy_test_arr[0]
+            for _elem in _copy_test_arr:
+                if _elem < pre_elem:
+                    print  "is not ordered: " + str(_test_arr)
+                    is_test_pass = False
+                    break
+        print "-------------test " + \
+            ("pass" if is_test_pass else "not pass") + \
+            "---------------"
 
-sort_algo_func_list = [
-    insert_sort,
-    merge_sort, merge_sort_bottom_up, merge_sort_bottom_up_optimize, 
-    quick_sort, quick_sort_optimize, quick_sort_3_ways,
-    heap_sort,
-]
-test_arr_list = [
-    [4, 3, 5, 1, 88, 0, -7, 2, 66, -58],
-    [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    [4, 3, 5, 1, 88, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, -7, 2, 66, -58],
-    [4, 3, 5, 1, 88, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, -7, 2, 66, -58],
-    [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, -7, 2, 66, -58, 4, 3, 5, 1, 88],
-    [0, -7, 2, 66, -58, 4, 3, 5, 1, 884, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
-    [-3, -7, 1, 2, 3, 4, 5, 6, 7, 8, 21, 42, 87, 99, 66, 32, 91, 19, 28],
-    [8, 7, 6, 5, 4, 3, 2, 1, 0, -1, 21, 42, 87, 99, 66, 32, 91, 19, 28],
-]
-for _sort_algo in sort_algo_func_list:
-    print _sort_algo.__name__
-    is_test_pass = True
-    for _test_arr in test_arr_list:
-        _copy_test_arr = copy.deepcopy(_test_arr)
-        _sort_algo(_copy_test_arr, 0, len(_copy_test_arr)-1)
-        # print _copy_test_arr
-        pre_elem = _copy_test_arr[0]
-        for _elem in _copy_test_arr:
-            if _elem < pre_elem:
-                print  "is not ordered: " + str(_test_arr)
-                is_test_pass = False
-                break
-    print "-------------test " + \
-        ("pass" if is_test_pass else "not pass") + \
-        "---------------"
+    print "\n"
 
-print "\n"
+    _bt_a = BinaryTreeNode('a')
+    _bt_b = BinaryTreeNode('b')
+    _bt_c = BinaryTreeNode('c')
+    _bt_d = BinaryTreeNode('d')
+    _bt_e = BinaryTreeNode('e')
+    _bt_f = BinaryTreeNode('f')
+    _bt_g = BinaryTreeNode('g')
+    _bt_a.left = _bt_b
+    _bt_b.left = _bt_c
+    _bt_b.right = _bt_d
+    _bt_d.left = _bt_e
+    _bt_d.right = _bt_f
+    _bt_e.right = _bt_g
 
-_bt_a = BinaryTreeNode('a')
-_bt_b = BinaryTreeNode('b')
-_bt_c = BinaryTreeNode('c')
-_bt_d = BinaryTreeNode('d')
-_bt_e = BinaryTreeNode('e')
-_bt_f = BinaryTreeNode('f')
-_bt_g = BinaryTreeNode('g')
-_bt_a.left = _bt_b
-_bt_b.left = _bt_c
-_bt_b.right = _bt_d
-_bt_d.left = _bt_e
-_bt_d.right = _bt_f
-_bt_e.right = _bt_g
+    bt_traversal_func_list = {
+        binary_tree_preorder_traversal: ['a', 'b', 'c', 'd', 'e', 'g', 'f'],
+        binary_tree_inorder_traversal: ['c', 'b', 'e', 'g', 'd', 'f', 'a'],
+        binary_tree_postorder_traversal: ['c', 'g', 'e', 'f', 'd', 'b', 'a'],
+        binary_tree_levelorder_traversal: ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+    }
+    for _bt_traversal_func, _pass_result_arr in bt_traversal_func_list.iteritems():
+        print _bt_traversal_func.__name__
+        print "------------test " + \
+            ("pass" if _bt_traversal_func(_bt_a) == _pass_result_arr else "not pass") + \
+            "---------------"
 
-bt_traversal_func_list = {
-    binary_tree_preorder_traversal: ['a', 'b', 'c', 'd', 'e', 'g', 'f'],
-    binary_tree_inorder_traversal: ['c', 'b', 'e', 'g', 'd', 'f', 'a'],
-    binary_tree_postorder_traversal: ['c', 'g', 'e', 'f', 'd', 'b', 'a'],
-    binary_tree_levelorder_traversal: ['a', 'b', 'c', 'd', 'e', 'f', 'g']
-}
-for _bt_traversal_func, _pass_result_arr in bt_traversal_func_list.iteritems():
-    print _bt_traversal_func.__name__
-    print "------------test " + \
-        ("pass" if _bt_traversal_func(_bt_a) == _pass_result_arr else "not pass") + \
-        "---------------"
+    print ""
 
-print ""
+    _copy_bt_a = copy.deepcopy(_bt_a)
+    binary_tree_swap_recursive(_copy_bt_a)
+    print "after binary_tree_swap_recursive, levelorder traversal"
+    print binary_tree_levelorder_traversal(_copy_bt_a)
 
-_copy_bt_a = copy.deepcopy(_bt_a)
-binary_tree_swap_recursive(_copy_bt_a)
-print "after binary_tree_swap_recursive, levelorder traversal"
-print binary_tree_levelorder_traversal(_copy_bt_a)
-
-_copy_bt_a = copy.deepcopy(_bt_a)
-binary_tree_swap_iterative(_copy_bt_a)
-print "after binary_tree_swap_iterative, levelorder traversal"
-print binary_tree_levelorder_traversal(_copy_bt_a)
+    _copy_bt_a = copy.deepcopy(_bt_a)
+    binary_tree_swap_iterative(_copy_bt_a)
+    print "after binary_tree_swap_iterative, levelorder traversal"
+    print binary_tree_levelorder_traversal(_copy_bt_a)
