@@ -476,8 +476,22 @@ class LinkList:
 
 
 def linklist_reverse(head):
-    
-    
+    if not head:
+        return
+    _pre = None
+    _cur = head
+    _temp_next = head.next
+    while _cur:
+        #先用_temp_next保存_cur的下一个节点的信息，
+        #保证单链表不会因为失去_cur节点的next而就此断裂
+        _temp_next = _cur.next
+        #保存完_temp_next，就可以让_cur的next指向_pre了
+        _cur.next = _pre
+        #让_pre，_cur依次向后移动一个节点，继续下一次的指针反转
+        _pre = _cur
+        _cur = _temp_next
+    return _pre
+
 
 if __name__ == "__main__":
         
@@ -553,3 +567,22 @@ if __name__ == "__main__":
     binary_tree_swap_iterative(_copy_bt_a)
     print "after binary_tree_swap_iterative, levelorder traversal"
     print binary_tree_levelorder_traversal(_copy_bt_a)
+
+    print "\n"
+    
+    _ll_a = LinkList('a')
+    _ll_b = LinkList('b')
+    _ll_c = LinkList('c')
+    _ll_d = LinkList('d')
+    _ll_e = LinkList('e')
+    _ll_a.next = _ll_b
+    _ll_a.next.next = _ll_c
+    _ll_a.next.next.next = _ll_d
+    _ll_a.next.next.next.next = _ll_e
+
+    print "after linklist_reverse: "
+    new_head = linklist_reverse(_ll_a)
+    i = new_head
+    while i:
+        print i.val, "->",
+        i = i.next
