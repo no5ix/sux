@@ -361,7 +361,7 @@ def heap_sort(arr, left_index , right_index):
         _max_heapify_recursive(arr, root_index, left_index, cur_right_index)
 
 
-class BinaryTreeNode:
+class BinaryTreeNode(object):
     
     def __init__(self, val):
         self.left = None
@@ -468,7 +468,7 @@ def binary_tree_swap_iterative(root):
             _temp_stack.append(("go", _cur_node.left))
 
 
-class LinkList:
+class LinkList(object):
 
     def __init__(self, val):
         self.next = None
@@ -491,6 +491,87 @@ def linklist_reverse(head):
         _pre = _cur
         _cur = _temp_next
     return _pre
+
+
+class GraphIterator(object):
+
+    def __init__(self, graph, cur_point_index):
+        self.graph = graph
+        self.cur_point_index = cur_point_index
+        self.iter_index = 0  # 迭代器索引
+
+    def next():
+        if self.graph.__class__.__name__ == "SparseGraph":
+            if self.iter_index < len(self.adjacency_container[cur_point_index]):
+                ret_point_index = self.adjacency_container[cur_point_index][self.iter_index]
+                self.iter_index += 1
+                return ret_point_index
+        elif self.graph.__class__.__name__ == "DenseGraph":
+            while self.iter_index < len(self.adjacency_container[cur_point_index]):
+                _next_point_index = self.adjacency_matrix[cur_point_index][self.iter_index]
+                self.iter_index += 1
+                if _next_point_index is not False:
+                    return _next_point_index
+        return None
+
+
+class GraphBase(object):
+    # 图的基类
+
+    def __init__(self, point_count, is_directed):
+        self.adjacency_container = None
+        self.is_directed = is_directed  # 是否为有向图
+    
+    # 深度优先遍历
+    def graph_dfs(self):
+        visited_arr = []
+        for _cur_point_index in xrange(0, len(self.adjacency_container)):
+            if _cur_point_index not in visited_arr:
+                self._dfs_by_point(_cur_point_index, visited_arr)
+        return visited_arr
+
+    def _dfs_by_point(self, cur_point_index, visited_arr):
+        visited_arr.append(cur_point_index)
+        for _next_point_index in self._traversal_connected_point(cur_point_index):
+            if _next_point_index not in visited_arr:
+                self._dfs_by_point(_next_point_index, visited_arr)
+
+    def _traversal_connected_point(self, cur_point_index):
+        raise NotImplementedError        
+
+
+class SparseGraph(GraphBase):
+    # 稀疏图
+
+    def __init__(self, point_count, is_directed):
+        super(SparseGraph, self).__init__(point_count, is_directed)
+        self.adjacency_container = [ [] for _ in xrange(point_count) ]  # 邻接表
+
+    def set_adjacency_list(self, adjacency_list):
+        self.adjacency_container = adjacency_list
+
+    def _traversal_connected_point(self, cur_point_index):
+        for _connected_point_index in self.adjacency_container[cur_point_index]:
+            yield _connected_point_index
+
+
+class DenseGraph(GraphBase):
+    # 稠密图
+
+    def __init__(self, point_count, is_directed):
+        super(DenseGraph, self).__init__(point_count, is_directed)
+        self.adjacency_container = [
+            [ False for _ in xrange(point_count)] for _ in xrange(point_count) 
+        ]  # 邻接矩阵
+
+    def set_adjacency_matrix(self, adjacency_matrix):
+        self.adjacency_container = adjacency_matrix
+
+    def _traversal_connected_point(self, cur_point_index):
+        for _connected_point_index in self.adjacency_container[cur_point_index]:
+            if _connected_point_index is not False:
+                continue
+            yield _connected_point_index
 
 
 if __name__ == "__main__":
@@ -586,3 +667,19 @@ if __name__ == "__main__":
     while i:
         print i.val, "->",
         i = i.next
+
+    print "\n"
+
+    temp_adjacency_list = [
+        [1, 2, 5, 6],
+        [0],
+        [0],
+        [4, 5],
+        [3, 5, 6],
+        [0, 3, 4],
+        [0, 4],
+    ]
+    test_sparse_graph = SparseGraph(point_count=len(temp_adjacency_list), is_directed=True)
+    test_sparse_graph.set_adjacency_list(temp_adjacency_list)
+    print "graph dfs:"
+    print test_sparse_graph.graph_dfs()
