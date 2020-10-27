@@ -497,12 +497,20 @@ class GraphBase(object):
     # 图的基类
 
     def __init__(self, point_count, is_directed):
+        # 因为稀疏图一般用邻接表来保存图的顶点数据,
+        # 而稠密图一般用邻接矩阵来表示, 所以他们的保存邻接点容器是不同的,
+        # 留给具体子类来指定, 此处用 `self.adjacency_container = None`表示即可
         self.adjacency_container = None
         self.is_directed = is_directed  # 是否为有向图
         self.connected_components_count = 0  # 连通分量个数
     
-    # 深度优先遍历
     def graph_dfs(self):
+        """
+        图的深度优先遍历（DFS）, 深度优先遍历尽可能优先往深层次进行搜索；
+        1. 首先访问出发点v，并将其标记为已访问过；
+        2. 然后依次从v出发搜索v的每个邻接点w。若w未曾访问过，则以w为新的出发点继续进行深度优先遍历，直至图中所有和源点v有路径相通的顶点均已被访问为止。
+        3. 若此时图中仍有未访问的顶点，则另选一个尚未访问的顶点为新的源点重复上述过程，直至图中所有的顶点均已被访问为止。
+        """
         visited_arr = []
         for _cur_point_index in xrange(0, len(self.adjacency_container)):
             if _cur_point_index not in visited_arr:
@@ -519,8 +527,14 @@ class GraphBase(object):
             if _next_point_index not in visited_arr:
                 self._dfs_by_point(_next_point_index, visited_arr)
 
-    # 广度优先遍历
     def graph_bfs(self):
+        """
+        图的广度优先遍历, 也可以称为图的层序遍历, 广度优先遍历按层次优先搜索最近的结点，一层一层往外搜索:
+        1. 首先访问出发点v，接着依次访问v的所有邻接点w1、w2......wt，
+        2. 然后依次访问w1、w2......wt邻接的所有未曾访问过的顶点。
+        3. 以此类推，直至图中所有和源点v有路径相通的顶点都已访问到为止。此时从v开始的搜索过程结束。
+        4. 若此时图中仍有未访问的顶点，则另选一个尚未访问的顶点为新的源点重复上述过程，直至图中所有的顶点均已被访问为止。
+        """
         result_arr = []
         visited_set = set()  # 用来记录某个顶点是否已经访问过
         _temp_queue = []
@@ -539,7 +553,12 @@ class GraphBase(object):
 
 
     def _iter_adjacent_points(self, cur_point_index):
-        raise NotImplementedError 
+        """
+        因为稀疏图一般用邻接表来保存图的顶点数据,
+        而稠密图一般用邻接矩阵来表示,
+        所以他们的遍历邻接点的方式是不同的, 留给具体的子类来实现.
+        """
+        raise NotImplementedError
 
 
 class SparseGraph(GraphBase):
@@ -574,6 +593,64 @@ class DenseGraph(GraphBase):
             if not _is_point_adjacent:
                 continue
             yield _adjacent_point_index
+
+
+# 首先要明确此递归函数的定义: 查看root是否为叶子结点并且root的val是否等于sum_num,
+# 然后才开始写代码
+def has_path_sum(root, sum_num):
+	if not root:
+		return False
+    # 判断是否为叶子
+	if not root.left and not root.left and root.val == sum_num:
+		return True
+    # 通过递归, 继续查看左右孩子节点是否有 sum_num-root.val
+	if has_path_sum(root.left, sum_num-root.val):
+		return True
+	return has_path_sum(root.right, sum_num-root.val)
+
+
+def binary_tree_paths(root):
+    result_arr = []
+    if not root:
+        return result_arr
+    if not root.left and not root.right:
+        result_arr.append(str(root.val))
+        return result_arr
+    # 获取左孩子的路径
+    left_bt_path_arr = binary_tree_paths(root.left)
+    for _path in left_bt_path_arr:
+        result_arr.append(str(root.val) + "->" + _path)
+    # 获取右孩子的路径
+    right_bt_path_arr = binary_tree_paths(root.right)
+    for _path in right_bt_path_arr:
+        result_arr.append(str(root.val) + "->" + _path)
+    return result_arr
+
+
+def _get_path_sum_include_node(node, sum_num):
+    if not node:
+        return 0
+    _path_cnt = 0
+    if node.val == sum_num:  # node本身值等于sum_num也算一条路径
+        _path_cnt += 1
+    _path_cnt += _get_path_sum_include_node(node.left, sum_num-node.val)
+    _path_cnt += _get_path_sum_include_node(node.right, sum_num-node.val)
+    return _path_cnt
+
+
+def path_sum_3(root, sum_num):
+    if not root:
+        return 0
+    path_cnt = 0
+    # 先求包括node本身的情况, 此时这轮递归所说的node是代码中的root
+    # 这种情况可以用类似于 path_sum问题 的 `has_path_sum`来实现
+    path_cnt += _get_path_sum_include_node(root, sum_num)
+    # 再求不包括node本身的情况, 
+    # 直接计算左右孩子往下的路径中和为sum_num(注意不是sum_num-root.val)的路径数量
+    path_cnt += path_sum_3(root.left, sum_num)
+    path_cnt += path_sum_3(root.right, sum_num)
+    return path_cnt
+        
 
 
 if __name__ == "__main__":
@@ -643,12 +720,12 @@ if __name__ == "__main__":
 
     _copy_bt_a = copy.deepcopy(_bt_a)
     binary_tree_swap_recursive(_copy_bt_a)
-    print "after binary_tree_swap_recursive, levelorder traversal"
+    print "after binary_tree_swap_recursive, levelorder traversal:"
     print binary_tree_levelorder_traversal(_copy_bt_a)
 
     _copy_bt_a = copy.deepcopy(_bt_a)
     binary_tree_swap_iterative(_copy_bt_a)
-    print "after binary_tree_swap_iterative, levelorder traversal"
+    print "after binary_tree_swap_iterative, levelorder traversal:"
     print binary_tree_levelorder_traversal(_copy_bt_a)
 
     print "\n"
@@ -704,3 +781,49 @@ if __name__ == "__main__":
     print test_dense_graph.graph_dfs()
     print "test_dense_graph graph bfs:"
     print test_dense_graph.graph_bfs()
+
+    print "\n"
+
+    bt_5 = BinaryTreeNode(5)
+    bt_4a = BinaryTreeNode(4)
+    bt_8 = BinaryTreeNode(8)
+    bt_11 = BinaryTreeNode(11)
+    bt_13 = BinaryTreeNode(13)
+    bt_4b = BinaryTreeNode(4)
+    bt_7 = BinaryTreeNode(7)
+    bt_2 = BinaryTreeNode(2)
+    bt_1 = BinaryTreeNode(1)
+
+    bt_5.left = bt_4a
+    bt_5.right = bt_8
+    bt_4a.left = bt_11
+    bt_11.left = bt_7
+    bt_11.right = bt_2
+    bt_8.left = bt_13
+    bt_8.right = bt_4b
+    bt_13.right = bt_1
+
+    print "path_sum:"
+    print "5: " + str(has_path_sum(bt_5, sum_num=5))
+    print "0: " + str(has_path_sum(bt_5, sum_num=0))
+    print "22: " + str(has_path_sum(bt_5, sum_num=22))
+    print "13: " + str(has_path_sum(bt_5, sum_num=13))
+    print "17: " + str(has_path_sum(bt_5, sum_num=17))
+    print "27: " + str(has_path_sum(bt_5, sum_num=27))
+    print "20: " + str(has_path_sum(bt_5, sum_num=20))
+
+    print ""
+
+    print "binary_tree_paths:"
+    print binary_tree_paths(bt_5)
+
+    print ""
+
+    print "path_sum_3"
+    print "5: " + str(path_sum_3(bt_5, sum_num=5))
+    print "0: " + str(path_sum_3(bt_5, sum_num=0))
+    print "22: " + str(path_sum_3(bt_5, sum_num=22))
+    print "13: " + str(path_sum_3(bt_5, sum_num=13))
+    print "17: " + str(path_sum_3(bt_5, sum_num=17))
+    print "27: " + str(path_sum_3(bt_5, sum_num=27))
+    print "20: " + str(path_sum_3(bt_5, sum_num=20))
