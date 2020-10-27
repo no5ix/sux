@@ -493,34 +493,13 @@ def linklist_reverse(head):
     return _pre
 
 
-class GraphIterator(object):
-
-    def __init__(self, graph, cur_point_index):
-        self.graph = graph
-        self.cur_point_index = cur_point_index
-        self.iter_index = 0  # 迭代器索引
-
-    def next():
-        if self.graph.__class__.__name__ == "SparseGraph":
-            if self.iter_index < len(self.adjacency_container[cur_point_index]):
-                ret_point_index = self.adjacency_container[cur_point_index][self.iter_index]
-                self.iter_index += 1
-                return ret_point_index
-        elif self.graph.__class__.__name__ == "DenseGraph":
-            while self.iter_index < len(self.adjacency_container[cur_point_index]):
-                _next_point_index = self.adjacency_matrix[cur_point_index][self.iter_index]
-                self.iter_index += 1
-                if _next_point_index is not False:
-                    return _next_point_index
-        return None
-
-
 class GraphBase(object):
     # 图的基类
 
     def __init__(self, point_count, is_directed):
         self.adjacency_container = None
         self.is_directed = is_directed  # 是否为有向图
+        self.connected_components_count = 0  # 连通分量个数
     
     # 深度优先遍历
     def graph_dfs(self):
@@ -528,16 +507,39 @@ class GraphBase(object):
         for _cur_point_index in xrange(0, len(self.adjacency_container)):
             if _cur_point_index not in visited_arr:
                 self._dfs_by_point(_cur_point_index, visited_arr)
+                # 运行到此处, 说明已经把所有和_cur_point_index 相连接的点都遍历完了,
+                # A-B-C 也算作 A和C相连接的,
+                # 其他的点肯定在另一个连接分量中
+                self.connected_components_count += 1
         return visited_arr
 
     def _dfs_by_point(self, cur_point_index, visited_arr):
         visited_arr.append(cur_point_index)
-        for _next_point_index in self._traversal_connected_point(cur_point_index):
+        for _next_point_index in self._iter_adjacent_points(cur_point_index):
             if _next_point_index not in visited_arr:
                 self._dfs_by_point(_next_point_index, visited_arr)
 
-    def _traversal_connected_point(self, cur_point_index):
-        raise NotImplementedError        
+    # 广度优先遍历
+    def graph_bfs(self):
+        result_arr = []
+        visited_set = set()  # 用来记录某个顶点是否已经访问过
+        _temp_queue = []
+        for _cur_point_index in xrange(0, len(self.adjacency_container)):
+            if _cur_point_index not in visited_set:
+                _temp_queue.append(_cur_point_index)
+                visited_set.add(_cur_point_index)
+            while _temp_queue:
+                _pt = _temp_queue.pop(0)
+                result_arr.append(_pt)
+                for _next_pt_index in self._iter_adjacent_points(_pt):
+                    if _next_pt_index not in visited_set:
+                        _temp_queue.append(_next_pt_index)
+                        visited_set.add(_next_pt_index)
+        return result_arr
+
+
+    def _iter_adjacent_points(self, cur_point_index):
+        raise NotImplementedError 
 
 
 class SparseGraph(GraphBase):
@@ -550,9 +552,9 @@ class SparseGraph(GraphBase):
     def set_adjacency_list(self, adjacency_list):
         self.adjacency_container = adjacency_list
 
-    def _traversal_connected_point(self, cur_point_index):
-        for _connected_point_index in self.adjacency_container[cur_point_index]:
-            yield _connected_point_index
+    def _iter_adjacent_points(self, cur_point_index):
+        for _adjacent_point_index in self.adjacency_container[cur_point_index]:
+            yield _adjacent_point_index
 
 
 class DenseGraph(GraphBase):
@@ -561,17 +563,17 @@ class DenseGraph(GraphBase):
     def __init__(self, point_count, is_directed):
         super(DenseGraph, self).__init__(point_count, is_directed)
         self.adjacency_container = [
-            [ False for _ in xrange(point_count)] for _ in xrange(point_count) 
+            [ 0 for _ in xrange(point_count)] for _ in xrange(point_count) 
         ]  # 邻接矩阵
 
     def set_adjacency_matrix(self, adjacency_matrix):
         self.adjacency_container = adjacency_matrix
 
-    def _traversal_connected_point(self, cur_point_index):
-        for _connected_point_index in self.adjacency_container[cur_point_index]:
-            if _connected_point_index is not False:
+    def _iter_adjacent_points(self, cur_point_index):
+        for _adjacent_point_index, _is_point_adjacent in enumerate(self.adjacency_container[cur_point_index]):
+            if not _is_point_adjacent:
                 continue
-            yield _connected_point_index
+            yield _adjacent_point_index
 
 
 if __name__ == "__main__":
@@ -679,7 +681,26 @@ if __name__ == "__main__":
         [0, 3, 4],
         [0, 4],
     ]
-    test_sparse_graph = SparseGraph(point_count=len(temp_adjacency_list), is_directed=True)
+    test_sparse_graph = SparseGraph(point_count=len(temp_adjacency_list), is_directed=False)
     test_sparse_graph.set_adjacency_list(temp_adjacency_list)
-    print "graph dfs:"
+    print "test_sparse_graph graph dfs:"
     print test_sparse_graph.graph_dfs()
+    print "test_sparse_graph graph bfs:"
+    print test_sparse_graph.graph_bfs()
+
+    # 这个邻接矩阵表示的和上面那个邻接表 temp_adjacency_list 是同一个图
+    temp_adjacency_matrix = [
+        [0, 1, 1, 0, 0, 1, 1],
+        [1, 0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 1, 0, 1, 1],
+        [1, 0, 0, 1, 1, 0, 0],
+        [1, 0, 0, 0, 1, 0, 0],
+    ]
+    test_dense_graph = DenseGraph(point_count=len(temp_adjacency_matrix), is_directed=False)
+    test_dense_graph.set_adjacency_matrix(temp_adjacency_matrix)
+    print "test_dense_graph graph dfs:"
+    print test_dense_graph.graph_dfs()
+    print "test_dense_graph graph bfs:"
+    print test_dense_graph.graph_bfs()
