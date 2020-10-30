@@ -1018,7 +1018,8 @@ WebSearch(user_input, search_key="default") {
 	; last_search_str := user_input
 	; Gui, Destroy
 
-	if IsRawUrl(user_input) {
+	; 当只填了 url 而没填 search_key 的时候
+	if (IsRawUrl(user_input) && search_key == "default") {
 		search_key := "url"
 	}
 
