@@ -1013,15 +1013,17 @@ gui_destroy() {
 }
 
 
-WebSearch(user_input, search_key="default") {
+WebSearch(user_input, search_key="") {
 	; gui_destroy()
 	; last_search_str := user_input
 	; Gui, Destroy
 
 	; 当只填了 url 而没填 search_key 的时候
-	if (IsRawUrl(user_input) && search_key == "default") {
+	if (IsRawUrl(user_input) && search_key == "") {
 		search_key := "url"
 	}
+	if (search_key == "")
+		search_key := "default"
 
 	search_flag_index = 1
 	search_flag := WebSearchUrlMap[search_key][search_flag_index]

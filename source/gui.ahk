@@ -65,13 +65,13 @@ HandleGuiUserInput:
 
 	if !trim_gui_user_input
 	{
-		WebSearch(Clipboard, "default")
+		WebSearch(Clipboard)
 		gui_destroy()
 	}
 	; else if SubStr(GuiUserInput, 1, 1) = A_Space
 	; ; else if SubStr(GuiUserInput, 0, 1) = A_Space
 	; {
-	; 	WebSearch(GuiUserInput, "default")
+	; 	WebSearch(GuiUserInput)
 		; gui_destroy()
 	; }
 	; else if SubStr(GuiUserInput, 0, 1) = A_Space
@@ -82,7 +82,7 @@ HandleGuiUserInput:
 	; 	WinWaitActive, ahk_exe Everything.exe, , 0.666
 	; 	if ErrorLevel{
 	; 		; MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-	; 		WebSearch(GuiUserInput, "default")
+	; 		WebSearch(GuiUserInput)
 			; gui_destroy()
 
 	; 	}
@@ -329,7 +329,7 @@ HandleGuiUserInput:
 				gui_destroy()
 			}
 			else {
-				WebSearch(GuiUserInput, "default")
+				WebSearch(GuiUserInput)
 				gui_destroy()
 			}
 
