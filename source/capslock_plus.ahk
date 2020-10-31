@@ -49,33 +49,35 @@ CapsLock & Tab::
 ; 	return
 
 CapsLock & v::
-	if GetKeyState("LShift", "P")
-		Send, +6  ; ^ like reverse V
-	else 
+	; if GetKeyState("LShift", "P")
+	; 	Send, +6  ; ^ like reverse V
+	; else 
 		; PasteCompatibleWithAutoSelectionCopy()
-		; Send, +6
+		Send, +6
 		; Send, ^v
-		Send, +{Ins}
+		; Send, +{Ins}
 	ClickUpIfLbDown()
 	return
 
 CapsLock & f::
-	if GetKeyState("LShift", "P")
-		Send, ^+f
+	; if GetKeyState("LShift", "P")
+	; 	Send, ^+f
 	; else if GetKeyState("RShift", "P")
 	; 	Send, {F2}
-	else
+	; else
 		; Send, ^f
-		Send, {F2}
+		; Send, {F2}
+		Send, ^y
 	ClickUpIfLbDown()
 	return
 
 CapsLock & w:: 
-	if GetKeyState("LShift", "P")
-		Send, +``  ; wave line : w
-	else
+	; if GetKeyState("LShift", "P")
+	; 	Send, +``  ; wave line : w
+	; else
 		; Send, ^a
-		Send, ``  ; wave line : w
+		; Send, ``  ; wave line : w
+		Send, +{Ins}
 	return
 
 CapsLock & e::
@@ -142,19 +144,20 @@ CapsLock & c::
 	return
 
 CapsLock & s::
-	if GetKeyState("LShift", "P")
-		Send, +^s
-	else
+	; if GetKeyState("LShift", "P")
+	; 	Send, +^s
+	; else
 		; Send, ^s
 		Send, +4
 	ClickUpIfLbDown()
 	return
 
 CapsLock & r::
-	if GetKeyState("LShift", "P")
-		Send, ^+t  ; for chrome, reopen closed tab
-	else
-		Send, ^y
+	; if GetKeyState("LShift", "P")
+	; 	Send, ^+t  ; for chrome, reopen closed tab
+	; else
+		; Send, ^y
+		Send, {F2}
 	return
 
 ; CapsLock & `:: 

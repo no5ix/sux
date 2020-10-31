@@ -3,9 +3,6 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
-;-------------------------------------------------------------------------------
-; LAUNCH GUI
-;-------------------------------------------------------------------------------
 ~Alt::
 	ClickUpIfLbDown()
 	
@@ -227,12 +224,11 @@
 
 
 ;=====================================================================o
-;                       For Notebook:                                 ;|
+;                       For Notebook: 
+; 功能(主要用于笔记本触摸板): 			                                ;|
 ;---------------------------------o-----------------------------------o
 
-; 功能(主要用于笔记本触摸板): 
 ; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
-#Persistent
 ^8::
 	result_arr := HandleMouseOnEdges("Ctrl+8")
 	if result_arr[1] = 1
@@ -243,3 +239,20 @@
 	Click Down
 	ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
 	return
+
+
+MButton::
+	result_arr := HandleMouseOnEdges("MButton")
+	if result_arr[1] = 1
+		return
+	MouseClick, Middle
+	return
+
+
+; ; 这个$符号是为了防止下方代码中的`Send, ^w`一直触发自己
+; $^w::
+; 	result_arr := HandleMouseOnEdges("Ctrl+W")
+; 	if result_arr[1] = 1
+; 		return
+; 	Send, ^w
+; 	return
