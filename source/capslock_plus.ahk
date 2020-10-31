@@ -66,8 +66,8 @@ CapsLock & f::
 	; 	Send, {F2}
 	; else
 		; Send, ^f
-		; Send, {F2}
-		Send, ^y
+		Send, {F2}
+		; Send, ^y
 	ClickUpIfLbDown()
 	return
 
@@ -156,8 +156,8 @@ CapsLock & r::
 	; if GetKeyState("LShift", "P")
 	; 	Send, ^+t  ; for chrome, reopen closed tab
 	; else
-		; Send, ^y
-		Send, {F2}
+		Send, ^y
+		; Send, {F2}
 	return
 
 ; CapsLock & `:: 
