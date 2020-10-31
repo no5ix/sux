@@ -991,7 +991,7 @@ IncludeUserConfIFExist() {
 ; 		Send, ^+!1
 ; 	}					
 ; 	else if (from = "MButton") {
-; 		Send, !{Tab}
+;		Send, #{Tab}
 ; 	}				
 ; }
 ; 
