@@ -54,7 +54,7 @@ global nox_border_shadow_type := classic_shadow_type
 ; visual studio code path(e.g. "C:\Users\xxxx\AppData\Local\Programs\Microsoft VS Code\Code.exe")
 ; if blank, leave a ugly cmd window after input cmd `proj`(open nox project with vscode).
 
-global disable_win10_auto_update := 1
+global disable_win10_auto_update := 0
 
 global auto_update_when_launch_nox := 0
 
