@@ -497,13 +497,8 @@ IsStandardRawUrl(user_input){
 
 
 IsRawUrl(user_input){
-	; com_str := ".com"
-	; net_str := ".net"
-	; cn_str := ".cn"
-	; www_str := "www."
-	; io_str := ".io"
-	; return InStr(user_input, com_str) or InStr(user_input, net_str) or InStr(user_input, cn_str) or InStr(user_input, www_str) or InStr(user_input, io_str) 
-
+	if Instr(user_input, " ")
+		return 0
 	raw_url_str_arr := ["http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
 	Loop % raw_url_str_arr.Length()
 		if InStr(user_input, raw_url_str_arr[A_Index]) {

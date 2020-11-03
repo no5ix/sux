@@ -3,6 +3,20 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
+
+~Esc::
+	ClickUpIfLbDown()
+	return
+
+~LWin::
+	ClickUpIfLbDown()
+	return
+	
+~RWin::
+	ClickUpIfLbDown()
+	return
+
+
 ~Alt::
 	ClickUpIfLbDown()
 	
@@ -104,16 +118,6 @@
 ; 	}
 ; 	Send, {F2}
 ; 	return
-
-
-~LWin::
-	ClickUpIfLbDown()
-	return
-
-
-~RWin::
-	ClickUpIfLbDown()
-	return
 
 
 ;---------------------------------------------------------------------o
