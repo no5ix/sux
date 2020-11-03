@@ -19,18 +19,19 @@ global second_monitor_min_y := 0
 global second_monitor_max_x := 0
 global second_monitor_max_y := 0
 
+global should_not_ignore_original_action := 0
+global should_ignore_original_action := 1
 
 
 HandleMouseOnEdges(from) {
-	IsOnEdge := 0
 	if (enable_hot_edges = 0){
-		return [IsOnEdge, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
+		return [should_not_ignore_original_action, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
 	}
 	if (limit_mode){
-		return [IsOnEdge, "Notice: limit mode is on, edge triggers are disabled."]
+		return [should_not_ignore_original_action, "Notice: limit mode is on, edge triggers are disabled."]
 	}
 	if IsCorner(){
-		return [IsOnEdge, "Notice: Is Corner, so do NOTHING by edge triggers."]
+		return [should_not_ignore_original_action, "Notice: Is Corner, so do NOTHING by edge triggers."]
 	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
@@ -47,37 +48,33 @@ HandleMouseOnEdges(from) {
 	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
 	if (MouseY < cur_monitor_min_y + CornerEdgeOffset)
 	{
-		IsOnEdge = 1
 		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
-			%HotEdgesTopHalfLeftTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesTopHalfLeftTriggerFunc%(from)
 		else
-			%HotEdgesTopHalfRightTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesTopHalfRightTriggerFunc%(from)
 	}
 	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
 	{
-		IsOnEdge = 1
 		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
-			%HotEdgesBottomHalfLeftTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesBottomHalfLeftTriggerFunc%(from)
 		else
-			%HotEdgesBottomHalfRightTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesBottomHalfRightTriggerFunc%(from)
 	}
 	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
 	{
-		IsOnEdge = 1
 		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
-			%HotEdgesLeftHalfUpTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesLeftHalfUpTriggerFunc%(from)
 		else
-			%HotEdgesLeftHalfDownTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesLeftHalfDownTriggerFunc%(from)
 	}
 	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
 	{
-		IsOnEdge = 1
 		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
-			%HotEdgesRightHalfUpTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesRightHalfUpTriggerFunc%(from)
 		else
-			%HotEdgesRightHalfDownTriggerFunc%(from)
+			cur_should_go_on_doing := %HotEdgesRightHalfDownTriggerFunc%(from)
 	}
-   return [IsOnEdge, ""]
+   return [cur_should_go_on_doing, ""]
 }
 
 
@@ -713,22 +710,25 @@ Default_HotEdgesTopHalfLeftTrigger(from){
 	; 	; MaximizeWindow(1111, "Explorer.exe")
 
 	; }
+	return should_not_ignore_original_action
 }
 Default_HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {						
 		Send, #e
 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 		MaximizeWindow(1111, "Explorer.exe")
+		return should_ignore_original_action
 	}					
+	return should_not_ignore_original_action
 }
 Default_HotEdgesBottomHalfLeftTrigger(from){
 	if (from = "Ctrl+8") {												
 		Send, ^+{Esc}
 		ToolTipWithTimer("Launching Task Manager ...", 1111)
 		MaximizeWindow(1111, "taskmgr.exe")
-
-		; Send, !{F4}
+		return should_ignore_original_action
 	}					
+	return should_not_ignore_original_action
 }
 Default_HotEdgesBottomHalfRightTrigger(from){
 	; if (from = "Ctrl+8") {
@@ -740,6 +740,7 @@ Default_HotEdgesBottomHalfRightTrigger(from){
 	; 	run %im_path%
 	; 	; MaximizeWindow(1111, "WeChat.exe")
 	; }					
+	return should_not_ignore_original_action
 }
 Default_HotEdgesLeftHalfUpTrigger(from){
 	if (from = "Ctrl+8") {		
@@ -747,12 +748,16 @@ Default_HotEdgesLeftHalfUpTrigger(from){
 		Send, {Left}
 		Sleep, 111
 		Send {LWin Up}
-	}			
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
 }
 Default_HotEdgesLeftHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #{Tab}
-	}			
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
 }
 Default_HotEdgesRightHalfUpTrigger(from){
 	if (from = "Ctrl+8") {		
@@ -760,12 +765,16 @@ Default_HotEdgesRightHalfUpTrigger(from){
 		Send, {Right}
 		Sleep, 111
 		Send {LWin Up}
-	}			
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
 }
 Default_HotEdgesRightHalfDownTrigger(from){
 	if (from = "Ctrl+8") {
 		Send, #a
-	}			
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
 }
 
 
@@ -797,7 +806,7 @@ IncludeUserConfIFExist() {
 	user_conf_file := A_ScriptDir "\conf\user_conf.ahk"
 	if !FileExist(user_conf_file) {
 		FileAppend, 
-		(
+ 		(
 ; ; ; Note: Save with encoding UTF-8 with BOM if possible.
 ; ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
@@ -857,9 +866,9 @@ IncludeUserConfIFExist() {
 ; global HotEdgesTopHalfRightTriggerFunc := "User_HotEdgesTopHalfRightTrigger"
 ; global HotEdgesBottomHalfLeftTriggerFunc := "User_HotEdgesBottomHalfLeftTrigger"
 ; global HotEdgesBottomHalfRightTriggerFunc := "User_HotEdgesBottomHalfRightTrigger"
-; ; global HotEdgesLeftHalfUpTriggerFunc := ""
+; global HotEdgesLeftHalfUpTriggerFunc := "User_HotEdgesLeftHalfUpTrigger"
 ; global HotEdgesLeftHalfDownTriggerFunc := "User_HotEdgesLeftHalfDownTrigger"
-; ; global HotEdgesRightHalfUpTriggerFunc := ""
+; global HotEdgesRightHalfUpTriggerFunc := "User_HotEdgesRightHalfUpTrigger"
 ; global HotEdgesRightHalfDownTriggerFunc := "User_HotEdgesRightHalfDownTrigger"
 ; ; global HotCornersTopLeftTriggerFunc := ""
 ; ; global HotCornersTopRightTriggerFunc := ""
@@ -953,10 +962,9 @@ IncludeUserConfIFExist() {
 ; 	if (from = "Ctrl+8") {
 ; 		ToolTipWithTimer("Launching Music App ...", 1111)
 ; 		run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
-; 	}		
-; 	else if (from = "MButton") {
-; 		Send, ^+!0
-; 	}
+; 		return should_ignore_original_action
+; 	}					
+; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesTopHalfRightTrigger(from) {
@@ -964,21 +972,24 @@ IncludeUserConfIFExist() {
 ; 		Send, #e
 ; 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 ; 		MaximizeWindow(1111, "Explorer.exe")
-; 	}				
-; 	else if (from = "MButton") {
-; 		Send, {F5}
-; 	}
+; 		return should_ignore_original_action
+; 	}					
+; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesBottomHalfRightTrigger(from) {
 ; 	if (from = "Ctrl+8") {
 ; 		ToolTipWithTimer("Launching WeChat ...", 1111)
-; 		run "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
+; 		; run "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
+; 		Send, ^+!7
 ; 		; MaximizeWindow(1111, "WeChat.exe")
-; 	}			
-; 	else if (from = "MButton") {
+; 		return should_ignore_original_action
+; 	}					
+; 	else if (from = "RButton") {
 ; 		Send, #d
-; 	}			
+; 		return should_ignore_original_action
+; 	}					
+; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesBottomHalfLeftTrigger(from) {
@@ -988,28 +999,67 @@ IncludeUserConfIFExist() {
 ; 		MaximizeWindow(1111, "taskmgr.exe")
 
 ; 		; Send, !{F4}
+; 		return should_ignore_original_action
 ; 	}					
-; 	else if (from = "MButton") {
+; 	else if (from = "RButton") {
 ; 		Send, ^+t
-; 	}			
+; 		return should_ignore_original_action
+; 	}
+; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesLeftHalfDownTrigger(from) {
 ; 	if (from = "Ctrl+8") {
 ; 		Send, ^+!1
+; 		return should_ignore_original_action
 ; 	}					
-; 	else if (from = "MButton") {
+; 	else if (from = "RButton") {
 ; 		Send, #{Tab}
+; 		return should_ignore_original_action
 ; 	}				
+; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesRightHalfDownTrigger(from) {
 ; 	if (from = "Ctrl+8") {
 ; 		Send, ^+!2
+; 		return should_ignore_original_action
 ; 	}	
-; 	else if (from = "MButton") {
+; 	else if (from = "RButton") {
 ; 		Send, #a
+; 		return should_ignore_original_action
 ; 	}				
+; 	return should_not_ignore_original_action
+; }
+
+; User_HotEdgesLeftHalfUpTrigger(from){
+; 	if (from = "Ctrl+8") {		
+; 		Send {LWin Down}
+; 		Send, {Left}
+; 		Sleep, 111
+; 		Send {LWin Up}
+; 		return should_ignore_original_action
+; 	}			
+; 	else if (from = "RButton") {
+; 		Send, ^+!0
+; 		return should_ignore_original_action
+; 	}					
+; 	return should_not_ignore_original_action
+; }
+
+; User_HotEdgesRightHalfUpTrigger(from){
+; 	if (from = "Ctrl+8") {		
+; 		Send {LWin Down}
+; 		Send, {Left}
+; 		Sleep, 111
+; 		Send {LWin Up}
+; 		return should_ignore_original_action
+; 	}			
+; 	else if (from = "RButton") {
+; 		Send, {F5}
+; 		return should_ignore_original_action
+; 	}						
+; 	return should_not_ignore_original_action
 ; }
 
 

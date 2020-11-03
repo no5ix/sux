@@ -235,7 +235,7 @@
 ; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
 ^8::
 	result_arr := HandleMouseOnEdges("Ctrl+8")
-	if result_arr[1] = 1
+	if result_arr[1] = should_ignore_original_action
 		return
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 	SetMouseDelay, 0
@@ -248,7 +248,7 @@
 MButton::
 	ClickUpIfLbDown()
 	result_arr := HandleMouseOnEdges("MButton")
-	if result_arr[1] = 1
+	if result_arr[1] = should_ignore_original_action
 		return
 	MouseClick, Middle
 	return
@@ -256,6 +256,9 @@ MButton::
 
 RButton::
 	ClickUpIfLbDown()
+	result_arr := HandleMouseOnEdges("RButton")
+	if result_arr[1] = should_ignore_original_action
+		return
 	MouseClick, Right
 	return
 
@@ -263,7 +266,7 @@ RButton::
 ; ; 这个$符号是为了防止下方代码中的`Send, ^w`一直触发自己
 ; $^w::
 ; 	result_arr := HandleMouseOnEdges("Ctrl+W")
-; 	if result_arr[1] = 1
+; 	if result_arr[1] = should_ignore_original_action
 ; 		return
 ; 	Send, ^w
 ; 	return
