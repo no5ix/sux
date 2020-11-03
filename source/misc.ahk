@@ -246,6 +246,7 @@
 
 
 MButton::
+	ClickUpIfLbDown()
 	result_arr := HandleMouseOnEdges("MButton")
 	if result_arr[1] = 1
 		return
