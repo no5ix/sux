@@ -714,7 +714,8 @@ Default_HotEdgesTopHalfLeftTrigger(from){
 }
 Default_HotEdgesTopHalfRightTrigger(from){
 	if (from = "Ctrl+8") {						
-		Send, #e
+		; Send, #e
+		run "explorer.exe"
 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 		MaximizeWindow(1111, "Explorer.exe")
 		return should_ignore_original_action
@@ -970,7 +971,8 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesTopHalfRightTrigger(from) {
 ; 	if (from = "Ctrl+8") {						
-; 		Send, #e
+;		; Send, #e
+;		run "explorer.exe"
 ; 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 ; 		MaximizeWindow(1111, "Explorer.exe")
 ; 		return should_ignore_original_action
