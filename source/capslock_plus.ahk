@@ -59,17 +59,17 @@ CapsLock & v::
 	ClickUpIfLbDown()
 	return
 
-CapsLock & f::
-	; if GetKeyState("LShift", "P")
-	; 	Send, ^+f
-	; else if GetKeyState("RShift", "P")
-	; 	Send, {F2}
-	; else
-		; Send, ^f
-		Send, {F2}
-		; Send, ^y
-	ClickUpIfLbDown()
-	return
+; CapsLock & x::
+; 	; if GetKeyState("LShift", "P")
+; 	; 	Send, ^+f
+; 	; else if GetKeyState("RShift", "P")
+; 	; 	Send, {F2}
+; 	; else
+; 		; Send, ^f
+; 		Send, {F2}
+; 		; Send, ^y
+; 	ClickUpIfLbDown()
+; 	return
 
 CapsLock & w:: 
 	; if GetKeyState("LShift", "P")
@@ -89,7 +89,7 @@ CapsLock & e::
 	ClickUpIfLbDown()
 	return
 
-CapsLock & x::
+CapsLock & f::
 	if GetKeyState("LShift", "P") {
 		; Send, {Up}
 		; Send, {End}
@@ -153,11 +153,11 @@ CapsLock & s::
 	return
 
 CapsLock & r::
-	; if GetKeyState("LShift", "P")
-	; 	Send, ^+t  ; for chrome, reopen closed tab
-	; else
+	if GetKeyState("LShift", "P")
+		; Send, ^+t  ; for chrome, reopen closed tab
+		Send, {F2}
+	else
 		Send, ^y
-		; Send, {F2}
 	return
 
 ; CapsLock & `:: 
