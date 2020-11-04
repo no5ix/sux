@@ -962,7 +962,7 @@ IncludeUserConfIFExist() {
 ; 		; ToolTipWithTimer("Launching Music App ...", 1111)
 ; 		; run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 ; 		Send, ^+!0
-; 		ToolTipWithTimer("Pause music ...", 1111)
+; 		ToolTipWithTimer("Pause/Play music ...", 1111)
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	return should_not_ignore_original_action
