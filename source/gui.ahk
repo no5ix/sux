@@ -300,11 +300,11 @@ HandleGuiUserInput:
 		}
 		else
 		{
+			gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 				
 			if (word_array[1] == "ev"){
 				;;; everything search
-				gui_destroy()
 				%EverythingShortCutFunc%()
 				WinWaitActive, ahk_exe Everything.exe, , 2.222
 				if ErrorLevel
@@ -339,13 +339,10 @@ HandleGuiUserInput:
 					pending_search_str := word_array[2]
 					WebSearch(pending_search_str, word_array[1])
 				}
-				gui_destroy()
 			}
 			else {
 				WebSearch(GuiUserInput)
-				gui_destroy()
 			}
-
 		}
 	}
 
