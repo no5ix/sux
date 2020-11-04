@@ -1161,8 +1161,8 @@ WebSearch(user_input, search_key="") {
 	; 当只填了 url 而没填 search_key 的时候
 	if (IsRawUrl(user_input) && search_key == "") {
 		if not IsStandardRawUrl(user_input)
-			search_final_url := StringJoin("", ["http://", user_input]*)
-		run %search_final_url%
+			user_input := StringJoin("", ["http://", user_input]*)
+		run %user_input%
 		return
 	}
 
