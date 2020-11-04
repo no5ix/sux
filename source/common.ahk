@@ -910,7 +910,7 @@ IncludeUserConfIFExist() {
 ; 	,  "bi" : ["Bing", "https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1"]
 ; 	,  "yd" : ["Youdao", "http://www.youdao.com/w/REPLACEME"]
 ; 	,  "bd" : ["Baidu", "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"]
-; 	,  "bb" : ["Bilibili", "https://search.bilibili.com/all?keyword=REPLACEME"]
+; 	,  "bb" : ["Bilibili", "search.bilibili.com/all?keyword=REPLACEME"]
 ; 	,  "jd" : ["JD", "https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8"]
 ; 	,  "zh" : ["Zhihu", "https://www.zhihu.com/search?type=content&q=REPLACEME"]
 ; 	,  "gh" : ["GitHub", "https://github.com/search?q=REPLACEME"]
@@ -959,8 +959,9 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesTopHalfLeftTrigger(from) {
 ; 	if (from = "Ctrl+8") {
-; 		ToolTipWithTimer("Launching Music App ...", 1111)
-; 		run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
+; 		; ToolTipWithTimer("Launching Music App ...", 1111)
+; 		; run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
+; 		Send, ^+!0
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	return should_not_ignore_original_action
@@ -978,32 +979,33 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesBottomHalfRightTrigger(from) {
 ; 	if (from = "Ctrl+8") {
-; 		ToolTipWithTimer("Launching WeChat ...", 1111)
-; 		; run "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
-; 		Send, ^+!7
+; 		; ToolTipWithTimer("Launching WeChat ...", 1111)
+; 		; ; run "C:\Program Files (x86)\Tencent\WeChat\WeChat.exe"
+; 		; Send, ^+!7
 ; 		; MaximizeWindow(1111, "WeChat.exe")
+; 		Send, {F5}	
 ; 		return should_ignore_original_action
 ; 	}					
-; 	else if (from = "RButton") {
-; 		Send, #d
-; 		return should_ignore_original_action
-; 	}					
+; 	; else if (from = "MButton") {
+; 	; 	Send, #d
+; 	; 	return should_ignore_original_action
+; 	; }					
 ; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesBottomHalfLeftTrigger(from) {
 ; 	if (from = "Ctrl+8") {												
-; 		Send, ^+{Esc}
-; 		ToolTipWithTimer("Launching Task Manager ...", 1111)
-; 		MaximizeWindow(1111, "taskmgr.exe")
-
+; 		; Send, ^+{Esc}
+; 		; ToolTipWithTimer("Launching Task Manager ...", 1111)
+; 		; MaximizeWindow(1111, "taskmgr.exe")
+; 		Send, ^+t
 ; 		; Send, !{F4}
 ; 		return should_ignore_original_action
 ; 	}					
-; 	else if (from = "RButton") {
-; 		Send, ^+t
-; 		return should_ignore_original_action
-; 	}
+; 	; else if (from = "MButton") {
+; 	; 	Send, ^+t
+; 	; 	return should_ignore_original_action
+; 	; }
 ; 	return should_not_ignore_original_action
 ; }
 
@@ -1012,7 +1014,7 @@ IncludeUserConfIFExist() {
 ; 		Send, ^+!1
 ; 		return should_ignore_original_action
 ; 	}					
-; 	else if (from = "RButton") {
+; 	else if (from = "MButton") {
 ; 		Send, #{Tab}
 ; 		return should_ignore_original_action
 ; 	}				
@@ -1024,7 +1026,7 @@ IncludeUserConfIFExist() {
 ; 		Send, ^+!2
 ; 		return should_ignore_original_action
 ; 	}	
-; 	else if (from = "RButton") {
+; 	else if (from = "MButton") {
 ; 		Send, #a
 ; 		return should_ignore_original_action
 ; 	}				
@@ -1033,29 +1035,31 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesLeftHalfUpTrigger(from){
 ; 	if (from = "Ctrl+8") {		
+; 		; Send, ^+!0
+; 		WebSearch(GetCurSelectedText())
+; 		return should_ignore_original_action
+; 	}			
+; 	else if (from = "MButton") {
 ; 		Send {LWin Down}
 ; 		Send, {Left}
 ; 		Sleep, 111
 ; 		Send {LWin Up}
-; 		return should_ignore_original_action
-; 	}			
-; 	else if (from = "RButton") {
-; 		Send, ^+!0
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	return should_not_ignore_original_action
 ; }
 
 ; User_HotEdgesRightHalfUpTrigger(from){
-; 	if (from = "Ctrl+8") {		
+; 	if (from = "Ctrl+8") {	
+; 		; Send, {F5}	
+; 		%EverythingShortCutFunc%()
+; 		return should_ignore_original_action
+; 	}			
+; 	else if (from = "MButton") {
 ; 		Send {LWin Down}
 ; 		Send, {Left}
 ; 		Sleep, 111
 ; 		Send {LWin Up}
-; 		return should_ignore_original_action
-; 	}			
-; 	else if (from = "RButton") {
-; 		Send, {F5}
 ; 		return should_ignore_original_action
 ; 	}						
 ; 	return should_not_ignore_original_action

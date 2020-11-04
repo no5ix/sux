@@ -65,7 +65,7 @@ HandleGuiUserInput:
 
 	if !trim_gui_user_input
 	{
-		WebSearch(Clipboard)
+		; WebSearch(Clipboard)
 		gui_destroy()
 	}
 	; else if SubStr(GuiUserInput, 1, 1) = A_Space
