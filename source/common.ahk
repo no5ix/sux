@@ -1057,7 +1057,7 @@ IncludeUserConfIFExist() {
 ; 	}			
 ; 	else if (from = "MButton") {
 ; 		Send {LWin Down}
-; 		Send, {Left}
+; 		Send, {Right}
 ; 		Sleep, 111
 ; 		Send {LWin Up}
 ; 		return should_ignore_original_action

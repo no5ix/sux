@@ -263,6 +263,11 @@ RButton::
 	return
 
 
+^+!m::
+	MaxMinWindow()
+	return
+
+
 ; ; 这个$符号是为了防止下方代码中的`Send, ^w`一直触发自己
 ; $^w::
 ; 	result_arr := HandleMouseOnEdges("Ctrl+W")
