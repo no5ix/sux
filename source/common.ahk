@@ -962,6 +962,7 @@ IncludeUserConfIFExist() {
 ; 		; ToolTipWithTimer("Launching Music App ...", 1111)
 ; 		; run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
 ; 		Send, ^+!0
+; 		ToolTipWithTimer("Pause music ...", 1111)
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	return should_not_ignore_original_action
@@ -984,6 +985,7 @@ IncludeUserConfIFExist() {
 ; 		; Send, ^+!7
 ; 		; MaximizeWindow(1111, "WeChat.exe")
 ; 		Send, {F5}	
+; 		ToolTipWithTimer(" Refresh tab ...", 1111)
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	; else if (from = "MButton") {
@@ -1000,6 +1002,7 @@ IncludeUserConfIFExist() {
 ; 		; MaximizeWindow(1111, "taskmgr.exe")
 ; 		Send, ^+t
 ; 		; Send, !{F4}
+; 		ToolTipWithTimer("Reopen closed tap...", 1111)
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	; else if (from = "MButton") {
@@ -1012,6 +1015,7 @@ IncludeUserConfIFExist() {
 ; User_HotEdgesLeftHalfDownTrigger(from) {
 ; 	if (from = "Ctrl+8") {
 ; 		Send, ^+!1
+; 		ToolTipWithTimer("Last Song ...", 1111)
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	else if (from = "MButton") {
@@ -1024,6 +1028,7 @@ IncludeUserConfIFExist() {
 ; User_HotEdgesRightHalfDownTrigger(from) {
 ; 	if (from = "Ctrl+8") {
 ; 		Send, ^+!2
+; 		ToolTipWithTimer("Next song ...", 1111)
 ; 		return should_ignore_original_action
 ; 	}	
 ; 	else if (from = "MButton") {
