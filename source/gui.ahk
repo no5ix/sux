@@ -321,11 +321,24 @@ HandleGuiUserInput:
 				}
 			}
 			else if WebSearchUrlMap.HasKey(word_array[1]){
-				if !word_array[2]
-					pending_search_str := Clipboard
-				else
+				if (!word_array[2]) {
+					search_url := WebSearchUrlMap[word_array[1]][2]
+					; domain_url just like: "https://www.google.com"
+					RegExMatch(search_url, "(http://|https://)?(www.)?(\w+(\.)?)+", domain_url)
+					WebSearch(domain_url)
+					; DebugPrintVal(pending_search_str)
+					; return
+					; pending_search_str := Clipboard
+					; if StrLen(pending_search_str) >= 88 {
+					; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
+					; 	gui_destroy()
+					; 	return
+					; }
+				}
+				else {
 					pending_search_str := word_array[2]
-				WebSearch(pending_search_str, word_array[1])
+					WebSearch(pending_search_str, word_array[1])
+				}
 				gui_destroy()
 			}
 			else {

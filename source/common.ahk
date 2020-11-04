@@ -904,7 +904,6 @@ IncludeUserConfIFExist() {
 ; 	"search_input_key" : ["search_flag", "extra_info (don't del this line)"] 
 
 ; 	,  "default" : ["MULTI", "bi", "bd"]
-; 	,  "url" : ["URL", "http://REPLACEME"]
 ; 	,  "nox" : ["Nox", "https://github.com/no5ix/nox"]
 
 ; 	,  "gg" : ["Google", "https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
@@ -1150,19 +1149,18 @@ WebSearch(user_input, search_key="") {
 
 	; 当只填了 url 而没填 search_key 的时候
 	if (IsRawUrl(user_input) && search_key == "") {
-		search_key := "url"
+		if not IsStandardRawUrl(user_input)
+			search_final_url := StringJoin("", ["http://", user_input]*)
+		run %search_final_url%
+		return
 	}
+
 	if (search_key == "")
 		search_key := "default"
 
 	search_flag_index = 1
 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
-	if (search_flag = "URL") {
-		if IsStandardRawUrl(user_input) {
-			run %user_input%
-			return
-		}
-	} else if (search_flag = "MULTI") {
+	if (search_flag = "MULTI") {
 		for _index, _elem in WebSearchUrlMap[search_key] {
 			if (_index != search_flag_index) {
 				WebSearch(user_input, _elem)
@@ -1175,6 +1173,8 @@ WebSearch(user_input, search_key="") {
 	safe_query := UriEncode(Trim(user_input))
 	search_url := WebSearchUrlMap[search_key][2]
 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+	if not IsStandardRawUrl(search_final_url)
+		search_final_url := StringJoin("", ["http://", search_final_url]*)
 	Run, %search_final_url%
 }
 

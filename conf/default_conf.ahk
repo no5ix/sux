@@ -118,7 +118,6 @@ global WebSearchUrlMap :=
 	"search_input_key" : ["search_flag", "extra_info (don't del this line)"] 
 
 	,  "default" : ["MULTI", "gg", "bd"]
-	,  "url" : ["URL", "http://REPLACEME"]
 	,  "nox" : ["Nox", "https://github.com/no5ix/nox"]
 
 	,  "gg" : ["Google", "https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
