@@ -23,11 +23,10 @@
 	; ; 不能这么写, 因为这样长按 alt 也会触发
 	; If (A_PriorHotKey = "~Alt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
 	; 	gui_spawn()
-
 	if (A_PriorHotkey <> "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
-		KeyWait, Alt
+		KeyWait, Alt  ; Wait for the key to be released.
 		return
 	}
 	if limit_mode {
@@ -36,6 +35,7 @@
 	}
 	%DoubleClickAltTriggerFunc%()
 	return
+
 
 
 ; -----------------------------------------------------------------------------
