@@ -38,6 +38,58 @@
 
 
 
+
+;=====================================================================o
+;                       For Notebook: 
+; 功能(主要用于笔记本触摸板): 			                                ;|
+;---------------------------------o-----------------------------------o
+
+; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
+^8::
+	result_arr := HandleMouseOnEdges("Ctrl+8")
+	if result_arr[1] = should_ignore_original_action
+		return
+	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
+	SetMouseDelay, 0
+	fake_lb_down = 1
+	Click Down
+	ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
+	return
+
+
+MButton::
+	ClickUpIfLbDown()
+	result_arr := HandleMouseOnEdges("MButton")
+	if result_arr[1] = should_ignore_original_action
+		return
+	MouseClick, Middle
+	return
+
+
+RButton::
+	ClickUpIfLbDown()
+	result_arr := HandleMouseOnEdges("RButton")
+	if result_arr[1] = should_ignore_original_action
+		return
+	MouseClick, Right
+	return
+
+
+^+!m::
+	MaxMinWindow()
+	return
+
+
+; ; 这个$符号是为了防止下方代码中的`Send, ^w`一直触发自己
+; $^w::
+; 	result_arr := HandleMouseOnEdges("Ctrl+W")
+; 	if result_arr[1] = should_ignore_original_action
+; 		return
+; 	Send, ^w
+; 	return
+
+
+
 ; -----------------------------------------------------------------------------
 ; ~LShift::
 ; 	ClickUpIfLbDown()
@@ -225,53 +277,3 @@
 ; ---------------------------------------------------------------------o
 ; 					Auto copy clipboard end
 ; ---------------------------------------------------------------------o
-
-
-;=====================================================================o
-;                       For Notebook: 
-; 功能(主要用于笔记本触摸板): 			                                ;|
-;---------------------------------o-----------------------------------o
-
-; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
-^8::
-	result_arr := HandleMouseOnEdges("Ctrl+8")
-	if result_arr[1] = should_ignore_original_action
-		return
-	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
-	SetMouseDelay, 0
-	fake_lb_down = 1
-	Click Down
-	ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
-	return
-
-
-MButton::
-	ClickUpIfLbDown()
-	result_arr := HandleMouseOnEdges("MButton")
-	if result_arr[1] = should_ignore_original_action
-		return
-	MouseClick, Middle
-	return
-
-
-RButton::
-	ClickUpIfLbDown()
-	result_arr := HandleMouseOnEdges("RButton")
-	if result_arr[1] = should_ignore_original_action
-		return
-	MouseClick, Right
-	return
-
-
-^+!m::
-	MaxMinWindow()
-	return
-
-
-; ; 这个$符号是为了防止下方代码中的`Send, ^w`一直触发自己
-; $^w::
-; 	result_arr := HandleMouseOnEdges("Ctrl+W")
-; 	if result_arr[1] = should_ignore_original_action
-; 		return
-; 	Send, ^w
-; 	return
