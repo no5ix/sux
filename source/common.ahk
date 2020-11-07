@@ -921,6 +921,7 @@ IncludeUserConfIFExist() {
 ; 	,  "db" : ["Douban", "https://www.douban.com/search?q=REPLACEME"]
 ; 	,  "qm" : ["QiMai", "https://www.qimai.cn/search/index/country/cn/search/REPLACEME"]
 ; 	,  "yk" : ["YouKu", "https://so.youku.com/search_video/q_REPLACEME?searchfrom=1"]
+; 	,  "lc" : ["LeetCode", "https://leetcode-cn.com/problemset/all/?search=REPLACEME"]
 
 ; 	,  "np" : ["URL", "https://hulinhong.com/2018/08/06/noodle_plan/"]
 ; 	,  "npl" : ["URL", "http://localhost:9009/2018/08/06/noodle_plan/"]

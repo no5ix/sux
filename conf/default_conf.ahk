@@ -134,6 +134,7 @@ global WebSearchUrlMap :=
 	,  "db" : ["Douban", "https://www.douban.com/search?q=REPLACEME"]
 	,  "qm" : ["QiMai", "https://www.qimai.cn/search/index/country/cn/search/REPLACEME"]
 	,  "yk" : ["YouKu", "https://so.youku.com/search_video/q_REPLACEME?searchfrom=1"]
+	,  "lc" : ["LeetCode", "https://leetcode-cn.com/problemset/all/?search=REPLACEME"]
 }
 )
 
