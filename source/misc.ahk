@@ -37,6 +37,21 @@
 	return
 
 
+~Ctrl::
+	ClickUpIfLbDown()
+	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		KeyWait, Ctrl
+		return
+	}
+	if limit_mode {
+		ToolTipWithTimer("	limit mode is on, double Ctrl is disabled.", 2000)
+		return
+	}
+	%DoubleClickCtrlTriggerFunc%()
+	return
+
 
 
 ;=====================================================================o
@@ -142,21 +157,6 @@ RButton::
 ; 	return
 ; -----------------------------------------------------------------------------
 
-
-~Ctrl::
-	ClickUpIfLbDown()
-	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		KeyWait, Ctrl
-		return
-	}
-	if limit_mode {
-		ToolTipWithTimer("	limit mode is on, double Ctrl is disabled.", 2000)
-		return
-	}
-	%DoubleClickCtrlTriggerFunc%()
-	return
 
 ; -----------------------------------------------------------------------------
 
