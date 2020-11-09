@@ -68,7 +68,7 @@
 	SetMouseDelay, 0
 	fake_lb_down = 1
 	Click Down
-	ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
+	; ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
 	return
 
 
