@@ -902,7 +902,7 @@ IncludeUserConfIFExist() {
 ; global WebSearchUrlMap := 
 ; (join web search url map
 ; {
-; 	"search_input_key" : ["search_flag(MULTI & URL for special use)", "extra_info (don't del this line)"] 
+; 	"search_input_key" : ["search_flag(MULTI for special use)", "extra_info (don't del this line)"] 
 
 ; 	,  "default" : ["MULTI", "bi", "bd"]
 ; 	,  "nox" : ["Nox", "https://github.com/no5ix/nox"]
@@ -923,8 +923,9 @@ IncludeUserConfIFExist() {
 ; 	,  "yk" : ["YouKu", "https://so.youku.com/search_video/q_REPLACEME?searchfrom=1"]
 ; 	,  "lc" : ["LeetCode", "https://leetcode-cn.com/problemset/all/?search=REPLACEME"]
 
-; 	,  "np" : ["URL", "https://hulinhong.com/2018/08/06/noodle_plan/"]
-; 	,  "npl" : ["URL", "http://localhost:9009/2018/08/06/noodle_plan/"]
+;   ,  "np" : ["noodle_plan", "https://hulinhong.com/2018/08/06/noodle_plan/"]
+;   ,  "an" : ["algo_newbie", "http://localhost:9009/2018/10/23/algo_newbie/"]
+;   ,  "npl" : ["noodle_plan local", "http://localhost:9009/2018/08/06/noodle_plan/"]
 ; }
 ; )
 
@@ -1164,13 +1165,15 @@ WebSearch(user_input, search_key="") {
 	search_flag_index = 1
 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
 	search_url := WebSearchUrlMap[search_key][2]
-	if (user_input == "") {			
-		if (search_flag = "URL") {
+	if (user_input == "") {	
+		if !InStr(search_url, "REPLACEME") {
+		; if (search_flag = "URL") {
 			Run %search_url%
 			return
 		} 
 		; domain_url just like: "https://www.google.com"
-		RegExMatch(search_url, "(http://|https://)?(www.)?(\w+(\.)?)+", domain_url)
+		; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+		RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
 		if not IsStandardRawUrl(domain_url)
 			domain_url := StringJoin("", ["http://", domain_url]*)
 		Run %domain_url%

@@ -115,7 +115,7 @@ global StrMap :=
 global WebSearchUrlMap := 
 (join web search url map
 {
-	"search_input_key" : ["search_flag(MULTI & URL for special use)", "extra_info (don't del this line)"] 
+	"search_input_key" : ["search_flag(MULTI for special use)", "extra_info (don't del this line)"] 
 
 	,  "default" : ["MULTI", "gg", "bd"]
 	,  "nox" : ["Nox", "https://github.com/no5ix/nox"]
