@@ -923,9 +923,9 @@ IncludeUserConfIFExist() {
 ; 	,  "yk" : ["YouKu", "https://so.youku.com/search_video/q_REPLACEME?searchfrom=1"]
 ; 	,  "lc" : ["LeetCode", "https://leetcode-cn.com/problemset/all/?search=REPLACEME"]
 
-;   ,  "np" : ["noodle_plan", "https://hulinhong.com/2018/08/06/noodle_plan/"]
-;   ,  "an" : ["algo_newbie", "http://localhost:9009/2018/10/23/algo_newbie/"]
-;   ,  "npl" : ["noodle_plan local", "http://localhost:9009/2018/08/06/noodle_plan/"]
+; 	,  "np" : ["noodle_plan", "https://hulinhong.com/2018/08/06/noodle_plan/"]
+; 	,  "an" : ["algo_newbie", "http://localhost:9009/2018/10/23/algo_newbie/"]
+; 	,  "npl" : ["noodle_plan local", "http://localhost:9009/2018/08/06/noodle_plan/"]
 ; }
 ; )
 
@@ -962,10 +962,18 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesTopHalfLeftTrigger(from) {
 ; 	if (from = "Ctrl+8") {
-; 		; ToolTipWithTimer("Launching Music App ...", 1111)
-; 		; run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
-; 		Send, ^+!0
-; 		ToolTipWithTimer("Pause/Play music ...", 1111)
+; 		; Sets ErrorLevel to the Process ID (PID) if a matching process exists, or 0 otherwise.
+; 		Process, Exist, cloudmusic.exe
+; 		if !ErrorLevel
+; 		{
+; 			ToolTipWithTimer("Launching Music App ...", 1111)
+; 			run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
+; 		}
+; 		else
+; 		{
+; 			Send, ^+!0
+; 			ToolTipWithTimer("Pause/Play music ...", 1111)
+; 		}
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	return should_not_ignore_original_action
@@ -973,8 +981,8 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesTopHalfRightTrigger(from) {
 ; 	if (from = "Ctrl+8") {						
-;		; Send, #e
-;		run "explorer.exe"
+; 		; Send, #e
+; 		run "explorer.exe"
 ; 		ToolTipWithTimer("Launching File Explorer ...", 1111)
 ; 		MaximizeWindow(1111, "Explorer.exe")
 ; 		return should_ignore_original_action
