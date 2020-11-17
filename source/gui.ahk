@@ -321,8 +321,7 @@ HandleGuiUserInput:
 				}
 			}
 			else if WebSearchUrlMap.HasKey(word_array[1]){
-				pending_search_str := word_array[2]
-				WebSearch(pending_search_str, word_array[1])
+				WebSearch(word_array[2], word_array[1])
 			}
 			else {
 				WebSearch(GuiUserInput)

@@ -1166,6 +1166,14 @@ gui_destroy() {
 WebSearch(user_input, search_key="") {
 	if (user_input == "" && search_key == "")
 		return
+
+	; 当只填了 url 而没填 search_key 的时候
+	if (IsRawUrl(user_input) && search_key == "") {
+		if not IsStandardRawUrl(user_input)
+			user_input := StringJoin("", ["http://", user_input]*)
+		Run %user_input%
+		return
+	}
 	
 	if (search_key == "")
 		search_key := "default"
@@ -1195,14 +1203,7 @@ WebSearch(user_input, search_key="") {
 		; 	return
 		; }
 	}
-
-	; 当只填了 url 而没填 search_key 的时候
-	if (IsRawUrl(user_input) && search_key == "") {
-		if not IsStandardRawUrl(user_input)
-			user_input := StringJoin("", ["http://", user_input]*)
-		Run %user_input%
-		return
-	}
+	
 	if (search_flag = "MULTI") {
 		for _index, _elem in WebSearchUrlMap[search_key] {
 			if (_index != search_flag_index) {
