@@ -72,22 +72,22 @@
 	return
 
 
-~MButton::
-	ClickUpIfLbDown()
-	result_arr := HandleMouseOnEdges("MButton")
-	if result_arr[1] = should_ignore_original_action
-		return
-	; MouseClick, Middle
-	return
+; MButton::
+; 	ClickUpIfLbDown()
+; 	result_arr := HandleMouseOnEdges("MButton")
+; 	if result_arr[1] = should_ignore_original_action
+; 		return
+; 	MouseClick, Middle
+; 	return
 
 
-~RButton::
-	ClickUpIfLbDown()
-	result_arr := HandleMouseOnEdges("RButton")
-	if result_arr[1] = should_ignore_original_action
-		return
-	; MouseClick, Right
-	return
+; RButton::
+; 	ClickUpIfLbDown()
+; 	result_arr := HandleMouseOnEdges("RButton")
+; 	if result_arr[1] = should_ignore_original_action
+; 		return
+; 	MouseClick, Right
+; 	return
 
 
 ^+!m::

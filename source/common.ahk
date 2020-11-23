@@ -904,7 +904,7 @@ IncludeUserConfIFExist() {
 ; {
 ; 	"search_input_key" : ["search_flag(MULTI for special use)", "extra_info (don't del this line)"] 
 
-; 	,  "default" : ["MULTI", "bi", "bd"]
+; 	,  "default" : ["MULTI", "gg", "bd"]
 ; 	,  "nox" : ["Nox", "https://github.com/no5ix/nox"]
 
 ; 	,  "gg" : ["Google", "https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l="]
@@ -962,18 +962,18 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesTopHalfLeftTrigger(from) {
 ; 	if (from = "Ctrl+8") {
-; 		; Sets ErrorLevel to the Process ID (PID) if a matching process exists, or 0 otherwise.
-; 		Process, Exist, cloudmusic.exe
-; 		if !ErrorLevel
-; 		{
+; 		; ; Sets ErrorLevel to the Process ID (PID) if a matching process exists, or 0 otherwise.
+; 		; Process, Exist, cloudmusic.exe
+; 		; if !ErrorLevel
+; 		; {
 ; 			ToolTipWithTimer("Launching Music App ...", 1111)
 ; 			run "C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe"
-; 		}
-; 		else
-; 		{
-; 			Send, ^+!0
-; 			ToolTipWithTimer("Pause/Play music ...", 1111)
-; 		}
+; 		; }
+; 		; else
+; 		; {
+; 		; 	Send, ^+!0
+; 		; 	ToolTipWithTimer("Pause/Play music ...", 1111)
+; 		; }
 ; 		return should_ignore_original_action
 ; 	}					
 ; 	return should_not_ignore_original_action
@@ -1026,11 +1026,11 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesLeftHalfDownTrigger(from) {
 ; 	if (from = "Ctrl+8") {
-; 		Send, ^+!1
-; 		ToolTipWithTimer("Last Song ...", 1111)
-; 		return should_ignore_original_action
-; 	}					
-; 	else if (from = "MButton") {
+; 	; 	Send, ^+!1
+; 	; 	ToolTipWithTimer("Last Song ...", 1111)
+; 	; 	return should_ignore_original_action
+; 	; }					
+; 	; else if (from = "MButton") {
 ; 		Send, #{Tab}
 ; 		return should_ignore_original_action
 ; 	}				
@@ -1039,11 +1039,11 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesRightHalfDownTrigger(from) {
 ; 	if (from = "Ctrl+8") {
-; 		Send, ^+!2
-; 		ToolTipWithTimer("Next song ...", 1111)
-; 		return should_ignore_original_action
-; 	}	
-; 	else if (from = "MButton") {
+; 	; 	Send, ^+!2
+; 	; 	ToolTipWithTimer("Next song ...", 1111)
+; 	; 	return should_ignore_original_action
+; 	; }	
+; 	; else if (from = "MButton") {
 ; 		Send, #a
 ; 		return should_ignore_original_action
 ; 	}				
@@ -1052,11 +1052,10 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesLeftHalfUpTrigger(from){
 ; 	if (from = "Ctrl+8") {		
-; 		; Send, ^+!0
-; 		WebSearch(GetCurSelectedText())
-; 		return should_ignore_original_action
-; 	}			
-; 	else if (from = "MButton") {
+; 	; 	WebSearch(GetCurSelectedText())
+; 	; 	return should_ignore_original_action
+; 	; }			
+; 	; else if (from = "MButton") {
 ; 		Send {LWin Down}
 ; 		Send, {Left}
 ; 		Sleep, 111
@@ -1068,11 +1067,10 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesRightHalfUpTrigger(from){
 ; 	if (from = "Ctrl+8") {	
-; 		; Send, {F5}	
-; 		%EverythingShortCutFunc%()
-; 		return should_ignore_original_action
-; 	}			
-; 	else if (from = "MButton") {
+; 	; 	%EverythingShortCutFunc%()
+; 	; 	return should_ignore_original_action
+; 	; }			
+; 	; else if (from = "MButton") {
 ; 		Send {LWin Down}
 ; 		Send, {Right}
 ; 		Sleep, 111
