@@ -72,21 +72,21 @@
 	return
 
 
-MButton::
+~MButton::
 	ClickUpIfLbDown()
 	result_arr := HandleMouseOnEdges("MButton")
 	if result_arr[1] = should_ignore_original_action
 		return
-	MouseClick, Middle
+	; MouseClick, Middle
 	return
 
 
-RButton::
+~RButton::
 	ClickUpIfLbDown()
 	result_arr := HandleMouseOnEdges("RButton")
 	if result_arr[1] = should_ignore_original_action
 		return
-	MouseClick, Right
+	; MouseClick, Right
 	return
 
 
