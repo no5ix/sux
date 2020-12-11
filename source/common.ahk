@@ -924,7 +924,8 @@ IncludeUserConfIFExist() {
 ; 	,  "lc" : ["LeetCode", "https://leetcode-cn.com/problemset/all/?search=REPLACEME"]
 
 ; 	,  "np" : ["noodle_plan", "https://hulinhong.com/2018/08/06/noodle_plan/"]
-; 	,  "an" : ["algo_newbie", "http://localhost:9009/2018/10/23/algo_newbie/"]
+;	,  "an" : ["algo_newbie", "https://hulinhong.com/2018/10/23/algo_newbie/"]
+;	,  "anl" : ["algo_newbie", "http://localhost:9009/2018/10/23/algo_newbie/"]
 ; 	,  "npl" : ["noodle_plan local", "http://localhost:9009/2018/08/06/noodle_plan/"]
 ; }
 ; )
