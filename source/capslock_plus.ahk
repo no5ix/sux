@@ -35,7 +35,7 @@ CapsLock & Tab::
 	else
 	{
 		; ; screen capture
-		param = %A_ScriptDir%\source\PrScrn.dll\PrScrn
+		param = %A_ScriptDir%\source\printscrn.dll\PrScrn
 		DllCall(param)
 	}
 	; KeyWait, ``                                                          ;|
