@@ -325,6 +325,7 @@ HandleGuiUserInput:
 		else
 		{
 			gui_destroy()
+			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 			if WebSearchUrlMap.HasKey(word_array[1]){
 				WebSearch(word_array[2], word_array[1])
 			}
