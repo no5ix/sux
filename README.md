@@ -154,10 +154,10 @@ createobject("wscript.shell").run "D:\A.bat",0
 # 设置Everything始终以运行次数排序
 
 0. Everything设置如下:  
-    [ ] 保存设置和数据到%APPDATA%\Everything目录  
-    [x] 随系统自启动  
-    [x] 以管理员身份运行  
-    [x] Everything服务  
+    * [ ] 保存设置和数据到%APPDATA%\Everything目录  
+    * [x] 随系统自启动  
+    * [x] 以管理员身份运行  
+    * [x] Everything服务  
 1. 退出Everything
 2. 找到其配置文件 Everything.ini , 并在其文件末尾添加
     ```
