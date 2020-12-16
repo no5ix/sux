@@ -2,6 +2,8 @@ An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
+![](/img/web_search.gif)
+
 
 # IMPORTANT
   
@@ -11,17 +13,18 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
 # Features
 
-* **personalized configuration** : u can modify `user_conf.ahk` to override the default configuration
-* **hot edges** : right/middle mouse click or `Ctrl+8` on the edge (useful for touchpad user)
+* **personalized configuration** : u can modify `user_conf.ahk` to override all default configuration
+* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`)
 * **hot corners** : just like mac hot cornes
-* **web search** : just like Wox/Listary/Alfred, see `default_conf.ahk` `WebSearchUrlMap`
+* **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `default_conf.ahk` `WebSearchUrlMap`
+    * use `Tab` to search multi line
 * **enhanced capslock** : just like Capslock+, see `capslock_plus.ahk`
 * **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: see `default_conf.ahk` : `CustomCommandLineMap["ev"]`
 * **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see `default_conf.ahk` : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
 * **custom theme** : two default theme(dark/light), and u can add ur own theme
 * **screen capture** : try `Capslock + Tab`
 * **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
-* **start nox with windows support**
+* **start nox with windows support**: try try double click `Alt` then input `nw` command
 * **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
 * **custom command line map support**:  see `default_conf.ahk` : `CustomCommandLineMap`
 <!-- * **auto selection copy** : just like linux terminal -->
