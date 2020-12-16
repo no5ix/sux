@@ -19,7 +19,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: see `default_conf.ahk` : `CustomCommandLineMap["ev"]`
 * **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see `default_conf.ahk` : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
 * **custom theme** : two default theme(dark/light), and u can add ur own theme
-* **screen capture** : try `Capslock + ~`
+* **screen capture** : try `Capslock + Tab`
 * **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
 * **start nox with windows support**
 * **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
@@ -44,7 +44,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <!-- * `limit` : turn on/off limit mode -->
 
 
-<!-- # CapsLock+
+# CapsLock+
 
 * `CapsLock` :
     *  `Esc`
@@ -60,35 +60,34 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `CapsLock` & `L` :
 	* `Right`
 	* with shift : `Shift`+`Right`
-* `CapsLock` & `~` :
+* `CapsLock` & `Tab` :
     * screen capture
 	* with shift : `CapsLock`
 * `CapsLock` & `V` :
-    * `Ctrl`+`V`
-	* with shift : `^`
+    * `^`
 * `CapsLock` & `F` :
-	* `Ctrl`+`F`
-	* with shift : `Ctrl`+`Shift`+`F`
+	* copy current and pop out nox search window
+	<!-- * with shift : `Ctrl`+`Shift`+`F` -->
 * `CapsLock` & `W` :
-	* `Ctrl`+`A`
-	* with shift : `~`
+	* `Shift`+`Ins`
 * `CapsLock` & `E` :
 	* Enter
-	* with shift : `Ctrl`+`/`
-* `CapsLock` & `X` :
-    *  `Ctrl`+`
+	<!-- * with shift : `Ctrl`+`/` -->
+<!-- * `CapsLock` & `X` :
+    *  `Ctrl`+` -->
 * `CapsLock` & `C` :
-	* `Ctrl`+`C`
-	* with shift : `$`
+	* `Ctrl`+`/`
+	<!-- * with shift : `$` -->
 * `CapsLock` & `S` :
-	* `Ctrl`+`S`
-	* with shift : `Ctrl`+`Shift`+`S`
+	<!-- * `Ctrl`+`S` -->
+	<!-- * with shift : `Ctrl`+`Shift`+`S` -->
+	* `$`
 * `CapsLock` & `R` :
-	* `Ctrl`+`Z`
-	* with shift : `Ctrl`+`Y`
-* `CapsLock` & `Tab` :
+	* `Ctrl`+`Y`
+	<!-- * with shift : `Ctrl`+`Y` -->
+<!-- * `CapsLock` & `Tab` :
 	* `Shift`+`Ins`
-	* with shift : `Ins`
+	* with shift : `Ins` -->
 * `CapsLock` & `d` :
 	* `Del`
 	* with shift : `BS`
@@ -133,7 +132,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 	* with shift : `Ctrl`+`Shift`+`Backspace`
 * `CapsLock` & `M` :
 	* `Ctrl`+`Del`
-	* with shift : `Shift`+`End`+`Del` -->
+	* with shift : `Shift`+`End`+`Del`
 
 
 <!-- # 设置开机以管理员权限启动
@@ -174,6 +173,8 @@ createobject("wscript.shell").run "D:\A.bat",0
 
 Just download release then double click nox.exe !
 
+或者对于高级用户, 你也可以安装好autohotkey环境, 然后直接运行nox.ahk.
+
 
 # Update Log
 
@@ -181,8 +182,7 @@ Just download release then double click nox.exe !
 
 ## 2020.12.16
 
-添加了二进制exe文
-件,ev命令现在是用CustomCommandLineMap来配置了
+添加了二进制exe文件,ev命令现在是用CustomCommandLineMap来配置了
 
 ## 2020.10.11
 
