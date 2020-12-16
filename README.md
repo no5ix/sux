@@ -173,7 +173,7 @@ createobject("wscript.shell").run "D:\A.bat",0
 
 # How to use
 
-Just download release then double click nox.exe !
+Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github.com/no5ix/nox/releases) and unzip it then run nox.exe as admin !
 
 或者对于高级用户, 你也可以安装好autohotkey环境, 然后直接运行nox.ahk.
 
