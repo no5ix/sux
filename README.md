@@ -16,7 +16,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **hot corners** : just like mac hot cornes
 * **web search** : just like Wox/Listary/Alfred, see `default_conf.ahk` `WebSearchUrlMap`
 * **enhanced capslock** : just like Capslock+, see `capslock_plus.ahk`
-* **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: `Ctrl+Shift+Alt+E`, see `default_conf.ahk` : `EverythingShortCutFunc`
+* **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: see `default_conf.ahk` : `CustomCommandLineMap["ev"]`
 * **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see `default_conf.ahk` : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
 * **custom theme** : two default theme(dark/light), and u can add ur own theme
 * **screen capture** : try `Capslock + ~`
@@ -25,7 +25,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
 * **custom command line map support**:  see `default_conf.ahk` : `CustomCommandLineMap`
 <!-- * **auto selection copy** : just like linux terminal -->
-<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+U, now u know, see user_conf.ahk -->
+<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
 
 
@@ -34,7 +34,6 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * `nox` : nox official site
 * `nw` : start nox with windows or not
 * `ev` : run Everything
-* `url` : open an URL
 * `cmd` : open a command prompt window on the current explorer path 
 * `rd` : reload this script
 * `dir` : open the directory for this script
@@ -161,7 +160,6 @@ createobject("wscript.shell").run "D:\A.bat",0
     [x]
      以管理员身份运行  
     [x] Everything服务  
-    显示窗口快捷键: `Ctrl+Shift+Alt+E`
 1. 退出Everything
 2. 找到其配置文件 Everything.ini , 并在其文件末尾添加
     ```
@@ -172,9 +170,19 @@ createobject("wscript.shell").run "D:\A.bat",0
 3. 运行Everything
 
 
+# How to use
+
+Just download release then double click nox.exe !
+
+
 # Update Log
 
 <!-- I'm so lazy...maybe u could see [nox commits](https://github.com/no5ix/nox/commits/master) -->
+
+## 2020.12.16
+
+添加了二进制exe文
+件,ev命令现在是用CustomCommandLineMap来配置了
 
 ## 2020.10.11
 

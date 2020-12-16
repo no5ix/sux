@@ -61,7 +61,6 @@ global auto_update_when_launch_nox := 0
 global enable_hot_edges := 0  ; when ctrl+8 on the edge (useful for touchpad user)
 
 
-global EverythingShortCutFunc := "Default_EverythingShortCut"
 ; global DoubleClickShiftTriggerFunc := "Default_DoubleClickShiftTrigger"
 global DoubleClickAltTriggerFunc := "Default_DoubleClickAltTrigger"
 global DoubleClickCtrlTriggerFunc := "Default_DoubleClickCtrlTrigger"
@@ -151,6 +150,7 @@ global CustomCommandLineMap :=
 	,  "USE_CURRENT_DIRECTORY_PATH_CMDs": {"cmd" : "%UserProfile%\Desktop"}  ;, "git" : "~/Desktop"}
 	,  "cmd" : ["cmd.exe"]
 
+	; ,  "ev" : ["C:\Program Files\Everything\Everything.exe"]
 	; ,  "git" : ["C:\Program Files\Git\bin\bash.exe", "--login"]
 	; ,  "proj" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\no5ix\Documents\github\example_proj"]
 	; ,  "test.go" : ["notepad.exe", "C:\Users\b\Desktop\test.go"]

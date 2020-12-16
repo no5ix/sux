@@ -670,16 +670,6 @@ UpdateNox(from_launch) {
 
 
 
-
-
-; ---------------------------------------------------------------------o
-; 					Everything shortCut conf  
-; ---------------------------------------------------------------------o
-
-Default_EverythingShortCut(){
-	Send, ^!+e
-}
-
 ; ---------------------------------------------------------------------o
 ; 					double click conf  
 ; ---------------------------------------------------------------------o
@@ -689,7 +679,6 @@ Default_DoubleClickShiftTrigger(){
 	%gui_spawn_func%()
 }
 Default_DoubleClickAltTrigger(){
-	; Default_EverythingShortCut()
 	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
 	%gui_spawn_func%()
 }
@@ -859,7 +848,6 @@ IncludeUserConfIFExist() {
 
 ; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
 
-; ; global EverythingShortCutFunc := "User_EverythingShortCut"
 ; ; global DoubleClickShiftTriggerFunc := ""
 ; ; global DoubleClickAltTriggerFunc := ""
 ; ; global DoubleClickCtrlTriggerFunc := ""
@@ -943,6 +931,8 @@ IncludeUserConfIFExist() {
 ; 	,  "USE_CURRENT_DIRECTORY_PATH_CMDs": {"cmd" : "%UserProfile%\Desktop", "git" : "~/Desktop"}
 ; 	,  "cmd" : ["cmd.exe"]
 
+
+;	,  "ev" : ["C:\Program Files\Everything\Everything.exe"]
 ; 	,  "git" : ["C:\Program Files\Git\bin\bash.exe", "--login"]
 ; 	,  "blog" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\b\Documents\github\hexo-theme-next-optimized"]
 ; 	,  "proj" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\b\Documents\github\nox"]
@@ -1068,7 +1058,6 @@ IncludeUserConfIFExist() {
 
 ; User_HotEdgesRightHalfUpTrigger(from){
 ; 	if (from = "Ctrl+8") {	
-; 	; 	%EverythingShortCutFunc%()
 ; 	; 	return should_ignore_original_action
 ; 	; }			
 ; 	; else if (from = "MButton") {
@@ -1094,7 +1083,10 @@ IncludeUserConfIFExist() {
 
 
 ReloadForIncludingUserConf() {
-	Reload
+	user_conf_file := A_ScriptDir "\conf\user_conf.ahk"
+	if FileExist(user_conf_file) {
+		Reload
+	}
 }
 
 StartNoxWithWindows() {

@@ -150,7 +150,8 @@ HandleGuiUserInput:
 		else if trim_gui_user_input = dir ; Open the directory for this script
 		{
 			gui_destroy()
-			Run, %A_ScriptDir%
+			; Run, %A_ScriptDir%  ; 用这种方式会把nox文件夹之前的文件夹里的exe执行..头疼..所以改用下面这行代码来写
+			Run, explorer %A_ScriptDir%
 		}
 		; else if trim_gui_user_input = conf ; Edit user_conf
 		; {
@@ -258,7 +259,7 @@ HandleGuiUserInput:
 		; 		run cmd.exe
 		; 	}
 		; }
-		else if CustomCommandLineMap.HasKey(trim_gui_user_input)
+		else if (CustomCommandLineMap.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
 			gui_destroy()
 			; p_cmd := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"]
@@ -268,6 +269,29 @@ HandleGuiUserInput:
 			; 		use_cur_path := 1
 			; 		Break
 			; 	}
+
+			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
+			if (word_array[1] == "ev"){
+				;;; everything search
+				; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
+				everything_exe_path := CustomCommandLineMap["ev"][1]
+				run, %everything_exe_path%
+				WinWaitActive, ahk_exe Everything.exe, , 2.222
+				if ErrorLevel
+					MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+				else if (word_array[2]){
+					
+					pending_search_str := word_array[2]
+					; last_search_str := GuiUserInput
+					; Sleep, 88
+					; SendRaw, %trim_gui_user_input%
+					; Sleep, 222
+					; SendRaw, %last_search_str%
+					Send, {Blind}{Text}%pending_search_str%
+				}
+				return
+			}
+
 			use_cur_path := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"].HasKey(trim_gui_user_input)
 			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
 			{
@@ -301,26 +325,7 @@ HandleGuiUserInput:
 		else
 		{
 			gui_destroy()
-			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-				
-			if (word_array[1] == "ev"){
-				;;; everything search
-				%EverythingShortCutFunc%()
-				WinWaitActive, ahk_exe Everything.exe, , 2.222
-				if ErrorLevel
-					MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-				else if (word_array[2]){
-					
-					pending_search_str := word_array[2]
-					; last_search_str := GuiUserInput
-					; Sleep, 88
-					; SendRaw, %trim_gui_user_input%
-					; Sleep, 222
-					; SendRaw, %last_search_str%
-					Send, {Blind}{Text}%pending_search_str%
-				}
-			}
-			else if WebSearchUrlMap.HasKey(word_array[1]){
+			if WebSearchUrlMap.HasKey(word_array[1]){
 				WebSearch(word_array[2], word_array[1])
 			}
 			else {
