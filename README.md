@@ -138,22 +138,6 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 	* with shift : `Shift`+`End`+`Del`
 
 
-<!-- # 设置开机以管理员权限启动
-
-1. 对“A.exe”创建快捷方式, 然后将这个快捷方式改名为“A” (不用改名为A.lnk, 因为windows的快捷方式默认扩展名就是lnk)
-2. 右键这个快捷方式-> 高级，勾选用管理员身份运行； 
-3. 新建“A.bat”文件，将这个快捷方式的路径信息写入并保存，如：
-```
-@echo off
-start C:\Users\b\Desktop\A.lnk
-```
-4. 因为直接运行 A.bat 会有个窗口一闪而过, 所以新建个 A.vbs 来运行这个bat来避免这个窗口
-```
-createobject("wscript.shell").run "D:\A.bat",0
-```
-5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中 -->
-
-
 # 设置Everything始终以运行次数排序
 
 0. Everything设置如下:  
@@ -180,8 +164,6 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 
 # Update Log
 
-<!-- I'm so lazy...maybe u could see [nox commits](https://github.com/no5ix/nox/commits/master) -->
-
 ## 2020.12.16
 
 添加了二进制exe文件,ev命令现在是用CustomCommandLineMap来配置了
@@ -197,3 +179,19 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 ## 2020.10.09
 
 * start nox with windows support, try cmd `nw`
+
+
+<!-- # 设置开机以管理员权限启动
+
+1. 对“A.exe”创建快捷方式, 然后将这个快捷方式改名为“A” (不用改名为A.lnk, 因为windows的快捷方式默认扩展名就是lnk)
+2. 右键这个快捷方式-> 高级，勾选用管理员身份运行； 
+3. 新建“A.bat”文件，将这个快捷方式的路径信息写入并保存，如：
+```
+@echo off
+start C:\Users\b\Desktop\A.lnk
+```
+4. 因为直接运行 A.bat 会有个窗口一闪而过, 所以新建个 A.vbs 来运行这个bat来避免这个窗口
+```
+createobject("wscript.shell").run "D:\A.bat",0
+```
+5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中 -->
