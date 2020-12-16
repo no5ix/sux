@@ -2,7 +2,8 @@ An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
-![](/img/web_search.gif)
+[![](/img/web_search.gif)](https://hulinhong.com/2020/01/09/nox_readme/)
+click img to see full video
 
 
 # IMPORTANT
@@ -24,9 +25,9 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 * **custom theme** : two default theme(dark/light), and u can add ur own theme
 * **screen capture** : try `Capslock + Tab`
 * **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
-* **start nox with windows support**: try try double click `Alt` then input `nw` command
-* **auto update when launch nox support** : see `default_conf.ahk` : `auto_update_when_launch_nox`
-* **custom command line map support**:  see `default_conf.ahk` : `CustomCommandLineMap`
+* **start nox with windows**: try double click `Alt` then input `nw` command
+* **auto update when launch nox** : see `default_conf.ahk` : `auto_update_when_launch_nox`
+* **custom command line map**:  see `default_conf.ahk` : `CustomCommandLineMap`
 <!-- * **auto selection copy** : just like linux terminal -->
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
@@ -159,7 +160,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
 Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github.com/no5ix/nox/releases) and unzip it then run nox.exe as admin !
 
-或者对于高级用户, 你也可以安装好autohotkey环境, 然后直接运行nox.ahk.
+或者对于高级用户, 你也可以[安装好autohotkey环境](https://www.autohotkey.com/), 然后直接运行nox.ahk, 这样就可以自定义改各种配置和代码了, 改完之后`rd`即可.
 
 
 # Update Log
