@@ -11,7 +11,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
 # Features
 
-* **personalized configuration** : u can modify user_conf.ahk to override the default configuration
+* **personalized configuration** : u can modify `user_conf.ahk` to override the default configuration
 * **hot edges** : right/middle mouse click or `Ctrl+8` on the edge (useful for touchpad user)
 * **hot corners** : just like mac hot cornes
 * **web search** : just like Wox/Listary/Alfred, see `default_conf.ahk` `WebSearchUrlMap`
