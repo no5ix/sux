@@ -3,6 +3,9 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
+RShift::
+	Send, ^{Space}
+	return
 
 ~Esc::
 	ClickUpIfLbDown()
