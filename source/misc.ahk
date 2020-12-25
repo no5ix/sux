@@ -4,7 +4,22 @@
 
 
 RShift::
-	Send, ^{Space}
+	if (A_PriorHotkey <> "RShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		ClickUpIfLbDown()
+		Send, ^{Space}
+		KeyWait, RShift
+		return
+	}
+	if limit_mode {
+		ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
+		return
+	}
+	; Send, ^{Space}
+	Send, ^+{Left}
+	; Sleep, 66
+	Send, {Del}
 	return
 
 ~Esc::
@@ -21,14 +36,13 @@ RShift::
 
 
 ~Alt::
-	ClickUpIfLbDown()
-	
 	; ; 不能这么写, 因为这样长按 alt 也会触发
 	; If (A_PriorHotKey = "~Alt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
 	; 	gui_spawn()
 	if (A_PriorHotkey <> "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
+		ClickUpIfLbDown()
 		KeyWait, Alt  ; Wait for the key to be released.
 		return
 	}
@@ -41,10 +55,10 @@ RShift::
 
 
 ~Ctrl::
-	ClickUpIfLbDown()
 	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
+		ClickUpIfLbDown()
 		KeyWait, Ctrl
 		return
 	}
