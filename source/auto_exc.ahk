@@ -5,19 +5,20 @@
 
 RunAsAdmin()
 
-HandleMonitorConfWhenFirstRun()
+if IsFirstTimeRunNox() {
+    HandleStartingNoxWithWindows()
+    WriteMonitorConf()
+}
 
-; SetTimer, IncludeUserConfIFExist, 66
-IncludeUserConfIFExist()
+
+; SetTimer, ReloadAfterWritingUserConf, 66
+ReloadAfterWritingUserConf()
 
 if auto_limit_mode_when_full_screen
 	SetTimer, LimitModeWhenFullScreen, 88
 
 if disable_win10_auto_update
     SetTimer, DisableWin10AutoUpdate, 66666
-
-if IsFirstTimeRunNox()
-    StartNoxWithWindows()
 
 if auto_update_when_launch_nox
     UpdateNox(1)

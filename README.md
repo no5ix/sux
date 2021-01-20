@@ -37,13 +37,13 @@ click img to see full video
 
 * `nox` : nox official site
 * `nw` : start nox with windows or not
-* `ev` : run Everything
 * `cmd` : open a command prompt window on the current explorer path 
 * `rd` : reload this script
 * `dir` : open the directory for this script
 * `up` : update nox
 * `wau` : turn on/off disable win10 auto update
 * `xy` : set second monitor xy for detecting IsCorner()
+<!-- * `ev` : run Everything -->
 <!-- * `conf` : Edit user_conf -->
 <!-- * `limit` : turn on/off limit mode -->
 

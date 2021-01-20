@@ -520,7 +520,7 @@ DebugPrintVal(val) {
 }
 
 
-HandleMonitorConfWhenFirstRun() {
+WriteMonitorConf() {
 	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
 	if !FileExist(monitor_xy_conf_file) {
 		FileAppend, 
@@ -532,17 +532,17 @@ HandleMonitorConfWhenFirstRun() {
 	if enable_hot_corners {
 		SysGet, monitor_cnt, MonitorCount
 		if (monitor_cnt > 2) {
-			msg_str := "You have more than 2 monitors, hot corners will not perform exactly at none primary monitor, so we disable it."
-			MsgBox,,, %msg_str%        
+			msg_str := "You have more than 2 monitors, hot corners will not perform exactly at none primary monitor"
+			MsgBox,,, %msg_str%
 		}
 		else {
 			#IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
 			if (monitor_cnt == 2 and second_monitor_min_x == 0) {
 				msg_str := "You have 2 monitors, if they have two different resolution,"
 					. " you can use cmd 'xy' to set the 2th monitor resolustion config. `n`n"
-					. " Would you like to set it later(Yes) or now(No)?"
+					. " Would you like to set it now(Yes) or later(No)?"
 				MsgBox, 4,, %msg_str%
-				IfMsgBox No
+				IfMsgBox Yes
 					Set2thMonitorXY()
 			}
 			SetTimer, HotCorners, %hot_corners_detect_interval%
@@ -561,6 +561,7 @@ SaveMonitorXyConfToFile() {
 	monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
 	FileDelete %monitor_xy_conf_file%  ; In case previous run was terminated prematurely.
 	FileAppend, %monitor_xy_conf_str%, %monitor_xy_conf_file%
+	Sleep, 888
 	#IncludeAgain *i %A_ScriptDir%\conf\monitor_xy_conf.ahk
 }
 
@@ -792,7 +793,7 @@ Default_HotCornersBottomRightTrigger(){
 }
 
 
-IncludeUserConfIFExist() {
+ReloadAfterWritingUserConf() {
 	user_conf_file := A_ScriptDir "\conf\user_conf.ahk"
 	if !FileExist(user_conf_file) {
 		FileAppend, 
@@ -1073,11 +1074,11 @@ IncludeUserConfIFExist() {
 
 		), %user_conf_file%
 		
-		SetTimer, ReloadForIncludingUserConf, -66
+		SetTimer, ReloadForIncludingUserConf, -888
 	}
 	; else {
 	; 	; #IncludeAgain *i %A_ScriptDir%\conf\user_conf.ahk
-	; 	; SetTimer, IncludeUserConfIFExist, off
+	; 	; SetTimer, ReloadAfterWritingUserConf, off
 	; }
 }
 
@@ -1089,7 +1090,7 @@ ReloadForIncludingUserConf() {
 	}
 }
 
-StartNoxWithWindows() {
+HandleStartingNoxWithWindows() {
 	; Clipboard =    ; Empties Clipboard
 	; Send, ^c        ; Copies filename and path
 	; ClipWait 0      ; Waits for copy

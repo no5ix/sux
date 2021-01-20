@@ -213,7 +213,7 @@ HandleGuiUserInput:
 		}
 		else if trim_gui_user_input = nw ; start nox with windows
 		{
-			StartNoxWithWindows()
+			HandleStartingNoxWithWindows()
 			gui_destroy()
 		}
 		;-------------------------------------------------------------------------------
