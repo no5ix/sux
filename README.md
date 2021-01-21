@@ -41,8 +41,8 @@ click img to see full video
 * `rd` : reload this script
 * `dir` : open the directory for this script
 * `up` : update nox
-* `wau` : turn on/off disable win10 auto update
 * `xy` : set second monitor xy for detecting IsCorner()
+<!-- * `wau` : turn on/off disable win10 auto update -->
 <!-- * `ev` : run Everything -->
 <!-- * `conf` : Edit user_conf -->
 <!-- * `limit` : turn on/off limit mode -->

@@ -1074,7 +1074,7 @@ ReloadAfterWritingUserConf() {
 
 		), %user_conf_file%
 		
-		SetTimer, ReloadForIncludingUserConf, -888
+		SetTimer, ReloadForIncludingUserConf, -88
 	}
 	; else {
 	; 	; #IncludeAgain *i %A_ScriptDir%\conf\user_conf.ahk
