@@ -650,7 +650,8 @@ UpdateNox(from_launch) {
 	; ToolTipWithTimer("nox background updating, please wait...", 2222)
 	; RunWait, cmd.exe /c git pull origin master,,hide
 	run_result := RunWaitOne("git pull origin master", from_launch)
-	if (InStr(run_result, "Already up to date")) {
+	; if (InStr(run_result, "Already up to date")) {
+	if (RegExMatch(run_result, "Already.*up.*to.*date")) {
 		if from_launch
 			return
 		MsgBox,,, nox is already up to date. , 6
