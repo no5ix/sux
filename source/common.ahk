@@ -854,7 +854,7 @@ ReloadAfterWritingUserConf() {
 
 ; global disable_win10_auto_update := 1
 
-; global auto_update_when_launch_nox := 1
+; global auto_update_when_launch_nox := 0  ; if 1, git is required
 
 ; global enable_hot_edges := 1  ; when ctrl+8 on the edge (useful for touchpad user)
 
