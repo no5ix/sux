@@ -165,6 +165,15 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 
 # Update Log
 
+## 2021.02.01
+
+- add '192.168' to IsRawUrl() function
+- HotCornersTopLeft/Right: activate the window currently under mouse cursor
+- fix bug: nox auto update
+- remove wau command
+- fix bug: 第一次启动nox的时候会出现两次设置monitor xy
+- add double rshift to ctrl+backspace and ctrl+space
+
 ## 2020.12.16
 
 添加了二进制exe文件,ev命令现在是用CustomCommandLineMap来配置了
