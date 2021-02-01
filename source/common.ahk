@@ -496,7 +496,7 @@ IsStandardRawUrl(user_input){
 IsRawUrl(user_input){
 	if Instr(user_input, " ")
 		return 0
-	raw_url_str_arr := ["http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
+	raw_url_str_arr := ["192.168", "http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
 	Loop % raw_url_str_arr.Length()
 		if InStr(user_input, raw_url_str_arr[A_Index]) {
 			return 1
@@ -788,7 +788,7 @@ Default_HotCornersTopRightTrigger(){
 	; activate the window currently under mouse cursor
 	MouseGetPos,,, curr_hwnd 
 	WinActivate, ahk_id %curr_hwnd%
-	
+
 	Send {LControl Down}
 	Send, {Tab}
 	Sleep, 111
