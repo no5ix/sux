@@ -775,12 +775,20 @@ Default_HotEdgesRightHalfDownTrigger(from){
 ; ---------------------------------------------------------------------o
 
 Default_HotCornersTopLeftTrigger(){
+	; activate the window currently under mouse cursor
+	MouseGetPos,,, curr_hwnd 
+	WinActivate, ahk_id %curr_hwnd%
+	
 	Send {LControl Down}{LShift Down}
 	Send, {Tab}
 	Sleep, 111
 	Send {LControl Up}{LShift Up}
 }
 Default_HotCornersTopRightTrigger(){
+	; activate the window currently under mouse cursor
+	MouseGetPos,,, curr_hwnd 
+	WinActivate, ahk_id %curr_hwnd%
+	
 	Send {LControl Down}
 	Send, {Tab}
 	Sleep, 111
