@@ -2,7 +2,7 @@ An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
-[![](https://hulinhong.com/img/nox/web_search.gif)](https://hulinhong.com/2020/01/09/nox_readme/)
+[![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/nox/web_search.gif)](https://hulinhong.com/2020/01/09/nox_readme/)
 click img to see full video
 
 
