@@ -3,7 +3,7 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
-SetCapsLockState, AlwaysOff
+SetCapsLockState, AlwaysOff  ; 如果这里注释了, 记得也注释nox.ahk里的那一行
 
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI

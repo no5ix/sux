@@ -9,7 +9,7 @@
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance
 
-SetCapsLockState, AlwaysOff
+SetCapsLockState, AlwaysOff  ; 必须得在
 
 
 -----------------------
@@ -18,7 +18,6 @@ SetCapsLockState, AlwaysOff
 #Include %A_ScriptDir%\conf\default_conf.ahk
 ;;  *i ignore any failure to load the included file.
 #Include *i %A_ScriptDir%\conf\user_conf.ahk
-#Include *i %A_ScriptDir%\conf\init_conf.ahk
 
 
 #Include %A_ScriptDir%\source\common.ahk
