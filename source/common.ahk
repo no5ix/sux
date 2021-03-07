@@ -778,7 +778,7 @@ Default_HotCornersTopLeftTrigger(){
 	MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
 	WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
 	; MsgBox, The active window is at %X%`,%Y%
-	if (Mouse_x > second_monitor_min_x && cur_active_window_X < second_monitor_min_x) || (Mouse_x < second_monitor_min_x && cur_active_window_X > second_monitor_min_x) { 
+	if (second_monitor_min_x != 0) && ((Mouse_x > second_monitor_min_x && cur_active_window_X < second_monitor_min_x) || (Mouse_x < second_monitor_min_x && cur_active_window_X > second_monitor_min_x)) { 
 		; activate the window currently under mouse cursor
 		MouseGetPos,,, curr_hwnd 
 		WinActivate, ahk_id %curr_hwnd%
@@ -793,8 +793,7 @@ Default_HotCornersTopLeftTrigger(){
 Default_HotCornersTopRightTrigger(){
 	MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
 	WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
-	; MsgBox, The active window is at %X%`,%Y%
-	if (Mouse_x > second_monitor_min_x && cur_active_window_X < second_monitor_min_x) || (Mouse_x < second_monitor_min_x && cur_active_window_X > second_monitor_min_x) { 
+	if (second_monitor_min_x != 0) && ((Mouse_x > second_monitor_min_x && cur_active_window_X < second_monitor_min_x) || (Mouse_x < second_monitor_min_x && cur_active_window_X > second_monitor_min_x)) { 
 		; activate the window currently under mouse cursor
 		MouseGetPos,,, curr_hwnd 
 		WinActivate, ahk_id %curr_hwnd%
