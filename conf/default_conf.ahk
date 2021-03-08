@@ -157,3 +157,145 @@ global CustomCommandLineMap :=
 	; ,  "test.py" : ["C:\Program Files\Microsoft VS Code\Code.exe", "C:\Users\b\Desktop\test.py"]
 }
 )
+
+
+
+
+
+
+
+; ---------------------------------------------------------------------o
+; 					double click conf  
+; ---------------------------------------------------------------------o
+
+Default_DoubleClickShiftTrigger(){
+	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
+	%gui_spawn_func%()
+}
+Default_DoubleClickAltTrigger(){
+	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
+	%gui_spawn_func%()
+}
+Default_DoubleClickCtrlTrigger(){
+}
+
+
+; ---------------------------------------------------------------------o
+;                       hot edge conf 
+; ---------------------------------------------------------------------o
+
+Default_HotEdgesTopHalfLeftTrigger(from){
+	; if (from = "Ctrl+8") {
+	; 	ToolTipWithTimer("Launching Music App ...", 1111)
+	; 	run %music_app_path%
+	; 	; Send, #e
+	; 	; ToolTipWithTimer("Launching File Explorer ...", 1111)
+	; 	; MaximizeWindow(1111, "Explorer.exe")
+
+	; }
+	return should_not_ignore_original_action
+}
+Default_HotEdgesTopHalfRightTrigger(from){
+	if (from = "Ctrl+8") {						
+		; Send, #e
+		run "explorer.exe"
+		ToolTipWithTimer("Launching File Explorer ...", 1111)
+		MaximizeWindow(1111, "Explorer.exe")
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
+}
+Default_HotEdgesBottomHalfLeftTrigger(from){
+	if (from = "Ctrl+8") {												
+		Send, ^+{Esc}
+		ToolTipWithTimer("Launching Task Manager ...", 1111)
+		MaximizeWindow(1111, "taskmgr.exe")
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
+}
+Default_HotEdgesBottomHalfRightTrigger(from){
+	; if (from = "Ctrl+8") {
+	; 	; Send, #m				
+	; 	; Send, #{Up}				
+	; 	; Send, !{F4}
+
+	; 	ToolTipWithTimer("Launching WeChat ...", 1111)
+	; 	run %im_path%
+	; 	; MaximizeWindow(1111, "WeChat.exe")
+	; }					
+	return should_not_ignore_original_action
+}
+Default_HotEdgesLeftHalfUpTrigger(from){
+	if (from = "Ctrl+8") {		
+		Send {LWin Down}
+		Send, {Left}
+		Sleep, 111
+		Send {LWin Up}
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
+}
+Default_HotEdgesLeftHalfDownTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #{Tab}
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
+}
+Default_HotEdgesRightHalfUpTrigger(from){
+	if (from = "Ctrl+8") {		
+		Send {LWin Down}
+		Send, {Right}
+		Sleep, 111
+		Send {LWin Up}
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
+}
+Default_HotEdgesRightHalfDownTrigger(from){
+	if (from = "Ctrl+8") {
+		Send, #a
+		return should_ignore_original_action
+	}					
+	return should_not_ignore_original_action
+}
+
+
+; ---------------------------------------------------------------------o
+; 					hot corners conf  
+; ---------------------------------------------------------------------o
+
+Default_HotCornersTopLeftTrigger(){
+	if (IsMouseActiveWindowAtSameMonitor() == 0) {
+		; activate the window currently under mouse cursor
+		MouseGetPos,,, curr_hwnd 
+		WinActivate, ahk_id %curr_hwnd%
+	}
+
+	
+	Send {LControl Down}{LShift Down}
+	Send, {Tab}
+	Sleep, 111
+	Send {LControl Up}{LShift Up}
+}
+Default_HotCornersTopRightTrigger(){
+	if (IsMouseActiveWindowAtSameMonitor() == 0) {
+		; activate the window currently under mouse cursor
+		MouseGetPos,,, curr_hwnd 
+		WinActivate, ahk_id %curr_hwnd%
+	}
+
+	Send {LControl Down}
+	Send, {Tab}
+	Sleep, 111
+	Send {LControl Up}
+}
+Default_HotCornersBottomLeftTrigger(){
+		Send, {LWin}
+}
+Default_HotCornersBottomRightTrigger(){
+		Send, !{Tab}
+}
+
+

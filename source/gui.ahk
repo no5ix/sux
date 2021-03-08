@@ -7,6 +7,35 @@
 ; global gui_state := closed
 
 
+
+
+ShadowBorder(handle)
+{
+    DllCall("user32.dll\SetClassLongPtr", "ptr", handle, "int", -26, "ptr", DllCall("user32.dll\GetClassLongPtr", "ptr", handle, "int", -26, "uptr") | 0x20000)
+}
+
+FrameShadow(handle) {
+	DllCall("dwmapi\DwmIsCompositionEnabled","IntP",_ISENABLED) ; Get if DWM Manager is Enabled
+	if !_ISENABLED ; if DWM is not enabled, Make Basic Shadow
+		DllCall("SetClassLong","UInt",handle,"Int",-26,"Int",DllCall("GetClassLong","UInt",handle,"Int",-26)|0x20000)
+	else {
+		VarSetCapacity(_MARGINS,16)
+		NumPut(1,&_MARGINS,0,"UInt")
+		NumPut(1,&_MARGINS,4,"UInt")
+		NumPut(1,&_MARGINS,8,"UInt")
+		NumPut(1,&_MARGINS,12,"UInt")
+		DllCall("dwmapi\DwmSetWindowAttribute", "Ptr", handle, "UInt", 2, "Int*", 2, "UInt", 4)
+		DllCall("dwmapi\DwmExtendFrameIntoClientArea", "Ptr", handle, "Ptr", &_MARGINS)
+	}
+}
+
+
+gui_destroy() {
+	; Hide GUI
+	Gui, Destroy
+}
+
+
 gui_spawn(curr_select_text="") {
 	gui_destroy()
 	; curr_select_text := GetCurSelectedText()

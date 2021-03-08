@@ -2,6 +2,65 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+HandleMouseOnEdges(from) {
+	if (enable_hot_edges = 0){
+		return [should_not_ignore_original_action, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
+	}
+	if (limit_mode){
+		return [should_not_ignore_original_action, "Notice: limit mode is on, edge triggers are disabled."]
+	}
+	if IsCorner(){
+		return [should_not_ignore_original_action, "Notice: Is Corner, so do NOTHING by edge triggers."]
+	}
+	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+
+	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
+	cur_monitor_min_x := min_max_xy_arr[1]
+	cur_monitor_max_x := min_max_xy_arr[2]
+	cur_monitor_min_y := min_max_xy_arr[3]
+	cur_monitor_max_y := min_max_xy_arr[4]
+
+	cur_monitor_width := abs(cur_monitor_max_x-cur_monitor_min_x)
+	cur_monitor_height := abs(cur_monitor_max_y-cur_monitor_min_y)
+
+	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
+	if (MouseY < cur_monitor_min_y + CornerEdgeOffset)
+	{
+		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
+			cur_should_go_on_doing := %HotEdgesTopHalfLeftTriggerFunc%(from)
+		else
+			cur_should_go_on_doing := %HotEdgesTopHalfRightTriggerFunc%(from)
+	}
+	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
+	{
+		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
+			cur_should_go_on_doing := %HotEdgesBottomHalfLeftTriggerFunc%(from)
+		else
+			cur_should_go_on_doing := %HotEdgesBottomHalfRightTriggerFunc%(from)
+	}
+	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
+	{
+		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
+			cur_should_go_on_doing := %HotEdgesLeftHalfUpTriggerFunc%(from)
+		else
+			cur_should_go_on_doing := %HotEdgesLeftHalfDownTriggerFunc%(from)
+	}
+	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
+	{
+		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
+			cur_should_go_on_doing := %HotEdgesRightHalfUpTriggerFunc%(from)
+		else
+			cur_should_go_on_doing := %HotEdgesRightHalfDownTriggerFunc%(from)
+	}
+   return [cur_should_go_on_doing, ""]
+}
+
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
 
 RShift::
 	if (A_PriorHotkey <> "RShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
