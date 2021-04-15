@@ -500,6 +500,31 @@ ReloadForIncludingUserConf() {
 
 
 
+
+OneQuick.Ini()
+
+
+/*
+普通快捷键
+*/
+if(OneQuick.GetFeatureCfg("hotkey.switch", 0))
+{
+	For key, value in OneQuick.GetFeatureCfg("hotkey.buildin", {})
+		register_hotkey(key, value, "")
+}
+
+/*
+屏幕边缘操作
+*/
+if(OneQuick.GetFeatureCfg("screen-border.switch", 0))
+{
+	For border_key, border_action in OneQuick.GetFeatureCfg("screen-border.action", {})
+		for key, value in border_action
+			register_hotkey(key, value, border_key)
+}
+
+
+
 RunAsAdmin()
 
 if IsFirstTimeRunNox() {
@@ -520,3 +545,4 @@ if enable_hot_corners
 
 if auto_update_when_launch_nox
     UpdateNox(1)
+

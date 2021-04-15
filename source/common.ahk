@@ -23,6 +23,9 @@ global should_not_ignore_original_action := 0
 global should_ignore_original_action := 1
 
 
+; 记录快捷键与对应操作
+HOTKEY_REGISTER_LIST := {}
+
 
 
 ; modified from jackieku's code (http://www.autohotkey.com/forum/post-310959.html#310959)
@@ -509,3 +512,4 @@ IsMouseActiveWindowAtSameMonitor() {
 	}
 	return 1
 }
+

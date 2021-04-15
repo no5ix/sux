@@ -163,6 +163,18 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 或者对于高级用户, 你也可以[安装好autohotkey环境](https://www.autohotkey.com/), 然后直接运行nox.ahk, 这样就可以自定义改各种配置和代码了, 改完之后`rd`即可.
 
 
+# TODO
+
+- ini
+- clipboard history
+- suspend img
+- internal Everything
+- auto install ahk
+- custom tray menu
+- auto compile
+- auto update
+
+
 # Update Log
 
 ## 2021.02.01
