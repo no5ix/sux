@@ -583,6 +583,6 @@ if disable_win10_auto_update
 if enable_hot_corners
     SetTimer, HotCorners, %hot_corners_detect_interval%
 
-if auto_update_when_launch_nox
-    UpdateNoxImpl(1)
+; if auto_update_when_launch_nox
+;     UpdateNoxImpl(1)
 
