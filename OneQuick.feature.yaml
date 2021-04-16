@@ -6,44 +6,113 @@ app_enhance:
 hotkey: 
   switch: 1
   buildin: 
-    win_z: xmenu_show_great_menu
-    ctrl_alt_r: OneQuick.Command_run
-    win_rclick: WinMenu.Show
-    shift_wheeldown: "send {PgDn}"
-    shift_wheelup: "send {PgUp}"
-    win_t: sys.win.topmost
-    win_n: notepad
-    win_shift_l: Sys.Power.LockAndMonitoroff
-    ctrl_shift_alt_r: OneQuick.Reload
+    # win_z: xmenu_show_great_menu
+    # ctrl_alt_r: OneQuick.Command_run
+    # win_rclick: WinMenu.Show
+    # shift_wheeldown: "send {PgDn}"
+    # shift_wheelup: "send {PgUp}"
+    # win_t: sys.win.topmost
+    # win_n: notepad
+    # win_shift_l: Sys.Power.LockAndMonitoroff
+    # ctrl_shift_alt_r: OneQuick.Reload
+    caps_c: "send ^/"
+    caps_v: "send +6"
+    caps_w: "send +{Ins}"
+    caps_e: "send {Enter}"
+    caps_s: "send +4"
+    caps_r: "send ^y"
+    caps_shift_r: "send {F2}"
+    caps_d: "send {Del}"
+    caps_shift_d: "send {BS}"
+    caps_y: "send +8"
+    caps_shift_y: "send +5"
+    caps_u: "send "+1""
+    caps_shift_u: "send +2"
+    caps_h: "send {Left}"
+    caps_shift_h: "send +{Left}"
+    caps_j: "send {Down}"
+    caps_shift_j: "send +{Down}"
+    caps_k: "send {Up}"
+    caps_shift_k: "send +{Up}"
+    caps_l: "send {Right}"
+    caps_shift_l: "send +{Right}"
+    caps_p: "send +3"
+    caps_shift_p: "send +7"
+    caps_i: "send ^{Left}"
+    caps_shift_i: "send +^{Left}"
+    caps_o: "send ^{Right}"
+    caps_shift_o: "send +^{Right}"
+    caps_9: "send ["
+    caps_shift_9: "send {{}"
+    caps_0: "send ]"
+    caps_shift_0: "send {}}"
+    caps_n: "send ^{BS}"
+    caps_shift_n: "send +{Home}{Del}"
+    caps_m: "send ^{Del}"
+    caps_shift_m: "send +{End}{Del}"
 screen-border: 
   switch: 1
   action: 
-    B: 
-      wheelclick: "send #{tab}"
-      wheeldown: "send ^#{right}"
-      wheelup: "send ^#{left}"
-    L-R: 
-      ctrl_shift_wheeldown: "send {end}"
-      ctrl_shift_wheelup: "send {home}"
-      shift_wheeldown: "send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}"
-      shift_wheelup: "send {pgup}{pgup}{pgup}{pgup}{pgup}"
-      wheeldown: "send {pgdn}"
-      wheelup: "send {pgup}"
-    LT: 
-      rclick: winmenu.show
-      shift_wheeldown: Sys.Screen.BrightnessDown
-      shift_wheelup: Sys.Screen.BrightnessUp
-      wheelclick: "send {volume_mute}"
+    LeftTopCorner: 
+      # rclick: winmenu.show
+      hover: Sys.Win.GotoPreTab
+      # shift_wheeldown: Sys.Screen.BrightnessDown
+      # shift_wheelup: Sys.Screen.BrightnessUp
+      # wheelclick: "send {volume_mute}"
+      # wheeldown: "Send {volume_down}"
+      # wheelup: "Send {volume_up}"
+    RightTopCorner: 
+      hover: Sys.Win.GotoNextTab
+      # rclick: xmenu_show_screen_rt_menu
+      # wheelclick: "send {media_play_pause}"
+      # wheeldown: "send {media_next}"
+      # wheelup: "send {media_prev}"
+    LeftBottomCorner: 
+      hover: "send {LWin}"
+      # rclick: xmenu_show_screen_rt_menu
+      # wheelclick: "send {media_play_pause}"
+      # wheeldown: "send {media_next}"
+      # wheelup: "send {media_prev}"
+    RightBottomCorner: 
+      hover: "send !{Tab}"
+      # rclick: xmenu_show_screen_rt_menu
+      # wheelclick: "send {media_play_pause}"
+      # wheeldown: "send {media_next}"
+      # wheelup: "send {media_prev}"
+    TopHalfLeftEdge: 
+      ctrl_8: "C:/Program Files (x86)/Netease/CloudMusic/cloudmusic.exe"
+    TopHalfRightEdge: 
+      ctrl_8: "explorer.exe"
+    BottomHalfLeftEdge:
+      ctrl_8: "send ^+t"
+    BottomHalfRightEdge: 
+      ctrl_8: "send {F5}"
+      # wheelclick: "send #{tab}"
+      # wheeldown: "send ^#{right}"
+      # wheelup: "send ^#{left}"
+    # LeftHalfTopEdge/RightHalfTopEdge/LeftHalfBottomEdge/RightHalfBottomEdge: 
+    #   ctrl_shift_wheeldown: "send {end}"
+    #   ctrl_shift_wheelup: "send {home}"
+    #   shift_wheeldown: "send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}"
+    #   shift_wheelup: "send {pgup}{pgup}{pgup}{pgup}{pgup}"
+    #   wheeldown: "send {pgdn}"
+    #   wheelup: "send {pgup}"
+    LeftHalfBottomEdge: 
+      ctrl_8: "send #{Tab}"
+      # shift_wheeldown: Sys.Screen.BrightnessDown
+      # shift_wheelup: Sys.Screen.BrightnessUp
+    LeftHalfTopEdge: 
+      ctrl_8: "send #{Left}"
       wheeldown: "Send {volume_down}"
       wheelup: "Send {volume_up}"
-    RT: 
-      rclick: xmenu_show_screen_rt_menu
-      wheelclick: "send {media_play_pause}"
-      wheeldown: "send {media_next}"
-      wheelup: "send {media_prev}"
-    T: 
-      wheeldown: Sys.Win.GotoNextTab
-      wheelup: Sys.Win.GotoPreTab
+    RightHalfTopEdge: 
+      ctrl_8: "send #{Right}"
+    RightHalfBottomEdge: 
+      ctrl_8: "send #a"
+      # wheeldown: Sys.Win.GotoNextTab
+      # # wheeldown: Sys.Win.GotoPreApp
+      # wheelup: Sys.Win.GotoPreTab
+      # wheelup: Sys.Win.GotoNextApp
 clipboard: 
   switch: 1
   hotkey: 

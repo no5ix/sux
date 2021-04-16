@@ -2,61 +2,65 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
-HandleMouseOnEdges(from) {
-	if (enable_hot_edges = 0){
-		return [should_not_ignore_original_action, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
-	}
-	if (limit_mode){
-		return [should_not_ignore_original_action, "Notice: limit mode is on, edge triggers are disabled."]
-	}
-	if IsCorner(){
-		return [should_not_ignore_original_action, "Notice: Is Corner, so do NOTHING by edge triggers."]
-	}
-	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+; HandleMouseOnEdges(from) {
+; 	if (enable_hot_edges = 0){
+; 		return [should_not_ignore_original_action, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
+; 	}
+; 	if (limit_mode){
+; 		return [should_not_ignore_original_action, "Notice: limit mode is on, edge triggers are disabled."]
+; 	}
+; 	if IsCorner(){
+; 		return [should_not_ignore_original_action, "Notice: Is Corner, so do NOTHING by edge triggers."]
+; 	}
+; 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+; 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
 
-	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
-	cur_monitor_min_x := min_max_xy_arr[1]
-	cur_monitor_max_x := min_max_xy_arr[2]
-	cur_monitor_min_y := min_max_xy_arr[3]
-	cur_monitor_max_y := min_max_xy_arr[4]
+; 	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
+; 	cur_monitor_min_x := min_max_xy_arr[1]
+; 	cur_monitor_max_x := min_max_xy_arr[2]
+; 	cur_monitor_min_y := min_max_xy_arr[3]
+; 	cur_monitor_max_y := min_max_xy_arr[4]
 
-	cur_monitor_width := abs(cur_monitor_max_x-cur_monitor_min_x)
-	cur_monitor_height := abs(cur_monitor_max_y-cur_monitor_min_y)
+; 	cur_monitor_width := abs(cur_monitor_max_x-cur_monitor_min_x)
+; 	cur_monitor_height := abs(cur_monitor_max_y-cur_monitor_min_y)
 
-	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
-	if (MouseY < cur_monitor_min_y + CornerEdgeOffset)
-	{
-		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
-			cur_should_go_on_doing := %HotEdgesTopHalfLeftTriggerFunc%(from)
-		else
-			cur_should_go_on_doing := %HotEdgesTopHalfRightTriggerFunc%(from)
-	}
-	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
-	{
-		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
-			cur_should_go_on_doing := %HotEdgesBottomHalfLeftTriggerFunc%(from)
-		else
-			cur_should_go_on_doing := %HotEdgesBottomHalfRightTriggerFunc%(from)
-	}
-	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
-	{
-		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
-			cur_should_go_on_doing := %HotEdgesLeftHalfUpTriggerFunc%(from)
-		else
-			cur_should_go_on_doing := %HotEdgesLeftHalfDownTriggerFunc%(from)
-	}
-	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
-	{
-		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
-			cur_should_go_on_doing := %HotEdgesRightHalfUpTriggerFunc%(from)
-		else
-			cur_should_go_on_doing := %HotEdgesRightHalfDownTriggerFunc%(from)
-	}
-   return [cur_should_go_on_doing, ""]
-}
+; 	Sleep, 66  ; 不加这个 `Sleep 66`, 可能某些快捷键跟触发快捷键有混杂冲突啥的, 比如可能会有win开始界面一闪而过
+; 	if (MouseY < cur_monitor_min_y + CornerEdgeOffset)
+; 	{
+; 		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
+; 			cur_should_go_on_doing := %HotEdgesTopHalfLeftTriggerFunc%(from)
+; 		else
+; 			cur_should_go_on_doing := %HotEdgesTopHalfRightTriggerFunc%(from)
+; 	}
+; 	else if (MouseY > cur_monitor_max_y - CornerEdgeOffset)
+; 	{
+; 		if Abs(MouseX-cur_monitor_min_x) < (cur_monitor_width / 2)
+; 			cur_should_go_on_doing := %HotEdgesBottomHalfLeftTriggerFunc%(from)
+; 		else
+; 			cur_should_go_on_doing := %HotEdgesBottomHalfRightTriggerFunc%(from)
+; 	}
+; 	else if (MouseX < cur_monitor_min_x + CornerEdgeOffset)
+; 	{
+; 		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
+; 			cur_should_go_on_doing := %HotEdgesLeftHalfUpTriggerFunc%(from)
+; 		else
+; 			cur_should_go_on_doing := %HotEdgesLeftHalfDownTriggerFunc%(from)
+; 	}
+; 	else if (MouseX > cur_monitor_max_x - CornerEdgeOffset)
+; 	{
+; 		if Abs(MouseY-cur_monitor_min_y) < (cur_monitor_height / 2)
+; 			cur_should_go_on_doing := %HotEdgesRightHalfUpTriggerFunc%(from)
+; 		else
+; 			cur_should_go_on_doing := %HotEdgesRightHalfDownTriggerFunc%(from)
+; 	}
+;    return [cur_should_go_on_doing, ""]
+; }
 
 
+
+; HandleMouseOnEdges(from) {
+
+; }
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -136,16 +140,17 @@ RShift::
 ;---------------------------------o-----------------------------------o
 
 ; - 单击快捷键Ctrl+8: 模拟鼠标左键按下, 在触摸板上拖动则可选中
-^8::
-	result_arr := HandleMouseOnEdges("Ctrl+8")
-	if result_arr[1] = should_ignore_original_action
-		return
-	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
-	SetMouseDelay, 0
-	fake_lb_down = 1
-	Click Down
-	; ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
-	return
+
+; ^8::
+; 	result_arr := HandleMouseOnEdges("Ctrl+8")
+; 	if result_arr[1] = should_ignore_original_action
+; 		return
+; 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
+; 	SetMouseDelay, 0
+; 	fake_lb_down = 1
+; 	Click Down
+; 	; ToolTipWithTimer("simulate click DOWN. `n" . result_arr[2], 2222)
+; 	return
 
 
 ; MButton::
@@ -478,11 +483,14 @@ str_array_concate(arr, app, deli="")
 	return % ret
 }
 
+
 register_hotkey(key_name, action, prefix="")
 {
+
 	global HOTKEY_REGISTER_LIST
 	trans_key := []
 	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
+			,hover: "hover", caps: "CapsLock"
 			,lwin: "<#", rwin: ">#"
 			,lctrl: "<^", rctrl: ">^"
 			,lshift: "<+", rshift: ">+"
@@ -498,23 +506,35 @@ register_hotkey(key_name, action, prefix="")
 			trans_key := str_array_concate(trans_key, [cur_symbol])
 		}
 		else if(IsObject(maped_symbol)) {
+		; m(trans_key)
 			trans_key := str_array_concate(trans_key, maped_symbol)
 		}
 		else {
 			trans_key := str_array_concate(trans_key, [maped_symbol])
 		}
 	}
-	prefix_arr := StrSplit(prefix, "-")
+
+		; m(trans_key)
+
+	prefix_arr := StrSplit(prefix, "/")
 	prefix_trans_keys := str_array_concate(prefix_arr, trans_key, "|")
 	Loop, % prefix_trans_keys.MaxIndex()
 	{
 		key := prefix_trans_keys[A_Index]
-		StringUpper, key, key
+		; StringUpper, key, key
+		original_key := key
+		key := StrReplace(key, "CapsLock", "CapsLock & ")
+		key := StrReplace(key, "CapsLock & +", "CapsLock & ")
 		; m(key "//" action)
+		; m(original_key "//" action)
 
-		HOTKEY_REGISTER_LIST[key] := action
+		HOTKEY_REGISTER_LIST[original_key] := action
 		; DebugPrintVal(HOTKEY_REGISTER_LIST[key])
 		arr := StrSplit(key, "|")
+		
+		if (arr[2] == "hover") {
+			Continue
+		}
 		
 ; DebugPrintVal(key)
 ; DebugPrintVal(action)
@@ -529,9 +549,6 @@ register_hotkey(key_name, action, prefix="")
 			Hotkey, % arr[2], SUB_HOTKEY_ZONE_ANYWAY
 		}
 	}
-	
-	; For k, v in HOTKEY_REGISTER_LIST
-    ; 	MsgBox %k%=%v%
 }
 
 
@@ -540,22 +557,13 @@ register_hotkey(key_name, action, prefix="")
 */
 SUB_HOTKEY_ZONE_ANYWAY:
 SUB_HOTKEY_ZONE_BORDER:
-
-; DebugPrintVal("gg")
-
 border_code := Sys.Cursor.CornerPos()
-
-; DebugPrintVal(border_code)
-
-action := HOTKEY_REGISTER_LIST[border_code "|" A_ThisHotkey]
-
-; DebugPrintVal(action)
-
+pending_replace_str := GetKeyState("LShift", "P") ? "CapsLock+": "CapsLock"
+cur_hotkey := StrReplace(A_ThisHotkey, "CapsLock & ", pending_replace_str)
+action := HOTKEY_REGISTER_LIST[border_code "|" cur_hotkey]
 if(action="") {
-	
-; DebugPrintVal("kong??")
 	; 鼠标移到边缘但触发普通热键时
-	action := HOTKEY_REGISTER_LIST["|" A_ThisHotkey]
+	action := HOTKEY_REGISTER_LIST["|" cur_hotkey]
 }
 run(action)
 Return
@@ -567,15 +575,13 @@ border_event_evoke()
 {
 	global HOTKEY_REGISTER_LIST
 	border_code := Sys.Cursor.CornerPos()
+	; ToolTipWithTimer(border_code)
+
 	key := border_code "|" A_ThisHotkey
-	StringUpper, key, key
+	; ToolTipWithTimer(key)
 
-; DebugPrintVal(HOTKEY_REGISTER_LIST)
-; DebugPrintVal(key)
-
+	; StringUpper, key, key
 	action := HOTKEY_REGISTER_LIST[key]
-; DebugPrintVal(action)
-
 	if(action!="")
 		return true
 }

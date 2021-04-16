@@ -2,6 +2,50 @@
 class Sys
 {
 
+
+	; Sys.Win
+	class Win
+	{
+		GotoPreApp()
+		{
+			send !+{esc}
+			winget, x ,MinMax, A
+			if x=-1
+				WinRestore A
+		}
+
+		GotoNextApp()
+		{
+			send !{esc}
+			winget, x ,MinMax, A
+			if x=-1
+				WinRestore A
+		}
+
+		; Sys.Win.GotoPreTab
+		GotoPreTab()
+		{
+			if(Sys.Win.Class()="PX_WINDOW_CLASS") {
+				send ^{PgUp}
+			}
+			else {
+				send ^+{tab}
+			}
+		}
+
+		; Sys.Win.GotoNextTab
+		GotoNextTab()
+		{
+			if(Sys.Win.Class()="PX_WINDOW_CLASS") {
+				send ^{PgDn}
+			}
+			else {
+				send ^{tab}
+			}
+		}
+	}
+
+
 	class Cursor
 	{
 		static CornerPixel := 8
@@ -9,8 +53,6 @@ class Sys
 
 		CornerPos(X := "", Y := "", cornerPix = "")
 		{
-; DebugPrintVal("0jlkj8812")
-
 			if (X = "") or (Y = "")
 			{
 				MouseGetPos, X, Y
@@ -24,59 +66,58 @@ class Sys
 			Loop, % MonitorCount
 			{
 				SysGet, Mon, Monitor, % A_Index
-                ; ToolTipWithTimer(MonBottom)
-                ; ToolTipWithTimer(X)
-                ; ToolTipWithTimer(MonBottom - cornerPix)
-
+                cur_mon_width := MonRight - MonLeft
+                cur_mon_height := MonBottom - MonTop
 				if(X>=MonLeft && Y>= MonTop && X<MonRight && Y<MonBottom)
 				{
 					str =
 					if ( X < MonLeft + cornerPix ){
-; DebugPrintVal("jlkj8812")
-						str .= "L"
+                        if (Y < cur_mon_height / 2)
+						    str .= "LeftHalfTopEdge"
+                        else
+                            str .= "LeftHalfBottomEdge"
                     }
 					else if ( X >= MonRight - cornerPix) {
-; DebugPrintVal("jlkj88123")
-						str .= "R"
+						; str .= "RightEdge"
+                        if (Y < cur_mon_height / 2)
+						    str .= "RightHalfTopEdge"
+                        else
+                            str .= "RightHalfBottomEdge"
                     }
 					if ( Y < MonTop + cornerPix ) {
-; DebugPrintVal("jlkj88124")
-						str .= "T"
+                        if (str == "") {
+                            if (X < cur_mon_width / 2)
+                                str .= "TopHalfLeftEdge"
+                            else
+                                str .= "TopHalfRightEdge"
+                        }
+                            ; str .= "TopEdge"
+                        else {
+                            str := StrSplit(str, "Half")[1]
+                            str .= "TopCorner"
+                        }
+						; str .= (str == "") ? "TopEdge" : "TopCorner"
                     }
 					else if ( Y >= MonBottom - cornerPix) {
-; DebugPrintVal("jlkj88125")
-						str .= "B"
+                        if (str == "") {
+                            if (X < cur_mon_width / 2)
+                                str .= "BottomHalfLeftEdge"
+                            else
+                                str .= "BottomHalfRightEdge"
+                        }
+                            ; str .= "BottomEdge"
+                        else {
+                            str := StrSplit(str, "Half")[1]
+                            str .= "BottomCorner"
+                        }
+						; str .= (str == "") ? "BottomEdge" : "BottomCorner"
                     }
-; DebugPrintVal("jlkj88126")
 					return % str
 				}
 			}
-; DebugPrintVal("jlkj88127")
 			return ""
 		}
 
-		; IsPos(pos, cornerPix = "")
-		; {
-		; 	StringUpper, pos, pos
-		; 	pos_now := this.CornerPos("", "", cornerPix)
-		; 	if (pos_now == "") && (pos == "")
-		; 		Return
-		; 	if StrLen(pos_now) == 1
-		; 		Return % (pos_now == pos)
-		; 	Else
-		; 		pos_now2 := SubStr(pos_now,2,1) SubStr(pos_now,1,1)
-		; 	Return ((pos_now == pos) || (pos_now2 == pos))
-		; }
-
-		; Info()
-		; {
-		; 	this.info_switch := !this.info_switch
-		; 	if (this.info_switch)
-		; 	{
-		; 		Gosub, Sub_Sys_Cursor_Info
-		; 		Settimer, Sub_Sys_Cursor_Info, 500
-		; 	}
-		; }
 	}
 
 }
@@ -153,7 +194,9 @@ run(command, throwErr := 1)
 		}
 		Try
 		{
-			run, %command%
+            ; command := StrReplace(command, "\", "/")
+            ; ToolTipWithTimer(command)
+			run %command%
 			Return
 		}
 		Catch

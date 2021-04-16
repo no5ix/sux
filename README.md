@@ -165,6 +165,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 
 # TODO
 
+- refractor HandleMouseOnEdges
 - ini
 - clipboard history
 - suspend img

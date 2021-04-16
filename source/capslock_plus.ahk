@@ -48,46 +48,46 @@ CapsLock & Tab::
 ; 	ClickUpIfLbDown()
 ; 	return
 
-CapsLock & v::
-	; if GetKeyState("LShift", "P")
-	; 	Send, +6  ; ^ like reverse V
-	; else 
-		; PasteCompatibleWithAutoSelectionCopy()
-		Send, +6
-		; Send, ^v
-		; Send, +{Ins}
-	ClickUpIfLbDown()
-	return
-
-; CapsLock & x::
+; CapsLock & v::
 ; 	; if GetKeyState("LShift", "P")
-; 	; 	Send, ^+f
-; 	; else if GetKeyState("RShift", "P")
-; 	; 	Send, {F2}
-; 	; else
-; 		; Send, ^f
-; 		Send, {F2}
-; 		; Send, ^y
+; 	; 	Send, +6  ; ^ like reverse V
+; 	; else 
+; 		; PasteCompatibleWithAutoSelectionCopy()
+; 		Send, +6
+; 		; Send, ^v
+; 		; Send, +{Ins}
 ; 	ClickUpIfLbDown()
 ; 	return
 
-CapsLock & w:: 
-	; if GetKeyState("LShift", "P")
-	; 	Send, +``  ; wave line : w
-	; else
-		; Send, ^a
-		; Send, ``  ; wave line : w
-		Send, +{Ins}
-	return
+; ; CapsLock & x::
+; ; 	; if GetKeyState("LShift", "P")
+; ; 	; 	Send, ^+f
+; ; 	; else if GetKeyState("RShift", "P")
+; ; 	; 	Send, {F2}
+; ; 	; else
+; ; 		; Send, ^f
+; ; 		Send, {F2}
+; ; 		; Send, ^y
+; ; 	ClickUpIfLbDown()
+; ; 	return
 
-CapsLock & e::
-	; if GetKeyState("LShift", "P")
-	; 	Send, ^/  ; comment : e
-	; else
-		Send, {Enter}
-		; Send, +4
-	ClickUpIfLbDown()
-	return
+; CapsLock & w:: 
+; 	; if GetKeyState("LShift", "P")
+; 	; 	Send, +``  ; wave line : w
+; 	; else
+; 		; Send, ^a
+; 		; Send, ``  ; wave line : w
+; 		Send, +{Ins}
+; 	return
+
+; CapsLock & e::
+; 	; if GetKeyState("LShift", "P")
+; 	; 	Send, ^/  ; comment : e
+; 	; else
+; 		Send, {Enter}
+; 		; Send, +4
+; 	ClickUpIfLbDown()
+; 	return
 
 CapsLock & f::
 	; if GetKeyState("LShift", "P") {
@@ -134,94 +134,94 @@ CapsLock & f::
 	ClickUpIfLbDown()
 	return
 
-CapsLock & c::
-	; if GetKeyState("LShift", "P")
-	; 	Send, +4
-	; else
-		; Send, ^c
-		Send, ^/  ; comment : e
-	ClickUpIfLbDown()
-	return
-
-CapsLock & s::
-	; if GetKeyState("LShift", "P")
-	; 	Send, +^s
-	; else
-		; Send, ^s
-		Send, +4
-	ClickUpIfLbDown()
-	return
-
-CapsLock & r::
-	if GetKeyState("LShift", "P")
-		; Send, ^+t  ; for chrome, reopen closed tab
-		Send, {F2}
-	else
-		Send, ^y
-	return
-
-; CapsLock & `:: 
-; 	if GetKeyState("LShift", "P")
-; 		Send, +{Ins}
-; 	else
-; 		Send, {Ins}
+; CapsLock & c::
+; 	; if GetKeyState("LShift", "P")
+; 	; 	Send, +4
+; 	; else
+; 		; Send, ^c
+; 		Send, ^/  ; comment : e
+; 	ClickUpIfLbDown()
 ; 	return
 
-CapsLock & d:: 
-	if GetKeyState("LShift", "P")
-		Send, {BS}
-	else
-		Send, {Del}
-	return
+; CapsLock & s::
+; 	; if GetKeyState("LShift", "P")
+; 	; 	Send, +^s
+; 	; else
+; 		; Send, ^s
+; 		Send, +4
+; 	ClickUpIfLbDown()
+; 	return
 
-CapsLock & y::
-	if GetKeyState("LShift", "P")
-		Send, +5
-	else
-		Send, +8
-	return
+; CapsLock & r::
+; 	if GetKeyState("LShift", "P")
+; 		; Send, ^+t  ; for chrome, reopen closed tab
+; 		Send, {F2}
+; 	else
+; 		Send, ^y
+; 	return
 
-CapsLock & u::
-	if GetKeyState("LShift", "P")
-		Send, +2
-	else
-		Send, +1
-	return
+; ; CapsLock & `:: 
+; ; 	if GetKeyState("LShift", "P")
+; ; 		Send, +{Ins}
+; ; 	else
+; ; 		Send, {Ins}
+; ; 	return
 
-	; if GetKeyState("LShift", "P")
-	; 	Send, ^{Space}
-	; else
-	; {
-	; }
-	; return
+; CapsLock & d:: 
+; 	if GetKeyState("LShift", "P")
+; 		Send, {BS}
+; 	else
+; 		Send, {Del}
+; 	return
 
-CapsLock & h::
-	if GetKeyState("LShift", "P")
-		Send, +{Left}
-	else
-		Send, {Left}
-	return
+; CapsLock & y::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +5
+; 	else
+; 		Send, +8
+; 	return
 
-CapsLock & j::
-	if GetKeyState("LShift", "P")
-		Send, +{Down}
-	else
-		Send, {Down}
-	return
+; CapsLock & u::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +2
+; 	else
+; 		Send, +1
+; 	return
 
-CapsLock & k::
-	if GetKeyState("LShift", "P")
-		Send, +{Up}
-	else
-		Send, {Up}
-	return
+; 	; if GetKeyState("LShift", "P")
+; 	; 	Send, ^{Space}
+; 	; else
+; 	; {
+; 	; }
+; 	; return
 
-CapsLock & l::
-	if GetKeyState("LShift", "P")
-		Send, +{Right}
-	else
-		Send, {Right}
-	return
+; CapsLock & h::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{Left}
+; 	else
+; 		Send, {Left}
+; 	return
+
+; CapsLock & j::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{Down}
+; 	else
+; 		Send, {Down}
+; 	return
+
+; CapsLock & k::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{Up}
+; 	else
+; 		Send, {Up}
+; 	return
+
+; CapsLock & l::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{Right}
+; 	else
+; 		Send, {Right}
+; 	return
 
 CapsLock & ,::
 	if GetKeyState("LShift", "P")
@@ -237,26 +237,26 @@ CapsLock & .::
 		Send, {End}
 	return
 
-CapsLock & p::
-	if GetKeyState("LShift", "P")
-		Send, +3
-	else
-		Send, +7
-	return
+; CapsLock & p::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +3
+; 	else
+; 		Send, +7
+; 	return
 
-CapsLock & i::
-	if GetKeyState("LShift", "P")
-		Send, +^{Left}
-	else
-		Send, ^{Left}
-	return
+; CapsLock & i::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +^{Left}
+; 	else
+; 		Send, ^{Left}
+; 	return
 
-CapsLock & o::
-	if GetKeyState("LShift", "P")
-		Send, +^{Right}
-	else
-		Send, ^{Right}
-	return
+; CapsLock & o::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +^{Right}
+; 	else
+; 		Send, ^{Right}
+; 	return
 
 CapsLock & `;::
 	if GetKeyState("LShift", "P")
@@ -279,43 +279,43 @@ CapsLock & /::
 		Send, \
 	return
 
-CapsLock & 9:: 
-	if GetKeyState("LShift", "P")
-		Send, {{}
-	else
-		Send, [
-	return
+; CapsLock & 9:: 
+; 	if GetKeyState("LShift", "P")
+; 		Send, {{}
+; 	else
+; 		Send, [
+; 	return
 
-CapsLock & 0:: 
-	if GetKeyState("LShift", "P")
-		Send, {}}
-	else
-		Send, ]
-	return
+; CapsLock & 0:: 
+; 	if GetKeyState("LShift", "P")
+; 		Send, {}}
+; 	else
+; 		Send, ]
+; 	return
 
-CapsLock & n:: 
-	if GetKeyState("LShift", "P")
-		Send, +{Home}{Del}
-	else
-	{
-		; Send, ^{BS}
+; CapsLock & n:: 
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{Home}{Del}
+; 	else
+; 	{
+; 		; Send, ^{BS}
 
-		Send, ^+{Left}
-		; Sleep, 66
-		Send, {Del}
+; 		Send, ^+{Left}
+; 		; Sleep, 66
+; 		Send, {Del}
 		
-		; Send, ^{Left}
-		; Sleep, 66
-		; Send, ^{Del}
-	}
-	return
+; 		; Send, ^{Left}
+; 		; Sleep, 66
+; 		; Send, ^{Del}
+; 	}
+; 	return
 
-CapsLock & m:: 
-	if GetKeyState("LShift", "P")
-		Send, +{End}{Del}
-	else
-		Send, ^{Del}
-	return
+; CapsLock & m:: 
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{End}{Del}
+; 	else
+; 		Send, ^{Del}
+; 	return
 
 ;;==================================================================;;
 ;;=========================CapsLock's Stuff=========================;;

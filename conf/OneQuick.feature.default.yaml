@@ -31,19 +31,23 @@ screen-border:
       wheelup: "send {pgup}"
     LT: 
       # rclick: winmenu.show
+      hover: Sys.Win.GotoPreTab
       shift_wheeldown: Sys.Screen.BrightnessDown
       shift_wheelup: Sys.Screen.BrightnessUp
       wheelclick: "send {volume_mute}"
       wheeldown: "Send {volume_down}"
       wheelup: "Send {volume_up}"
     RT: 
+      hover: Sys.Win.GotoNextTab
       # rclick: xmenu_show_screen_rt_menu
       wheelclick: "send {media_play_pause}"
       wheeldown: "send {media_next}"
       wheelup: "send {media_prev}"
     T: 
-      wheeldown: Sys.Win.GotoNextTab
-      wheelup: Sys.Win.GotoPreTab
+      # wheeldown: Sys.Win.GotoNextTab
+      wheeldown: Sys.Win.GotoPreApp
+      # wheelup: Sys.Win.GotoPreTab
+      wheelup: Sys.Win.GotoNextApp
 clipboard: 
   switch: 1
   hotkey: 

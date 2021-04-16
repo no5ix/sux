@@ -359,130 +359,148 @@ ReloadAfterWritingUserConf() {
 }
 
 
-HotCorners() {				; Timer content 
-	if (limit_mode){
-		return
-	}
+HotCorners() {
+	global HOTKEY_REGISTER_LIST
+	border_code := Sys.Cursor.CornerPos()
+	if (InStr(border_code, "Corner")) {
+		action := HOTKEY_REGISTER_LIST[border_code "|" "hover"]
+		; ToolTipWithTimer(border_code "|" "hover")
+		; ToolTipWithTimer(action)
 
-	; if IsCorner("IsOnTop"){
-	; 	LButtonDown := GetKeyState("LButton","P")
-	; 	if LButtonDown
-	; 		return
-	; 	HotEdgesTopTrigger()
-	; 	Loop 
-	; 	{
-	; 		if ! IsCorner("IsOnTop")
-	; 			break ; exits loop when mouse is no longer in the corner
-	; 	}
-	; 	return
-	; }
-
-	if IsCorner("TopLeft")
-	{
-		%HotCornersTopLeftTriggerFunc%()
+		run(action)
 		Loop 
 		{
-			if ! IsCorner("TopLeft")
+			if (Sys.Cursor.CornerPos() == "")
 				break ; exits loop when mouse is no longer in the corner
 		}
-		return
-	}
-	else if IsCorner("TopRight")
-	{	
-		%HotCornersTopRightTriggerFunc%()
-		Loop
-		{
-			if ! IsCorner("TopRight")
-				break ; exits loop when mouse is no longer in the corner
-		}	
-		return
-	}
-	else if IsCorner("BottomLeft")
-	{	
-		%HotCornersBottomLeftTriggerFunc%()
-		Loop
-		{
-			if ! IsCorner("BottomLeft")
-				break ; exits loop when mouse is no longer in the corner
-		}	
-		return
-	}
-	else if IsCorner("BottomRight")
-	{	
-		%HotCornersBottomRightTriggerFunc%()
-		Loop
-		{
-			if ! IsCorner("BottomRight")
-				break ; exits loop when mouse is no longer in the corner
-		}	
-		return
 	}
 }
 
 
-IsAt_left(MouseX, cur_monitor_min_x) {
-	return MouseX < (cur_monitor_min_x + CornerEdgeOffset)
-}
-IsAt_right(MouseX, cur_monitor_max_x) {
-	return MouseX > (cur_monitor_max_x - CornerEdgeOffset)  
-}
-IsAt_top(MouseY, cur_monitor_min_y) {
-	return MouseY < (cur_monitor_min_y + CornerEdgeOffset)
-}
-IsAt_bottom(MouseY, cur_monitor_max_y) {
-	return MouseY > (cur_monitor_max_y - CornerEdgeOffset)
-}
+; HotCorners() {				; Timer content 
+; 	if (limit_mode){
+; 		return
+; 	}
 
-GetCurMonitorMinMaxXYArray(cur_mouse_x) {
-	if (cur_mouse_x < 0 or cur_mouse_x >= A_ScreenWidth) {
-		if (second_monitor_min_x == 0) {  ; means have 2 same resolution monitor
-			second_monitor_min_x := cur_mouse_x < 0 ? -A_ScreenWidth : A_ScreenWidth
-			second_monitor_max_x := cur_mouse_x < 0 ? 0 : (2 * A_ScreenWidth)
-			second_monitor_min_y := 0
-			second_monitor_max_y := A_ScreenHeight
-			SaveMonitorXyConfToFile()
-		}
-		cur_monitor_min_x := second_monitor_min_x	
-		cur_monitor_min_y := second_monitor_min_y	
-		cur_monitor_max_x := second_monitor_max_x	
-		cur_monitor_max_y := second_monitor_max_y	
-	} else {
-		cur_monitor_min_x := 0	
-		cur_monitor_min_y := 0	
-		cur_monitor_max_x := A_ScreenWidth	
-		cur_monitor_max_y := A_ScreenHeight
-	}
-	return [cur_monitor_min_x, cur_monitor_max_x, cur_monitor_min_y, cur_monitor_max_y]
-}
+; 	; if IsCorner("IsOnTop"){
+; 	; 	LButtonDown := GetKeyState("LButton","P")
+; 	; 	if LButtonDown
+; 	; 		return
+; 	; 	HotEdgesTopTrigger()
+; 	; 	Loop 
+; 	; 	{
+; 	; 		if ! IsCorner("IsOnTop")
+; 	; 			break ; exits loop when mouse is no longer in the corner
+; 	; 	}
+; 	; 	return
+; 	; }
 
-; compatible with dual monitor
-IsCorner(cornerID="")
-{
-	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+; 	if IsCorner("TopLeft")
+; 	{
+; 		%HotCornersTopLeftTriggerFunc%()
+; 		Loop 
+; 		{
+; 			if ! IsCorner("TopLeft")
+; 				break ; exits loop when mouse is no longer in the corner
+; 		}
+; 		return
+; 	}
+; 	else if IsCorner("TopRight")
+; 	{	
+; 		%HotCornersTopRightTriggerFunc%()
+; 		Loop
+; 		{
+; 			if ! IsCorner("TopRight")
+; 				break ; exits loop when mouse is no longer in the corner
+; 		}	
+; 		return
+; 	}
+; 	else if IsCorner("BottomLeft")
+; 	{	
+; 		%HotCornersBottomLeftTriggerFunc%()
+; 		Loop
+; 		{
+; 			if ! IsCorner("BottomLeft")
+; 				break ; exits loop when mouse is no longer in the corner
+; 		}	
+; 		return
+; 	}
+; 	else if IsCorner("BottomRight")
+; 	{	
+; 		%HotCornersBottomRightTriggerFunc%()
+; 		Loop
+; 		{
+; 			if ! IsCorner("BottomRight")
+; 				break ; exits loop when mouse is no longer in the corner
+; 		}	
+; 		return
+; 	}
+; }
 
-	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
 
-	if (cornerID = "TopLeft"){
-		return IsAt_left(MouseX, min_max_xy_arr[1]) and IsAt_top(MouseY, min_max_xy_arr[3]) 
-	}
-	else if (cornerID = "TopRight"){
-		return IsAt_right(MouseX, min_max_xy_arr[2]) and IsAt_top(MouseY, min_max_xy_arr[3]) 
-	}
-	else if (cornerID = "BottomLeft"){
-		return IsAt_left(MouseX, min_max_xy_arr[1]) and IsAt_bottom(MouseY, min_max_xy_arr[4])
-	}
-	else if  (cornerID = "BottomRight") {
-		return IsAt_right(MouseX, min_max_xy_arr[2]) and IsAt_bottom(MouseY, min_max_xy_arr[4])
-	}
-	else{
-		CornerTopLeft := IsAt_top(MouseY, min_max_xy_arr[3]) and IsAt_left(MouseX, min_max_xy_arr[1])	
-		CornerTopRight := IsAt_top(MouseY, min_max_xy_arr[3]) and IsAt_right(MouseX, min_max_xy_arr[2])  
-		CornerBottomLeft := IsAt_bottom(MouseY, min_max_xy_arr[4]) and IsAt_left(MouseX, min_max_xy_arr[1])
-		CornerBottomRight := IsAt_bottom(MouseY, min_max_xy_arr[4]) and IsAt_right(MouseX, min_max_xy_arr[2]) 
-		return (CornerTopLeft or CornerTopRight or CornerBottomLeft or CornerBottomRight)
-	}
-}
+; IsAt_left(MouseX, cur_monitor_min_x) {
+; 	return MouseX < (cur_monitor_min_x + CornerEdgeOffset)
+; }
+; IsAt_right(MouseX, cur_monitor_max_x) {
+; 	return MouseX > (cur_monitor_max_x - CornerEdgeOffset)  
+; }
+; IsAt_top(MouseY, cur_monitor_min_y) {
+; 	return MouseY < (cur_monitor_min_y + CornerEdgeOffset)
+; }
+; IsAt_bottom(MouseY, cur_monitor_max_y) {
+; 	return MouseY > (cur_monitor_max_y - CornerEdgeOffset)
+; }
+
+; GetCurMonitorMinMaxXYArray(cur_mouse_x) {
+; 	if (cur_mouse_x < 0 or cur_mouse_x >= A_ScreenWidth) {
+; 		if (second_monitor_min_x == 0) {  ; means have 2 same resolution monitor
+; 			second_monitor_min_x := cur_mouse_x < 0 ? -A_ScreenWidth : A_ScreenWidth
+; 			second_monitor_max_x := cur_mouse_x < 0 ? 0 : (2 * A_ScreenWidth)
+; 			second_monitor_min_y := 0
+; 			second_monitor_max_y := A_ScreenHeight
+; 			SaveMonitorXyConfToFile()
+; 		}
+; 		cur_monitor_min_x := second_monitor_min_x	
+; 		cur_monitor_min_y := second_monitor_min_y	
+; 		cur_monitor_max_x := second_monitor_max_x	
+; 		cur_monitor_max_y := second_monitor_max_y	
+; 	} else {
+; 		cur_monitor_min_x := 0	
+; 		cur_monitor_min_y := 0	
+; 		cur_monitor_max_x := A_ScreenWidth	
+; 		cur_monitor_max_y := A_ScreenHeight
+; 	}
+; 	return [cur_monitor_min_x, cur_monitor_max_x, cur_monitor_min_y, cur_monitor_max_y]
+; }
+
+; ; compatible with dual monitor
+; IsCorner(cornerID="")
+; {
+; 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+; 	MouseGetPos, MouseX, MouseY 							; Function MouseGetPos retrieves the current position of the mouse cursor
+
+; 	min_max_xy_arr := GetCurMonitorMinMaxXYArray(MouseX)
+
+; 	if (cornerID = "TopLeft"){
+; 		return IsAt_left(MouseX, min_max_xy_arr[1]) and IsAt_top(MouseY, min_max_xy_arr[3]) 
+; 	}
+; 	else if (cornerID = "TopRight"){
+; 		return IsAt_right(MouseX, min_max_xy_arr[2]) and IsAt_top(MouseY, min_max_xy_arr[3]) 
+; 	}
+; 	else if (cornerID = "BottomLeft"){
+; 		return IsAt_left(MouseX, min_max_xy_arr[1]) and IsAt_bottom(MouseY, min_max_xy_arr[4])
+; 	}
+; 	else if  (cornerID = "BottomRight") {
+; 		return IsAt_right(MouseX, min_max_xy_arr[2]) and IsAt_bottom(MouseY, min_max_xy_arr[4])
+; 	}
+; 	else{
+; 		CornerTopLeft := IsAt_top(MouseY, min_max_xy_arr[3]) and IsAt_left(MouseX, min_max_xy_arr[1])	
+; 		CornerTopRight := IsAt_top(MouseY, min_max_xy_arr[3]) and IsAt_right(MouseX, min_max_xy_arr[2])  
+; 		CornerBottomLeft := IsAt_bottom(MouseY, min_max_xy_arr[4]) and IsAt_left(MouseX, min_max_xy_arr[1])
+; 		CornerBottomRight := IsAt_bottom(MouseY, min_max_xy_arr[4]) and IsAt_right(MouseX, min_max_xy_arr[2]) 
+; 		return (CornerTopLeft or CornerTopRight or CornerBottomLeft or CornerBottomRight)
+; 	}
+; }
 
 
 
