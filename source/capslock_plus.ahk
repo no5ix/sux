@@ -3,7 +3,7 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 
-SetCapsLockState, AlwaysOff  ; 如果这里注释了, 记得也注释nox.ahk里的那一行
+; SetCapsLockState, AlwaysOff  ; 如果这里注释了, 记得也注释nox.ahk里的那一行
 
 ;-------------------------------------------------------------------------------
 ; LAUNCH GUI
@@ -12,35 +12,35 @@ SetCapsLockState, AlwaysOff  ; 如果这里注释了, 记得也注释nox.ahk里�
 ; 	gui_spawn()
 ; return
 
-CapsLock::
-	Send, {ESC}
-	return
+; CapsLock::
+; 	Send, {ESC}
+; 	return
 
 ;=====================================================================o
 ;                       CapsLock Switcher:                           ;|
 ;---------------------------------o-----------------------------------o
 ;                    CapsLock + ` | {CapsLock}                       ;|
 ;---------------------------------o-----------------------------------o
-CapsLock & Tab:: 
-	if GetKeyState("LShift", "P")
-	{
-		GetKeyState, CapsLockState, CapsLock, T                              ;|
-		if CapsLockState = D                                                 ;|
-			SetCapsLockState, AlwaysOff                                      ;|
-		else
-		{
-			SetCapsLockState, AlwaysOn
-		}
-	}
-	else
-	{
-		; ; screen capture
-		param = %A_ScriptDir%\source\printscrn.dll\PrScrn
-		DllCall(param)
-	}
-	; KeyWait, ``                                                          ;|
-	return                                                               ;|
-;---------------------------------------------------------------------o
+; CapsLock & Tab:: 
+; 	if GetKeyState("LShift", "P")
+; 	{
+; 		GetKeyState, CapsLockState, CapsLock, T                              ;|
+; 		if CapsLockState = D                                                 ;|
+; 			SetCapsLockState, AlwaysOff                                      ;|
+; 		else
+; 		{
+; 			SetCapsLockState, AlwaysOn
+; 		}
+; 	}
+; 	else
+; 	{
+; 		; ; screen capture
+; 		param = %A_ScriptDir%\source\printscrn.dll\PrScrn
+; 		DllCall(param)
+; 	}
+; 	; KeyWait, ``                                                          ;|
+; 	return                                                               ;|
+; ;---------------------------------------------------------------------o
 
 
 ; CapsLock & Space::
@@ -89,50 +89,50 @@ CapsLock & Tab::
 ; 	ClickUpIfLbDown()
 ; 	return
 
-CapsLock & f::
-	; if GetKeyState("LShift", "P") {
-	; 	; Send, {Up}
-	; 	; Send, {End}
-	; 	; Send, ^v
+; CapsLock & f::
+; 	; if GetKeyState("LShift", "P") {
+; 	; 	; Send, {Up}
+; 	; 	; Send, {End}
+; 	; 	; Send, ^v
 
-	; 	; store the number of replacements that occurred (0 if none).
-	; 	replace_sum := 0
-	; 	ClipSaved := ClipboardAll   ; Save the entire clipboard to a variable of your choice.
-	; 	; ... here make temporary use of the clipboard, such as for pasting Unicode text via Transform Unicode ...
-	; 	Sleep, 66
-	; 	Send, ^a
-	; 	Sleep, 66
-	; 	Send, ^c
-	; 	Sleep, 66
-	; 	; Read from the array:
-	; 	; Loop % Array.MaxIndex()   ; More traditional approach.
-	; 	for key, value in StrMap ; Enumeration is the recommended approach in most cases.
-	; 	{
-	; 		cur_replace_cnt := 0
-	; 		; Using "Loop", indices must be consecutive numbers from 1 to the number
-	; 		; of elements in the array (or they must be calculated within the loop).
-	; 		; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
-	; 		; Using "for", both the index (or "key") and its associated value
-	; 		; are provided, and the index can be *any* value of your choosing.
-	; 		Clipboard := StrReplace(Clipboard, key, value, cur_replace_cnt)
-	; 		replace_sum += cur_replace_cnt
-	; 	}
-	; 	Sleep, 66
-	; 	if replace_sum != 0
-	; 		Send, ^v
-	; 	else
-	; 		Send, {Right}
-	; 	Sleep, 66
-	; 	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-	; 	ClipSaved := ""   ; Free the memory in case the clipboard was very large.
-	; }
-	; else {
-		; WebSearch(Clipboard)
-		gui_spawn_func := "gui_spawn"
-		%gui_spawn_func%(GetCurSelectedText())
-	; }
-	ClickUpIfLbDown()
-	return
+; 	; 	; store the number of replacements that occurred (0 if none).
+; 	; 	replace_sum := 0
+; 	; 	ClipSaved := ClipboardAll   ; Save the entire clipboard to a variable of your choice.
+; 	; 	; ... here make temporary use of the clipboard, such as for pasting Unicode text via Transform Unicode ...
+; 	; 	Sleep, 66
+; 	; 	Send, ^a
+; 	; 	Sleep, 66
+; 	; 	Send, ^c
+; 	; 	Sleep, 66
+; 	; 	; Read from the array:
+; 	; 	; Loop % Array.MaxIndex()   ; More traditional approach.
+; 	; 	for key, value in StrMap ; Enumeration is the recommended approach in most cases.
+; 	; 	{
+; 	; 		cur_replace_cnt := 0
+; 	; 		; Using "Loop", indices must be consecutive numbers from 1 to the number
+; 	; 		; of elements in the array (or they must be calculated within the loop).
+; 	; 		; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
+; 	; 		; Using "for", both the index (or "key") and its associated value
+; 	; 		; are provided, and the index can be *any* value of your choosing.
+; 	; 		Clipboard := StrReplace(Clipboard, key, value, cur_replace_cnt)
+; 	; 		replace_sum += cur_replace_cnt
+; 	; 	}
+; 	; 	Sleep, 66
+; 	; 	if replace_sum != 0
+; 	; 		Send, ^v
+; 	; 	else
+; 	; 		Send, {Right}
+; 	; 	Sleep, 66
+; 	; 	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+; 	; 	ClipSaved := ""   ; Free the memory in case the clipboard was very large.
+; 	; }
+; 	; else {
+; 		; WebSearch(Clipboard)
+; 		gui_spawn_func := "gui_spawn"
+; 		%gui_spawn_func%(GetCurSelectedText())
+; 	; }
+; 	ClickUpIfLbDown()
+; 	return
 
 ; CapsLock & c::
 ; 	; if GetKeyState("LShift", "P")
@@ -223,19 +223,19 @@ CapsLock & f::
 ; 		Send, {Right}
 ; 	return
 
-CapsLock & ,::
-	if GetKeyState("LShift", "P")
-		Send, +{Home}
-	else
-		Send, {Home}
-	return
+; CapsLock & ,::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{Home}
+; 	else
+; 		Send, {Home}
+; 	return
 
-CapsLock & .::
-	if GetKeyState("LShift", "P")
-		Send, +{End}
-	else
-		Send, {End}
-	return
+; CapsLock & .::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +{End}
+; 	else
+; 		Send, {End}
+; 	return
 
 ; CapsLock & p::
 ; 	if GetKeyState("LShift", "P")
@@ -258,12 +258,12 @@ CapsLock & .::
 ; 		Send, ^{Right}
 ; 	return
 
-CapsLock & `;::
-	if GetKeyState("LShift", "P")
- 		Send, -
-	else
-		Send, _
-	return
+; CapsLock & `;::
+; 	if GetKeyState("LShift", "P")
+;  		Send, -
+; 	else
+; 		Send, _
+; 	return
 
 CapsLock & '::
 	if GetKeyState("LShift", "P")
@@ -274,9 +274,9 @@ CapsLock & '::
 
 CapsLock & /::
 	if GetKeyState("LShift", "P")
-		Send, +\
+		Send, +`\
 	else
-		Send, \
+		Send, `\
 	return
 
 ; CapsLock & 9:: 

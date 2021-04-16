@@ -523,8 +523,12 @@ register_hotkey(key_name, action, prefix="")
 		key := prefix_trans_keys[A_Index]
 		; StringUpper, key, key
 		original_key := key
-		key := StrReplace(key, "CapsLock", "CapsLock & ")
-		key := StrReplace(key, "CapsLock & +", "CapsLock & ")
+
+		if !(original_key = "|CapsLock") {
+			; m(original_key)
+			key := StrReplace(key, "CapsLock", "CapsLock & ")
+			key := StrReplace(key, "CapsLock & +", "CapsLock & ")
+		}
 		; m(key "//" action)
 		; m(original_key "//" action)
 

@@ -22,6 +22,7 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 
 #Include %A_ScriptDir%\source\common.ahk
 
+#Include %A_ScriptDir%\source\action.ahk
 #Include %A_ScriptDir%\source\auto_exc.ahk
 #Include %A_ScriptDir%\source\gui.ahk
 #Include %A_ScriptDir%\source\capslock_plus.ahk

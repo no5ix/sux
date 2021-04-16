@@ -15,6 +15,10 @@ hotkey:
     # win_n: notepad
     # win_shift_l: Sys.Power.LockAndMonitoroff
     # ctrl_shift_alt_r: OneQuick.Reload
+    caps: "send {Esc}"
+    caps_tab: ScreenShot
+    caps_shift_tab: SwitchCapsState
+    caps_f: WebSearchCurSelectedText
     caps_c: "send ^/"
     caps_v: "send +6"
     caps_w: "send +{Ins}"
@@ -26,7 +30,7 @@ hotkey:
     caps_shift_d: "send {BS}"
     caps_y: "send +8"
     caps_shift_y: "send +5"
-    caps_u: "send "+1""
+    caps_u: "send +1"
     caps_shift_u: "send +2"
     caps_h: "send {Left}"
     caps_shift_h: "send +{Left}"
@@ -50,19 +54,29 @@ hotkey:
     caps_shift_n: "send +{Home}{Del}"
     caps_m: "send ^{Del}"
     caps_shift_m: "send +{End}{Del}"
+    caps_,: "send {Home}"
+    caps_shift_,: "send +{Home}"
+    caps_.: "send {End}"
+    caps_shift_.: "send +{End}"
+    caps_;: "send _"
+    caps_shift_;: "send -"
+    # caps_': "send ="
+    # caps_shift_': "send +="
+    # caps_/: "send \"
+    # caps_shift_/: "send +\"
 screen-border: 
   switch: 1
   action: 
     LeftTopCorner: 
       # rclick: winmenu.show
-      hover: Sys.Win.GotoPreTab
+      hover: JumpToPrevTab
       # shift_wheeldown: Sys.Screen.BrightnessDown
       # shift_wheelup: Sys.Screen.BrightnessUp
       # wheelclick: "send {volume_mute}"
       # wheeldown: "Send {volume_down}"
       # wheelup: "Send {volume_up}"
     RightTopCorner: 
-      hover: Sys.Win.GotoNextTab
+      hover: JumpToNextTab
       # rclick: xmenu_show_screen_rt_menu
       # wheelclick: "send {media_play_pause}"
       # wheeldown: "send {media_next}"
