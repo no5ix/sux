@@ -218,20 +218,6 @@ LimitModeWhenFullScreen() {
 }
 
 
-MaxMinWindow() {
-	; ; OutputVar is made blank if no matching window exists; otherwise, it is set to one of the following numbers:
-	; ; -1: The window is minimized (WinRestore can unminimize it).
-	; ; 1: The window is maximized (WinRestore can unmaximize it).
-	; ; 0: The window is neither minimized nor maximized.
-	WinGet,S,MinMax,A
-	if S=0
-		WinMaximize, A
-	else if S=1
-		WinMinimize, A
-	; else if S=-1
-	;     WinRestore, A
-}
-
 MaximizeWindow(timeout=2222, exe_name="") {
 	if !exe_name
 	{

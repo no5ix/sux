@@ -66,71 +66,71 @@
 
 
 
-RShift::
-	if (A_PriorHotkey <> "RShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		ClickUpIfLbDown()
-		Send, ^{Space}
-		KeyWait, RShift
-		return
-	}
-	if limit_mode {
-		ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
-		return
-	}
-	; Send, ^{Space}
-	Send, ^+{Left}
-	; Sleep, 66
-	Send, {Del}
-	return
+; RShift::
+; 	if (A_PriorHotkey <> "RShift" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+; 	{
+; 		; Too much time between presses, so this isn't a double-press.
+; 		ClickUpIfLbDown()
+; 		Send, ^{Space}
+; 		KeyWait, RShift
+; 		return
+; 	}
+; 	if limit_mode {
+; 		ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
+; 		return
+; 	}
+; 	; Send, ^{Space}
+; 	Send, ^+{Left}
+; 	; Sleep, 66
+; 	Send, {Del}
+; 	return
 
-~Esc::
-	ClickUpIfLbDown()
-	return
+; ~Esc::
+; 	ClickUpIfLbDown()
+; 	return
 
-~LWin::
-	ClickUpIfLbDown()
-	return
+; ~LWin::
+; 	ClickUpIfLbDown()
+; 	return
 	
-~RWin::
-	ClickUpIfLbDown()
-	return
+; ~RWin::
+; 	ClickUpIfLbDown()
+; 	return
 
 
-~Alt::
-	; ; 不能这么写, 因为这样长按 alt 也会触发
-	; If (A_PriorHotKey = "~Alt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
-	; 	gui_spawn()
-	if (A_PriorHotkey <> "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		ClickUpIfLbDown()
-		KeyWait, Alt  ; Wait for the key to be released.
-		return
-	}
-	if limit_mode {
-		ToolTipWithTimer("	limit mode is on, double Alt is disabled.", 2000)
-		return
-	}
-	%DoubleClickAltTriggerFunc%()
-	return
+; ~Alt::
+; 	; ; 不能这么写, 因为这样长按 alt 也会触发
+; 	; If (A_PriorHotKey = "~Alt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
+; 	; 	gui_spawn()
+; 	if (A_PriorHotkey <> "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+; 	{
+; 		; Too much time between presses, so this isn't a double-press.
+; 		ClickUpIfLbDown()
+; 		KeyWait, Alt  ; Wait for the key to be released.
+; 		return
+; 	}
+; 	if limit_mode {
+; 		ToolTipWithTimer("	limit mode is on, double Alt is disabled.", 2000)
+; 		return
+; 	}
+; 	%DoubleClickAltTriggerFunc%()
+; 	return
 
 
-~Ctrl::
-	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		ClickUpIfLbDown()
-		KeyWait, Ctrl
-		return
-	}
-	if limit_mode {
-		ToolTipWithTimer("	limit mode is on, double Ctrl is disabled.", 2000)
-		return
-	}
-	%DoubleClickCtrlTriggerFunc%()
-	return
+; ~Ctrl::
+; 	if (A_PriorHotkey <> "~Ctrl" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+; 	{
+; 		; Too much time between presses, so this isn't a double-press.
+; 		ClickUpIfLbDown()
+; 		KeyWait, Ctrl
+; 		return
+; 	}
+; 	if limit_mode {
+; 		ToolTipWithTimer("	limit mode is on, double Ctrl is disabled.", 2000)
+; 		return
+; 	}
+; 	%DoubleClickCtrlTriggerFunc%()
+; 	return
 
 
 
@@ -171,9 +171,9 @@ RShift::
 ; 	return
 
 
-^+!m::
-	MaxMinWindow()
-	return
+; ^+!m::
+; 	MaxMinWindow()
+; 	return
 
 
 ; ; 这个$符号是为了防止下方代码中的`Send, ^w`一直触发自己
@@ -489,8 +489,10 @@ register_hotkey(key_name, action, prefix="")
 
 	global HOTKEY_REGISTER_LIST
 	trans_key := []
+	
+	StringLower, key_name, key_name
 	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
-			,hover: "hover", caps: "CapsLock"
+			,hover: "hover", capslock: "CapsLock"
 			,lwin: "<#", rwin: ">#"
 			,lctrl: "<^", rctrl: ">^"
 			,lshift: "<+", rshift: ">+"
@@ -498,10 +500,13 @@ register_hotkey(key_name, action, prefix="")
 			,lclick:  "LButton", rclick:  "RButton", wheelclick: "MButton" }
 			; ,wheel: ["wheelUp", "wheelDown"] }
 	key_split_arr := StrSplit(key_name, "_")
+	; DebugPrintVal(key_split_arr.Length())
+
 	Loop, % key_split_arr.MaxIndex()
 	{
 		cur_symbol := key_split_arr[A_Index]
-		maped_symbol := map1[cur_symbol]
+		; if (key_split_arr.Length() == 1) 
+		maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
 		if(maped_symbol=="") {
 			trans_key := str_array_concate(trans_key, [cur_symbol])
 		}
@@ -513,7 +518,6 @@ register_hotkey(key_name, action, prefix="")
 			trans_key := str_array_concate(trans_key, [maped_symbol])
 		}
 	}
-
 		; m(trans_key)
 
 	prefix_arr := StrSplit(prefix, "/")
