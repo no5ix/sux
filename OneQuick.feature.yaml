@@ -9,61 +9,62 @@ hotkey:
     # win_z: xmenu_show_great_menu
     # ctrl_alt_r: OneQuick.Command_run
     # win_rclick: WinMenu.Show
-    # shift_wheeldown: "send {PgDn}"
-    # shift_wheelup: "send {PgUp}"
+    # shift_wheeldown: 'send {PgDn}'
+    # shift_wheelup: 'send {PgUp}'
     # win_t: sys.win.topmost
     # win_n: notepad
     # win_shift_l: Sys.Power.LockAndMonitoroff
     # ctrl_shift_alt_r: OneQuick.Reload
-    caps: "send {Esc}"
+    caps: 'send {Esc}'
     caps_tab: ScreenShot
     caps_shift_tab: SwitchCapsState
     caps_f: WebSearchCurSelectedText
-    caps_c: "send ^/"
-    caps_v: "send +6"
-    caps_w: "send +{Ins}"
-    caps_e: "send {Enter}"
-    caps_s: "send +4"
-    caps_r: "send ^y"
-    caps_shift_r: "send {F2}"
-    caps_d: "send {Del}"
-    caps_shift_d: "send {BS}"
-    caps_y: "send +8"
-    caps_shift_y: "send +5"
-    caps_u: "send +1"
-    caps_shift_u: "send +2"
-    caps_h: "send {Left}"
-    caps_shift_h: "send +{Left}"
+    caps_c: 'send ^/'
+    caps_v: 'send +6'
+    caps_w: 'send +{Ins}'
+    caps_e: 'send {Enter}'
+    caps_s: 'send +4'
+    caps_r: 'send ^y'
+    caps_shift_r: 'send {F2}'
+    caps_d: 'send {Del}'
+    caps_shift_d: 'send {BS}'
+    caps_y: 'send +8'
+    caps_shift_y: 'send +5'
+    caps_u: 'send +1'
+    caps_shift_u: 'send +2'
+    caps_h: 'send {Left}'
+    caps_shift_h: 'send +{Left}'
     caps_j: "send {Down}"
-    caps_shift_j: "send +{Down}"
-    caps_k: "send {Up}"
-    caps_shift_k: "send +{Up}"
-    caps_l: "send {Right}"
-    caps_shift_l: "send +{Right}"
-    caps_p: "send +3"
-    caps_shift_p: "send +7"
-    caps_i: "send ^{Left}"
-    caps_shift_i: "send +^{Left}"
-    caps_o: "send ^{Right}"
-    caps_shift_o: "send +^{Right}"
-    caps_9: "send ["
-    caps_shift_9: "send {{}"
-    caps_0: "send ]"
-    caps_shift_0: "send {}}"
-    caps_n: "send ^{BS}"
-    caps_shift_n: "send +{Home}{Del}"
-    caps_m: "send ^{Del}"
-    caps_shift_m: "send +{End}{Del}"
-    caps_,: "send {Home}"
-    caps_shift_,: "send +{Home}"
-    caps_.: "send {End}"
-    caps_shift_.: "send +{End}"
-    caps_;: "send _"
-    caps_shift_;: "send -"
-    # caps_': "send ="
-    # caps_shift_': "send +="
-    # caps_/: "send \"
-    # caps_shift_/: "send +\"
+    caps_shift_j: 'send +{Down}'
+    caps_k: 'send {Up}'
+    caps_shift_k: 'send +{Up}'
+    caps_l: 'send {Right}'
+    caps_shift_l: 'send +{Right}'
+    caps_p: 'send +7'
+    caps_shift_p: 'send +3'
+    caps_i: 'send ^{Left}'
+    caps_shift_i: 'send +^{Left}'
+    caps_o: 'send ^{Right}'
+    caps_shift_o: 'send +^{Right}'
+    caps_9: 'send ['
+    caps_shift_9: 'send {{}'
+    caps_0: 'send ]'
+    caps_shift_0: 'send {}}'
+    caps_n: 'send ^{BS}'
+    caps_shift_n: 'send +{Home}{Del}'
+    caps_m: 'send ^{Del}'
+    caps_shift_m: 'send +{End}{Del}'
+    caps_,: 'send {Home}'
+    caps_shift_,: 'send +{Home}'
+    caps_.: 'send {End}'
+    caps_shift_.: 'send +{End}'
+    caps_;: 'send _'
+    caps_shift_;: 'send -'
+    # 下面这行 cap_ 的后面有个单引号, 需要用双引号包起来
+    "caps_'": 'send ='
+    "caps_shift_'": 'send +='
+    caps_/: 'send \'
+    caps_shift_/: 'send +\'
 screen-border: 
   switch: 1
   action: 
@@ -72,57 +73,57 @@ screen-border:
       hover: JumpToPrevTab
       # shift_wheeldown: Sys.Screen.BrightnessDown
       # shift_wheelup: Sys.Screen.BrightnessUp
-      # wheelclick: "send {volume_mute}"
-      # wheeldown: "Send {volume_down}"
-      # wheelup: "Send {volume_up}"
+      # wheelclick: 'send {volume_mute}'
+      # wheeldown: 'Send {volume_down}'
+      # wheelup: 'Send {volume_up}'
     RightTopCorner: 
       hover: JumpToNextTab
       # rclick: xmenu_show_screen_rt_menu
-      # wheelclick: "send {media_play_pause}"
-      # wheeldown: "send {media_next}"
-      # wheelup: "send {media_prev}"
+      # wheelclick: 'send {media_play_pause}'
+      # wheeldown: 'send {media_next}'
+      # wheelup: 'send {media_prev}'
     LeftBottomCorner: 
-      hover: "send {LWin}"
+      hover: 'send {LWin}'
       # rclick: xmenu_show_screen_rt_menu
-      # wheelclick: "send {media_play_pause}"
-      # wheeldown: "send {media_next}"
-      # wheelup: "send {media_prev}"
+      # wheelclick: 'send {media_play_pause}'
+      # wheeldown: 'send {media_next}'
+      # wheelup: 'send {media_prev}'
     RightBottomCorner: 
-      hover: "send !{Tab}"
+      hover: 'send !{Tab}'
       # rclick: xmenu_show_screen_rt_menu
-      # wheelclick: "send {media_play_pause}"
-      # wheeldown: "send {media_next}"
-      # wheelup: "send {media_prev}"
+      # wheelclick: 'send {media_play_pause}'
+      # wheeldown: 'send {media_next}'
+      # wheelup: 'send {media_prev}'
     TopHalfLeftEdge: 
-      ctrl_8: "C:/Program Files (x86)/Netease/CloudMusic/cloudmusic.exe"
+      ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
     TopHalfRightEdge: 
-      ctrl_8: "explorer.exe"
+      ctrl_8: 'explorer.exe'
     BottomHalfLeftEdge:
-      ctrl_8: "send ^+t"
+      ctrl_8: 'send ^+t'
     BottomHalfRightEdge: 
-      ctrl_8: "send {F5}"
-      # wheelclick: "send #{tab}"
-      # wheeldown: "send ^#{right}"
-      # wheelup: "send ^#{left}"
+      ctrl_8: 'send {F5}'
+      # wheelclick: 'send #{tab}'
+      # wheeldown: 'send ^#{right}'
+      # wheelup: 'send ^#{left}'
     # LeftHalfTopEdge/RightHalfTopEdge/LeftHalfBottomEdge/RightHalfBottomEdge: 
-    #   ctrl_shift_wheeldown: "send {end}"
-    #   ctrl_shift_wheelup: "send {home}"
-    #   shift_wheeldown: "send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}"
-    #   shift_wheelup: "send {pgup}{pgup}{pgup}{pgup}{pgup}"
-    #   wheeldown: "send {pgdn}"
-    #   wheelup: "send {pgup}"
+    #   ctrl_shift_wheeldown: 'send {end}'
+    #   ctrl_shift_wheelup: 'send {home}'
+    #   shift_wheeldown: 'send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}'
+    #   shift_wheelup: 'send {pgup}{pgup}{pgup}{pgup}{pgup}'
+    #   wheeldown: 'send {pgdn}'
+    #   wheelup: 'send {pgup}'
     LeftHalfBottomEdge: 
-      ctrl_8: "send #{Tab}"
+      ctrl_8: 'send #{Tab}'
       # shift_wheeldown: Sys.Screen.BrightnessDown
       # shift_wheelup: Sys.Screen.BrightnessUp
     LeftHalfTopEdge: 
-      ctrl_8: "send #{Left}"
-      wheeldown: "Send {volume_down}"
-      wheelup: "Send {volume_up}"
+      ctrl_8: 'send #{Left}'
+      wheeldown: 'Send {volume_down}'
+      wheelup: 'Send {volume_up}'
     RightHalfTopEdge: 
-      ctrl_8: "send #{Right}"
+      ctrl_8: 'send #{Right}'
     RightHalfBottomEdge: 
-      ctrl_8: "send #a"
+      ctrl_8: 'send #a'
       # wheeldown: Sys.Win.GotoNextTab
       # # wheeldown: Sys.Win.GotoPreApp
       # wheelup: Sys.Win.GotoPreTab
@@ -133,15 +134,15 @@ clipboard:
     ctrl_shift_x: xClipboard.ShowAllClips
     ctrl_shift_c: xClipboard.CopyAndShowMenu
     ctrl_shift_v: xClipboard.ShowClipMenu
-  browser: "Default, Edge, Chrome, IE"
-  search: "Google/g, baidu/b/百度, baidu_local//百度Local, Bing, weibo/w/微博, zhihu/z/知乎, Bilibili/l/哔哩哔哩, Acfun/a, YouTube/y, netease_music//网易云音乐, douban/d/豆瓣, douban_movie/m/豆瓣电影, qr_code/q/二维码"
+  browser: 'Default, Edge, Chrome, IE'
+  search: 'Google/g, baidu/b/百度, baidu_local//百度Local, Bing, weibo/w/微博, zhihu/z/知乎, Bilibili/l/哔哩哔哩, Acfun/a, YouTube/y, netease_music//网易云音乐, douban/d/豆瓣, douban_movie/m/豆瓣电影, qr_code/q/二维码'
   ClipsFirstShowNum: 10
   ClipsTotalNum: 50
   browser_list: 
     Default: default
-    Edge: "microsoft-edge:"
-    Chrome: "chrome.exe"
-    IE: "iexplore.exe"
+    Edge: 'microsoft-edge:'
+    Chrome: 'chrome.exe'
+    IE: 'iexplore.exe'
   search_list: 
     google: https://www.google.com/search?q=%s
     baidu: http://www.baidu.com/s?wd=%s

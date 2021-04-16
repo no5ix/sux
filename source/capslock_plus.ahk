@@ -265,19 +265,19 @@
 ; 		Send, _
 ; 	return
 
-CapsLock & '::
-	if GetKeyState("LShift", "P")
-		Send, +=
-	else
-		Send, =
-	return
+; CapsLock & '::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +=
+; 	else
+; 		Send, =
+; 	return
 
-CapsLock & /::
-	if GetKeyState("LShift", "P")
-		Send, +`\
-	else
-		Send, `\
-	return
+; CapsLock & /::
+; 	if GetKeyState("LShift", "P")
+; 		Send, +\
+; 	else
+; 		Send, \
+; 	return
 
 ; CapsLock & 9:: 
 ; 	if GetKeyState("LShift", "P")
