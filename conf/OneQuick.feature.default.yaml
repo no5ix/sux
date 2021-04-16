@@ -3,66 +3,190 @@ app_enhance:
   chrome_scroll_tab: 1
   notepad_ctrl_w_close: 1
   sublime_file_folder: 1
+web-search:
+  switch: 1
+  buildin:
+    default: 'gg', 'bd'
+	  nox : 'https://github.com/no5ix/nox'
+	  gg : 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
+	  bi : 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
+	  yd : 'http://www.youdao.com/w/REPLACEME'
+	  bd : 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+	  bb : 'search.bilibili.com/all?keyword=REPLACEME'
+	  jd : 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8'
+	  zh : 'https://www.zhihu.com/search?type=content&q=REPLACEME'
+	  gh : 'https://github.com/search?q=REPLACEME'
+	  so : 'https://stackoverflow.com/search?q=REPLACEME'
+	  yt : 'https://www.youtube.com/results?search_query=REPLACEME'
+	  ph : 'https://www.pornhub.com/video/search?search=REPLACEME'
+	  db : 'https://www.douban.com/search?q=REPLACEME'
+	  qm : 'https://www.qimai.cn/search/index/country/cn/search/REPLACEME'
+	  yk : 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
+	  lc : 'https://leetcode-cn.com/problemset/all/?search=REPLACEME'
+  custom:
+command: 
+  switch: 1
+  buildin:
+    rd: Reload
+    dir: OpenNoxDir
+    up: UpdateNox
+    wau: SwitchWin10AutoUpdate
+    nw: StartNoxWithWindows
+    cmd: 'cmd.exe'
+	  ev : 'C:\Program Files\Everything\Everything.exe'
+	  git : 'C:\Program Files\Git\bin\bash.exe', '--login'
+  custom:
+    blog : 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Documents\github\hexo-theme-next-optimized'
+    proj : 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Documents\github\nox'
+    test.py : 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Desktop\test.py'
+    test.go : 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Desktop\test.go'
+    test.cpp : 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Desktop\test.cpp'
 hotkey: 
   switch: 1
   buildin: 
-    win_z: xmenu_show_great_menu
-    ctrl_alt_r: OneQuick.Command_run
-    win_rclick: WinMenu.Show
-    shift_wheeldown: "send {PgDn}"
-    shift_wheelup: "send {PgUp}"
-    win_t: sys.win.topmost
-    win_n: notepad
-    win_shift_l: Sys.Power.LockAndMonitoroff
-    ctrl_shift_alt_r: OneQuick.Reload
+    # win_z: xmenu_show_great_menu
+    # ctrl_alt_r: OneQuick.Command_run
+    # RButton: WinMenu.Show
+    # shift_wheeldown: 'send {PgDn}'
+    # shift_wheelup: 'send {PgUp}'
+    # win_t: sys.win.topmost
+    # win_n: notepad
+    # win_shift_l: Sys.Power.LockAndMonitoroff
+    # ctrl_shift_alt_r: OneQuick.Reload
+    ctrl_8: SimulateClickDown
+    ctrl_shift_alt_m: MaxMinWindow
+    rshift: SwitchInputMethod
+    ~alt: DoubleHitWebSearch
+    # ctrl: DoubleHitWebSearch
+    capslock: 'send {Esc}'
+    capslock_tab: ScreenShot
+    capslock_shift_tab: SwitchCapsState
+    capslock_f: WebSearchCurSelectedText
+    capslock_c: 'send ^/'
+    capslock_v: 'send +6'
+    capslock_w: 'send +{Ins}'
+    capslock_e: 'send {Enter}'
+    capslock_s: 'send +4'
+    capslock_r: 'send ^y'
+    capslock_shift_r: 'send {F2}'
+    capslock_d: 'send {Del}'
+    capslock_shift_d: 'send {BS}'
+    capslock_y: 'send +8'
+    capslock_shift_y: 'send +5'
+    capslock_u: 'send +1'
+    capslock_shift_u: 'send +2'
+    capslock_h: 'send {Left}'
+    capslock_shift_h: 'send +{Left}'
+    capslock_j: 'send {Down}'
+    capslock_shift_j: 'send +{Down}'
+    capslock_k: 'send {Up}'
+    capslock_shift_k: 'send +{Up}'
+    capslock_l: 'send {Right}'
+    capslock_shift_l: 'send +{Right}'
+    capslock_p: 'send +7'
+    capslock_shift_p: 'send +3'
+    capslock_i: 'send ^{Left}'
+    capslock_shift_i: 'send +^{Left}'
+    capslock_o: 'send ^{Right}'
+    capslock_shift_o: 'send +^{Right}'
+    capslock_9: 'send ['
+    capslock_shift_9: 'send {{}'
+    capslock_0: 'send ]'
+    capslock_shift_0: 'send {}}'
+    capslock_n: 'send ^{BS}'
+    capslock_shift_n: 'send +{Home}{Del}'
+    capslock_m: 'send ^{Del}'
+    capslock_shift_m: 'send +{End}{Del}'
+    capslock_,: 'send {Home}'
+    capslock_shift_,: 'send +{Home}'
+    capslock_.: 'send {End}'
+    capslock_shift_.: 'send +{End}'
+    capslock_;: 'send _'
+    capslock_shift_;: 'send -'
+    # 下面这行 cap_ 的后面有个单引号, 需要用双引号包起来
+    'capslock_'': 'send ='
+    'capslock_shift_'': 'send +='
+    capslock_/: 'send \'
+    capslock_shift_/: 'send +\'
+  custom:
 screen-border: 
   switch: 1
   action: 
-    B: 
-      wheelclick: "send #{tab}"
-      wheeldown: "send ^#{right}"
-      wheelup: "send ^#{left}"
-    L-R: 
-      ctrl_shift_wheeldown: "send {end}"
-      ctrl_shift_wheelup: "send {home}"
-      shift_wheeldown: "send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}"
-      shift_wheelup: "send {pgup}{pgup}{pgup}{pgup}{pgup}"
-      wheeldown: "send {pgdn}"
-      wheelup: "send {pgup}"
-    LT: 
-      # rclick: winmenu.show
-      hover: Sys.Win.GotoPreTab
-      shift_wheeldown: Sys.Screen.BrightnessDown
-      shift_wheelup: Sys.Screen.BrightnessUp
-      wheelclick: "send {volume_mute}"
-      wheeldown: "Send {volume_down}"
-      wheelup: "Send {volume_up}"
-    RT: 
-      hover: Sys.Win.GotoNextTab
-      # rclick: xmenu_show_screen_rt_menu
-      wheelclick: "send {media_play_pause}"
-      wheeldown: "send {media_next}"
-      wheelup: "send {media_prev}"
-    T: 
+    LeftTopCorner: 
+      # RButton: winmenu.show
+      hover: JumpToPrevTab
+      # shift_wheeldown: Sys.Screen.BrightnessDown
+      # shift_wheelup: Sys.Screen.BrightnessUp
+      # MButton: 'send {volume_mute}'
+      # wheeldown: 'Send {volume_down}'
+      # wheelup: 'Send {volume_up}'
+    RightTopCorner: 
+      hover: JumpToNextTab
+      # RButton: xmenu_show_screen_rt_menu
+      # MButton: 'send {media_play_pause}'
+      # wheeldown: 'send {media_next}'
+      # wheelup: 'send {media_prev}'
+    LeftBottomCorner: 
+      hover: 'send {LWin}'
+      # RButton: xmenu_show_screen_rt_menu
+      # MButton: 'send {media_play_pause}'
+      # wheeldown: 'send {media_next}'
+      # wheelup: 'send {media_prev}'
+    RightBottomCorner: 
+      hover: 'send !{Tab}'
+      # RButton: xmenu_show_screen_rt_menu
+      # MButton: 'send {media_play_pause}'
+      # wheeldown: 'send {media_next}'
+      # wheelup: 'send {media_prev}'
+    TopHalfLeftEdge: 
+      ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
+    TopHalfRightEdge: 
+      ctrl_8: 'explorer.exe'
+    BottomHalfLeftEdge:
+      ctrl_8: 'send ^+t'
+    BottomHalfRightEdge: 
+      ctrl_8: 'send {F5}'
+      # MButton: 'send #{tab}'
+      # wheeldown: 'send ^#{right}'
+      # wheelup: 'send ^#{left}'
+    # LeftHalfTopEdge/RightHalfTopEdge/LeftHalfBottomEdge/RightHalfBottomEdge: 
+    #   ctrl_shift_wheeldown: 'send {end}'
+    #   ctrl_shift_wheelup: 'send {home}'
+    #   shift_wheeldown: 'send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}'
+    #   shift_wheelup: 'send {pgup}{pgup}{pgup}{pgup}{pgup}'
+    #   wheeldown: 'send {pgdn}'
+    #   wheelup: 'send {pgup}'
+    LeftHalfBottomEdge: 
+      ctrl_8: 'send #{Tab}'
+      # shift_wheeldown: Sys.Screen.BrightnessDown
+      # shift_wheelup: Sys.Screen.BrightnessUp
+    LeftHalfTopEdge: 
+      ctrl_8: 'send #{Left}'
+      wheeldown: 'Send {volume_down}'
+      wheelup: 'Send {volume_up}'
+    RightHalfTopEdge: 
+      ctrl_8: 'send #{Right}'
+    RightHalfBottomEdge: 
+      ctrl_8: 'send #a'
       # wheeldown: Sys.Win.GotoNextTab
-      wheeldown: Sys.Win.GotoPreApp
+      # # wheeldown: Sys.Win.GotoPreApp
       # wheelup: Sys.Win.GotoPreTab
-      wheelup: Sys.Win.GotoNextApp
+      # wheelup: Sys.Win.GotoNextApp
 clipboard: 
   switch: 1
   hotkey: 
     ctrl_shift_x: xClipboard.ShowAllClips
     ctrl_shift_c: xClipboard.CopyAndShowMenu
     ctrl_shift_v: xClipboard.ShowClipMenu
-  browser: "Default, Edge, Chrome, IE"
-  search: "Google/g, baidu/b/百度, baidu_local//百度Local, Bing, weibo/w/微博, zhihu/z/知乎, Bilibili/l/哔哩哔哩, Acfun/a, YouTube/y, netease_music//网易云音乐, douban/d/豆瓣, douban_movie/m/豆瓣电影, qr_code/q/二维码"
+  browser: 'Default, Edge, Chrome, IE'
+  search: 'Google/g, baidu/b/百度, baidu_local//百度Local, Bing, weibo/w/微博, zhihu/z/知乎, Bilibili/l/哔哩哔哩, Acfun/a, YouTube/y, netease_music//网易云音乐, douban/d/豆瓣, douban_movie/m/豆瓣电影, qr_code/q/二维码'
   ClipsFirstShowNum: 10
   ClipsTotalNum: 50
   browser_list: 
     Default: default
-    Edge: "microsoft-edge:"
-    Chrome: "chrome.exe"
-    IE: "iexplore.exe"
+    Edge: 'microsoft-edge:'
+    Chrome: 'chrome.exe'
+    IE: 'iexplore.exe'
   search_list: 
     google: https://www.google.com/search?q=%s
     baidu: http://www.baidu.com/s?wd=%s
