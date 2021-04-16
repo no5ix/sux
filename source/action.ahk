@@ -59,6 +59,7 @@ DoubleHitWebSearch(){
 	; return
 	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
 	%gui_spawn_func%()
+	return
 }
 
 WebSearchCurSelectedText() {
@@ -98,4 +99,55 @@ MaxMinWindow() {
 		WinMinimize, A
 	; else if S=-1
 	;     WinRestore, A
+}
+
+Reload() {
+	gui_destroy() ; removes the GUI even when the reload fails
+	Reload
+}
+
+OpenNoxDir() {  ; Open the directory for this script
+	gui_destroy()
+	; Run, %A_ScriptDir%  ; 用这种方式会把nox文件夹之前的文件夹里的exe执行..头疼..所以改用下面这行代码来写
+	Run, explorer %A_ScriptDir%
+}
+
+UpdateNox() {
+	MsgBox, 4,, Would you like to update nox?
+	IfMsgBox Yes
+	{
+		gui_destroy()
+		; Gosub gui_spawn
+		UpdateNoxImpl(0)
+	}
+}
+
+SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
+	msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
+	MsgBox, 4,, %msg_str%
+	IfMsgBox Yes
+	{
+		gui_destroy()
+		disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
+		if (disable_win10_auto_update == 0) {
+			SetTimer, DisableWin10AutoUpdate, off
+			run, cmd /c sc config wuauserv start= auto,,hide
+			run, cmd /c net start wuauserv,,hide
+		} else {
+			DisableWin10AutoUpdate()
+			SetTimer, DisableWin10AutoUpdate, 66666
+		}
+	}
+}
+
+StartNoxWithWindows() { ; start nox with windows
+	HandleStartingNoxWithWindows()
+	gui_destroy()
+}
+
+SimulateClickDown() {
+	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
+	SetMouseDelay, 0
+	fake_lb_down = 1
+	Click Down
 }

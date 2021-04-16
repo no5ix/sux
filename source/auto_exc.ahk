@@ -541,6 +541,28 @@ if(OneQuick.GetFeatureCfg("screen-border.switch", 0))
 			register_hotkey(key, value, border_key)
 }
 
+if(OneQuick.GetFeatureCfg("command.switch", 0))
+{
+	For key, value in OneQuick.GetFeatureCfg("command.buildin", {})
+	{
+		val_split_arr := StrSplit(value, ["','", "', '"])
+		register_command(key, val_split_arr)
+	}
+	For key, value in OneQuick.GetFeatureCfg("command.custom", {})
+		register_command(key, StrSplit(value, ["','", "', '"]))
+}
+
+if(OneQuick.GetFeatureCfg("web-search.switch", 0))
+{
+	For key, value in OneQuick.GetFeatureCfg("web-search.buildin", {})
+	{
+		val_split_arr := StrSplit(value, ["','", "', '"])
+		register_web_search(key, val_split_arr)
+	}
+	For key, value in OneQuick.GetFeatureCfg("web-search.custom", {})
+		register_web_search(key, StrSplit(value, ["','", "', '"]))
+}
+
 
 
 RunAsAdmin()
@@ -562,5 +584,5 @@ if enable_hot_corners
     SetTimer, HotCorners, %hot_corners_detect_interval%
 
 if auto_update_when_launch_nox
-    UpdateNox(1)
+    UpdateNoxImpl(1)
 

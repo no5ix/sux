@@ -26,6 +26,12 @@ global should_ignore_original_action := 1
 ; 记录快捷键与对应操作
 HOTKEY_REGISTER_LIST := {}
 
+; 记录command与对应操作
+CMD_REGISTER_LIST := {}
+
+; 记录web-search与对应操作
+WEB_SEARCH_REGISTER_LIST := {}
+
 
 
 ; modified from jackieku's code (http://www.autohotkey.com/forum/post-310959.html#310959)
@@ -351,7 +357,7 @@ RunWaitOne(command, hide_window) {
 }
 
 
-UpdateNox(from_launch) {
+UpdateNoxImpl(from_launch) {
 	; ToolTipWithTimer("nox background updating, please wait...", 2222)
 	; RunWait, cmd.exe /c git pull origin master,,hide
 	run_result := RunWaitOne("git pull origin master", from_launch)
@@ -416,9 +422,9 @@ HandleStartingNoxWithWindows() {
 
 
 WebSearch(user_input, search_key="") {
+	global WEB_SEARCH_REGISTER_LIST
 	if (user_input == "" && search_key == "")
 		return
-
 	; 当只填了 url 而没填 search_key 的时候
 	if (IsRawUrl(user_input) && search_key == "") {
 		if not IsStandardRawUrl(user_input)
@@ -426,13 +432,15 @@ WebSearch(user_input, search_key="") {
 		Run %user_input%
 		return
 	}
-	
 	if (search_key == "")
 		search_key := "default"
 
-	search_flag_index = 1
-	search_flag := WebSearchUrlMap[search_key][search_flag_index]
-	search_url := WebSearchUrlMap[search_key][2]
+	; search_flag_index = 1
+	; search_flag := WEB_SEARCH_REGISTER_LIST[search_key][search_flag_index]
+	search_url := WEB_SEARCH_REGISTER_LIST[search_key]
+	if (search_url.Length() == 1) {
+		search_url := search_url[1]
+	}
 	if (user_input == "") {	
 		if !InStr(search_url, "REPLACEME") {
 		; if (search_flag = "URL") {
@@ -456,12 +464,12 @@ WebSearch(user_input, search_key="") {
 		; }
 	}
 	
-	if (search_flag = "MULTI") {
-		for _index, _elem in WebSearchUrlMap[search_key] {
-			if (_index != search_flag_index) {
+	if (search_key = "default") {
+		for _index, _elem in WEB_SEARCH_REGISTER_LIST[search_key] {
+			; if (_index != search_flag_index) {
 				WebSearch(user_input, _elem)
 				Sleep, 666
-			}
+			; }
 		}
 		return
 	}
@@ -472,6 +480,64 @@ WebSearch(user_input, search_key="") {
 		search_final_url := StringJoin("", ["http://", search_final_url]*)
 	Run, %search_final_url%
 }
+
+; WebSearch(user_input, search_key="") {
+; 	if (user_input == "" && search_key == "")
+; 		return
+
+; 	; 当只填了 url 而没填 search_key 的时候
+; 	if (IsRawUrl(user_input) && search_key == "") {
+; 		if not IsStandardRawUrl(user_input)
+; 			user_input := StringJoin("", ["http://", user_input]*)
+; 		Run %user_input%
+; 		return
+; 	}
+	
+; 	if (search_key == "")
+; 		search_key := "default"
+
+; 	search_flag_index = 1
+; 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
+; 	search_url := WebSearchUrlMap[search_key][2]
+; 	if (user_input == "") {	
+; 		if !InStr(search_url, "REPLACEME") {
+; 		; if (search_flag = "URL") {
+; 			Run %search_url%
+; 			return
+; 		} 
+; 		; domain_url just like: "https://www.google.com"
+; 		; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+; 		RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
+; 		if not IsStandardRawUrl(domain_url)
+; 			domain_url := StringJoin("", ["http://", domain_url]*)
+; 		Run %domain_url%
+; 		return
+; 		; DebugPrintVal(pending_search_str)
+; 		; return
+; 		; pending_search_str := Clipboard
+; 		; if StrLen(pending_search_str) >= 88 {
+; 		; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
+; 		; 	gui_destroy()
+; 		; 	return
+; 		; }
+; 	}
+	
+; 	if (search_flag = "MULTI") {
+; 		for _index, _elem in WebSearchUrlMap[search_key] {
+; 			if (_index != search_flag_index) {
+; 				WebSearch(user_input, _elem)
+; 				Sleep, 666
+; 			}
+; 		}
+; 		return
+; 	}
+
+; 	safe_query := UriEncode(Trim(user_input))
+; 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+; 	if not IsStandardRawUrl(search_final_url)
+; 		search_final_url := StringJoin("", ["http://", search_final_url]*)
+; 	Run, %search_final_url%
+; }
 
 ; Which can be used like this:
 ; Code: Select all - Toggle Line numbers

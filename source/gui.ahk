@@ -171,80 +171,80 @@ HandleGuiUserInput:
 		; 	MaximizeWindow(6666, "Code.exe")
 		; }
 		; else 
-		if trim_gui_user_input = rd ; Reload this script
-		{
-			gui_destroy() ; removes the GUI even when the reload fails
-			Reload
-		}
-		else if trim_gui_user_input = dir ; Open the directory for this script
-		{
-			gui_destroy()
-			; Run, %A_ScriptDir%  ; 用这种方式会把nox文件夹之前的文件夹里的exe执行..头疼..所以改用下面这行代码来写
-			Run, explorer %A_ScriptDir%
-		}
-		; else if trim_gui_user_input = conf ; Edit user_conf
+		; if trim_gui_user_input = rd ; Reload this script
+		; {
+		; 	gui_destroy() ; removes the GUI even when the reload fails
+		; 	Reload
+		; }
+		; else if trim_gui_user_input = dir ; Open the directory for this script
 		; {
 		; 	gui_destroy()
-		; 	; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
-		; 	param = %A_ScriptDir%\conf\user_conf.ahk
-		; 	Run_AsUser("notepad.exe", param)
+		; 	; Run, %A_ScriptDir%  ; 用这种方式会把nox文件夹之前的文件夹里的exe执行..头疼..所以改用下面这行代码来写
+		; 	Run, explorer %A_ScriptDir%
 		; }
-		else if trim_gui_user_input = up ; update nox
-		{
-			MsgBox, 4,, Would you like to update nox?
-			IfMsgBox Yes
-			{
-				gui_destroy()
-				; Gosub gui_spawn
-				UpdateNox(0)
-			}
-		}
-		; else if trim_gui_user_input = limit ; turn on/off limit mode
+		; ; else if trim_gui_user_input = conf ; Edit user_conf
+		; ; {
+		; ; 	gui_destroy()
+		; ; 	; run, notepad.exe "%A_ScriptDir%\user_conf.ahk"
+		; ; 	param = %A_ScriptDir%\conf\user_conf.ahk
+		; ; 	Run_AsUser("notepad.exe", param)
+		; ; }
+		; else if trim_gui_user_input = up ; update nox
 		; {
-		; 	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " limit mode?"
+		; 	MsgBox, 4,, Would you like to update nox?
+		; 	IfMsgBox Yes
+		; 	{
+		; 		gui_destroy()
+		; 		; Gosub gui_spawn
+		; 		UpdateNox(0)
+		; 	}
+		; }
+		; ; else if trim_gui_user_input = limit ; turn on/off limit mode
+		; ; {
+		; ; 	msg_str := "Would you like to turn " . (limit_mode ? "off" : "on") . " limit mode?"
+		; ; 	MsgBox, 4,, %msg_str%
+		; ; 	IfMsgBox Yes
+		; ; 	{
+		; ; 		gui_destroy()
+		; ; 		limit_mode := limit_mode ? 0 : 1
+		; ; 		if limit_mode {
+		; ; 			if enable_hot_corners
+		; ; 				SetTimer, LimitModeWhenFullScreen, Off
+		; ; 			MsgBox, Double Shift is disabled in limit mode`, you can CapsLock+X to open nox input box.
+		; ; 		} else {
+		; ; 			if enable_hot_corners
+		; ; 				SetTimer, LimitModeWhenFullScreen, 888
+		; ; 		}
+		; ; 	}
+		; ; }
+		; else if trim_gui_user_input = wau ; turn on/off disable win10 auto update
+		; {
+		; 	msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
 		; 	MsgBox, 4,, %msg_str%
 		; 	IfMsgBox Yes
 		; 	{
 		; 		gui_destroy()
-		; 		limit_mode := limit_mode ? 0 : 1
-		; 		if limit_mode {
-		; 			if enable_hot_corners
-		; 				SetTimer, LimitModeWhenFullScreen, Off
-		; 			MsgBox, Double Shift is disabled in limit mode`, you can CapsLock+X to open nox input box.
+		; 		disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
+		; 		if (disable_win10_auto_update == 0) {
+		; 			SetTimer, DisableWin10AutoUpdate, off
+		; 			run, cmd /c sc config wuauserv start= auto,,hide
+		; 			run, cmd /c net start wuauserv,,hide
 		; 		} else {
-		; 			if enable_hot_corners
-		; 				SetTimer, LimitModeWhenFullScreen, 888
+		; 			DisableWin10AutoUpdate()
+		; 			SetTimer, DisableWin10AutoUpdate, 66666
 		; 		}
 		; 	}
 		; }
-		else if trim_gui_user_input = wau ; turn on/off disable win10 auto update
-		{
-			msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
-			MsgBox, 4,, %msg_str%
-			IfMsgBox Yes
-			{
-				gui_destroy()
-				disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
-				if (disable_win10_auto_update == 0) {
-					SetTimer, DisableWin10AutoUpdate, off
-					run, cmd /c sc config wuauserv start= auto,,hide
-					run, cmd /c net start wuauserv,,hide
-				} else {
-					DisableWin10AutoUpdate()
-					SetTimer, DisableWin10AutoUpdate, 66666
-				}
-			}
-		}
-		else if trim_gui_user_input = xy ; set second monitor xy for detecting IsCorner()
-		{
-			Set2thMonitorXY()
-			gui_destroy()
-		}
-		else if trim_gui_user_input = nw ; start nox with windows
-		{
-			HandleStartingNoxWithWindows()
-			gui_destroy()
-		}
+		; else if trim_gui_user_input = xy ; set second monitor xy for detecting IsCorner()
+		; {
+		; 	Set2thMonitorXY()
+		; 	gui_destroy()
+		; }
+		; else if trim_gui_user_input = nw ; start nox with windows
+		; {
+		; 	HandleStartingNoxWithWindows()
+		; 	gui_destroy()
+		; }
 		;-------------------------------------------------------------------------------
 		;;; web search ;;;
 		;-------------------------------------------------------------------------------
@@ -268,7 +268,11 @@ HandleGuiUserInput:
 		; 	gui_search_title := WebSearchUrlMap[trim_gui_user_input][1]
 		; 	gui_search(WebSearchUrlMap[trim_gui_user_input][2])
 		; }
-
+		; global CMD_REGISTER_LIST
+		; if (CMD_REGISTER_LIST.HasKey(trim_gui_user_input))
+		; {
+		; 	run(CMD_REGISTER_LIST[trim_gui_user_input])
+		; }
 		;-------------------------------------------------------------------------------
 		;;; custom command line ;;;
 		;-------------------------------------------------------------------------------
@@ -288,8 +292,10 @@ HandleGuiUserInput:
 		; 		run cmd.exe
 		; 	}
 		; }
-		else if (CustomCommandLineMap.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
+		global CMD_REGISTER_LIST
+		if (CMD_REGISTER_LIST.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
+			; m("uio")
 			gui_destroy()
 			; p_cmd := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"]
 			; use_cur_path := 0
@@ -303,7 +309,7 @@ HandleGuiUserInput:
 			if (word_array[1] == "ev"){
 				;;; everything search
 				; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-				everything_exe_path := CustomCommandLineMap["ev"][1]
+				everything_exe_path := CMD_REGISTER_LIST["ev"][1]
 				run, %everything_exe_path%
 				WinWaitActive, ahk_exe Everything.exe, , 2.222
 				if ErrorLevel
@@ -321,47 +327,132 @@ HandleGuiUserInput:
 				return
 			}
 
-			use_cur_path := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"].HasKey(trim_gui_user_input)
+			; if (word_array[1] == "git" || word_array[1] == "cmd"){
+			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "%UserProfile%\Desktop", "git" : "~/Desktop"}
+			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(trim_gui_user_input)
 			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
 			{
 				if (use_cur_path) {
 					Send, !d
-					final_cmd_str := StringJoin(" ", CustomCommandLineMap[trim_gui_user_input]*) . "`n"
+					final_cmd_str := StringJoin(" ", CMD_REGISTER_LIST[trim_gui_user_input]*) . "`n"
 					SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
 					; SendRaw, cmd
 					; Send, {Enter}
 					return
 				}
 			}
+			; }
 			; is_on_desktop := 0
 			; IfWinActive, ahk_exe explorer.exe ahk_class WorkerW  ; from desktop
 			; {
 			; 	is_on_desktop := 1
 			; }
-			Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
+			; run(CMD_REGISTER_LIST[trim_gui_user_input])
+			; DebugPrintVal(CMD_REGISTER_LIST[trim_gui_user_input][1])
+			; DebugPrintVal(CMD_REGISTER_LIST[trim_gui_user_input][2])
+			; m(CMD_REGISTER_LIST[trim_gui_user_input])
+			run(CMD_REGISTER_LIST[trim_gui_user_input])
+		; 	Run_AsUser(CMD_REGISTER_LIST[trim_gui_user_input]*)
 			if (use_cur_path) {
-				file_path_str := CustomCommandLineMap[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+				file_path_str := CMD_REGISTER_LIST[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
 				; DebugPrintVal(file_path_str)
 				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+$", file_name)  ; file_name just like: "bash.exe""
 				; DebugPrintVal(file_name)
 				WinWaitActive, ahk_exe %file_name%,, 2222
 				if !ErrorLevel {
-					cd_user_desktop_cmd_input := "cd " . CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"][trim_gui_user_input] . "`n"
+					cd_user_desktop_cmd_input := "cd " . USE_CURRENT_DIRECTORY_PATH_CMDs[trim_gui_user_input] . "`n"
 					SendInput, %cd_user_desktop_cmd_input%
 				}
 			}
+			; }
 		}
+		; else if (CustomCommandLineMap.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
+		; {
+		; 	gui_destroy()
+		; 	; p_cmd := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"]
+		; 	; use_cur_path := 0
+		; 	; Loop % p_cmd.Length()
+    	; 	; 	if (p_cmd[A_Index] == trim_gui_user_input) {
+		; 	; 		use_cur_path := 1
+		; 	; 		Break
+		; 	; 	}
+
+		; 	word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
+		; 	if (word_array[1] == "ev"){
+		; 		;;; everything search
+		; 		; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
+		; 		everything_exe_path := CustomCommandLineMap["ev"][1]
+		; 		run, %everything_exe_path%
+		; 		WinWaitActive, ahk_exe Everything.exe, , 2.222
+		; 		if ErrorLevel
+		; 			MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+		; 		else if (word_array[2]){
+					
+		; 			pending_search_str := word_array[2]
+		; 			; last_search_str := GuiUserInput
+		; 			; Sleep, 88
+		; 			; SendRaw, %trim_gui_user_input%
+		; 			; Sleep, 222
+		; 			; SendRaw, %last_search_str%
+		; 			Send, {Blind}{Text}%pending_search_str%
+		; 		}
+		; 		return
+		; 	}
+
+		; 	use_cur_path := CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"].HasKey(trim_gui_user_input)
+		; 	IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
+		; 	{
+		; 		if (use_cur_path) {
+		; 			Send, !d
+		; 			final_cmd_str := StringJoin(" ", CustomCommandLineMap[trim_gui_user_input]*) . "`n"
+		; 			SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
+		; 			; SendRaw, cmd
+		; 			; Send, {Enter}
+		; 			return
+		; 		}
+		; 	}
+		; 	; is_on_desktop := 0
+		; 	; IfWinActive, ahk_exe explorer.exe ahk_class WorkerW  ; from desktop
+		; 	; {
+		; 	; 	is_on_desktop := 1
+		; 	; }
+		; 	Run_AsUser(CustomCommandLineMap[trim_gui_user_input]*)
+		; 	if (use_cur_path) {
+		; 		file_path_str := CustomCommandLineMap[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+		; 		; DebugPrintVal(file_path_str)
+		; 		RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+$", file_name)  ; file_name just like: "bash.exe""
+		; 		; DebugPrintVal(file_name)
+		; 		WinWaitActive, ahk_exe %file_name%,, 2222
+		; 		if !ErrorLevel {
+		; 			cd_user_desktop_cmd_input := "cd " . CustomCommandLineMap["USE_CURRENT_DIRECTORY_PATH_CMDs"][trim_gui_user_input] . "`n"
+		; 			SendInput, %cd_user_desktop_cmd_input%
+		; 		}
+		; 	}
+		; }
 		else
 		{
 			gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			if WebSearchUrlMap.HasKey(word_array[1]){
+				; m(word_array)
+
+			if WEB_SEARCH_REGISTER_LIST.HasKey(word_array[1]){
 				WebSearch(word_array[2], word_array[1])
 			}
 			else {
 				WebSearch(GuiUserInput)
 			}
 		}
+		; else
+		; {
+		; 	gui_destroy()
+		; 	word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
+		; 	if WebSearchUrlMap.HasKey(word_array[1]){
+		; 		WebSearch(word_array[2], word_array[1])
+		; 	}
+		; 	else {
+		; 		WebSearch(GuiUserInput)
+		; 	}
+		; }
 	}
 
 	return

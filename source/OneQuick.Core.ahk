@@ -137,6 +137,11 @@ m(str := "")
 ; 参数可以是cmd命令，代码中的sub，function，网址，b站av号，还可以扩展
 run(command, throwErr := 1)
 {
+	if (command.Length() == 1)
+	{
+		command := command[1]
+	}
+	
 	if(IsLabel(command))
 	{
 		Gosub, %command%
@@ -194,20 +199,34 @@ run(command, throwErr := 1)
 		}
 		Try
 		{
-            ; command := StrReplace(command, "\", "/")
-            ; ToolTipWithTimer(command)
-			run %command%
+			; m("kl")
+			if (command.Length() > 1) {
+				Run_AsUser(command*)
+			}
+			else {
+				run %command%
+			}
+			; m(command)
+			; run %command%
 			Return
 		}
 		Catch
 		{
-			if(IsFunc("run_user"))
-			{
-				func_name = run_user
-				%func_name%(command)
-			}
-			else if (throwErr == 1)
-				MsgBox, 0x30, % OneQuick.ProgramName, % "Can't run command """ command """"
+			; Try
+			; {
+			; 	m(command)
+			; 	Run_AsUser(command*)
+			; }
+			; Catch
+			; {
+				if(IsFunc("run_user"))
+				{
+					func_name = run_user
+					%func_name%(command)
+				}
+				else if (throwErr == 1)
+					MsgBox, 0x30, % OneQuick.ProgramName, % "Can't run command """ command """"
+			; }
 		}
 	}
 }

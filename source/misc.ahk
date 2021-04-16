@@ -462,7 +462,6 @@ class OneQuick
 }
 
 
-
 ; 把两个字符串数组交叉连接起来
 str_array_concate(arr, app, deli="")
 {
@@ -481,6 +480,20 @@ str_array_concate(arr, app, deli="")
 		}
 	}
 	return % ret
+}
+
+
+register_command(key_name, action)
+{
+	global CMD_REGISTER_LIST
+	CMD_REGISTER_LIST[key_name] := action
+}
+
+
+register_web_search(key_name, action)
+{
+	global WEB_SEARCH_REGISTER_LIST
+	WEB_SEARCH_REGISTER_LIST[key_name] := action
 }
 
 
