@@ -16,7 +16,6 @@ ADDITIONAL_FEATURES_REGISTER_LIST := {}
 THEME_CONF_REGISTER_LIST := {}
 
 
-
 class NoxCore
 {
 	; dir
@@ -121,7 +120,6 @@ class NoxCore
 		this.OnClipboardChangeCmd.Insert(func)
 	}
 }
-
 
 
 
