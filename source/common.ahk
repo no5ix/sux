@@ -5,39 +5,15 @@
 global limit_mode := 0
 global old_limit_mode := limit_mode
 
-global cur_selected_text := ""
-
 global fake_lb_down := 0
 
 global CornerEdgeOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
 
-global trim_gui_user_input = ""
-global last_search_str = ""
 
 global second_monitor_min_x := 0
 global second_monitor_min_y := 0
 global second_monitor_max_x := 0
 global second_monitor_max_y := 0
-
-global should_not_ignore_original_action := 0
-global should_ignore_original_action := 1
-
-
-; 记录快捷键与对应操作
-HOTKEY_REGISTER_LIST := {}
-
-; 记录command与对应操作
-CMD_REGISTER_LIST := {}
-
-; 记录web-search与对应操作
-WEB_SEARCH_REGISTER_LIST := {}
-
-; 记录additional-features与对应操作
-ADDITIONAL_FEATURES_REGISTER_LIST := {}
-
-; 记录theme与对应操作
-THEME_CONF_REGISTER_LIST := {}
-
 
 
 ; modified from jackieku's code (http://www.autohotkey.com/forum/post-310959.html#310959)
@@ -87,18 +63,6 @@ StrPutVar(Str, ByRef Var, Enc = "")
 }
 
 
-ToolTipWithTimer(msg, delay_for_remove=600)
-{
-	ToolTip, %msg%
-	SetTimer, RemoveToolTip, -%delay_for_remove%
-	return
-
-	RemoveToolTip:
-		ToolTip
-		return
-}
-
-
 ClickUpIfLbDown()
 {
 	if fake_lb_down
@@ -116,13 +80,6 @@ ClickUpIfLbDown()
 ;     else
 ;         Send, ^v
 ; }
-
-
-Run_AsUser(prms*) {
-    ComObjCreate("Shell.Application")
-    .Windows.FindWindowSW(0, 0, 0x08, 0, 0x01)  
-    .Document.Application.ShellExecute(prms*) 
-}
 
 
 GetCurSelectedText() {
@@ -278,10 +235,173 @@ DisableWin10AutoUpdate(){
 }
 
 
-DebugPrintVal(val) {
-	MsgBox,,, %val%
+
+UpdateNoxImpl(from_launch) {
+	; ToolTipWithTimer("nox background updating, please wait...", 2222)
+	; RunWait, cmd.exe /c git pull origin master,,hide
+	run_result := RunWaitOne("git pull origin master", from_launch)
+	; if (InStr(run_result, "Already up to date")) {
+	if (RegExMatch(run_result, "Already.*up.*to.*date")) {
+		if from_launch
+			return
+		MsgBox,,, nox is already up to date. , 6
+	}
+	else if (!run_result || Instr(run_result, "FATAL:") || Instr(run_result, "fatal:") || Instr(run_result, "error:")){
+		msg_str := "nox update failed, " . (run_result ? "this is the error log: " . run_result : "please `git pull` to check.")
+		MsgBox,,, %msg_str%
+	}
+	else {
+		; MsgBox,,, nox update finished. , 6
+		msg_str := "nox update finished, would you like to see update log?"
+		MsgBox, 4,, %msg_str%, 6
+		IfMsgBox Yes
+			Run	"https://github.com/no5ix/nox#update-log"
+		Reload
+	}
 }
 
+
+
+; Which can be used like this:
+; Code: Select all - Toggle Line numbers
+
+; MsgBox % Join("`n", "one", "two", "three") 
+; substrings := ["one", "two", "three"]
+; MsgBox % Join("-", substrings*)
+StringJoin(sep, params*) {
+    for index,param in params
+        str .= sep . param
+    return SubStr(str, StrLen(sep)+1)
+}
+
+
+IsMouseActiveWindowAtSameMonitor() {
+	MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
+	WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
+	; MsgBox, The Mouse_ is at %Mouse_x%`,%Mouse_y%
+	; MsgBox, The active window is at %cur_active_window_X%`,%cur_active_window_Y%
+	active_window_x_limit := second_monitor_min_x - 8  ; 经测试, 实际上全屏后也总是会减8
+	; MsgBox, active_window_x_limit is at %active_window_x_limit%`
+	if (second_monitor_min_x != 0) && ((Mouse_x >= second_monitor_min_x && cur_active_window_X < active_window_x_limit) || (Mouse_x < second_monitor_min_x && cur_active_window_X >= active_window_x_limit)) { 
+		return 0
+	}
+	return 1
+}
+
+
+
+; 万能的run 函数
+; 参数可以是cmd命令，代码中的sub，function，网址，b站av号，还可以扩展
+run(command, throwErr := 1)
+{
+	if (command.Length() == 1)
+	{
+		command := command[1]
+	}
+	
+	if(IsLabel(command))
+	{
+		Gosub, %command%
+	}
+	else if (IsFunc(command))
+	{
+		Array := StrSplit(command, ".")
+		If (Array.MaxIndex() >= 2)
+		{
+			cls := Array[1]
+			cls := %cls%
+			Loop, % Array.MaxIndex() - 2
+			{
+				cls := cls[Array[A_Index+1]]
+			}
+			return cls[Array[Array.MaxIndex()]]()
+		}
+		Else
+		{
+			return %command%()
+		}
+	}
+	Else
+	{
+		if(RegExMatch(command, "^https?://"))
+		{
+			brw := NoxCore.Browser
+			if(brw=""||brw="default")
+				run, %command%
+			Else if(brw == "microsoft-edge:")
+				run, %brw%%command%
+			Else
+				run, %brw% %command%
+			Return
+		}
+		else if(RegExMatch(command, "i)av(\d+)", avn))
+		{
+			run("http://www.bilibili.com/video/av" avn1)
+			return
+		}
+		else if(RegExMatch(command, "i)send (.*)", sd))
+		{
+			send, % sd1
+			return
+		}
+		else if(RegExMatch(command, "i)m:(.*)", msg))
+		{
+			m(msg1)
+			return
+		}
+		else if(RegExMatch(command, "i)edit:\s*(.*)", f))
+		{
+			NoxCore.Edit(f1)
+			return
+		}
+		Try
+		{
+			if (command.Length() > 1) {
+				Run_AsUser(command*)
+			}
+			else {
+				run %command%
+			}
+			; m(command)
+			; run %command%
+			Return
+		}
+		Catch
+		{
+			; Try
+			; {
+			; 	m(command)
+			; 	Run_AsUser(command*)
+			; }
+			; Catch
+			; {
+				if(IsFunc("run_user"))
+				{
+					func_name = run_user
+					%func_name%(command)
+				}
+				else if (throwErr == 1)
+					MsgBox, 0x30, % NoxCore.ProgramName, % "Can't run command """ command """"
+			; }
+		}
+	}
+}
+
+
+RunArr(arr)
+{
+	Loop, % arr.MaxIndex()
+	{
+		run(arr[A_Index])
+	}
+}
+
+
+Run_AsUser(prms*) {
+    ComObjCreate("Shell.Application")
+    .Windows.FindWindowSW(0, 0, 0x08, 0, 0x01)  
+    .Document.Application.ShellExecute(prms*) 
+}
 
 
 ; run multiple commands in one go and retrieve their output, but cannot hide window
@@ -321,154 +441,90 @@ RunWaitOne(command, hide_window) {
 }
 
 
-UpdateNoxImpl(from_launch) {
-	; ToolTipWithTimer("nox background updating, please wait...", 2222)
-	; RunWait, cmd.exe /c git pull origin master,,hide
-	run_result := RunWaitOne("git pull origin master", from_launch)
-	; if (InStr(run_result, "Already up to date")) {
-	if (RegExMatch(run_result, "Already.*up.*to.*date")) {
-		if from_launch
-			return
-		MsgBox,,, nox is already up to date. , 6
+m(str := "")
+{
+	if(IsObject(str)) {
+		str := "[Object]`n" Yaml_dump(str)
 	}
-	else if (!run_result || Instr(run_result, "FATAL:") || Instr(run_result, "fatal:") || Instr(run_result, "error:")){
-		msg_str := "nox update failed, " . (run_result ? "this is the error log: " . run_result : "please `git pull` to check.")
-		MsgBox,,, %msg_str%
-	}
-	else {
-		; MsgBox,,, nox update finished. , 6
-		msg_str := "nox update finished, would you like to see update log?"
-		MsgBox, 4,, %msg_str%, 6
-		IfMsgBox Yes
-			Run	"https://github.com/no5ix/nox#update-log"
-		Reload
-	}
+	MsgBox, , % NoxCore.ProgramName, % str
 }
 
 
+ToolTipWithTimer(msg, delay_for_remove=600)
+{
+	ToolTip, %msg%
+	SetTimer, RemoveToolTip, -%delay_for_remove%
+	return
 
-
-HandleStartingNoxWithWindows() {
-	; Clipboard =    ; Empties Clipboard
-	; Send, ^c        ; Copies filename and path
-	; ClipWait 0      ; Waits for copy
-	; SplitPath, Clipboard, Name, Dir, Ext, Name_no_ext, Drive
-
-	msg_str := "Would you like to start nox with windows? Yes(Enable) or No(Disable)"
-	MsgBox, 3,, %msg_str%
-	IfMsgBox Cancel
+	RemoveToolTip:
+		ToolTip
 		return
+}
 
-	Name_no_ext := "nox"
-	Name := "nox.ahk"
-	Dir = %A_ScriptDir%
-	nox_ahk_file_path =  %A_ScriptFullPath%
 
-	IfExist, %A_Startup%\%Name_no_ext%.lnk
+get_border_code(X := "", Y := "", cornerPix = "")
+{
+	if (X = "") or (Y = "")
 	{
-		IfMsgBox No
-		{
-			FileDelete, %A_Startup%\%Name_no_ext%.lnk
-			MsgBox, %Name% removed from the Startup folder.
-		}
+		MouseGetPos, X, Y
 	}
-	Else
+	if(cornerPix = "")
 	{
-		IfMsgBox Yes
+		cornerPix := CornerEdgeOffset
+	}
+	; Multi Monitor Support
+	SysGet, MonitorCount, MonitorCount
+	Loop, % MonitorCount
+	{
+		SysGet, Mon, Monitor, % A_Index
+		cur_mon_width := MonRight - MonLeft
+		cur_mon_height := MonBottom - MonTop
+		if(X>=MonLeft && Y>= MonTop && X<MonRight && Y<MonBottom)
 		{
-			FileCreateShortcut, "%nox_ahk_file_path%"
-				, %A_Startup%\%Name_no_ext%.lnk
-				, %Dir%   ; Line wrapped using line continuation
-			MsgBox, %Name% added to Startup folder for auto-launch with Windows.
+			str =
+			if ( X < MonLeft + cornerPix ){
+				if (Y < cur_mon_height / 2)
+					str .= "LeftHalfTopEdge"
+				else
+					str .= "LeftHalfBottomEdge"
+			}
+			else if ( X >= MonRight - cornerPix) {
+				; str .= "RightEdge"
+				if (Y < cur_mon_height / 2)
+					str .= "RightHalfTopEdge"
+				else
+					str .= "RightHalfBottomEdge"
+			}
+			if ( Y < MonTop + cornerPix ) {
+				if (str == "") {
+					if (X < cur_mon_width / 2)
+						str .= "TopHalfLeftEdge"
+					else
+						str .= "TopHalfRightEdge"
+				}
+					; str .= "TopEdge"
+				else {
+					str := StrSplit(str, "Half")[1]
+					str .= "TopCorner"
+				}
+				; str .= (str == "") ? "TopEdge" : "TopCorner"
+			}
+			else if ( Y >= MonBottom - cornerPix) {
+				if (str == "") {
+					if (X < cur_mon_width / 2)
+						str .= "BottomHalfLeftEdge"
+					else
+						str .= "BottomHalfRightEdge"
+				}
+					; str .= "BottomEdge"
+				else {
+					str := StrSplit(str, "Half")[1]
+					str .= "BottomCorner"
+				}
+				; str .= (str == "") ? "BottomEdge" : "BottomCorner"
+			}
+			return % str
 		}
 	}
+	return ""
 }
-
-
-WebSearch(user_input, search_key="") {
-	global WEB_SEARCH_REGISTER_LIST
-	if (user_input == "" && search_key == "")
-		return
-	; 当只填了 url 而没填 search_key 的时候
-	if (IsRawUrl(user_input) && search_key == "") {
-		if not IsStandardRawUrl(user_input)
-			user_input := StringJoin("", ["http://", user_input]*)
-		Run %user_input%
-		return
-	}
-	if (search_key == "")
-		search_key := "default"
-
-	; search_flag_index = 1
-	; search_flag := WEB_SEARCH_REGISTER_LIST[search_key][search_flag_index]
-	search_url := WEB_SEARCH_REGISTER_LIST[search_key]
-	if (search_url.Length() == 1) {
-		search_url := search_url[1]
-	}
-	if (user_input == "") {	
-		if !InStr(search_url, "REPLACEME") {
-		; if (search_flag = "URL") {
-			Run %search_url%
-			return
-		} 
-		; domain_url just like: "https://www.google.com"
-		; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-		RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-		if not IsStandardRawUrl(domain_url)
-			domain_url := StringJoin("", ["http://", domain_url]*)
-		Run %domain_url%
-		return
-		; DebugPrintVal(pending_search_str)
-		; return
-		; pending_search_str := Clipboard
-		; if StrLen(pending_search_str) >= 88 {
-		; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
-		; 	gui_destroy()
-		; 	return
-		; }
-	}
-
-	if (search_key = "default") {
-		for _index, _elem in WEB_SEARCH_REGISTER_LIST[search_key] {
-			; if (_index != search_flag_index) {
-				WebSearch(user_input, _elem)
-				Sleep, 666
-			; }
-		}
-		return
-	}
-
-	safe_query := UriEncode(Trim(user_input))
-	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-	if not IsStandardRawUrl(search_final_url)
-		search_final_url := StringJoin("", ["http://", search_final_url]*)
-	Run, %search_final_url%
-}
-
-
-; Which can be used like this:
-; Code: Select all - Toggle Line numbers
-
-; MsgBox % Join("`n", "one", "two", "three") 
-; substrings := ["one", "two", "three"]
-; MsgBox % Join("-", substrings*)
-StringJoin(sep, params*) {
-    for index,param in params
-        str .= sep . param
-    return SubStr(str, StrLen(sep)+1)
-}
-
-
-IsMouseActiveWindowAtSameMonitor() {
-	MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
-	WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
-	; MsgBox, The Mouse_ is at %Mouse_x%`,%Mouse_y%
-	; MsgBox, The active window is at %cur_active_window_X%`,%cur_active_window_Y%
-	active_window_x_limit := second_monitor_min_x - 8  ; 经测试, 实际上全屏后也总是会减8
-	; MsgBox, active_window_x_limit is at %active_window_x_limit%`
-	if (second_monitor_min_x != 0) && ((Mouse_x >= second_monitor_min_x && cur_active_window_X < active_window_x_limit) || (Mouse_x < second_monitor_min_x && cur_active_window_X >= active_window_x_limit)) { 
-		return 0
-	}
-	return 1
-}
-

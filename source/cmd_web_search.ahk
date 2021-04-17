@@ -7,13 +7,74 @@
 ; global gui_state := closed
 
 
-
-; global classic_shadow_type := 0
-; global modern_shadow_type := 1
+global last_search_str = ""
+global trim_gui_user_input = ""
 global THEME_CONF_REGISTER_LIST
 
-ShadowBorder(handle)
-{
+
+
+WebSearch(user_input, search_key="") {
+	global WEB_SEARCH_REGISTER_LIST
+	if (user_input == "" && search_key == "")
+		return
+	; 当只填了 url 而没填 search_key 的时候
+	if (IsRawUrl(user_input) && search_key == "") {
+		if not IsStandardRawUrl(user_input)
+			user_input := StringJoin("", ["http://", user_input]*)
+		Run %user_input%
+		return
+	}
+	if (search_key == "")
+		search_key := "default"
+
+	; search_flag_index = 1
+	; search_flag := WEB_SEARCH_REGISTER_LIST[search_key][search_flag_index]
+	search_url := WEB_SEARCH_REGISTER_LIST[search_key]
+	if (search_url.Length() == 1) {
+		search_url := search_url[1]
+	}
+	if (user_input == "") {	
+		if !InStr(search_url, "REPLACEME") {
+		; if (search_flag = "URL") {
+			Run %search_url%
+			return
+		} 
+		; domain_url just like: "https://www.google.com"
+		; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+		RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
+		if not IsStandardRawUrl(domain_url)
+			domain_url := StringJoin("", ["http://", domain_url]*)
+		Run %domain_url%
+		return
+		; DebugPrintVal(pending_search_str)
+		; return
+		; pending_search_str := Clipboard
+		; if StrLen(pending_search_str) >= 88 {
+		; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
+		; 	gui_destroy()
+		; 	return
+		; }
+	}
+
+	if (search_key = "default") {
+		for _index, _elem in WEB_SEARCH_REGISTER_LIST[search_key] {
+			; if (_index != search_flag_index) {
+				WebSearch(user_input, _elem)
+				Sleep, 666
+			; }
+		}
+		return
+	}
+
+	safe_query := UriEncode(Trim(user_input))
+	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+	if not IsStandardRawUrl(search_final_url)
+		search_final_url := StringJoin("", ["http://", search_final_url]*)
+	Run, %search_final_url%
+}
+
+
+ShadowBorder(handle) {
     DllCall("user32.dll\SetClassLongPtr", "ptr", handle, "int", -26, "ptr", DllCall("user32.dll\GetClassLongPtr", "ptr", handle, "int", -26, "uptr") | 0x20000)
 }
 
