@@ -283,36 +283,36 @@ DebugPrintVal(val) {
 }
 
 
-Set2thMonitorXY() {
-	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
-		SetTimer, HotCorners, Off
-	}
-	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-	msg_str := "Please move mouse to the second monitor left-bottom corner, press enter when u are ready."
-	MsgBox,,, %msg_str%
-	MouseGetPos, lbX, lbY
+; Set2thMonitorXY() {
+; 	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
+; 		SetTimer, HotCorners, Off
+; 	}
+; 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
+; 	msg_str := "Please move mouse to the second monitor left-bottom corner, press enter when u are ready."
+; 	MsgBox,,, %msg_str%
+; 	MouseGetPos, lbX, lbY
 
-	second_monitor_min_x := lbX
-	second_monitor_max_y := lbY	
-	; DebugPrintVal(second_monitor_min_x)
-	; DebugPrintVal(second_monitor_max_y)
+; 	second_monitor_min_x := lbX
+; 	second_monitor_max_y := lbY	
+; 	; DebugPrintVal(second_monitor_min_x)
+; 	; DebugPrintVal(second_monitor_max_y)
 
-	msg_str := "Please move mouse to the second monitor right-top corner, press enter when u are ready."
-	MsgBox,,, %msg_str%
-	MouseGetPos, rtX, rtY 	
+; 	msg_str := "Please move mouse to the second monitor right-top corner, press enter when u are ready."
+; 	MsgBox,,, %msg_str%
+; 	MouseGetPos, rtX, rtY 	
 	
-	second_monitor_min_y := rtY	
-	second_monitor_max_x := rtX
-	; DebugPrintVal(second_monitor_min_y)
-	; DebugPrintVal(second_monitor_max_x)
+; 	second_monitor_min_y := rtY	
+; 	second_monitor_max_x := rtX
+; 	; DebugPrintVal(second_monitor_min_y)
+; 	; DebugPrintVal(second_monitor_max_x)
 
-	SaveMonitorXyConfToFile()
+; 	SaveMonitorXyConfToFile()
 
-	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
-	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
-		SetTimer, HotCorners, %hot_corners_detect_interval%
-	}
-}
+; 	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
+; 	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
+; 		SetTimer, HotCorners, %hot_corners_detect_interval%
+; 	}
+; }
 
 
 ; ; run single command and retrieve their output, but cannot hide window

@@ -15,9 +15,9 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 -----------------------
 
 
-#Include %A_ScriptDir%\conf\default_conf.ahk
+; #Include %A_ScriptDir%\conf\default_conf.ahk
 ;;  *i ignore any failure to load the included file.
-#Include *i %A_ScriptDir%\conf\user_conf.ahk
+; #Include *i %A_ScriptDir%\conf\user_conf.ahk
 
 
 #Include %A_ScriptDir%\source\common.ahk

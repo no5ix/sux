@@ -167,7 +167,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 
 <!-- - refractor HandleMouseOnEdges -->
 <!-- - ini -->
-- clipboard history
+<!-- - clipboard history -->
 - auto install ahk
 - custom tray menu
 - auto compile

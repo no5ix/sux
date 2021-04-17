@@ -97,47 +97,50 @@ class xClipboard
 		{
 			Menu, xClipboard_AllclipsMenu_More, DeleteAll
 		}
-		Try
-		{
-			Menu, xClipboard_AllclipsMenu_Favour, DeleteAll
-		}
+		; Try
+		; {
+		; 	Menu, xClipboard_AllclipsMenu_Favour, DeleteAll
+		; }
 		ClipsCount := this.Clips.MaxIndex()
+		shortcut_key_index_arr := ["q", "w", "e", "r", "a", "s", "d", "f", "g", "z", "x", "c", "v", "t", "b"]
 		Loop, % ClipsCount
 		{
 			idx := ClipsCount - A_Index + 1
 			keyName := this.Clips[idx][2]
 			if (A_Index <= this.ClipsFirstShowNum)
-				Menu, xClipboard_AllclipsMenu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
+				Menu, xClipboard_AllclipsMenu, Add, % (A_Index<10?"&":"") shortcut_key_index_arr[A_Index] ".      " keyName, Sub_xClipboard_AllClips_Click
+				; Menu, xClipboard_AllclipsMenu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
 			Else
 				Menu, xClipboard_AllclipsMenu_More, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_MoreClick
 		}
 		if (ClipsCount >= this.ClipsFirstShowNum)
 			Menu, xClipboard_AllclipsMenu, Add, % lang("More Clips"), :xClipboard_AllclipsMenu_More
-		FavoursCount := this.FavourClips.MaxIndex()
-		if (FavoursCount >= 0)
-		{
-			Loop, % FavoursCount
-			{
-				idx := FavoursCount - A_Index + 1
-				keyName := this.FavourClips[idx][2]
-				Menu, xClipboard_AllclipsMenu_Favour, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_FavourClick
-			}
-			Menu, xClipboard_AllclipsMenu_Favour, Add
-			Menu, xClipboard_AllclipsMenu_Favour, Add, % lang("Clear Favour List"), Sub_xClipboard_AllClips_FavourClear
-			Menu, xClipboard_AllclipsMenu, Add, % lang("Favour Clips"), :xClipboard_AllclipsMenu_Favour
-		}
+		; FavoursCount := this.FavourClips.MaxIndex()
+		; if (FavoursCount >= 0)
+		; {
+		; 	Loop, % FavoursCount
+		; 	{
+		; 		idx := FavoursCount - A_Index + 1
+		; 		keyName := this.FavourClips[idx][2]
+		; 		Menu, xClipboard_AllclipsMenu_Favour, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_FavourClick
+		; 	}
+		; 	Menu, xClipboard_AllclipsMenu_Favour, Add
+		; 	Menu, xClipboard_AllclipsMenu_Favour, Add, % lang("Clear Favour List"), Sub_xClipboard_AllClips_FavourClear
+		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Favour Clips"), :xClipboard_AllclipsMenu_Favour
+		; }
+		; if (ClipsCount > 0)
+		; {
+		; 	Menu, xClipboard_AllclipsMenu, Add
+		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Paste All"), Sub_Menu_xClipboard_PasteAll
+		; 	Menu, xClipboard_AllclipsMenu, Add
+		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") "(" %ClipsCount% " clips)", Sub_Menu_xClipboard_DeleteAll
+		; }
+		; Else
+		; {
+		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") " (0 clips)", Sub_Menu_xClipboard_DeleteAll
+		; }
 		if (ClipsCount > 0)
-		{
-			Menu, xClipboard_AllclipsMenu, Add
-			Menu, xClipboard_AllclipsMenu, Add, % lang("Paste All"), Sub_Menu_xClipboard_PasteAll
-			Menu, xClipboard_AllclipsMenu, Add
-			Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") "(" %ClipsCount% " clips)", Sub_Menu_xClipboard_DeleteAll
-		}
-		Else
-		{
-			Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") " (0 clips)", Sub_Menu_xClipboard_DeleteAll
-		}
-		Menu, xClipboard_AllclipsMenu, Show
+			Menu, xClipboard_AllclipsMenu, Show
 	}
 
 	CopyAndShowMenu()
@@ -255,15 +258,26 @@ class xClipboard
 	}
 }
 
+paste_cur_selected_text(idx) {
+	cur_selected_str :=xClipboard.Clips[idx][1]
+	m(cur_selected_str)
+	ClipSaved := ClipboardAll 
+	Clipboard := cur_selected_str   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+	Sleep, 66                             ; copy selected text to clipboard
+	Send, ^v
+	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+	ClipSaved := ""   ; Free the memory in case the clipboard was very large.
+}
+
 ; All Clips Menu
 Sub_xClipboard_AllClips_Click:
 idx := xClipboard.Clips.MaxIndex() - A_ThisMenuItemPos + 1
-xClipboard.ShowClipMenu(xClipboard.Clips[idx][1])
+paste_cur_selected_text(idx)
 Return
 
 Sub_xClipboard_AllClips_MoreClick:
 idx := xClipboard.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - xClipboard.ClipsFirstShowNum
-xClipboard.ShowClipMenu(xClipboard.Clips[idx][1])
+paste_cur_selected_text(idx)
 Return
 
 Sub_xClipboard_AllClips_FavourClick:
