@@ -283,48 +283,6 @@ DebugPrintVal(val) {
 }
 
 
-; Set2thMonitorXY() {
-; 	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
-; 		SetTimer, HotCorners, Off
-; 	}
-; 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
-; 	msg_str := "Please move mouse to the second monitor left-bottom corner, press enter when u are ready."
-; 	MsgBox,,, %msg_str%
-; 	MouseGetPos, lbX, lbY
-
-; 	second_monitor_min_x := lbX
-; 	second_monitor_max_y := lbY	
-; 	; DebugPrintVal(second_monitor_min_x)
-; 	; DebugPrintVal(second_monitor_max_y)
-
-; 	msg_str := "Please move mouse to the second monitor right-top corner, press enter when u are ready."
-; 	MsgBox,,, %msg_str%
-; 	MouseGetPos, rtX, rtY 	
-	
-; 	second_monitor_min_y := rtY	
-; 	second_monitor_max_x := rtX
-; 	; DebugPrintVal(second_monitor_min_y)
-; 	; DebugPrintVal(second_monitor_max_x)
-
-; 	SaveMonitorXyConfToFile()
-
-; 	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
-; 	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
-; 		SetTimer, HotCorners, %hot_corners_detect_interval%
-; 	}
-; }
-
-
-; ; run single command and retrieve their output, but cannot hide window
-; RunWaitOne(command) {
-;     ; WshShell object: http://msdn.microsoft.com/en-us/library/aew9yb99
-;     shell := ComObjCreate("WScript.Shell")
-;     ; Execute a single command via cmd.exe
-;     exec := shell.Exec(ComSpec " /C " command)
-;     ; Read and return the command's output
-;     return exec.StdOut.ReadAll()
-; }
-
 
 ; run multiple commands in one go and retrieve their output, but cannot hide window
 ; for example: 
@@ -487,63 +445,6 @@ WebSearch(user_input, search_key="") {
 	Run, %search_final_url%
 }
 
-; WebSearch(user_input, search_key="") {
-; 	if (user_input == "" && search_key == "")
-; 		return
-
-; 	; 当只填了 url 而没填 search_key 的时候
-; 	if (IsRawUrl(user_input) && search_key == "") {
-; 		if not IsStandardRawUrl(user_input)
-; 			user_input := StringJoin("", ["http://", user_input]*)
-; 		Run %user_input%
-; 		return
-; 	}
-	
-; 	if (search_key == "")
-; 		search_key := "default"
-
-; 	search_flag_index = 1
-; 	search_flag := WebSearchUrlMap[search_key][search_flag_index]
-; 	search_url := WebSearchUrlMap[search_key][2]
-; 	if (user_input == "") {	
-; 		if !InStr(search_url, "REPLACEME") {
-; 		; if (search_flag = "URL") {
-; 			Run %search_url%
-; 			return
-; 		} 
-; 		; domain_url just like: "https://www.google.com"
-; 		; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-; 		RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-; 		if not IsStandardRawUrl(domain_url)
-; 			domain_url := StringJoin("", ["http://", domain_url]*)
-; 		Run %domain_url%
-; 		return
-; 		; DebugPrintVal(pending_search_str)
-; 		; return
-; 		; pending_search_str := Clipboard
-; 		; if StrLen(pending_search_str) >= 88 {
-; 		; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
-; 		; 	gui_destroy()
-; 		; 	return
-; 		; }
-; 	}
-	
-; 	if (search_flag = "MULTI") {
-; 		for _index, _elem in WebSearchUrlMap[search_key] {
-; 			if (_index != search_flag_index) {
-; 				WebSearch(user_input, _elem)
-; 				Sleep, 666
-; 			}
-; 		}
-; 		return
-; 	}
-
-; 	safe_query := UriEncode(Trim(user_input))
-; 	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-; 	if not IsStandardRawUrl(search_final_url)
-; 		search_final_url := StringJoin("", ["http://", search_final_url]*)
-; 	Run, %search_final_url%
-; }
 
 ; Which can be used like this:
 ; Code: Select all - Toggle Line numbers

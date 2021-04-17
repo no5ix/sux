@@ -128,8 +128,8 @@ hotkey:
     capslock_;: 'send _'
     capslock_shift_;: 'send -'
     # 下面这行 cap_ 的后面有个单引号, 需要用双引号包起来
-    'capslock_'': 'send ='
-    'capslock_shift_'': 'send +='
+    "capslock_'": 'send ='
+    "capslock_shift_'": 'send +='
     capslock_/: 'send \'
     capslock_shift_/: 'send +\'
   custom:
@@ -199,7 +199,7 @@ screen-border:
 clipboard: 
   switch: 1
   hotkey: 
-    capslock_shift_c: xClipboard.ShowAllClips
+    win_alt_c: xClipboard.ShowAllClips
     # ctrl_shift_c: xClipboard.CopyAndShowMenu
     # ctrl_shift_v: xClipboard.ShowClipMenu
   # browser: 'Default, Edge, Chrome, IE'

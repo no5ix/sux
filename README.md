@@ -168,6 +168,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - refractor HandleMouseOnEdges -->
 <!-- - ini -->
 <!-- - clipboard history -->
+- 处理不要caps plus的逻辑
 - auto install ahk
 - custom tray menu
 - auto compile

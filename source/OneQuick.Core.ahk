@@ -47,46 +47,6 @@ class xClipboard
 		this.ini_registered := 1
 	}
 
-	SetHotkey(allClips, copyAndShow, clipMenu)
-	{
-		if (allClips != "")
-			Hotkey, %allClips%, Sub_xClipboard_ShowAllClips
-		if (copyAndShow != "")
-			Hotkey, %copyAndShow%, Sub_xClipboard_CopyAndShowMenu
-		if (clipMenu != "")
-			Hotkey, %clipMenu%, Sub_xClipboard_ShowClipMenu
-	}
-
-	SetBrowserList(browserList)
-	{
-		this.BrowserArr := browserList
-		if(this.BrowserArr.MaxIndex())
-		{
-			this.BrowserItemName := this.BrowserArr[1][2] "`t&" this.BrowserArr[1][1]
-			OneQuick.Browser := this.BrowserArr[1][3]
-		}
-	}
-
-	_setBrowserByItemName(ItemName)
-	{
-		if(RegExMatch(ItemName, "^([^`t]+)", out))
-		{
-			Loop, % this.BrowserArr.MaxIndex()
-			{
-				if(this.BrowserArr[A_Index][2] == out)
-				{
-					this.BrowserItemName := ItemName
-					OneQuick.Browser := this.BrowserArr[A_Index][3]
-				}
-			}
-		}
-	}
-
-	SetSearchList(search)
-	{
-		this.SearchArr := search
-	}
-
 	ShowAllClips()
 	{
 		Try
@@ -115,97 +75,8 @@ class xClipboard
 		}
 		if (ClipsCount >= this.ClipsFirstShowNum)
 			Menu, xClipboard_AllclipsMenu, Add, % lang("More Clips"), :xClipboard_AllclipsMenu_More
-		; FavoursCount := this.FavourClips.MaxIndex()
-		; if (FavoursCount >= 0)
-		; {
-		; 	Loop, % FavoursCount
-		; 	{
-		; 		idx := FavoursCount - A_Index + 1
-		; 		keyName := this.FavourClips[idx][2]
-		; 		Menu, xClipboard_AllclipsMenu_Favour, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_FavourClick
-		; 	}
-		; 	Menu, xClipboard_AllclipsMenu_Favour, Add
-		; 	Menu, xClipboard_AllclipsMenu_Favour, Add, % lang("Clear Favour List"), Sub_xClipboard_AllClips_FavourClear
-		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Favour Clips"), :xClipboard_AllclipsMenu_Favour
-		; }
-		; if (ClipsCount > 0)
-		; {
-		; 	Menu, xClipboard_AllclipsMenu, Add
-		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Paste All"), Sub_Menu_xClipboard_PasteAll
-		; 	Menu, xClipboard_AllclipsMenu, Add
-		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") "(" %ClipsCount% " clips)", Sub_Menu_xClipboard_DeleteAll
-		; }
-		; Else
-		; {
-		; 	Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") " (0 clips)", Sub_Menu_xClipboard_DeleteAll
-		; }
 		if (ClipsCount > 0)
 			Menu, xClipboard_AllclipsMenu, Show
-	}
-
-	CopyAndShowMenu()
-	{
-		send ^c
-		clipwait
-		sleep 100
-		this.ShowClipMenu()
-	}
-
-	ShowClipMenu(str := "")
-	{
-		if (str != "")
-		{
-			Clipboard := str
-			Sleep, 100
-		}
-		if (Clipboard == "")
-			Return
-		Try
-		{
-			Menu, xClipboard_clipMenu, DeleteAll
-		}
-		cliptrim := this._Trim(Clipboard, 0)
-		Menu, xClipboard_clipMenu, Add, % cliptrim, Sub_xClipboard_ClipMenu_CLIPTitle
-		Menu, xClipboard_clipMenu, Disable, % cliptrim
-		Menu, xClipboard_clipMenu, Add, % lang("Paste (Tab)") "`t&`t", Sub_xClipboard_ClipMenu_Paste
-		Menu, xClipboard_clipMenu, Add, % lang("RUN in CMD (Space)") " `t& ", Sub_xClipboard_ClipMenu_CMD
-		Menu, xClipboard_clipMenu, Add
-		Loop, % this.SearchArr.MaxIndex()
-		{
-			xC_Ssubobj := this.SearchArr[A_Index]
-			xC_item := xC_Ssubobj[2] ((xC_Ssubobj[1]=="")?"":"`t&" xC_Ssubobj[1]) 
-			Menu, xClipboard_clipMenu, Add, % xC_item, Sub_xClipboard_ClipCmdMenu_Search
-		}
-		if(this.BrowserArr.MaxIndex())
-		{
-			Menu, xClipboard_clipMenu, Add
-			Loop, % this.BrowserArr.MaxIndex()
-			{
-				subobj := this.BrowserArr[A_Index]
-				Menu, xClipboard_clipMenu, Add, % subobj[2] "`t&" subobj[1], Sub_xClipboard_ClipCmdMenu_SetBrowser
-			}
-			if(this.BrowserItemName != "")
-			{
-				Menu, xClipboard_clipMenu, Check, % this.BrowserItemName
-			}
-		}
-		Menu, xClipboard_clipMenu, Add
-		Menu, xClipboard_clipMenu, Add, % lang("Add to Favourite"), Sub_xClipboard_ClipMenu_AddFavour
-		Menu, xClipboard_clipMenu, Add, % lang("Remove from Favourite"), Sub_xClipboard_ClipMenu_RemoveFavour
-		Menu, xClipboard_clipMenu, Add,
-		Menu, xClipboard_clipMenu, Add, % lang("Delete"), Sub_xClipboard_ClipMenu_Delete
-		Menu, xClipboard_clipMenu, Show
-	}
-
-	DeleteAllClips()
-	{
-		this.Clips := []
-		Clipboard =
-	}
-
-	DeleteAllFavourClips()
-	{
-		this.FavourClips := []
 	}
 
 	_Trim(str_ori, add_time := 1)
@@ -260,7 +131,6 @@ class xClipboard
 
 paste_cur_selected_text(idx) {
 	cur_selected_str :=xClipboard.Clips[idx][1]
-	m(cur_selected_str)
 	ClipSaved := ClipboardAll 
 	Clipboard := cur_selected_str   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 	Sleep, 66                             ; copy selected text to clipboard
@@ -280,28 +150,6 @@ idx := xClipboard.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - xClipboard.ClipsFir
 paste_cur_selected_text(idx)
 Return
 
-Sub_xClipboard_AllClips_FavourClick:
-idx := xClipboard.FavourClips.MaxIndex() - A_ThisMenuItemPos + 1
-xClipboard.ShowClipMenu(xClipboard.FavourClips[idx][1])
-Return
-
-Sub_xClipboard_AllClips_FavourClear:
-xClipboard.DeleteAllFavourClips()
-Return
-
-Sub_Menu_xClipboard_PasteAll:
-ClipboardRem := ClipboardAll
-ClipboardPaste =
-Loop, % xClipboard.Clips.MaxIndex()
-{
-	ClipboardPaste := ClipboardPaste A_Index "`r`n" xClipboard.Clips[A_Index][1] "`r`n"
-}
-Clipboard := ClipboardPaste
-Send, ^v
-ClipboardPaste =
-Clipboard := ClipboardRem
-ClipboardRem =
-Return
 
 Sub_Menu_xClipboard_DeleteAll:
 xClipboard.DeleteAllClips()
@@ -309,55 +157,6 @@ Return
 
 ; Clip Menu
 Sub_xClipboard_ClipMenu_CLIPTitle:
-Return
-
-Sub_xClipboard_ClipMenu_Paste:
-xC_tmp := % Clipboard
-Clipboard := xC_tmp
-Send, ^v
-Return
-
-Sub_xClipboard_ClipMenu_CMD:
-run(Trim(Clipboard, " `t"), 0)
-Return
-
-Sub_xClipboard_ClipCmdMenu_Search:
-xC_site := xClipboard.SearchArr[A_ThisMenuItemPos-4][3]
-StringReplace, xC_site, xC_site, `%s, % UriEncode(clipboard), All
-Run(xC_site)
-Return
-
-Sub_xClipboard_ClipCmdMenu_SetBrowser:
-xClipboard._setBrowserByItemName(A_ThisMenuItem)
-xClipboard.ShowClipMenu()
-Return
-
-Sub_xClipboard_ClipMenu_Delete:
-xClipboard._RemoveArrClip(xClipboard.Clips, Clipboard)
-if (xClipboard.Clips.MaxIndex() >= 1)
-	Clipboard := xClipboard.Clips[1][1]
-Else
-	Clipboard =
-Return
-
-Sub_xClipboard_ClipMenu_AddFavour:
-xClipboard._AddArrClip(xClipboard.FavourClips, Clipboard)
-Return
-
-Sub_xClipboard_ClipMenu_RemoveFavour:
-xClipboard._RemoveArrClip(xClipboard.FavourClips, Clipboard)
-Return
-; hotkey
-Sub_xClipboard_ShowAllClips:
-xClipboard.ShowAllClips()
-Return
-
-Sub_xClipboard_CopyAndShowMenu:
-xClipboard.CopyAndShowMenu()
-Return
-
-Sub_xClipboard_ShowClipMenu:
-xClipboard.ShowClipMenu()
 Return
 
 ; OnEvent
