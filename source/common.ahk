@@ -32,6 +32,12 @@ CMD_REGISTER_LIST := {}
 ; 记录web-search与对应操作
 WEB_SEARCH_REGISTER_LIST := {}
 
+; 记录additional-features与对应操作
+ADDITIONAL_FEATURES_REGISTER_LIST := {}
+
+; 记录theme与对应操作
+THEME_CONF_REGISTER_LIST := {}
+
 
 
 ; modified from jackieku's code (http://www.autohotkey.com/forum/post-310959.html#310959)
@@ -278,7 +284,7 @@ DebugPrintVal(val) {
 
 
 Set2thMonitorXY() {
-	if (enable_hot_corners){
+	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
 		SetTimer, HotCorners, Off
 	}
 	CoordMode, Mouse, Screen		; Coordinate mode - coords will be passed to mouse related functions, with coords relative to entire screen 
@@ -303,7 +309,7 @@ Set2thMonitorXY() {
 	SaveMonitorXyConfToFile()
 
 	; MsgBox,,, 2th monitor resolution config string has already copy to your Clipboard, you can paste it in user_conf.ahk if you want to.
-	if (enable_hot_corners){
+	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]){
 		SetTimer, HotCorners, %hot_corners_detect_interval%
 	}
 }

@@ -8,6 +8,9 @@
 
 
 
+; global classic_shadow_type := 0
+; global modern_shadow_type := 1
+global THEME_CONF_REGISTER_LIST
 
 ShadowBorder(handle)
 {
@@ -46,9 +49,11 @@ gui_spawn(curr_select_text="") {
 	; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
 	
-	Gui, Margin, %nox_margin_x%, %nox_margin_y%
-	Gui, Color, %nox_bg_color%, %nox_control_color%
-	if (nox_border_shadow_type = classic_shadow_type)
+	DebugPrintVal(THEME_CONF_REGISTER_LIST["nox_text_color"])
+
+	Gui, Margin, THEME_CONF_REGISTER_LIST["nox_margin_x"], THEME_CONF_REGISTER_LIST["nox_margin_y"]
+	Gui, Color, THEME_CONF_REGISTER_LIST["nox_bg_color"], THEME_CONF_REGISTER_LIST["nox_control_color"]
+	if (THEME_CONF_REGISTER_LIST["nox_border_shadow_type"] == "classic_shadow_type")
 		ShadowBorder(hMyGUI)
 	else
 		FrameShadow(hMyGUI)
@@ -56,7 +61,9 @@ gui_spawn(curr_select_text="") {
 	Gui, Font, s22, Segoe UI
 	; Gui, Font, s10, Segoe UI
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleGuiUserInput
-	gui_control_options := "xm w" . nox_width . " c" . nox_text_color . " -E0x200"
+	gui_control_options := "xm w" . THEME_CONF_REGISTER_LIST["nox_width"] . " c" . THEME_CONF_REGISTER_LIST["nox_text_color"] . " -E0x200"
+	; DebugPrintVal(gui_control_options)
+
 	Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 	; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%
@@ -68,7 +75,7 @@ gui_spawn(curr_select_text="") {
 	MouseGetPos, MX
 	If (MX > A_ScreenWidth)
 		xMidScrn += A_ScreenWidth
-	xMidScrn -= nox_width / 2
+	xMidScrn -= THEME_CONF_REGISTER_LIST["nox_width"] / 2
 	yScrnOffset := A_ScreenHeight / 4
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, , myGUI
@@ -208,24 +215,24 @@ HandleGuiUserInput:
 		; ; 		gui_destroy()
 		; ; 		limit_mode := limit_mode ? 0 : 1
 		; ; 		if limit_mode {
-		; ; 			if enable_hot_corners
+		; ; 			if THEME_CONF_REGISTER_LIST["enable_hot_corners"]
 		; ; 				SetTimer, LimitModeWhenFullScreen, Off
 		; ; 			MsgBox, Double Shift is disabled in limit mode`, you can CapsLock+X to open nox input box.
 		; ; 		} else {
-		; ; 			if enable_hot_corners
+		; ; 			if THEME_CONF_REGISTER_LIST["enable_hot_corners"]
 		; ; 				SetTimer, LimitModeWhenFullScreen, 888
 		; ; 		}
 		; ; 	}
 		; ; }
 		; else if trim_gui_user_input = wau ; turn on/off disable win10 auto update
 		; {
-		; 	msg_str := "Would you like to turn " . (disable_win10_auto_update ? "off" : "on") . " disable win10 auto update?"
+		; 	msg_str := "Would you like to turn " . (THEME_CONF_REGISTER_LIST["disable_win10_auto_update"] ? "off" : "on") . " disable win10 auto update?"
 		; 	MsgBox, 4,, %msg_str%
 		; 	IfMsgBox Yes
 		; 	{
 		; 		gui_destroy()
-		; 		disable_win10_auto_update := disable_win10_auto_update ? 0 : 1
-		; 		if (disable_win10_auto_update == 0) {
+		; 		THEME_CONF_REGISTER_LIST["disable_win10_auto_update"] := THEME_CONF_REGISTER_LIST["disable_win10_auto_update"] ? 0 : 1
+		; 		if (THEME_CONF_REGISTER_LIST["disable_win10_auto_update"] == 0) {
 		; 			SetTimer, DisableWin10AutoUpdate, off
 		; 			run, cmd /c sc config wuauserv start= auto,,hide
 		; 			run, cmd /c net start wuauserv,,hide

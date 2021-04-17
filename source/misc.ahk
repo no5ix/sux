@@ -3,8 +3,8 @@
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
 ; HandleMouseOnEdges(from) {
-; 	if (enable_hot_edges = 0){
-; 		return [should_not_ignore_original_action, "Notice: conf.enable_hot_edges is 0, so edge triggers are disabled."]
+; 	if (ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_edges"] = 0){
+; 		return [should_not_ignore_original_action, "Notice: conf.ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_edges"] is 0, so edge triggers are disabled."]
 ; 	}
 ; 	if (limit_mode){
 ; 		return [should_not_ignore_original_action, "Notice: limit mode is on, edge triggers are disabled."]
@@ -494,6 +494,20 @@ register_web_search(key_name, action)
 {
 	global WEB_SEARCH_REGISTER_LIST
 	WEB_SEARCH_REGISTER_LIST[key_name] := action
+}
+
+
+register_additional_features(key_name, val)
+{
+	global ADDITIONAL_FEATURES_REGISTER_LIST
+	ADDITIONAL_FEATURES_REGISTER_LIST[key_name] := val
+}
+
+
+register_theme_conf(key_name, val)
+{
+	global THEME_CONF_REGISTER_LIST
+	THEME_CONF_REGISTER_LIST[key_name] := val
 }
 
 

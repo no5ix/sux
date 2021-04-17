@@ -47,7 +47,7 @@ WriteMonitorConf() {
 		), %monitor_xy_conf_file%
 	}
 
-	if enable_hot_corners {
+	if ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"] {
 		SysGet, monitor_cnt, MonitorCount
 		if (monitor_cnt > 2) {
 			msg_str := "You have more than 2 monitors, hot corners will not perform exactly at none primary monitor"
@@ -541,27 +541,28 @@ if(OneQuick.GetFeatureCfg("screen-border.switch", 0))
 			register_hotkey(key, value, border_key)
 }
 
+comma_delimiters_arr = ["','", "', '", "'，'", "'， '"]
 if(OneQuick.GetFeatureCfg("command.switch", 0))
 {
 	For key, value in OneQuick.GetFeatureCfg("command.buildin", {})
-	{
-		val_split_arr := StrSplit(value, ["','", "', '"])
-		register_command(key, val_split_arr)
-	}
+		register_command(key, StrSplit(value, comma_delimiters_arr))
 	For key, value in OneQuick.GetFeatureCfg("command.custom", {})
-		register_command(key, StrSplit(value, ["','", "', '"]))
+		register_command(key, StrSplit(value, comma_delimiters_arr))
 }
 
 if(OneQuick.GetFeatureCfg("web-search.switch", 0))
 {
 	For key, value in OneQuick.GetFeatureCfg("web-search.buildin", {})
-	{
-		val_split_arr := StrSplit(value, ["','", "', '"])
-		register_web_search(key, val_split_arr)
-	}
+		register_web_search(key, StrSplit(value, comma_delimiters_arr))
 	For key, value in OneQuick.GetFeatureCfg("web-search.custom", {})
-		register_web_search(key, StrSplit(value, ["','", "', '"]))
+		register_web_search(key, StrSplit(value, comma_delimiters_arr))
 }
+
+For key, value in OneQuick.GetFeatureCfg("additional-features", {})
+	register_additional_features(key, value)
+
+For key, value in OneQuick.GetFeatureCfg("theme", {})
+	register_theme_conf(key, value)
 
 
 
@@ -577,12 +578,12 @@ ReloadAfterWritingUserConf()
 if auto_limit_mode_when_full_screen
 	SetTimer, LimitModeWhenFullScreen, 88
 
-if disable_win10_auto_update
+if ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"]
     SetTimer, DisableWin10AutoUpdate, 66666
 
-if enable_hot_corners
+if ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"]
     SetTimer, HotCorners, %hot_corners_detect_interval%
 
-; if auto_update_when_launch_nox
+; if ADDITIONAL_FEATURES_REGISTER_LIST["auto_update_when_launch_nox"]
 ;     UpdateNoxImpl(1)
 
