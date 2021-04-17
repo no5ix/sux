@@ -25,7 +25,8 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 
 #Include %A_ScriptDir%\source\action.ahk
 #Include %A_ScriptDir%\source\nox_core.ahk
-#Include %A_ScriptDir%\source\auto_exec.ahk
 
 #Include %A_ScriptDir%\source\cmd_web_search.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
+
+#Include %A_ScriptDir%\source\auto_exec.ahk

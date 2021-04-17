@@ -8,6 +8,10 @@
 ; #Include, yaml.ahk
 
 
+; with this label, you can include this file on top of the file
+Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
+
+
 ; event callback
 OnClipboardChange:
 RunArr(NoxCore.OnClipboardChangeCmd)
@@ -158,3 +162,6 @@ NoxCore.UserData["xClipboard_Clips"] := ClipboardPlus.Clips
 NoxCore.UserData["xClipboard_FavourClips"] := ClipboardPlus.FavourClips
 Return
 
+
+; //////////////////////////////////////////////////////////////////////////
+SUB_CLIPBOARD_PLUS_FILE_END_LABEL:

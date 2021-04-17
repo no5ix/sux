@@ -2,9 +2,12 @@
 ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
-
 ; Initialize variable to keep track of the state of the GUI
 ; global gui_state := closed
+
+
+; with this label, you can include this file on top of the file
+Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 
 global last_search_str = ""
@@ -240,4 +243,9 @@ HandleGuiUserInput:
 		}
 	}
 
-	return
+return
+
+
+
+; //////////////////////////////////////////////////////////////////////////
+SUB_CMD_WEB_SEARCH_FILE_END_LABEL:
