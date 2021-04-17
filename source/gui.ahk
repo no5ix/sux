@@ -49,10 +49,10 @@ gui_spawn(curr_select_text="") {
 	; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
 	
-	DebugPrintVal(THEME_CONF_REGISTER_LIST["nox_text_color"])
-
 	Gui, Margin, THEME_CONF_REGISTER_LIST["nox_margin_x"], THEME_CONF_REGISTER_LIST["nox_margin_y"]
-	Gui, Color, THEME_CONF_REGISTER_LIST["nox_bg_color"], THEME_CONF_REGISTER_LIST["nox_control_color"]
+	nox_bg_color := THEME_CONF_REGISTER_LIST["nox_bg_color"] 
+	nox_control_color := THEME_CONF_REGISTER_LIST["nox_control_color"] 
+	Gui, Color, %nox_bg_color%, %nox_control_color%
 	if (THEME_CONF_REGISTER_LIST["nox_border_shadow_type"] == "classic_shadow_type")
 		ShadowBorder(hMyGUI)
 	else
