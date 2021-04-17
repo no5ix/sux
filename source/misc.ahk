@@ -427,6 +427,9 @@ class OneQuick
 		CoordMode, Mouse, Screen
 		; setting
 		this.LoadFeatureYaml()
+
+		; initialize module
+		xClipboard.Ini()
 	}
 
 	; feature.yaml
@@ -459,7 +462,17 @@ class OneQuick
 			OneQuick.FeatureObj := Yaml(OneQuick.feature_yaml_file)
 		}
 	}
+
+	OnClipboardChange(func)
+	{
+		this.OnClipboardChangeCmd.Insert(func)
+	}
 }
+
+; event callback
+OnClipboardChange:
+RunArr(OneQuick.OnClipboardChangeCmd)
+Return
 
 
 ; 把两个字符串数组交叉连接起来

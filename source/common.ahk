@@ -470,8 +470,6 @@ WebSearch(user_input, search_key="") {
 		; }
 	}
 
-	DebugPrintVal(search_key)
-	
 	if (search_key = "default") {
 		for _index, _elem in WEB_SEARCH_REGISTER_LIST[search_key] {
 			; if (_index != search_flag_index) {

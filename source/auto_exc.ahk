@@ -523,6 +523,68 @@ OneQuick.Ini()
 
 
 /*
+以下为超级菜单的自定义代码
+由xMenu模块可以方便地注册自定义菜单
+并由xMenu.Show()函数显示出来
+
+xMenu class can help register menus
+
+xMenu.Add(MenuName, [[itemName, Action],[...]])
+Action can be a label name, function name, even a submenu object, or any command runs in system cmd
+you can read the comments above run() function in OneQuick.Core.ahk for more information
+
+after you register a menu, you can use
+---- xMenu.Show(MenuName) ----
+to show the menu you registered
+*/
+xMenu.Add("System"
+	,[["Task Schdule","Taskschd.msc"]
+	,["Services","services.msc"]
+	,[]
+	,["Regedit","regedit"]
+	,["gpedit.msc","gpedit.msc"]
+	,[]
+	,["Edit HOSTS","Sys.Network.EditHOSTS"]
+	,["Flush DNS","ipconfig /flushdns"]])
+
+xMenu.Add("QuickAppMenu"
+	,[["Notepad","notepad"]
+	,["Paint","mspaint"]
+	,["Calculator","calc"]
+	,[]
+	,["Screen Keyboard","osk"]])
+
+xMenu.Add("GreatMenu"
+	,[["xClipboard`t&x","xClipboard.ShowAllClips"]
+	,["Window Info","WinMenu.Show"]
+	,["Cursor Info`t&i","Sys.Cursor.Info"]
+	,[]
+	,["Quick Apps`t&a",,{"sub":"QuickAppMenu"}]
+	,[]
+	,["Screen`t&s"
+		,[["Monitor off`t&c","Sys.Screen.Off"]
+		,["Lock && MonitorOff`t&l","Sys.Power.LockAndMonitoroff"]]]
+	,["System",,{"sub":"System"}]])
+
+; move mouse to top-right of screen and right click, this menu shows
+; 鼠标移到屏幕右上角并右击时出现的菜单
+xMenu.Add("ScreenRTMenu"
+	,[["Task Manager","taskmgr"]
+	,["Resource Monitor","resmon"]
+	,["System",,{"sub":"System"}]])
+
+; 两个函数供调用
+xmenu_show_great_menu()
+{
+	xMenu.Show("GreatMenu", A_ScreenWidth/2, A_ScreenHeight/2)
+}
+xmenu_show_screen_rt_menu()
+{
+	xMenu.Show("ScreenRTMenu")
+}
+
+
+/*
 普通快捷键
 */
 if(OneQuick.GetFeatureCfg("hotkey.switch", 0))

@@ -58,13 +58,13 @@ command:
     nw: StartNoxWithWindows
     cmd: 'cmd.exe'
 	  ev: 'C:\Program Files\Everything\Everything.exe'
-	  git: 'C:\Program Files\Git\bin\bash.exe', '--login'
+	  git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
-    blog: 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Documents\github\hexo-theme-next-optimized'
-    proj: 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Documents\github\nox'
-    test.py: 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Desktop\test.py'
-    test.go: 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Desktop\test.go'
-    test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe', 'C:\Users\b\Desktop\test.cpp'
+    blog: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Documents\github\hexo-theme-next-optimized'
+    proj: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Documents\github\nox'
+    test.py: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Desktop\test.py'
+    test.go: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Desktop\test.go'
+    test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Desktop\test.cpp'
 hotkey: 
   switch: 1
   buildin: 
