@@ -541,7 +541,7 @@ if(OneQuick.GetFeatureCfg("screen-border.switch", 0))
 			register_hotkey(key, value, border_key)
 }
 
-comma_delimiters_arr = ["','", "', '", "'，'", "'， '"]
+comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
 if(OneQuick.GetFeatureCfg("command.switch", 0))
 {
 	For key, value in OneQuick.GetFeatureCfg("command.buildin", {})
@@ -564,6 +564,45 @@ For key, value in OneQuick.GetFeatureCfg("additional-features", {})
 For key, value in OneQuick.GetFeatureCfg("theme", {})
 	register_theme_conf(key, value)
 
+
+if(OneQuick.GetFeatureCfg("clipboard.switch", 0))
+{
+	; 快捷键设置
+	; xClipboard.SetHotkey("^+x", "^+c", "^+v")
+	For key, value in OneQuick.GetFeatureCfg("clipboard.hotkey", {})
+		register_hotkey(key, value, "")
+	; 浏览器
+	; xClipboard_browser := OneQuick.GetFeatureCfg("clipboard.browser", "Default")
+	; xClipboard_browser_list := OneQuick.GetFeatureCfg("clipboard.browser_list", {})
+	; xClipboard_browser_obj := []
+	; browser_arr := StrSplit(xClipboard_browser, ",", " ")
+	; Loop, % browser_arr.MaxIndex()
+	; {
+	; 	key := browser_arr[A_Index]
+	; 	val := xClipboard_browser_list[key]
+	; 	xClipboard_browser_obj.push([A_Index, key, val])
+	; }
+	; xClipboard.SetBrowserList(xClipboard_browser_obj)
+	; ; 快速搜索列表
+	; xClipboard_search := OneQuick.GetFeatureCfg("clipboard.search", "Google")
+	; xClipboard_search_list := OneQuick.GetFeatureCfg("clipboard.search_list", {})
+	; xClipboard_search_obj := []
+	; search_arr := StrSplit(xClipboard_search, ",", " ")
+	; Loop, % search_arr.MaxIndex()
+	; {
+	; 	str := search_arr[A_Index]
+	; 	str_arr := StrSplit(str, "/")
+	; 	key := str_arr[1]
+	; 	hk := str_arr[2]
+	; 	name := str_arr[3]
+	; 	if(name="") {
+	; 		name := key
+	; 	}
+	; 	val := xClipboard_search_list[key]
+	; 	xClipboard_search_obj.push([hk, name, val])
+	; }
+	; xClipboard.SetSearchList(xClipboard_search_obj)
+}
 
 
 RunAsAdmin()

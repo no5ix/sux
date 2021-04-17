@@ -1,4 +1,242 @@
 
+; class xClipboard
+; {
+; 	static ClsName := "clipboard"
+; 	static ini_registered := 0
+; 	static Clips := []
+; 	static FavourClips := []
+; 	static BrowserArr := []
+; 	static BrowserItemName := ""
+; 	static SearchArr := []
+; 	static ClipsFirstShowNum = 
+; 	static ClipsTotalNum = 
+
+; 	Ini()
+; 	{
+; 		if (this.ini_registered == 1)
+; 			Return
+; 		OneQuick.OnClipboardChange("Sub_xClipboard_OnClipboardChange")
+; 		OneQuick.OnExit("Sub_xClipboard_OnExit")
+; 		this.Clips := OneQuick.UserData["xClipboard_Clips"]
+; 		this.FavourClips := OneQuick.UserData["xClipboard_FavourClips"]
+; 		this.ClipsFirstShowNum := OneQuick.GetFeatureCfg("clipboard.ClipsFirstShowNum", 10)
+; 		this.ClipsTotalNum := OneQuick.GetFeatureCfg("clipboard.ClipsTotalNum", 50)
+; 		if not IsObject(this.Clips)
+; 			this.Clips := []
+; 		if not IsObject(this.FavourClips)
+; 			this.FavourClips := []
+; 		this.ini_registered := 1
+; 	}
+
+; 	SetHotkey(allClips, copyAndShow, clipMenu)
+; 	{
+; 		if (allClips != "")
+; 			Hotkey, %allClips%, Sub_xClipboard_ShowAllClips
+; 		if (copyAndShow != "")
+; 			Hotkey, %copyAndShow%, Sub_xClipboard_CopyAndShowMenu
+; 		if (clipMenu != "")
+; 			Hotkey, %clipMenu%, Sub_xClipboard_ShowClipMenu
+; 	}
+
+; 	SetBrowserList(browserList)
+; 	{
+; 		this.BrowserArr := browserList
+; 		if(this.BrowserArr.MaxIndex())
+; 		{
+; 			this.BrowserItemName := this.BrowserArr[1][2] "`t&" this.BrowserArr[1][1]
+; 			OneQuick.Browser := this.BrowserArr[1][3]
+; 		}
+; 	}
+
+; 	_setBrowserByItemName(ItemName)
+; 	{
+; 		if(RegExMatch(ItemName, "^([^`t]+)", out))
+; 		{
+; 			Loop, % this.BrowserArr.MaxIndex()
+; 			{
+; 				if(this.BrowserArr[A_Index][2] == out)
+; 				{
+; 					this.BrowserItemName := ItemName
+; 					OneQuick.Browser := this.BrowserArr[A_Index][3]
+; 				}
+; 			}
+; 		}
+; 	}
+
+; 	SetSearchList(search)
+; 	{
+; 		this.SearchArr := search
+; 	}
+
+; 	ShowAllClips()
+; 	{
+; 		Try
+; 		{
+; 			Menu, xClipboard_AllclipsMenu, DeleteAll
+; 		}
+; 		Try
+; 		{
+; 			Menu, xClipboard_AllclipsMenu_More, DeleteAll
+; 		}
+; 		Try
+; 		{
+; 			Menu, xClipboard_AllclipsMenu_Favour, DeleteAll
+; 		}
+; 		ClipsCount := this.Clips.MaxIndex()
+; 		Loop, % ClipsCount
+; 		{
+; 			idx := ClipsCount - A_Index + 1
+; 			keyName := this.Clips[idx][2]
+; 			if (A_Index <= this.ClipsFirstShowNum)
+; 				Menu, xClipboard_AllclipsMenu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
+; 			Else
+; 				Menu, xClipboard_AllclipsMenu_More, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_MoreClick
+; 		}
+; 		if (ClipsCount >= this.ClipsFirstShowNum)
+; 			Menu, xClipboard_AllclipsMenu, Add, % lang("More Clips"), :xClipboard_AllclipsMenu_More
+; 		FavoursCount := this.FavourClips.MaxIndex()
+; 		if (FavoursCount >= 0)
+; 		{
+; 			Loop, % FavoursCount
+; 			{
+; 				idx := FavoursCount - A_Index + 1
+; 				keyName := this.FavourClips[idx][2]
+; 				Menu, xClipboard_AllclipsMenu_Favour, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_FavourClick
+; 			}
+; 			Menu, xClipboard_AllclipsMenu_Favour, Add
+; 			Menu, xClipboard_AllclipsMenu_Favour, Add, % lang("Clear Favour List"), Sub_xClipboard_AllClips_FavourClear
+; 			Menu, xClipboard_AllclipsMenu, Add, % lang("Favour Clips"), :xClipboard_AllclipsMenu_Favour
+; 		}
+; 		if (ClipsCount > 0)
+; 		{
+; 			Menu, xClipboard_AllclipsMenu, Add
+; 			Menu, xClipboard_AllclipsMenu, Add, % lang("Paste All"), Sub_Menu_xClipboard_PasteAll
+; 			Menu, xClipboard_AllclipsMenu, Add
+; 			Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") "(" %ClipsCount% " clips)", Sub_Menu_xClipboard_DeleteAll
+; 		}
+; 		Else
+; 		{
+; 			Menu, xClipboard_AllclipsMenu, Add, % lang("Clear Clipboard") " (0 clips)", Sub_Menu_xClipboard_DeleteAll
+; 		}
+; 		Menu, xClipboard_AllclipsMenu, Show
+; 	}
+
+; 	CopyAndShowMenu()
+; 	{
+; 		send ^c
+; 		clipwait
+; 		sleep 100
+; 		this.ShowClipMenu()
+; 	}
+
+; 	ShowClipMenu(str := "")
+; 	{
+; 		if (str != "")
+; 		{
+; 			Clipboard := str
+; 			Sleep, 100
+; 		}
+; 		if (Clipboard == "")
+; 			Return
+; 		Try
+; 		{
+; 			Menu, xClipboard_clipMenu, DeleteAll
+; 		}
+; 		cliptrim := this._Trim(Clipboard, 0)
+; 		Menu, xClipboard_clipMenu, Add, % cliptrim, Sub_xClipboard_ClipMenu_CLIPTitle
+; 		Menu, xClipboard_clipMenu, Disable, % cliptrim
+; 		Menu, xClipboard_clipMenu, Add, % lang("Paste (Tab)") "`t&`t", Sub_xClipboard_ClipMenu_Paste
+; 		Menu, xClipboard_clipMenu, Add, % lang("RUN in CMD (Space)") " `t& ", Sub_xClipboard_ClipMenu_CMD
+; 		Menu, xClipboard_clipMenu, Add
+; 		Loop, % this.SearchArr.MaxIndex()
+; 		{
+; 			xC_Ssubobj := this.SearchArr[A_Index]
+; 			xC_item := xC_Ssubobj[2] ((xC_Ssubobj[1]=="")?"":"`t&" xC_Ssubobj[1]) 
+; 			Menu, xClipboard_clipMenu, Add, % xC_item, Sub_xClipboard_ClipCmdMenu_Search
+; 		}
+; 		if(this.BrowserArr.MaxIndex())
+; 		{
+; 			Menu, xClipboard_clipMenu, Add
+; 			Loop, % this.BrowserArr.MaxIndex()
+; 			{
+; 				subobj := this.BrowserArr[A_Index]
+; 				Menu, xClipboard_clipMenu, Add, % subobj[2] "`t&" subobj[1], Sub_xClipboard_ClipCmdMenu_SetBrowser
+; 			}
+; 			if(this.BrowserItemName != "")
+; 			{
+; 				Menu, xClipboard_clipMenu, Check, % this.BrowserItemName
+; 			}
+; 		}
+; 		Menu, xClipboard_clipMenu, Add
+; 		Menu, xClipboard_clipMenu, Add, % lang("Add to Favourite"), Sub_xClipboard_ClipMenu_AddFavour
+; 		Menu, xClipboard_clipMenu, Add, % lang("Remove from Favourite"), Sub_xClipboard_ClipMenu_RemoveFavour
+; 		Menu, xClipboard_clipMenu, Add,
+; 		Menu, xClipboard_clipMenu, Add, % lang("Delete"), Sub_xClipboard_ClipMenu_Delete
+; 		Menu, xClipboard_clipMenu, Show
+; 	}
+
+; 	DeleteAllClips()
+; 	{
+; 		this.Clips := []
+; 		Clipboard =
+; 	}
+
+; 	DeleteAllFavourClips()
+; 	{
+; 		this.FavourClips := []
+; 	}
+
+; 	_Trim(str_ori, add_time := 1)
+; 	{
+; 		str := Trim(str_ori, " `t`r`n")
+; 		tabfind := InStr(str, "`t")
+; 		if (tabfind > 0)
+; 		{
+; 			str := SubStr(str, 1, tabfind -1)
+; 		}
+; 		if (str == "")
+; 			str := "<space>"
+; 		Else if (SubStr(str, 1, 1) != SubStr(str_ori, 1, 1))
+; 			str := "_" str
+; 		if StrLen(str) > 50
+; 			str := SubStr(str, 1, 50)
+; 		str := str "`t[" StrLen(str_ori) "]"
+; 		if(add_time)
+; 		{
+; 			str := str "[" A_Hour ":" A_Min ":" A_Sec "]"
+; 		}
+; 		Return % str
+; 	}
+
+; 	_AddArrClip(ByRef Arr, str)
+; 	{
+; 		trim_str := xClipboard._Trim(str)
+; 		if str !=
+; 		{
+; 			Loop, % Arr.MaxIndex()
+; 			{
+; 				if (str == Arr[A_Index][1])
+; 				{
+; 					Arr.Remove(A_Index)
+; 				}
+; 			}
+; 			Arr.Insert([str, trim_str])
+; 		}
+; 	}
+
+; 	_RemoveArrClip(ByRef Arr, str)
+; 	{
+; 		Loop, % Arr.MaxIndex()
+; 		{
+; 			if (str == Arr[A_Index][1])
+; 			{
+; 				Arr.Remove(A_Index)
+; 			}
+; 		}
+; 	}
+; }
+
+
 class Sys
 {
 
