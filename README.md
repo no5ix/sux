@@ -173,8 +173,9 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - auto install ahk -->
 - custom tray menu
 - update readme
-- 增加可供用户扩展的脚本, 方便用户配置各种自定义action
+<!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
 - gitignore user conf
+- start with win
 <!-- - auto compile -->
 <!-- - auto update -->
 <!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateNoxImpl的锅 -->
