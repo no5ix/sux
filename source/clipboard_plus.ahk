@@ -18,6 +18,7 @@ Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 
 
 #Include %A_ScriptDir%\source\nox_core.ahk
+#Include %A_ScriptDir%\source\util.ahk
 
 
 ; event callback
@@ -85,6 +86,8 @@ class ClipboardPlus
 			Menu, xClipboard_AllclipsMenu, Add, % "More Clips", :xClipboard_AllclipsMenu_More
 		if (ClipsCount > 0)
 			Menu, xClipboard_AllclipsMenu, Show
+		else
+			ToolTipWithTimer("clipboard currently has no centent, please copy something...")
 	}
 
 	_Trim(str_ori, add_time := 1)

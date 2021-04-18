@@ -496,6 +496,26 @@ RunAsAdmin() {
 }
 
 
+
+Autorun(enable, name, path="")
+{
+	if(enable)
+	{
+		RegWrite, REG_SZ, HKCU, "Software\Microsoft\Windows\CurrentVersion\Run", % name, % path
+	}
+	Else
+	{
+		RegDelete, HKCU, "Software\Microsoft\Windows\CurrentVersion\Run", % name
+	}
+}
+
+IsAutorun(name, path)
+{
+	RegRead, output, HKCU, "Software\Microsoft\Windows\CurrentVersion\Run", % name
+	return % output==path
+}
+
+
 ; LimitModeWhenFullScreen() {
 ; 	limit_mode := IsFullscreen() ? 1 : 0
 ; 	if (old_limit_mode = 0 and limit_mode = 1) or (old_limit_mode = 1 and limit_mode = 0)

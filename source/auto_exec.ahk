@@ -9,8 +9,6 @@
 #Include %A_ScriptDir%\source\cmd_web_search.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
 
-#Include %A_ScriptDir%\user_extension.ahk
-
 
 
 IsFirstTimeRunNox() {
@@ -53,6 +51,8 @@ HandleStartingNoxWithWindows() {
 	Name := "nox.ahk"
 	Dir = %A_ScriptDir%
 	nox_ahk_file_path =  %A_ScriptFullPath%
+	
+	; Autorun()
 
 	IfExist, %A_Startup%\%Name_no_ext%.lnk
 	{

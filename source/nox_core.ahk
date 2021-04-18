@@ -23,7 +23,7 @@ class NoxCore
 	static _Update_dl_DIR := "_bkp/dl/"
 	static _Update_bkp_folder_prefix := "_auto_"
 	; file
-	static Launcher_Name := A_WorkingDir "\NoxCore Launcher.exe"
+	static Launcher_Name := A_WorkingDir "\nox.exe"
 	static Ext_ahk_file := "NoxCore.Ext.ahk"
 	static version_yaml_file := NoxCore._CONF_DIR "version.yaml"
 	static feature_yaml_file := "conf.user.yaml"
