@@ -79,7 +79,7 @@ hotkey:
     ~alt: DoubleHitWebSearch
   custom:
 capslock_plus:
-  enable: 0
+  enable: 1
   buildin:
     # ctrl: DoubleHitWebSearch
     capslock: 'send {Esc}'

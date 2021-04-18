@@ -27,13 +27,14 @@ JumpToNextTab() {
 }
 
 SwitchCapsState() {
-    GetKeyState, CapsLockState, CapsLock, T                              ;|
-    if CapsLockState = D                                                 ;|
-        SetCapsLockState, AlwaysOff                                      ;|
-    else
-    {
-        SetCapsLockState, AlwaysOn
-    }
+	SetCapsLockState % !GetKeyState("CapsLock", "T")  ; Toggles CapsLock to its opposite state.
+    ; GetKeyState, CapsLockState, CapsLock, T                              ;|
+    ; if CapsLockState = D                                                 ;|
+    ;     SetCapsLockState, AlwaysOff                                      ;|
+    ; else
+    ; {
+    ;     SetCapsLockState, AlwaysOn
+    ; }
 }
 
 ScreenShot() {

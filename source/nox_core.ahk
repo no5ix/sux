@@ -109,15 +109,15 @@ class NoxCore
 			For key, value in NoxCore.GetFeatureCfg("hotkey.custom", {})
 				register_hotkey(key, value, "")
 		}
-		else {
-			SetCapsLockState,   ; 因为ahk语言的自身局限性, 必须得在这里加这一行, 只放在 nox_core.ahk里的话, 会有bug
-		}
 		if(NoxCore.GetFeatureCfg("capslock_plus.enable", 0))
 		{
 			For key, value in NoxCore.GetFeatureCfg("capslock_plus.buildin", {})
 				register_hotkey(key, value, "")
 			For key, value in NoxCore.GetFeatureCfg("capslock_plus.custom", {})
 				register_hotkey(key, value, "")
+		}
+		else {
+			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 
 		if(NoxCore.GetFeatureCfg("hot-corner-edge.enable", 0))
