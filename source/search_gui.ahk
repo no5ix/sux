@@ -6,7 +6,7 @@
 ; global gui_state := closed
 
 
-if(A_ScriptName=="cmd_web_search.ahk") {
+if(A_ScriptName=="search_gui.ahk") {
 	ExitApp
 }
 

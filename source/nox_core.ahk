@@ -61,7 +61,7 @@ class NoxCore
 	static Editor = notepad
 	static Browser := "default"
 
-	Ini(asLib=false)
+	Ini()
 	{
 		CoordMode, Mouse, Screen
 		; setting

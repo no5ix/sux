@@ -6,15 +6,9 @@
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\util.ahk
 #Include %A_ScriptDir%\source\nox_core.ahk
-#Include %A_ScriptDir%\source\cmd_web_search.ahk
+#Include %A_ScriptDir%\source\search_gui.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
 
-
-
-IsFirstTimeRunNox() {
-	; monitor_xy_conf_file := A_ScriptDir "\conf\monitor_xy_conf.ahk"
-	; return !FileExist(monitor_xy_conf_file)
-}
 
 
 HotCorners() {
@@ -36,45 +30,6 @@ HotCorners() {
 }
 
 
-HandleStartingNoxWithWindows() {
-	; Clipboard =    ; Empties Clipboard
-	; Send, ^c        ; Copies filename and path
-	; ClipWait 0      ; Waits for copy
-	; SplitPath, Clipboard, Name, Dir, Ext, Name_no_ext, Drive
-
-	msg_str := "Would you like to start nox with windows? Yes(Enable) or No(Disable)"
-	MsgBox, 3,, %msg_str%
-	IfMsgBox Cancel
-		return
-
-	Name_no_ext := "nox"
-	Name := "nox.ahk"
-	Dir = %A_ScriptDir%
-	nox_ahk_file_path =  %A_ScriptFullPath%
-	
-	; Autorun()
-
-	IfExist, %A_Startup%\%Name_no_ext%.lnk
-	{
-		IfMsgBox No
-		{
-			FileDelete, %A_Startup%\%Name_no_ext%.lnk
-			MsgBox, %Name% removed from the Startup folder.
-		}
-	}
-	Else
-	{
-		IfMsgBox Yes
-		{
-			FileCreateShortcut, "%nox_ahk_file_path%"
-				, %A_Startup%\%Name_no_ext%.lnk
-				, %Dir%   ; Line wrapped using line continuation
-			MsgBox, %Name% added to Startup folder for auto-launch with Windows.
-		}
-	}
-}
-
-
 
 
 
@@ -83,11 +38,6 @@ HandleStartingNoxWithWindows() {
 NoxCore.Ini()
 
 RunAsAdmin()
-
-if IsFirstTimeRunNox() {
-    HandleStartingNoxWithWindows()
-    ; WriteMonitorConf()
-}
 
 ; if auto_limit_mode_when_full_screen
 ; 	SetTimer, LimitModeWhenFullScreen, 88

@@ -51,7 +51,7 @@ command:
     dir: OpenNoxDir
     # up: UpdateNox
     # wau: SwitchWin10AutoUpdate
-    nw: StartNoxWithWindows
+    # nw: StartNoxWithWindows
     cmd: 'cmd.exe'
 	  ev: 'C:\Program Files\Everything\Everything.exe'
 	  git: 'C:\Program Files\Git\bin\bash.exe --login'

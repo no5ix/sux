@@ -27,6 +27,7 @@ RunArr(NoxCore.OnClipboardChangeCmd)
 Return
 
 
+
 class ClipboardPlus
 {
 	static ClsName := "clipboard-plus"
@@ -139,6 +140,7 @@ class ClipboardPlus
 		}
 	}
 }
+
 
 paste_cur_selected_text(idx) {
 	cur_selected_str :=ClipboardPlus.Clips[idx][1]

@@ -1,5 +1,5 @@
 #Include %A_ScriptDir%\source\common_const.ahk
-#Include %A_ScriptDir%\source\cmd_web_search.ahk
+#Include %A_ScriptDir%\source\search_gui.ahk
 
 
 JumpToPrevTab() {
@@ -146,10 +146,10 @@ SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
 	}
 }
 
-StartNoxWithWindows() { ; start nox with windows
-	HandleStartingNoxWithWindows()
-	gui_destroy()
-}
+; StartNoxWithWindows() { ; start nox with windows
+; 	HandleStartingNoxWithWindows()
+; 	gui_destroy()
+; }
 
 SimulateClickDown() {
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
