@@ -27,7 +27,7 @@ class NoxCore
 	static Ext_ahk_file := "NoxCore.Ext.ahk"
 	static version_yaml_file := NoxCore._CONF_DIR "version.yaml"
 	static feature_yaml_file := "conf.user.yaml"
-	static feature_yaml_default_file := NoxCore._CONF_DIR "conf.default.yaml"
+	static feature_yaml_default_file := "conf.default.yaml"
 	static config_file := "config.ini"
 	static user_data_file := NoxCore._JSON_DIR "NoxCore.Data." A_ComputerName ".json"
 	static icon_default := NoxCore._ICON_DIR "1.ico"
@@ -102,14 +102,14 @@ class NoxCore
 		}
 
 		
-		
-		if(NoxCore.GetFeatureCfg("hotkey.switch", 0))
+		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		if(NoxCore.GetFeatureCfg("hotkey.enable", 0))
 		{
 			For key, value in NoxCore.GetFeatureCfg("hotkey.buildin", {})
 				register_hotkey(key, value, "")
 		}
 
-		if(NoxCore.GetFeatureCfg("hot-corner-edge.switch", 0))
+		if(NoxCore.GetFeatureCfg("hot-corner-edge.enable", 0))
 		{
 			For border_key, border_action in NoxCore.GetFeatureCfg("hot-corner-edge.action", {})
 				for key, value in border_action
@@ -117,7 +117,7 @@ class NoxCore
 		}
 
 		comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
-		if(NoxCore.GetFeatureCfg("command.switch", 0))
+		if(NoxCore.GetFeatureCfg("command.enable", 0))
 		{
 			For key, value in NoxCore.GetFeatureCfg("command.buildin", {})
 				register_command(key, StrSplit(value, comma_delimiters_arr))
@@ -125,7 +125,7 @@ class NoxCore
 				register_command(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		if(NoxCore.GetFeatureCfg("web-search.switch", 0))
+		if(NoxCore.GetFeatureCfg("web-search.enable", 0))
 		{
 			For key, value in NoxCore.GetFeatureCfg("web-search.buildin", {})
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
@@ -140,7 +140,7 @@ class NoxCore
 			register_theme_conf(key, value)
 
 
-		if(NoxCore.GetFeatureCfg("clipboard-plus.switch", 0))
+		if(NoxCore.GetFeatureCfg("clipboard-plus.enable", 0))
 		{
 			For key, value in NoxCore.GetFeatureCfg("clipboard-plus.hotkey", {})
 				register_hotkey(key, value, "")

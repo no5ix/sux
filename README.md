@@ -163,19 +163,23 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 或者对于高级用户, 你也可以[安装好autohotkey环境](https://www.autohotkey.com/), 然后直接运行nox.ahk, 这样就可以自定义改各种配置和代码了, 改完之后`rd`即可.
 
 
-# TODO
+# TODO List
 
 <!-- - refractor HandleMouseOnEdges -->
 <!-- - ini -->
 <!-- - clipboard history -->
 - 处理不要caps plus的逻辑
-- auto install ahk
+- 托盘暂停
+<!-- - auto install ahk -->
 - custom tray menu
-- auto compile
-- auto update
-- fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateNoxImpl的锅
-- suspend img
-- internal Everything
+- update readme
+- 增加可供用户扩展的脚本, 方便用户配置各种自定义action
+- gitignore user conf
+<!-- - auto compile -->
+<!-- - auto update -->
+<!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateNoxImpl的锅 -->
+<!-- - suspend img -->
+<!-- - internal Everything -->
 
 
 # Update Log

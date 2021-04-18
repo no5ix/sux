@@ -24,7 +24,7 @@ additional-features:
   # when ctrl+8 on the edge (useful for touchpad user)
   enable_hot_edges: 1
 web-search:
-  switch: 1
+  enable: 1
   buildin:
     default: 'gg', 'bd'
 	  nox: 'https://github.com/no5ix/nox'
@@ -45,7 +45,7 @@ web-search:
 	  lc: 'https://leetcode-cn.com/problemset/all/?search=REPLACEME'
   custom:
 command: 
-  switch: 1
+  enable: 1
   buildin:
     rd: Reload
     dir: OpenNoxDir
@@ -62,7 +62,7 @@ command:
     test.go: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Desktop\test.go'
     test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Desktop\test.cpp'
 hotkey: 
-  switch: 1
+  enable: 1
   buildin: 
     # win_z: xmenu_show_great_menu
     # ctrl_alt_r: NoxCore.Command_run
@@ -130,7 +130,7 @@ hotkey:
     capslock_shift_/: 'send +\'
   custom:
 hot-corner-edge: 
-  switch: 1
+  enable: 1
   action: 
     LeftTopCorner: 
       # RButton: winmenu.show
@@ -193,7 +193,7 @@ hot-corner-edge:
       # wheelup: Sys.Win.GotoPreTab
       # wheelup: Sys.Win.GotoNextApp
 clipboard-plus: 
-  switch: 1
+  enable: 1
   hotkey: 
     win_alt_c: ClipboardPlus.ShowAllClips
     # ctrl_shift_c: ClipboardPlus.CopyAndShowMenu

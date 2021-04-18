@@ -9,7 +9,8 @@
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance
 
-SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在这里加这一行, 只放在capslock_plus.ahk里的话, 会有bug
+
+SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在这里加这一行, 只放在 nox_core.ahk里的话, 会有bug
 
 
 -----------------------
