@@ -77,6 +77,10 @@ hotkey:
     ctrl_shift_alt_m: MaxMinWindow
     rshift: SwitchInputMethod
     ~alt: DoubleHitWebSearch
+  custom:
+capslock_plus:
+  enable: 0
+  buildin:
     # ctrl: DoubleHitWebSearch
     capslock: 'send {Esc}'
     capslock_tab: ScreenShot
