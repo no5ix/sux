@@ -88,7 +88,7 @@ class ClipboardPlus
 		if (ClipsCount > 0)
 			Menu, xClipboard_AllclipsMenu, Show
 		else
-			ToolTipWithTimer("clipboard currently has no centent, please copy something...")
+			ToolTipWithTimer("clipboard currently has no centent, please copy something...", 2222)
 	}
 
 	_Trim(str_ori, add_time := 1)

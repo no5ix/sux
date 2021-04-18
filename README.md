@@ -169,13 +169,15 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - ini -->
 <!-- - clipboard history -->
 <!-- - 处理不要caps plus的逻辑 -->
-- 托盘暂停
+<!-- - 托盘暂停 -->
 <!-- - auto install ahk -->
-- custom tray menu
+<!-- - custom tray menu -->
 - update readme
+- fix bug: cant open conf.user.yaml with notepad
+- refactor tray menu code
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
-- gitignore user conf
-- start with win
+<!-- - gitignore user conf -->
+<!-- - start with win -->
 <!-- - auto compile -->
 <!-- - auto update -->
 <!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateNoxImpl的锅 -->

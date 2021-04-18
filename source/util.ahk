@@ -23,6 +23,30 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 }
 
 
+lang(key, default="")
+{
+	return key
+}
+
+
+EditFile(filename, admin := 0)
+{
+	if not FileExist(filename)
+	{
+		m("Can't find " filename "")
+		Return
+	}
+	cmd := "notepad" . %filename%
+	if ((not A_IsAdmin) && admin)
+	{
+		Run *RunAs %cmd%
+	}
+	Else
+	{
+		Run % cmd
+	}
+}
+
 ; modified from jackieku's code (http://www.autohotkey.com/forum/post-310959.html#310959)
 UriEncode(Uri, Enc = "UTF-8")
 {
@@ -529,3 +553,90 @@ RunAsAdmin() {
 ; 		Reload
 ; 	}
 ; }
+
+
+class xArray
+{
+	; xArray.merge
+	merge(arr1, arr2)
+	{
+		Loop, % arr2.MaxIndex()
+		{
+			arr1.Insert(arr2[A_Index])
+		}
+		return % arr1
+	}
+	; xArray.remove
+	remove(arr, value)
+	{
+		Loop, % arr.MaxIndex()
+		{
+			if(arr[A_Index]=value) {
+				arr.RemoveAt(A_Index)
+				return % xArray.remove(arr, value)
+			}
+		}
+		return % arr
+	}
+}
+
+
+class Tray
+{
+	; Tray.Tip
+	Tip(msg, seconds=1, opt=0x1)
+	{
+		; //BUG traytip弹出后，第一次单击托盘图标的动作将失效，第二次单击或显示托盘菜单后正常
+		TrayTip, % NoxCore.ProgramName, % msg, % seconds, % opt
+		Return
+		title := NoxCore.ProgramName
+		cmd = "%A_AhkPath%" "%A_ScriptDir%\NoxCore.Core.ahk" -traytip "%title%" "%msg%" "%opt%"
+		Run, %cmd%
+		Return
+	}
+
+	; Tray.SetMenu
+	SetMenu(menuList, ahk_std_menu=0)
+	{
+		Menu, Tray, DeleteAll
+		if(ahk_std_menu) {
+			Menu, Tray, Standard
+			Menu, Tray, Add
+		}
+		else {
+			Menu, Tray, NoStandard
+		}
+		xMenu.add("Tray", menuList)
+	}
+
+	; Tray.SetIcon
+	SetIcon(path)
+	{
+		if(FileExist(path))
+			Menu, Tray, Icon, %path%,,1
+	}
+}
+
+
+class Regedit
+{
+	static Subkey_Autorun := "Software\Microsoft\Windows\CurrentVersion\Run"
+	; Regedit.Autorun
+	Autorun(switch, name, path="")
+	{
+		if(switch)
+		{
+			RegWrite, REG_SZ, HKCU, % Regedit.Subkey_Autorun, % name, % path
+		}
+		Else
+		{
+			RegDelete, HKCU, % Regedit.Subkey_Autorun, % name
+		}
+	}
+	; Regedit.IsAutorun
+	IsAutorun(name, path)
+	{
+		RegRead, output, HKCU, % Regedit.Subkey_Autorun, % name
+		return % output==path
+	}
+}

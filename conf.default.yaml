@@ -199,6 +199,6 @@ hot-corner-edge:
 clipboard-plus: 
   enable: 1
   hotkey: 
-    win_alt_c: ClipboardPlus.ShowAllClips
+    win_alt_v: ClipboardPlus.ShowAllClips
   ClipsFirstShowNum: 10
   ClipsTotalNum: 50
