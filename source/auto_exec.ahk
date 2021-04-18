@@ -2,12 +2,14 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\util.ahk
 #Include %A_ScriptDir%\source\nox_core.ahk
 #Include %A_ScriptDir%\source\cmd_web_search.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
 
+#Include %A_ScriptDir%\user_extension.ahk
 
 
 
