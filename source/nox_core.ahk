@@ -1,23 +1,14 @@
 
-
+if(A_ScriptName=="nox_core.ahk") {
+	ExitApp
+}
 ; with this label, you can include this file on top of the file
 Goto, SUB_NOX_CORE_FILE_END_LABEL
 
 
-; 记录快捷键与对应操作
-HOTKEY_REGISTER_LIST := {}
-
-; 记录command与对应操作
-CMD_REGISTER_LIST := {}
-
-; 记录web-search与对应操作
-WEB_SEARCH_REGISTER_LIST := {}
-
-; 记录additional-features与对应操作
-ADDITIONAL_FEATURES_REGISTER_LIST := {}
-
-; 记录theme与对应操作
-THEME_CONF_REGISTER_LIST := {}
+#Include %A_ScriptDir%\source\common_const.ahk
+#Include %A_ScriptDir%\source\yaml.ahk
+#Include %A_ScriptDir%\source\action.ahk
 
 
 class NoxCore
@@ -45,21 +36,13 @@ class NoxCore
 	static icon_suspend_pause := NoxCore._ICON_DIR "3.ico"
 	; remote file path
 	static remote_branch := "master"
-	static remote_raw := "http://raw.githubusercontent.com/XUJINKAI/NoxCore/" NoxCore.remote_branch "/"
-	static remote_releases_dir := "https://github.com/XUJINKAI/NoxCore/releases/download/"
 	static remote_update_dl_dir := NoxCore.remote_releases_dir "beta0/"
-	; github api has limit
-	; static remote_contents := "https://api.github.com/repos/XUJINKAI/NoxCore/contents/"
 	; update
 	static check_update_first_after := 1
 	static check_update_period := 1000*3600*24
 	static Bkp_limit := 5
 	static update_list_path := NoxCore._CONF_DIR "update_list.json"
 	; online
-	static Project_Home_Page := "https://github.com/XUJINKAI/NoxCore"
-	static Project_Issue_page := "https://github.com/XUJINKAI/NoxCore/issues"
-	static remote_download_html := "https://github.com/XUJINKAI/NoxCore/releases"
-	static remote_help := "https://github.com/XUJINKAI/NoxCore/wiki"
 	;
 	; setting object (read only, for feature configuration)
 	static FeatureObj =
@@ -82,7 +65,7 @@ class NoxCore
 	{
 		CoordMode, Mouse, Screen
 		; setting
-		this.LoadFeatureYaml()
+		this.LoadConfYaml()
 
 		; initialize module
 		ClipboardPlus.Ini()
@@ -106,7 +89,7 @@ class NoxCore
 		return obj[cur_key]
 	}
 
-	LoadFeatureYaml()
+	LoadConfYaml()
 	{
 		if(NoxCore._DEBUG_ && this.debugConfig("load_default_feature_yaml", 0)) {
 			NoxCore.FeatureObj := Yaml(NoxCore.feature_yaml_default_file)
@@ -117,6 +100,51 @@ class NoxCore
 			}
 			NoxCore.FeatureObj := Yaml(NoxCore.feature_yaml_file)
 		}
+
+		
+		
+		if(NoxCore.GetFeatureCfg("hotkey.switch", 0))
+		{
+			For key, value in NoxCore.GetFeatureCfg("hotkey.buildin", {})
+				register_hotkey(key, value, "")
+		}
+
+		if(NoxCore.GetFeatureCfg("hot-corner-edge.switch", 0))
+		{
+			For border_key, border_action in NoxCore.GetFeatureCfg("hot-corner-edge.action", {})
+				for key, value in border_action
+					register_hotkey(key, value, border_key)
+		}
+
+		comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
+		if(NoxCore.GetFeatureCfg("command.switch", 0))
+		{
+			For key, value in NoxCore.GetFeatureCfg("command.buildin", {})
+				register_command(key, StrSplit(value, comma_delimiters_arr))
+			For key, value in NoxCore.GetFeatureCfg("command.custom", {})
+				register_command(key, StrSplit(value, comma_delimiters_arr))
+		}
+
+		if(NoxCore.GetFeatureCfg("web-search.switch", 0))
+		{
+			For key, value in NoxCore.GetFeatureCfg("web-search.buildin", {})
+				register_web_search(key, StrSplit(value, comma_delimiters_arr))
+			For key, value in NoxCore.GetFeatureCfg("web-search.custom", {})
+				register_web_search(key, StrSplit(value, comma_delimiters_arr))
+		}
+
+		For key, value in NoxCore.GetFeatureCfg("additional-features", {})
+			register_additional_features(key, value)
+
+		For key, value in NoxCore.GetFeatureCfg("theme", {})
+			register_theme_conf(key, value)
+
+
+		if(NoxCore.GetFeatureCfg("clipboard-plus.switch", 0))
+		{
+			For key, value in NoxCore.GetFeatureCfg("clipboard-plus.hotkey", {})
+				register_hotkey(key, value, "")
+		}
 	}
 
 	OnClipboardChange(func)
@@ -124,8 +152,6 @@ class NoxCore
 		this.OnClipboardChangeCmd.Insert(func)
 	}
 }
-
-
 
 
 
@@ -246,7 +272,7 @@ register_hotkey(key_name, action, prefix="")
 		; 	m(arr[2])
 		; 	m(action)
 		; }
-; DebugPrintVal(arr[2])
+; m(arr[2])
 
 		if(arr[1]!="") {
 			Hotkey, IF, border_event_evoke()
@@ -258,7 +284,6 @@ register_hotkey(key_name, action, prefix="")
 		}
 	}
 }
-
 
 
 /*
@@ -298,8 +323,10 @@ border_event_evoke()
 
 
 
+
+
 ; //////////////////////////////////////////////////////////////////////////
 SUB_NOX_CORE_FILE_END_LABEL:
-
+	temp_nc := "blabla"
 
 

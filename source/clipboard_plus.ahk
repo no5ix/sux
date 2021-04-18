@@ -8,8 +8,16 @@
 ; #Include, yaml.ahk
 
 
+
+if(A_ScriptName=="clipboard_plus.ahk") {
+	ExitApp
+}
+
 ; with this label, you can include this file on top of the file
 Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
+
+
+#Include %A_ScriptDir%\source\nox_core.ahk
 
 
 ; event callback
@@ -165,3 +173,4 @@ Return
 
 ; //////////////////////////////////////////////////////////////////////////
 SUB_CLIPBOARD_PLUS_FILE_END_LABEL:
+	temp_cp := "blabla"

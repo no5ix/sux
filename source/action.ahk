@@ -1,3 +1,6 @@
+#Include %A_ScriptDir%\source\common_const.ahk
+#Include %A_ScriptDir%\source\cmd_web_search.ahk
+
 
 JumpToPrevTab() {
 	if (IsMouseActiveWindowAtSameMonitor() == 0) {
@@ -57,7 +60,7 @@ DoubleHitWebSearch(){
 	; }
 	; %DoubleClickAltTriggerFunc%()
 	; return
-	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
+	gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common_const.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
 	%gui_spawn_func%()
 	return
 }
@@ -112,17 +115,18 @@ OpenNoxDir() {  ; Open the directory for this script
 	Run, explorer %A_ScriptDir%
 }
 
-UpdateNox() {
-	MsgBox, 4,, Would you like to update nox?
-	IfMsgBox Yes
-	{
-		gui_destroy()
-		; Gosub gui_spawn
-		UpdateNoxImpl(0)
-	}
-}
+; UpdateNox() {
+; 	MsgBox, 4,, Would you like to update nox?
+; 	IfMsgBox Yes
+; 	{
+; 		gui_destroy()
+; 		; Gosub gui_spawn
+; 		UpdateNoxImpl(0)
+; 	}
+; }
 
 SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
+	global ADDITIONAL_FEATURES_REGISTER_LIST
 	msg_str := "Would you like to turn " . (ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"] ? "off" : "on") . " disable win10 auto update?"
 	MsgBox, 4,, %msg_str%
 	IfMsgBox Yes

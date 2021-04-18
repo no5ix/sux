@@ -49,7 +49,7 @@ command:
   buildin:
     rd: Reload
     dir: OpenNoxDir
-    up: UpdateNox
+    # up: UpdateNox
     # wau: SwitchWin10AutoUpdate
     nw: StartNoxWithWindows
     cmd: 'cmd.exe'

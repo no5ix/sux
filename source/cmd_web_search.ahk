@@ -6,8 +6,14 @@
 ; global gui_state := closed
 
 
+if(A_ScriptName=="cmd_web_search.ahk") {
+	ExitApp
+}
+
 ; with this label, you can include this file on top of the file
 Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
+
+#Include %A_ScriptDir%\source\common_const.ahk
 
 
 global last_search_str = ""
@@ -249,3 +255,4 @@ return
 
 ; //////////////////////////////////////////////////////////////////////////
 SUB_CMD_WEB_SEARCH_FILE_END_LABEL:
+	temp_cws := "blabla"
