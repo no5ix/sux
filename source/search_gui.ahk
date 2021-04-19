@@ -119,10 +119,9 @@ gui_spawn(curr_select_text="") {
 	; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
 	
-	Gui, Margin, THEME_CONF_REGISTER_MAP["nox_margin_x"], THEME_CONF_REGISTER_MAP["nox_margin_y"]
+	Gui, Margin, 0, 0
 	nox_bg_color := THEME_CONF_REGISTER_MAP["nox_bg_color"] 
-	nox_control_color := THEME_CONF_REGISTER_MAP["nox_control_color"] 
-	Gui, Color, %nox_bg_color%, %nox_control_color%
+	Gui, Color, %nox_bg_color%, %nox_bg_color%
 	if (THEME_CONF_REGISTER_MAP["nox_border_shadow_type"] == "classic_shadow_type")
 		ShadowBorder(hMyGUI)
 	else
@@ -131,9 +130,8 @@ gui_spawn(curr_select_text="") {
 	Gui, Font, s22, Segoe UI
 	; Gui, Font, s10, Segoe UI
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleGuiUserInput
-	gui_control_options := "xm w" . THEME_CONF_REGISTER_MAP["nox_width"] . " c" . THEME_CONF_REGISTER_MAP["nox_text_color"] . " -E0x200"
-	; DebugPrintVal(gui_control_options)
-
+	gui_control_options := "xm+6 ym+6 w" . THEME_CONF_REGISTER_MAP["nox_width"] . " c" . THEME_CONF_REGISTER_MAP["nox_text_color"] . " -E0x200"
+	; gui_control_options := "w" . THEME_CONF_REGISTER_MAP["nox_width"] . " c" . THEME_CONF_REGISTER_MAP["nox_text_color"] . "  -E0x800000"
 	Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 	; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%

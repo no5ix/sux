@@ -178,13 +178,15 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
 <!-- - modify default conf: disable win auto update -->
 <!-- - hot corner: check on same monitor  -->
-- occasional: fix web search gui window lost caret / make caret center
+<!-- - occasional: fix web search gui window lost caret - make caret center -->
+- 失焦则销毁
+- 第二个屏幕就显示nox在第二个屏幕上
 <!-- - fix default lang -->
 
-- hot corner/edge/capslock switcher to tray menu
 - add donate page
 - add icon
 - add about nox version
+- hot corner/edge/capslock switcher to tray menu
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
 <!-- - gitignore user conf -->
 <!-- - start with win -->
