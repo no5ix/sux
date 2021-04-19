@@ -176,11 +176,11 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - fix bug: cant open conf.user.yaml with notepad -->
 <!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
-- modify default conf: disable win auto update
+<!-- - modify default conf: disable win auto update -->
 - hot corner: check on same monitor 
+- fix web search gui window lost caret / make caret center
+- 
 - add donate page
-- fix web search gui window lost caret
-- make caret center
 - add icon
 - add about nox version
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->

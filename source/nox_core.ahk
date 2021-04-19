@@ -89,7 +89,7 @@ class NoxCore
 
 		CoordMode, Mouse, Screen
 
-		this.LoadConfYaml()
+		this.HandleConfYaml()
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()
@@ -175,31 +175,10 @@ class NoxCore
 		NoxCore.Update_Tray_Menu()
 	}
 
-	AboutNox()
+	OnClipboardChange(func)
 	{
-		; lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
-		Gui, nox_About: New
-		Gui nox_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
-		Gui, Font, s12
-		; s := "NoxCore v" NoxCore.versionObj["version"]
-		; Gui, Add, Text,, % s
-		s := "<a href=""" NoxCore.Project_Home_Page """>" lang("Home Page") "</a>"
-		Gui, Add, Link,, % s
-		s := "<a href=""" NoxCore.Project_Issue_page """>" lang("Feedback") "</a>"
-		Gui, Add, Link,, % s
-		; s := "<a href=""" NoxCore.help_addr """>" lang("Help") "</a>"
-		; Gui, Add, Link,, % s
-		; s := "Author: XJK <a href=""mailto:jack8461@msn.cn"">jack8461@msn.cn</a>"
-		; Gui, Add, Link,, % s
-		; s := "<a href=""" NoxCore.donate_page """>" lang("Donate") "</a>"
-		; ; s .= " <a href=""https://www.zhihu.com/question/36847530/answer/92868539"">去知乎点赞!</a>"
-		; Gui, Add, Link,, % s
-		Gui, Add, Text
-		; Gui, Add, Button, Default gSub_Close_nox_About, Close
-		GuiControl, Focus, Close
-		Gui, Show,, About nox
+		this.OnClipboardChangeCmd.Insert(func)
 	}
-
 
 	; feature.yaml
 	GetFeatureCfg(keyStr, default="")
@@ -219,17 +198,12 @@ class NoxCore
 		return obj[cur_key]
 	}
 
-	LoadConfYaml()
+	HandleConfYaml()
 	{
-		if(NoxCore._DEBUG_ && this.debugConfig("load_default_feature_yaml", 0)) {
-			NoxCore.FeatureObj := Yaml(NoxCore.conf_default_yaml_file)
+		if(!FileExist(this.conf_user_yaml_file)) {
+			FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
 		}
-		else {
-			if(!FileExist(this.conf_user_yaml_file)) {
-				FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
-			}
-			NoxCore.FeatureObj := Yaml(NoxCore.conf_user_yaml_file)
-		}
+		NoxCore.FeatureObj := Yaml(NoxCore.conf_user_yaml_file)
 
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		if(NoxCore.GetFeatureCfg("hotkey.enable", 0))
@@ -254,9 +228,17 @@ class NoxCore
 			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 
-		if(NoxCore.GetFeatureCfg("hot-corner-edge.enable", 0))
+		if(NoxCore.GetFeatureCfg("hot-corner.enable", 0))
 		{
-			For border_key, border_action in NoxCore.GetFeatureCfg("hot-corner-edge.action", {})
+			For border_key, border_action in NoxCore.GetFeatureCfg("hot-corner.action", {})
+				for key, value in border_action
+					register_hotkey(key, value, border_key)
+			SetTimer, HotCorners, %hot_corners_detect_interval%
+		}
+
+		if(NoxCore.GetFeatureCfg("hot-edge.enable", 0))
+		{
+			For border_key, border_action in NoxCore.GetFeatureCfg("hot-edge.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 		}
@@ -291,14 +273,26 @@ class NoxCore
 				register_hotkey(key, value, "")
 		}
 	}
-
-	OnClipboardChange(func)
-	{
-		this.OnClipboardChangeCmd.Insert(func)
-	}
 }
 
 
+HotCorners() {
+	global HOTKEY_REGISTER_MAP
+	; ToolTipWithTimer("ggsmd")
+	border_code := get_border_code()
+	if (InStr(border_code, "Corner")) {
+		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
+		; ToolTipWithTimer(border_code "|" "hover")
+		; ToolTipWithTimer(action)
+
+		run(action)
+		Loop 
+		{
+			if (get_border_code() == "")
+				break ; exits loop when mouse is no longer in the corner
+		}
+	}
+}
 
 
 ; 把两个字符串数组交叉连接起来

@@ -11,23 +11,23 @@
 
 
 
-HotCorners() {
-	global HOTKEY_REGISTER_MAP
-	; ToolTipWithTimer("ggsmd")
-	border_code := get_border_code()
-	if (InStr(border_code, "Corner")) {
-		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
-		; ToolTipWithTimer(border_code "|" "hover")
-		; ToolTipWithTimer(action)
+; HotCorners() {
+; 	global HOTKEY_REGISTER_MAP
+; 	; ToolTipWithTimer("ggsmd")
+; 	border_code := get_border_code()
+; 	if (InStr(border_code, "Corner")) {
+; 		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
+; 		; ToolTipWithTimer(border_code "|" "hover")
+; 		; ToolTipWithTimer(action)
 
-		run(action)
-		Loop 
-		{
-			if (get_border_code() == "")
-				break ; exits loop when mouse is no longer in the corner
-		}
-	}
-}
+; 		run(action)
+; 		Loop 
+; 		{
+; 			if (get_border_code() == "")
+; 				break ; exits loop when mouse is no longer in the corner
+; 		}
+; 	}
+; }
 
 
 
@@ -39,12 +39,12 @@ NoxCore.init()
 
 RunAsAdmin()
 
-; if auto_limit_mode_when_full_screen
-; 	SetTimer, LimitModeWhenFullScreen, 88
+; ; if auto_limit_mode_when_full_screen
+; ; 	SetTimer, LimitModeWhenFullScreen, 88
 
-if ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"]
-    SetTimer, DisableWin10AutoUpdate, 66666
+; if ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"]
+;     SetTimer, DisableWin10AutoUpdate, 66666
 
-if ADDITIONAL_FEATURES_REGISTER_MAP["enable_hot_corners"] {
-    SetTimer, HotCorners, %hot_corners_detect_interval%
-}
+; if(NoxCore.GetFeatureCfg("hot-corner.enable", 0)) {
+;     SetTimer, HotCorners, %hot_corners_detect_interval%
+; }

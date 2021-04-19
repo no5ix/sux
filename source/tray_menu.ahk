@@ -78,7 +78,7 @@ class TrayMenu
 		; 		,[]])
 		; }
 		TrayMenuList := xArray.merge(TrayMenuList
-			,[[lang("About"), "NoxCore.AboutNox"]
+			,[[lang("About"), "TrayMenu.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]
 			,[lang("Donate"), NoxCore.donate_page]
 			; ,[check_update_name, "NoxCore.Check_update"]
@@ -109,6 +109,31 @@ class TrayMenu
 	{
 		NoxCore._switch_tray_standard_menu := (act="toggle")? !NoxCore._switch_tray_standard_menu :act
 		this.Update_Tray_Menu()
+	}
+
+	AboutNox()
+	{
+		; lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
+		Gui, nox_About: New
+		Gui nox_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
+		Gui, Font, s12
+		; s := "NoxCore v" NoxCore.versionObj["version"]
+		; Gui, Add, Text,, % s
+		s := "<a href=""" NoxCore.Project_Home_Page """>" lang("Home Page") "</a>"
+		Gui, Add, Link,, % s
+		s := "<a href=""" NoxCore.Project_Issue_page """>" lang("Feedback") "</a>"
+		Gui, Add, Link,, % s
+		; s := "<a href=""" NoxCore.help_addr """>" lang("Help") "</a>"
+		; Gui, Add, Link,, % s
+		; s := "Author: XJK <a href=""mailto:jack8461@msn.cn"">jack8461@msn.cn</a>"
+		; Gui, Add, Link,, % s
+		; s := "<a href=""" NoxCore.donate_page """>" lang("Donate") "</a>"
+		; ; s .= " <a href=""https://www.zhihu.com/question/36847530/answer/92868539"">去知乎点赞!</a>"
+		; Gui, Add, Link,, % s
+		Gui, Add, Text
+		; Gui, Add, Button, Default gSub_Close_nox_About, Close
+		GuiControl, Focus, Close
+		Gui, Show,, About nox
 	}
 
 	Update_Icon()
