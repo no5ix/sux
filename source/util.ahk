@@ -251,17 +251,21 @@ DisableWin10AutoUpdate(){
 
 
 ; Which can be used like this:
-; Code: Select all - Toggle Line numbers
-
-; MsgBox % Join("`n", "one", "two", "three") 
+; MsgBox % StringJoin("`n", "one", "two", "three") 
 ; substrings := ["one", "two", "three"]
-; MsgBox % Join("-", substrings*)
+; MsgBox % StringJoin("-", substrings*)
 StringJoin(sep, params*) {
     for index,param in params
         str .= sep . param
     return SubStr(str, StrLen(sep)+1)
 }
 
+
+ActivateWindowsUnderCursor() {
+	; activate the window currently under mouse cursor
+	MouseGetPos,,, curr_hwnd 
+	WinActivate, ahk_id %curr_hwnd%	
+}
 
 IsMouseActiveWindowAtSameMonitor() {
 	MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor

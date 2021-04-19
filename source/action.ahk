@@ -3,11 +3,7 @@
 
 
 JumpToPrevTab() {
-	if (IsMouseActiveWindowAtSameMonitor() == 0) {
-		; activate the window currently under mouse cursor
-		MouseGetPos,,, curr_hwnd 
-		WinActivate, ahk_id %curr_hwnd%
-	}
+	ActivateWindowsUnderCursor()
 	Send {LControl Down}{LShift Down}
 	Send, {Tab}
 	Sleep, 111
@@ -15,11 +11,7 @@ JumpToPrevTab() {
 }
 
 JumpToNextTab() {
-	if (IsMouseActiveWindowAtSameMonitor() == 0) {
-		; activate the window currently under mouse cursor
-		MouseGetPos,,, curr_hwnd 
-		WinActivate, ahk_id %curr_hwnd%
-	}
+	ActivateWindowsUnderCursor()
 	Send {LControl Down}
 	Send, {Tab}
 	Sleep, 111
