@@ -238,7 +238,7 @@ class NoxCore
 			For border_key, border_action in NoxCore.GetFeatureCfg("hot-corner.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
-			SetTimer, HotCorners, %hot_corners_detect_interval%
+			SetTimer, tick_hot_corners, %hot_corners_detect_interval%
 		}
 
 		if(NoxCore.GetFeatureCfg("hot-edge.enable", 0))
@@ -281,7 +281,7 @@ class NoxCore
 }
 
 
-HotCorners() {
+tick_hot_corners() {
 	global HOTKEY_REGISTER_MAP
 	; ToolTipWithTimer("ggsmd")
 	border_code := get_border_code()

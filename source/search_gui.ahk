@@ -15,10 +15,12 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 #Include %A_ScriptDir%\source\common_const.ahk
 
-
-global last_search_str = ""
-global trim_gui_user_input = ""
 global THEME_CONF_REGISTER_MAP
+
+
+last_search_str = ""
+trim_gui_user_input = ""
+auto_destory_gui_duration := -6666  ; millisecond
 
 
 
@@ -157,6 +159,7 @@ gui_spawn(curr_select_text="") {
 	yScrnOffset := A_ScreenHeight / 4
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, xCenter  y%yScrnOffset%, myGUI
+	; SetTimer, gui_destroy, %auto_destory_gui_duration%
 	return
 }
 
