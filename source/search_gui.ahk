@@ -142,7 +142,7 @@ gui_spawn(curr_select_text="") {
 
 	xMidScrn :=  A_ScreenWidth / 2
 	; m(xMidScrn)
-	CoordMode, Mouse, Screen
+	; CoordMode, Mouse, Screen
 	MouseGetPos, MX
 	If (MX > A_ScreenWidth)
 		xMidScrn += A_ScreenWidth

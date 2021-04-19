@@ -268,12 +268,15 @@ IsMouseActiveWindowAtSameMonitor() {
 	WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
 	; MsgBox, The Mouse_ is at %Mouse_x%`,%Mouse_y%
 	; MsgBox, The active window is at %cur_active_window_X%`,%cur_active_window_Y%
-	active_window_x_limit := second_monitor_min_x - 8  ; 经测试, 实际上全屏后也总是会减8
-	; MsgBox, active_window_x_limit is at %active_window_x_limit%`
-	if (second_monitor_min_x != 0) && ((Mouse_x >= second_monitor_min_x && cur_active_window_X < active_window_x_limit) || (Mouse_x < second_monitor_min_x && cur_active_window_X >= active_window_x_limit)) { 
-		return 0
+	real_cur_active_window_X := cur_active_window_X + 8  ; 经测试, 实际上全屏后也总是会加8
+	SysGet, mon_cnt, MonitorCount
+	Loop, % mon_cnt
+	{
+		SysGet, Mon, Monitor, % A_Index
+		if (Mouse_x >= MonLeft && Mouse_x < MonRight && real_cur_active_window_X >= MonLeft && real_cur_active_window_X < MonRight)
+			return 1
 	}
-	return 1
+	return 0
 }
 
 
@@ -440,10 +443,15 @@ get_border_code(X := "", Y := "", cornerPix = "")
 		cornerPix := CornerEdgeOffset
 	}
 	; Multi Monitor Support
-	SysGet, MonitorCount, MonitorCount
-	Loop, % MonitorCount
+	SysGet, mon_cnt, MonitorCount
+	Loop, % mon_cnt
 	{
 		SysGet, Mon, Monitor, % A_Index
+	; m(MonLeft)
+	; m(MonLeft)
+	; m(MonTop)
+	; m(MonBottom)
+	; ToolTipWithTimer(MonTop)
 		cur_mon_width := MonRight - MonLeft
 		cur_mon_height := MonBottom - MonTop
 		if(X>=MonLeft && Y>= MonTop && X<MonRight && Y<MonBottom)

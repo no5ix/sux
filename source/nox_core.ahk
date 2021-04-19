@@ -84,13 +84,17 @@ class NoxCore
 
 	init()
 	{
+		SetBatchLines, -1   ; maximize script speed!
+		SetWinDelay, -1
+		CoordMode, Mouse, Screen
+		CoordMode, ToolTip, Screen
+		CoordMode, Menu, Screen
+		
 		if !FileExist(NoxCore._APP_DATA_DIR)  
         	FileCreateDir, % NoxCore._APP_DATA_DIR
 
-		CoordMode, Mouse, Screen
-
 		this.HandleConfYaml()
-		
+
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()

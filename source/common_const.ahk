@@ -7,14 +7,7 @@ global old_limit_mode := limit_mode
 
 global fake_lb_down := 0
 
-global CornerEdgeOffset := 10  ; adjust tolerance value (pixels to corner) if desired	
-
-
-global second_monitor_min_x := 0
-global second_monitor_min_y := 0
-global second_monitor_max_x := 0
-global second_monitor_max_y := 0
-
+global CornerEdgeOffset := 8  ; adjust tolerance value (pixels to corner) if desired	
 
 global hot_corners_detect_interval := 88
 

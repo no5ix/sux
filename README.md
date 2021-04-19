@@ -179,7 +179,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - modify default conf: disable win auto update -->
 - hot corner: check on same monitor 
 - fix web search gui window lost caret / make caret center
-- 
+
+- hot corner/edge/capslock switcher to tray menu
 - add donate page
 - add icon
 - add about nox version
