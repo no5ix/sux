@@ -40,7 +40,7 @@ class ClipboardPlus
 	static ClipsFirstShowNum = 
 	static ClipsTotalNum = 
 
-	Ini()
+	init()
 	{
 		if (this.ini_registered == 1)
 			Return

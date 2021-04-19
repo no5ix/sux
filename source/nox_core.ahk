@@ -82,40 +82,17 @@ class NoxCore
 	static Editor = notepad
 	static Browser := "default"
 
-	Ini()
+	init()
 	{
 		if !FileExist(NoxCore._APP_DATA_DIR)  
         	FileCreateDir, % NoxCore._APP_DATA_DIR
 
 		CoordMode, Mouse, Screen
-		; setting
+
 		this.LoadConfYaml()
-
-		; initialize module
-		ClipboardPlus.Ini()
-		
-		WinMenu.Ini()
-
-		; initialize
-		this.Update_Tray_Menu()
-		this.SetAutorun("config")
-	}
-
-	SetAutorun(act="toggle")
-	{
-		cfg := NoxCore.GetConfig("autorun", 0)
-		autorun := (act="config")? cfg :act
-		autorun := (act="toggle")? !cfg :autorun
-		Regedit.Autorun(autorun, NoxCore.ProgramName, NoxCore.Launcher_Name)
-		NoxCore.SetConfig("autorun", autorun)
-		if(autorun)
-		{
-			Menu, Tray, Check, % lang("Start With Windows")
-		}
-		Else
-		{
-			Menu, Tray, UnCheck, % lang("Start With Windows")
-		}
+		ClipboardPlus.init()
+		WinMenu.init()
+		TrayMenu.init()
 	}
 
 
@@ -152,82 +129,6 @@ class NoxCore
 		NoxCore.ReloadNox()
 	}
 
-	; Tray Menu
-	Update_Tray_Menu()
-	{
-		; version_str := lang("About") " v" this.versionObj["version"]
-		autorun := NoxCore.GetConfig("autorun", 0)
-		; autoupdate := NoxCore.GetConfig("auto_update", 0)
-		; bigVer := NoxCore.GetBiggerRemVersion()
-		; if(bigVer!="") {
-		; 	check_update_name := lang("! New Version !") " v" bigVer
-		; }
-		; else {
-		; 	check_update_name := lang("Check Update")
-		; }
-		lang := NoxCore.GetConfig("lang")
-		Menu, Tray, Tip, % this.ProgramName
-		xMenu.New("TrayLanguage"
-			,[["English", "NoxCore.SetLang", {check: lang=="en"}]
-			, ["中文", "NoxCore.SetLang", {check: lang=="cn"}]])
-		; xMenu.New("TrayAdvanced"
-		; 	,[["Suspend Hotkey", "NoxCore.SetSuspend", {check: A_IsSuspended}]
-		; 	,["Pause Thread", "NoxCore.SetPause", {check: A_IsPaused}]
-		; 	,[]
-		; 	,[lang("AHK Standard Menu"), "NoxCore.Standard_Tray_Menu", {check: NoxCore._switch_tray_standard_menu}]
-		; 	,[]
-		; 	,[lang("Reset Program"), "NoxCore.ResetProgram"]])
-		TrayMenuList := []
-		; debug_show := NoxCore.debugConfig("show", 0)
-		; if(NoxCore._DEBUG_||debug_show) {
-		; 	TrayMenuList := xArray.merge(TrayMenuList
-		; 		,[["DEBUG Mode: " (NoxCore._DEBUG_?"ON":"OFF"), "NoxCore.debug_mode"],[]])
-		; }
-		; if(NoxCore._DEBUG_) {
-		; 	TrayMenuList := xArray.merge(TrayMenuList
-		; 		,[["ZIP files", "NoxCore._ZIP_nox_self"]
-		; 		,["Generate_update_list.json", "NoxCore._reGenerate_update_list"]
-		; 		,["Count_Download_Online", "NoxCore._SumGithubDownloadCount"]
-		; 		,[]
-		; 		,["config.ini", "notepad " NoxCore.app_data_ini_file]
-		; 		,["core.ahk", "edit: script/NoxCore.Core.ahk"]
-		; 		,["version.yaml", "edit:" NoxCore.version_yaml_file]
-		; 		,[]])
-		; }
-		TrayMenuList := xArray.merge(TrayMenuList
-			,[[lang("About"), "NoxCore.AboutNox"]
-			,[lang("Help"), NoxCore.help_addr]
-			,[lang("Donate"), NoxCore.donate_page]
-			; ,[check_update_name, "NoxCore.Check_update"]
-			,[]
-			,[lang("Start With Windows"), "NoxCore.SetAutorun", {check: autorun}]
-			; ,[lang("AutoUpdate"), "NoxCore.SetAutoUpdate", {check: autoupdate}]
-			,["Language",, {"sub": "TrayLanguage"}]
-			; ,[lang("Advanced"),, {"sub": "TrayAdvanced"}]
-			,[]
-			,[lang("Open nox Folder"), A_WorkingDir]
-			; ,[lang("Edit Ext.ahk"), "edit:" NoxCore.Ext_ahk_file]
-			,[lang("Edit Config File"), "NoxCore.Edit_conf_yaml"]
-			; ,[]
-			; ,[lang("Open AutoHotkey.exe Folder"), "Sub_nox_EXE_Loc"]
-			; ,[lang("AutoHotKey Help"), "Sub_nox_AHKHelp"]
-			,[]
-			,[lang("Disable"), "NoxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
-			,[lang("Restart nox"), "NoxCore.ReloadNox"]
-			,[lang("Exit"), "NoxCore.ExitNox"] ])
-		Tray.SetMenu(TrayMenuList, NoxCore._switch_tray_standard_menu)
-		Menu, Tray, Default, % lang("Disable")
-		Menu, Tray, Click, 1
-		NoxCore.Update_Icon()
-	}
-
-	static _switch_tray_standard_menu := 0
-	Standard_Tray_Menu(act="toggle")
-	{
-		NoxCore._switch_tray_standard_menu := (act="toggle")? !NoxCore._switch_tray_standard_menu :act
-		NoxCore.Update_Tray_Menu()
-	}
-
 	ExitNox(show_msg=true)
 	{
 		ExitApp
@@ -247,24 +148,6 @@ class NoxCore
 	Edit_conf_yaml()
 	{
 		EditFile(NoxCore.conf_user_yaml_file)
-	}
-
-	Update_Icon()
-	{
-		setsuspend := A_IsSuspended
-		setpause := A_IsPaused
-		if !setpause && !setsuspend {
-			this.SetIcon(this.icon_default)
-		}
-		Else if !setpause && setsuspend {
-			this.SetIcon(this.icon_pause)
-		}
-		Else if setpause && !setsuspend {
-			this.SetIcon(this.icon_suspend)
-		}
-		Else if setpause && setsuspend {
-			this.SetIcon(this.icon_suspend_pause)
-		}
 	}
 
 	SetState(setsuspend="", setpause="")
@@ -291,7 +174,7 @@ class NoxCore
 		}
 		NoxCore.Update_Tray_Menu()
 	}
-	;
+
 	AboutNox()
 	{
 		; lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)

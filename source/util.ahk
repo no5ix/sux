@@ -1,4 +1,4 @@
-
+﻿
 #Include %A_ScriptDir%\source\common_const.ahk
 
 
@@ -571,43 +571,6 @@ class xArray
 			}
 		}
 		return % arr
-	}
-}
-
-
-class Tray
-{
-	; Tray.Tip
-	Tip(msg, seconds=1, opt=0x1)
-	{
-		; //BUG traytip弹出后，第一次单击托盘图标的动作将失效，第二次单击或显示托盘菜单后正常
-		TrayTip, % NoxCore.ProgramName, % msg, % seconds, % opt
-		Return
-		title := NoxCore.ProgramName
-		cmd = "%A_AhkPath%" "%A_ScriptDir%\NoxCore.Core.ahk" -traytip "%title%" "%msg%" "%opt%"
-		Run, %cmd%
-		Return
-	}
-
-	; Tray.SetMenu
-	SetMenu(menuList, ahk_std_menu=0)
-	{
-		Menu, Tray, DeleteAll
-		if(ahk_std_menu) {
-			Menu, Tray, Standard
-			Menu, Tray, Add
-		}
-		else {
-			Menu, Tray, NoStandard
-		}
-		xMenu.add("Tray", menuList)
-	}
-
-	; Tray.SetIcon
-	SetIcon(path)
-	{
-		if(FileExist(path))
-			Menu, Tray, Icon, %path%,,1
 	}
 }
 

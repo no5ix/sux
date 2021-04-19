@@ -1,5 +1,192 @@
+﻿
+if(A_ScriptName=="tray_menu.ahk") {
+	ExitApp
+}
+
+; with this label, you can include this file on top of the file
+Goto, SUB_TRAY_MENU_FILE_END_LABEL
 
 
+#Include %A_ScriptDir%\source\nox_core.ahk
+; #Include %A_ScriptDir%\source\util.ahk
+
+class TrayMenu
+{
+	init() {
+		this.Update_Tray_Menu()
+		this.SetAutorun()
+	}
+
+
+	SetAutorun(act="toggle")
+	{
+		cfg := NoxCore.GetConfig("autorun", 0)
+		autorun := (act="config")? cfg :act
+		autorun := (act="toggle")? !cfg :autorun
+		Regedit.Autorun(autorun, NoxCore.ProgramName, NoxCore.Launcher_Name)
+		NoxCore.SetConfig("autorun", autorun)
+		if(autorun)
+		{
+			Menu, Tray, Check, % lang("Start With Windows")
+		}
+		Else
+		{
+			Menu, Tray, UnCheck, % lang("Start With Windows")
+		}
+	}
+
+	; Tray Menu
+	Update_Tray_Menu()
+	{
+		; version_str := lang("About") " v" this.versionObj["version"]
+		autorun := NoxCore.GetConfig("autorun", 0)
+		; autoupdate := NoxCore.GetConfig("auto_update", 0)
+		; bigVer := NoxCore.GetBiggerRemVersion()
+		; if(bigVer!="") {
+		; 	check_update_name := lang("! New Version !") " v" bigVer
+		; }
+		; else {
+		; 	check_update_name := lang("Check Update")
+		; }
+		lang := NoxCore.GetConfig("lang")
+		Menu, Tray, Tip, % this.ProgramName
+		xMenu.New("TrayLanguage"
+			,[["English", "NoxCore.SetLang", {check: lang=="en"}]
+			, ["中文", "NoxCore.SetLang", {check: lang=="cn"}]])
+		; xMenu.New("TrayAdvanced"
+		; 	,[["Suspend Hotkey", "NoxCore.SetSuspend", {check: A_IsSuspended}]
+		; 	,["Pause Thread", "NoxCore.SetPause", {check: A_IsPaused}]
+		; 	,[]
+		; 	,[lang("AHK Standard Menu"), "NoxCore.Standard_Tray_Menu", {check: NoxCore._switch_tray_standard_menu}]
+		; 	,[]
+		; 	,[lang("Reset Program"), "NoxCore.ResetProgram"]])
+		TrayMenuList := []
+		; debug_show := NoxCore.debugConfig("show", 0)
+		; if(NoxCore._DEBUG_||debug_show) {
+		; 	TrayMenuList := xArray.merge(TrayMenuList
+		; 		,[["DEBUG Mode: " (NoxCore._DEBUG_?"ON":"OFF"), "NoxCore.debug_mode"],[]])
+		; }
+		; if(NoxCore._DEBUG_) {
+		; 	TrayMenuList := xArray.merge(TrayMenuList
+		; 		,[["ZIP files", "NoxCore._ZIP_nox_self"]
+		; 		,["Generate_update_list.json", "NoxCore._reGenerate_update_list"]
+		; 		,["Count_Download_Online", "NoxCore._SumGithubDownloadCount"]
+		; 		,[]
+		; 		,["config.ini", "notepad " NoxCore.app_data_ini_file]
+		; 		,["core.ahk", "edit: script/NoxCore.Core.ahk"]
+		; 		,["version.yaml", "edit:" NoxCore.version_yaml_file]
+		; 		,[]])
+		; }
+		TrayMenuList := xArray.merge(TrayMenuList
+			,[[lang("About"), "NoxCore.AboutNox"]
+			,[lang("Help"), NoxCore.help_addr]
+			,[lang("Donate"), NoxCore.donate_page]
+			; ,[check_update_name, "NoxCore.Check_update"]
+			,[]
+			,[lang("Start With Windows"), "NoxCore.SetAutorun", {check: autorun}]
+			; ,[lang("AutoUpdate"), "NoxCore.SetAutoUpdate", {check: autoupdate}]
+			,["Language",, {"sub": "TrayLanguage"}]
+			; ,[lang("Advanced"),, {"sub": "TrayAdvanced"}]
+			,[]
+			,[lang("Open nox Folder"), A_WorkingDir]
+			; ,[lang("Edit Ext.ahk"), "edit:" NoxCore.Ext_ahk_file]
+			,[lang("Edit Config File"), "NoxCore.Edit_conf_yaml"]
+			; ,[]
+			; ,[lang("Open AutoHotkey.exe Folder"), "Sub_nox_EXE_Loc"]
+			; ,[lang("AutoHotKey Help"), "Sub_nox_AHKHelp"]
+			,[]
+			,[lang("Disable"), "NoxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
+			,[lang("Restart nox"), "NoxCore.ReloadNox"]
+			,[lang("Exit"), "NoxCore.ExitNox"] ])
+		this.SetMenu(TrayMenuList, NoxCore._switch_tray_standard_menu)
+		Menu, Tray, Default, % lang("Disable")
+		Menu, Tray, Click, 1
+		this.Update_Icon()
+	}
+
+	static _switch_tray_standard_menu := 0
+	Standard_Tray_Menu(act="toggle")
+	{
+		NoxCore._switch_tray_standard_menu := (act="toggle")? !NoxCore._switch_tray_standard_menu :act
+		this.Update_Tray_Menu()
+	}
+
+	Update_Icon()
+	{
+		setsuspend := A_IsSuspended
+		setpause := A_IsPaused
+		if !setpause && !setsuspend {
+			this.SetIcon(this.icon_default)
+		}
+		Else if !setpause && setsuspend {
+			this.SetIcon(this.icon_pause)
+		}
+		Else if setpause && !setsuspend {
+			this.SetIcon(this.icon_suspend)
+		}
+		Else if setpause && setsuspend {
+			this.SetIcon(this.icon_suspend_pause)
+		}
+	}
+
+	; Tray.SetIcon
+	SetIcon(path)
+	{
+		if(FileExist(path))
+			Menu, Tray, Icon, %path%,,1
+	}
+
+	; Tray.SetMenu
+	SetMenu(menuList, ahk_std_menu=0)
+	{
+		Menu, Tray, DeleteAll
+		if(ahk_std_menu) {
+			Menu, Tray, Standard
+			Menu, Tray, Add
+		}
+		else {
+			Menu, Tray, NoStandard
+		}
+		xMenu.add("Tray", menuList)
+	}
+}
+
+
+; class Tray
+; {
+; 	; Tray.Tip
+; 	Tip(msg, seconds=1, opt=0x1)
+; 	{
+; 		; //BUG traytip弹出后，第一次单击托盘图标的动作将失效，第二次单击或显示托盘菜单后正常
+; 		TrayTip, % NoxCore.ProgramName, % msg, % seconds, % opt
+; 		Return
+; 		title := NoxCore.ProgramName
+; 		cmd = "%A_AhkPath%" "%A_ScriptDir%\NoxCore.Core.ahk" -traytip "%title%" "%msg%" "%opt%"
+; 		Run, %cmd%
+; 		Return
+; 	}
+
+; 	; Tray.SetMenu
+; 	SetMenu(menuList, ahk_std_menu=0)
+; 	{
+; 		Menu, Tray, DeleteAll
+; 		if(ahk_std_menu) {
+; 			Menu, Tray, Standard
+; 			Menu, Tray, Add
+; 		}
+; 		else {
+; 			Menu, Tray, NoStandard
+; 		}
+; 		xMenu.add("Tray", menuList)
+; 	}
+
+; 	; ; Tray.SetIcon
+; 	; SetIcon(path)
+; 	; {
+; 	; 	if(FileExist(path))
+; 	; 		Menu, Tray, Icon, %path%,,1
+; 	; }
+; }
 
 
 ; //////////////////////////////////////////////////////////////////////////
@@ -14,7 +201,7 @@ class WinMenu
 	static HideIDs := {}
 	static ini_registered := 0
 
-	Ini()
+	init()
 	{
 		if (this.ini_registered == 1)
 			Return
@@ -226,3 +413,7 @@ Sub_xMenu_Open:
 Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
 Return
 
+
+; //////////////////////////////////////////////////////////////////////////
+SUB_TRAY_MENU_FILE_END_LABEL:
+	temp_tm := "blabla"

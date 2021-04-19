@@ -1,4 +1,4 @@
-#Include %A_ScriptDir%\source\common_const.ahk
+﻿#Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\search_gui.ahk
 
 
