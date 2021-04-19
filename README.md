@@ -174,7 +174,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - custom tray menu -->
 - update readme
 <!-- - fix bug: cant open conf.user.yaml with notepad -->
-- refactor tray menu code
+<!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
 - modify default conf: disable win auto update
 - hot corner: check on same monitor 

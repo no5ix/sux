@@ -241,6 +241,10 @@ class NoxCore
 		}
 		if(NoxCore.GetFeatureCfg("capslock_plus.enable", 0))
 		{
+			if (NoxCore.GetFeatureCfg("capslock_plus.buildin.capslock", 0) == 0) {
+				SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
+			}
+
 			For key, value in NoxCore.GetFeatureCfg("capslock_plus.buildin", {})
 				register_hotkey(key, value, "")
 			For key, value in NoxCore.GetFeatureCfg("capslock_plus.custom", {})
