@@ -17,7 +17,6 @@ web-search:
   enable: 1
   buildin:
     default: 'gg', 'bd'
-    nox: 'https://github.com/no5ix/nox'
     gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
     bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
     yd: 'http://www.youdao.com/w/REPLACEME'
@@ -39,6 +38,7 @@ command:
   buildin:
     cmd: 'cmd.exe'
     ev: 'C:\Program Files\Everything\Everything.exe'
+    nox: 'https://github.com/no5ix/nox'
     git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
 hotkey: 

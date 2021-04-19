@@ -14,7 +14,7 @@ click img to see full video
 
 # Features
 
-* **personalized configuration** : u can modify `user_conf.ahk` to override all default configuration
+* **personalized configuration** : u can modify `conf.user.yaml` to override all default configuration
 * **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`)
 * **hot corners** : just like mac hot cornes
 * **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `default_conf.ahk` `WebSearchUrlMap`
