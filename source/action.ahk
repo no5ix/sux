@@ -122,14 +122,14 @@ Reload() {
 ; }
 
 SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
-	global ADDITIONAL_FEATURES_REGISTER_LIST
-	msg_str := "Would you like to turn " . (ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"] ? "off" : "on") . " disable win10 auto update?"
+	global ADDITIONAL_FEATURES_REGISTER_MAP
+	msg_str := "Would you like to turn " . (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] ? "off" : "on") . " disable win10 auto update?"
 	MsgBox, 4,, %msg_str%
 	IfMsgBox Yes
 	{
 		gui_destroy()
-		ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"] := ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"] ? 0 : 1
-		if (ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"] == 0) {
+		ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] := ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] ? 0 : 1
+		if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] == 0) {
 			SetTimer, DisableWin10AutoUpdate, off
 			run, cmd /c sc config wuauserv start= auto,,hide
 			run, cmd /c net start wuauserv,,hide

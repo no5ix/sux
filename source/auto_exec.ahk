@@ -12,11 +12,11 @@
 
 
 HotCorners() {
-	global HOTKEY_REGISTER_LIST
+	global HOTKEY_REGISTER_MAP
 	; ToolTipWithTimer("ggsmd")
 	border_code := get_border_code()
 	if (InStr(border_code, "Corner")) {
-		action := HOTKEY_REGISTER_LIST[border_code "|" "hover"]
+		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
 		; ToolTipWithTimer(border_code "|" "hover")
 		; ToolTipWithTimer(action)
 
@@ -42,9 +42,9 @@ RunAsAdmin()
 ; if auto_limit_mode_when_full_screen
 ; 	SetTimer, LimitModeWhenFullScreen, 88
 
-if ADDITIONAL_FEATURES_REGISTER_LIST["disable_win10_auto_update"]
+if ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"]
     SetTimer, DisableWin10AutoUpdate, 66666
 
-if ADDITIONAL_FEATURES_REGISTER_LIST["enable_hot_corners"] {
+if ADDITIONAL_FEATURES_REGISTER_MAP["enable_hot_corners"] {
     SetTimer, HotCorners, %hot_corners_detect_interval%
 }

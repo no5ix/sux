@@ -18,12 +18,12 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 global last_search_str = ""
 global trim_gui_user_input = ""
-global THEME_CONF_REGISTER_LIST
+global THEME_CONF_REGISTER_MAP
 
 
 
 WebSearch(user_input, search_key="") {
-	global WEB_SEARCH_REGISTER_LIST
+	global WEB_SEARCH_REGISTER_MAP
 	if (user_input == "" && search_key == "")
 		return
 	; 当只填了 url 而没填 search_key 的时候
@@ -37,8 +37,8 @@ WebSearch(user_input, search_key="") {
 		search_key := "default"
 
 	; search_flag_index = 1
-	; search_flag := WEB_SEARCH_REGISTER_LIST[search_key][search_flag_index]
-	search_url := WEB_SEARCH_REGISTER_LIST[search_key]
+	; search_flag := WEB_SEARCH_REGISTER_MAP[search_key][search_flag_index]
+	search_url := WEB_SEARCH_REGISTER_MAP[search_key]
 	if (search_url.Length() == 1) {
 		search_url := search_url[1]
 	}
@@ -66,7 +66,7 @@ WebSearch(user_input, search_key="") {
 	}
 
 	if (search_key = "default") {
-		for _index, _elem in WEB_SEARCH_REGISTER_LIST[search_key] {
+		for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
 			; if (_index != search_flag_index) {
 				WebSearch(user_input, _elem)
 				Sleep, 666
@@ -119,11 +119,11 @@ gui_spawn(curr_select_text="") {
 	; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
 	
-	Gui, Margin, THEME_CONF_REGISTER_LIST["nox_margin_x"], THEME_CONF_REGISTER_LIST["nox_margin_y"]
-	nox_bg_color := THEME_CONF_REGISTER_LIST["nox_bg_color"] 
-	nox_control_color := THEME_CONF_REGISTER_LIST["nox_control_color"] 
+	Gui, Margin, THEME_CONF_REGISTER_MAP["nox_margin_x"], THEME_CONF_REGISTER_MAP["nox_margin_y"]
+	nox_bg_color := THEME_CONF_REGISTER_MAP["nox_bg_color"] 
+	nox_control_color := THEME_CONF_REGISTER_MAP["nox_control_color"] 
 	Gui, Color, %nox_bg_color%, %nox_control_color%
-	if (THEME_CONF_REGISTER_LIST["nox_border_shadow_type"] == "classic_shadow_type")
+	if (THEME_CONF_REGISTER_MAP["nox_border_shadow_type"] == "classic_shadow_type")
 		ShadowBorder(hMyGUI)
 	else
 		FrameShadow(hMyGUI)
@@ -131,7 +131,7 @@ gui_spawn(curr_select_text="") {
 	Gui, Font, s22, Segoe UI
 	; Gui, Font, s10, Segoe UI
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleGuiUserInput
-	gui_control_options := "xm w" . THEME_CONF_REGISTER_LIST["nox_width"] . " c" . THEME_CONF_REGISTER_LIST["nox_text_color"] . " -E0x200"
+	gui_control_options := "xm w" . THEME_CONF_REGISTER_MAP["nox_width"] . " c" . THEME_CONF_REGISTER_MAP["nox_text_color"] . " -E0x200"
 	; DebugPrintVal(gui_control_options)
 
 	Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
@@ -146,8 +146,8 @@ gui_spawn(curr_select_text="") {
 	MouseGetPos, MX
 	If (MX > A_ScreenWidth)
 		xMidScrn += A_ScreenWidth
-	xMidScrn -= THEME_CONF_REGISTER_LIST["nox_width"] / 2 
-	; m(THEME_CONF_REGISTER_LIST["nox_width"] / 2 )
+	xMidScrn -= THEME_CONF_REGISTER_MAP["nox_width"] / 2 
+	; m(THEME_CONF_REGISTER_MAP["nox_width"] / 2 )
 
 	yScrnOffset := A_ScreenHeight / 4
 	; Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
@@ -180,8 +180,8 @@ HandleGuiUserInput:
 	}
 	else
 	{
-		global CMD_REGISTER_LIST
-		if (CMD_REGISTER_LIST.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
+		global CMD_REGISTER_MAP
+		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
 			gui_destroy()
 
@@ -189,7 +189,7 @@ HandleGuiUserInput:
 			if (word_array[1] == "ev"){
 				;;; everything search
 				; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-				everything_exe_path := CMD_REGISTER_LIST["ev"][1]
+				everything_exe_path := CMD_REGISTER_MAP["ev"][1]
 				run, %everything_exe_path%
 				WinWaitActive, ahk_exe Everything.exe, , 2.222
 				if ErrorLevel
@@ -214,16 +214,16 @@ HandleGuiUserInput:
 			{
 				if (use_cur_path) {
 					Send, !d
-					final_cmd_str := StringJoin(" ", CMD_REGISTER_LIST[trim_gui_user_input]*) . "`n"
+					final_cmd_str := StringJoin(" ", CMD_REGISTER_MAP[trim_gui_user_input]*) . "`n"
 					SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
 					; SendRaw, cmd
 					; Send, {Enter}
 					return
 				}
 			}
-			run(CMD_REGISTER_LIST[trim_gui_user_input])
+			run(CMD_REGISTER_MAP[trim_gui_user_input])
 			if (use_cur_path) {
-				file_path_str := CMD_REGISTER_LIST[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+				file_path_str := CMD_REGISTER_MAP[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
 				; DebugPrintVal(file_path_str)
 				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+$", file_name)  ; file_name just like: "bash.exe""
 				; DebugPrintVal(file_name)
@@ -240,7 +240,7 @@ HandleGuiUserInput:
 			gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 
-			if WEB_SEARCH_REGISTER_LIST.HasKey(word_array[1]){
+			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]){
 				WebSearch(word_array[2], word_array[1])
 			}
 			else {

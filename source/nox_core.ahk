@@ -1,4 +1,4 @@
-
+﻿
 if(A_ScriptName=="nox_core.ahk") {
 	ExitApp
 }
@@ -13,6 +13,17 @@ Goto, SUB_NOX_CORE_FILE_END_LABEL
 
 
 
+
+
+lang(key)
+{
+	global LANGUAGE_CONF_MAP
+	lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
+	ret := key
+	if (lang == NoxCore.Default_lang)
+		ret := LANGUAGE_CONF_MAP[key]
+	return ret
+}
 
 
 class NoxCore
@@ -99,11 +110,11 @@ class NoxCore
 		NoxCore.SetConfig("autorun", autorun)
 		if(autorun)
 		{
-			Menu, Tray, Check, % lang("Autorun")
+			Menu, Tray, Check, % lang("Start With Windows")
 		}
 		Else
 		{
-			Menu, Tray, UnCheck, % lang("Autorun")
+			Menu, Tray, UnCheck, % lang("Start With Windows")
 		}
 	}
 
@@ -184,11 +195,12 @@ class NoxCore
 		; 		,[]])
 		; }
 		TrayMenuList := xArray.merge(TrayMenuList
-			,[[lang("About"), "NoxCore.About"]
+			,[[lang("About"), "NoxCore.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]
+			,[lang("Donate"), NoxCore.donate_page]
 			; ,[check_update_name, "NoxCore.Check_update"]
 			,[]
-			,[lang("Autorun"), "NoxCore.SetAutorun", {check: autorun}]
+			,[lang("Start With Windows"), "NoxCore.SetAutorun", {check: autorun}]
 			; ,[lang("AutoUpdate"), "NoxCore.SetAutoUpdate", {check: autoupdate}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			; ,[lang("Advanced"),, {"sub": "TrayAdvanced"}]
@@ -201,7 +213,7 @@ class NoxCore
 			; ,[lang("AutoHotKey Help"), "Sub_nox_AHKHelp"]
 			,[]
 			,[lang("Disable"), "NoxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
-			,[lang("Restart"), "NoxCore.ReloadNox"]
+			,[lang("Restart nox"), "NoxCore.ReloadNox"]
 			,[lang("Exit"), "NoxCore.ExitNox"] ])
 		Tray.SetMenu(TrayMenuList, NoxCore._switch_tray_standard_menu)
 		Menu, Tray, Default, % lang("Disable")
@@ -280,9 +292,9 @@ class NoxCore
 		NoxCore.Update_Tray_Menu()
 	}
 	;
-	About()
+	AboutNox()
 	{
-		lang := NoxCore.GetConfig("lang", "cn")
+		; lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
 		Gui, nox_About: New
 		Gui nox_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, Font, s12
@@ -292,12 +304,13 @@ class NoxCore
 		Gui, Add, Link,, % s
 		s := "<a href=""" NoxCore.Project_Issue_page """>" lang("Feedback") "</a>"
 		Gui, Add, Link,, % s
+		; s := "<a href=""" NoxCore.help_addr """>" lang("Help") "</a>"
+		; Gui, Add, Link,, % s
 		; s := "Author: XJK <a href=""mailto:jack8461@msn.cn"">jack8461@msn.cn</a>"
 		; Gui, Add, Link,, % s
-		dnt := lang="cn" ? "捐赠!让作者更有动力给nox加新功能!" : "Donate!"
-		s := "<a href=""" NoxCore.donate_page """>" dnt "</a>"
-		; s .= " <a href=""https://www.zhihu.com/question/36847530/answer/92868539"">去知乎点赞!</a>"
-		Gui, Add, Link,, % s
+		; s := "<a href=""" NoxCore.donate_page """>" lang("Donate") "</a>"
+		; ; s .= " <a href=""https://www.zhihu.com/question/36847530/answer/92868539"">去知乎点赞!</a>"
+		; Gui, Add, Link,, % s
 		Gui, Add, Text
 		; Gui, Add, Button, Default gSub_Close_nox_About, Close
 		GuiControl, Focus, Close
@@ -424,36 +437,36 @@ str_array_concate(arr, app, deli="")
 
 register_command(key_name, action)
 {
-	global CMD_REGISTER_LIST
-	CMD_REGISTER_LIST[key_name] := action
+	global CMD_REGISTER_MAP
+	CMD_REGISTER_MAP[key_name] := action
 }
 
 
 register_web_search(key_name, action)
 {
-	global WEB_SEARCH_REGISTER_LIST
-	WEB_SEARCH_REGISTER_LIST[key_name] := action
+	global WEB_SEARCH_REGISTER_MAP
+	WEB_SEARCH_REGISTER_MAP[key_name] := action
 }
 
 
 register_additional_features(key_name, val)
 {
-	global ADDITIONAL_FEATURES_REGISTER_LIST
-	ADDITIONAL_FEATURES_REGISTER_LIST[key_name] := val
+	global ADDITIONAL_FEATURES_REGISTER_MAP
+	ADDITIONAL_FEATURES_REGISTER_MAP[key_name] := val
 }
 
 
 register_theme_conf(key_name, val)
 {
-	global THEME_CONF_REGISTER_LIST
-	THEME_CONF_REGISTER_LIST[key_name] := val
+	global THEME_CONF_REGISTER_MAP
+	THEME_CONF_REGISTER_MAP[key_name] := val
 }
 
 
 register_hotkey(key_name, action, prefix="")
 {
 
-	global HOTKEY_REGISTER_LIST
+	global HOTKEY_REGISTER_MAP
 	trans_key := []
 	
 	StringLower, key_name, key_name
@@ -503,8 +516,8 @@ register_hotkey(key_name, action, prefix="")
 		; m(key "//" action)
 		; m(original_key "//" action)
 
-		HOTKEY_REGISTER_LIST[original_key] := action
-		; DebugPrintVal(HOTKEY_REGISTER_LIST[key])
+		HOTKEY_REGISTER_MAP[original_key] := action
+		; DebugPrintVal(HOTKEY_REGISTER_MAP[key])
 		arr := StrSplit(key, "|")
 		
 		if (arr[2] == "hover") {
@@ -539,10 +552,10 @@ SUB_HOTKEY_ZONE_BORDER:
 	border_code := get_border_code()
 	pending_replace_str := GetKeyState("LShift", "P") ? "CapsLock+": "CapsLock"
 	cur_hotkey := StrReplace(A_ThisHotkey, "CapsLock & ", pending_replace_str)
-	action := HOTKEY_REGISTER_LIST[border_code "|" cur_hotkey]
+	action := HOTKEY_REGISTER_MAP[border_code "|" cur_hotkey]
 	if(action="") {
 		; 鼠标移到边缘但触发普通热键时
-		action := HOTKEY_REGISTER_LIST["|" cur_hotkey]
+		action := HOTKEY_REGISTER_MAP["|" cur_hotkey]
 	}
 	run(action)
 Return
@@ -553,7 +566,7 @@ Return
 
 border_event_evoke()
 {
-	global HOTKEY_REGISTER_LIST
+	global HOTKEY_REGISTER_MAP
 	border_code := get_border_code()
 	; ToolTipWithTimer(border_code)
 
@@ -561,7 +574,7 @@ border_event_evoke()
 	; ToolTipWithTimer(key)
 
 	; StringUpper, key, key
-	action := HOTKEY_REGISTER_LIST[key]
+	action := HOTKEY_REGISTER_MAP[key]
 	if(action!="")
 		return true
 }

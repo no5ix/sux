@@ -25,19 +25,32 @@ global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
 
 
+LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给nox加新功能!"
+    ,"About": "关于"
+    ,"Help": "帮助"
+    ,"Start With Windows": "开机启动"
+    ,"Language": "语言"
+    ,"Open nox Folder": "打开nox文件夹"
+    ,"Edit Config File": "编辑配置文件"
+    ,"Disable": "禁用"
+    ,"Restart nox": "重启nox"
+    ,"Exit": "退出"
+    ,"Home Page": "主页"
+    ,"Feedback": "反馈"}
+
 
 ; 记录快捷键与对应操作
-HOTKEY_REGISTER_LIST := {}
+HOTKEY_REGISTER_MAP := {}
 
 ; 记录command与对应操作
-CMD_REGISTER_LIST := {}
+CMD_REGISTER_MAP := {}
 
 ; 记录web-search与对应操作
-WEB_SEARCH_REGISTER_LIST := {}
+WEB_SEARCH_REGISTER_MAP := {}
 
 ; 记录additional-features与对应操作
-ADDITIONAL_FEATURES_REGISTER_LIST := {}
+ADDITIONAL_FEATURES_REGISTER_MAP := {}
 
 ; 记录theme与对应操作
-THEME_CONF_REGISTER_LIST := {}
+THEME_CONF_REGISTER_MAP := {}
 

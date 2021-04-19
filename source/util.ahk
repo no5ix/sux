@@ -23,12 +23,6 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 }
 
 
-lang(key, default="")
-{
-	return key
-}
-
-
 EditFile(filename, admin := 0)
 {
 	if not FileExist(filename)
