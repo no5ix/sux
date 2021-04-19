@@ -128,7 +128,7 @@ capslock_plus:
     capslock_/: 'send \'
     capslock_shift_/: 'send +\'
   custom:
-hot-corner-edge: 
+hot-corner: 
   enable: 1
   action: 
     LeftTopCorner: 
@@ -157,6 +157,9 @@ hot-corner-edge:
       # MButton: 'send {media_play_pause}'
       # wheeldown: 'send {media_next}'
       # wheelup: 'send {media_prev}'
+hot-edge:
+  enable: 1
+  action:
     TopHalfLeftEdge: 
       ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
     TopHalfRightEdge: 
@@ -168,13 +171,6 @@ hot-corner-edge:
       # MButton: 'send #{tab}'
       # wheeldown: 'send ^#{right}'
       # wheelup: 'send ^#{left}'
-    # LeftHalfTopEdge/RightHalfTopEdge/LeftHalfBottomEdge/RightHalfBottomEdge: 
-    #   ctrl_shift_wheeldown: 'send {end}'
-    #   ctrl_shift_wheelup: 'send {home}'
-    #   shift_wheeldown: 'send {pgdn}{pgdn}{pgdn}{pgdn}{pgdn}'
-    #   shift_wheelup: 'send {pgup}{pgup}{pgup}{pgup}{pgup}'
-    #   wheeldown: 'send {pgdn}'
-    #   wheelup: 'send {pgup}'
     LeftHalfBottomEdge: 
       ctrl_8: 'send #{Tab}'
       # shift_wheeldown: Sys.Screen.BrightnessDown
