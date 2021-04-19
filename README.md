@@ -177,8 +177,9 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
 <!-- - modify default conf: disable win auto update -->
-- hot corner: check on same monitor 
-- fix web search gui window lost caret / make caret center
+<!-- - hot corner: check on same monitor  -->
+- occasional: fix web search gui window lost caret / make caret center
+<!-- - fix default lang -->
 
 - hot corner/edge/capslock switcher to tray menu
 - add donate page

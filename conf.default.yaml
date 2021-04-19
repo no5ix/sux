@@ -1,4 +1,4 @@
-﻿File-Description: 可参考conf.default.yaml文件修改
+﻿File-Description: 可参考conf.default.yaml文件修改, 改了之后重启nox才会生效
 theme: 
   # # dark theme
   # nox_width: 620

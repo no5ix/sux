@@ -47,7 +47,7 @@ class TrayMenu
 		; else {
 		; 	check_update_name := lang("Check Update")
 		; }
-		lang := NoxCore.GetConfig("lang")
+		lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
 		Menu, Tray, Tip, % this.ProgramName
 		xMenu.New("TrayLanguage"
 			,[["English", "NoxCore.SetLang", {check: lang=="en"}]

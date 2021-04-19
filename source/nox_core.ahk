@@ -19,9 +19,10 @@ lang(key)
 {
 	global LANGUAGE_CONF_MAP
 	lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
-	ret := key
 	if (lang == NoxCore.Default_lang)
 		ret := LANGUAGE_CONF_MAP[key]
+	else
+		ret := key
 	return ret
 }
 
@@ -89,7 +90,7 @@ class NoxCore
 		CoordMode, Mouse, Screen
 		CoordMode, ToolTip, Screen
 		CoordMode, Menu, Screen
-		
+
 		if !FileExist(NoxCore._APP_DATA_DIR)  
         	FileCreateDir, % NoxCore._APP_DATA_DIR
 
@@ -124,7 +125,6 @@ class NoxCore
 	{
 		if(act="itemname")
 		{
-			lang_map := {"English": "en", "中文": "cn"}
 			lang := lang_map[A_ThisMenuItem]
 		}
 		else {
