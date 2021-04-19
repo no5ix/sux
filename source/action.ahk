@@ -111,12 +111,6 @@ Reload() {
 	Reload
 }
 
-OpenNoxDir() {  ; Open the directory for this script
-	gui_destroy()
-	; Run, %A_ScriptDir%  ; 用这种方式会把nox文件夹之前的文件夹里的exe执行..头疼..所以改用下面这行代码来写
-	Run, explorer %A_ScriptDir%
-}
-
 ; UpdateNox() {
 ; 	MsgBox, 4,, Would you like to update nox?
 ; 	IfMsgBox Yes

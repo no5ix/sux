@@ -27,34 +27,33 @@ web-search:
   enable: 1
   buildin:
     default: 'gg', 'bd'
-	  nox: 'https://github.com/no5ix/nox'
-	  gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
-	  bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
-	  yd: 'http://www.youdao.com/w/REPLACEME'
-	  bd: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-	  bb: 'search.bilibili.com/all?keyword=REPLACEME'
-	  jd: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8'
-	  zh: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
-	  gh: 'https://github.com/search?q=REPLACEME'
-	  so: 'https://stackoverflow.com/search?q=REPLACEME'
-	  yt: 'https://www.youtube.com/results?search_query=REPLACEME'
-	  ph: 'https://www.pornhub.com/video/search?search=REPLACEME'
-	  db: 'https://www.douban.com/search?q=REPLACEME'
-	  qm: 'https://www.qimai.cn/search/index/country/cn/search/REPLACEME'
-	  yk: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
-	  lc: 'https://leetcode-cn.com/problemset/all/?search=REPLACEME'
+    nox: 'https://github.com/no5ix/nox'
+    gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
+    bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
+    yd: 'http://www.youdao.com/w/REPLACEME'
+    bd: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+    bb: 'search.bilibili.com/all?keyword=REPLACEME'
+    jd: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8'
+    zh: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
+    gh: 'https://github.com/search?q=REPLACEME'
+    so: 'https://stackoverflow.com/search?q=REPLACEME'
+    yt: 'https://www.youtube.com/results?search_query=REPLACEME'
+    ph: 'https://www.pornhub.com/video/search?search=REPLACEME'
+    db: 'https://www.douban.com/search?q=REPLACEME'
+    qm: 'https://www.qimai.cn/search/index/country/cn/search/REPLACEME'
+    yk: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
+    lc: 'https://leetcode-cn.com/problemset/all/?search=REPLACEME'
   custom:
 command: 
   enable: 1
   buildin:
-    rd: Reload
-    dir: OpenNoxDir
+    # rd: Reload
     # up: UpdateNox
     # wau: SwitchWin10AutoUpdate
     # nw: StartNoxWithWindows
     cmd: 'cmd.exe'
-	  ev: 'C:\Program Files\Everything\Everything.exe'
-	  git: 'C:\Program Files\Git\bin\bash.exe --login'
+    ev: 'C:\Program Files\Everything\Everything.exe'
+    git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
     blog: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Documents\github\hexo-theme-next-optimized'
     proj: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\b\Documents\github\nox'

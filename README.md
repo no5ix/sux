@@ -176,6 +176,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 - fix bug: cant open conf.user.yaml with notepad
 - refactor tray menu code
 - fix lang logic: "Autorun" -> "Start with Windows"
+- modify default conf: disable win auto update
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
 <!-- - gitignore user conf -->
 <!-- - start with win -->

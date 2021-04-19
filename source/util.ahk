@@ -36,7 +36,7 @@ EditFile(filename, admin := 0)
 		m("Can't find " filename "")
 		Return
 	}
-	cmd := "notepad" . %filename%
+	cmd := "notepad " . filename
 	if ((not A_IsAdmin) && admin)
 	{
 		Run *RunAs %cmd%
