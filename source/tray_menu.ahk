@@ -14,9 +14,8 @@ class TrayMenu
 {
 	init() {
 		this.Update_Tray_Menu()
-		this.SetAutorun()
+		this.SetAutorun("config")
 	}
-
 
 	SetAutorun(act="toggle")
 	{
@@ -83,7 +82,7 @@ class TrayMenu
 			,[lang("Donate"), NoxCore.donate_page]
 			; ,[check_update_name, "NoxCore.Check_update"]
 			,[]
-			,[lang("Start With Windows"), "NoxCore.SetAutorun", {check: autorun}]
+			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
 			; ,[lang("AutoUpdate"), "NoxCore.SetAutoUpdate", {check: autoupdate}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			; ,[lang("Advanced"),, {"sub": "TrayAdvanced"}]

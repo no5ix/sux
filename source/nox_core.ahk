@@ -90,6 +90,7 @@ class NoxCore
 		CoordMode, Mouse, Screen
 
 		this.HandleConfYaml()
+		
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()
