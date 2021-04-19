@@ -180,7 +180,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - hot corner: check on same monitor  -->
 <!-- - occasional: fix web search gui window lost caret - make caret center -->
 - 失焦则销毁
-- 第二个屏幕就显示nox在第二个屏幕上
+<!-- - 第二个屏幕就显示nox在第二个屏幕上 -->
 <!-- - fix default lang -->
 
 - add donate page

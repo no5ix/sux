@@ -138,19 +138,25 @@ gui_spawn(curr_select_text="") {
 
 	Gui, Add, Button, x-10 y-10 w1 h1 +default gHandleGuiUserInput ; hidden button
 
-	xMidScrn :=  A_ScreenWidth / 2
-	; m(xMidScrn)
-	; CoordMode, Mouse, Screen
-	MouseGetPos, MX
-	If (MX > A_ScreenWidth)
-		xMidScrn += A_ScreenWidth
-	xMidScrn -= THEME_CONF_REGISTER_MAP["nox_width"] / 2 
-	; m(THEME_CONF_REGISTER_MAP["nox_width"] / 2 )
+	MouseGetPos, Mouse_x
 
+	SysGet, mon_cnt, MonitorCount
+	xMidScrn := 0
+	last_mon_width := 0
+	Loop, % mon_cnt
+	{
+		SysGet, Mon, Monitor, % A_Index
+		_mon_width := (MonRight - MonLeft)
+		xMidScrn += _mon_width
+		last_mon_width := _mon_width
+		if (Mouse_x >= MonLeft && Mouse_x < MonRight)
+			break
+	}
+	xMidScrn -= last_mon_width / 2
+	xMidScrn -= THEME_CONF_REGISTER_MAP["nox_width"] / 2 
 	yScrnOffset := A_ScreenHeight / 4
-	; Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
-	Gui, Show, xCenter  y%yScrnOffset%, myGUI
-	; Gui, Show, , myGUI
+	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
+	; Gui, Show, xCenter  y%yScrnOffset%, myGUI
 	return
 }
 
