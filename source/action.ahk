@@ -99,7 +99,7 @@ MaxMinWindow() {
 	;     WinRestore, A
 }
 
-Reload() {
+ReloadNox() {
 	gui_destroy() ; removes the GUI even when the reload fails
 	Reload
 }

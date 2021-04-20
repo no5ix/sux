@@ -216,7 +216,7 @@ HandleGuiUserInput:
 			}
 
 			; if (word_array[1] == "git" || word_array[1] == "cmd"){
-			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "%UserProfile%\Desktop", "git" : "~/Desktop"}
+			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop", "git" : "cd ~/Desktop"}
 			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(trim_gui_user_input)
 			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
 			{
@@ -232,12 +232,10 @@ HandleGuiUserInput:
 			run(CMD_REGISTER_MAP[trim_gui_user_input])
 			if (use_cur_path) {
 				file_path_str := CMD_REGISTER_MAP[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
-				; DebugPrintVal(file_path_str)
 				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+$", file_name)  ; file_name just like: "bash.exe""
-				; DebugPrintVal(file_name)
 				WinWaitActive, ahk_exe %file_name%,, 2222
 				if !ErrorLevel {
-					cd_user_desktop_cmd_input := "cd " . USE_CURRENT_DIRECTORY_PATH_CMDs[trim_gui_user_input] . "`n"
+					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[trim_gui_user_input] . "`n"
 					SendInput, %cd_user_desktop_cmd_input%
 				}
 			}

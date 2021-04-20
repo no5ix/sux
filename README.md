@@ -24,13 +24,13 @@ click img to see full video
 * **screen capture** : try `Capslock + Tab`
 * **disable win10 auto update**: see `conf.user.yaml`-`additional-features`-`disable_win10_auto_update`
 * **start nox with windows**
-<!-- * **auto update when launch nox** : see `default_conf.ahk` : `auto_update_when_launch_nox` -->
 * **custom command line**:  see `conf.user.yaml`-`command`
 * **custom hotkey**:  see `conf.user.yaml`-`hotkey`
 * **clipboard-plus**:  clipboard history, try `win+alt+v`, see `conf.user.yaml`-`clipboard-plus`
 <!-- * **auto selection copy** : just like linux terminal -->
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
+<!-- * **auto update when launch nox** : see `default_conf.ahk` : `auto_update_when_launch_nox` -->
 
 
 # CMDs
@@ -46,7 +46,6 @@ click img to see full video
 
 - see [Chinese detail](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
 - see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
-
 - win: "#" 
 - ctrl: "^" 
 - shift: "+" 
@@ -233,10 +232,11 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - auto install ahk -->
 <!-- - custom tray menu -->
 <!-- - rshift issue -->
-- git cmd not goto desktop
+<!-- - git cmd not goto desktop -->
+- 
 - auto update/check update
 - add about nox version
-- add donate page
+<!-- - add donate page -->
 - add icon
 - update readme
 - hot corner/edge/capslock switcher to tray menu
