@@ -63,7 +63,7 @@ class TrayMenu
 			,[[version_str, "TrayMenu.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]
 			,[lang("Donate"), NoxCore.donate_page]
-			,[check_update_menu_name, "NoxCore.CheckUpdate"]
+			,[check_update_menu_name, "CheckUpdate"]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
 			,["Language",, {"sub": "TrayLanguage"}]

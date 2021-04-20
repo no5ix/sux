@@ -30,22 +30,22 @@ lang(key)
 }
 
 
+check_update_from_launch = 0
 
-CheckUpdate()
+CheckUpdate(from_launch=0)
 {
+	global check_update_from_launch
+	check_update_from_launch := from_launch
 	NoxCore.get_remote_file(NoxCore.data_ini_file)
 }
 
 cur_http_req =
-last_resp_txt := ""
 
 get_remote_data_ini(url)
 {
 	global cur_http_req
 	cur_http_req := ComObjCreate("Msxml2.XMLHTTP")
 	; 打开启用异步的请求.
-	; cur_http_req.open("GET", "https://www.autohotkey.com/download/1.1/version.txt", true)
-	; cur_http_req.open("GET", "https://raw.githubusercontent.com/no5ix/nox/master/app_data/data.ini", true)
 	cur_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
 	cur_http_req.onreadystatechange := Func("on_get_remote_data_ini_ready")
@@ -55,19 +55,38 @@ get_remote_data_ini(url)
 
 on_get_remote_data_ini_ready() {
 	global cur_http_req
-	; m(cur_http_req)
-	; m(cur_http_req.responseText)
-	; if (cur_http_req.status == 200) ; 完成.
-	; m(cur_http_req.status)
-	if (cur_http_req.readyState != 4)  ; 没有完成.
+	global check_update_from_launch
+	if (cur_http_req.readyState != 4) {  ; 没有完成.
 		return
-	if (cur_http_req.status == 200 && last_resp_txt != cur_http_req.responseText) {
-		; FileAppend, % cur_http_req.responseText, jj_remote.ini
+	}
+	if (cur_http_req.status == 200) {
 		if FileExist(NoxCore.remote_data_ini_file)
 			FileDelete, % NoxCore.remote_data_ini_file
 		FileAppend, % cur_http_req.responseText, % NoxCore.remote_data_ini_file
-		NoxCore.handle_new_version()
+		remote_ver_str := NoxCore.get_remote_config("ver")
+		if (get_version_sum(remote_ver_str) > get_version_sum(NoxCore.version)) {
+			TrayMenu.update_tray_menu()
+			MsgBox, 4,, % lang("There is a new version nox, would you like to check it out?")
+			IfMsgBox Yes
+			{
+				run, % NoxCore.remote_download_html
+			}
+		}
+		else {
+			if (check_update_from_launch == 0)
+				MsgBox,,, % lang("This is the lastest version.") ,6
+		}
 	}
+	else {
+		if (check_update_from_launch == 0) {
+			msg := lang("Can not connect to GitHub.")
+			if (cur_http_req.status == 12007) {
+				msg := msg lang(" Maybe need a proxy.")
+			}
+			MsgBox,,, % msg ,6
+		}
+	}
+	check_update_from_launch := 0
 }
 
 
@@ -124,23 +143,11 @@ class NoxCore
 
 		this.HandleConfYaml()
 		this.version := NoxCore.GetConfig("ver")
-		CheckUpdate()
+		CheckUpdate(1)
 
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()
-	}
-
-	handle_new_version() {		
-		remote_ver_str := NoxCore.get_remote_config("ver")
-		if (get_version_sum(remote_ver_str) > get_version_sum(this.version)) {
-			TrayMenu.update_tray_menu()
-			MsgBox, 4,, % lang("There is a new version nox, would you like to check it out?")
-			IfMsgBox Yes
-			{
-				run, % NoxCore.remote_download_html
-			}
-		}
 	}
 
 	get_remote_file(path)
