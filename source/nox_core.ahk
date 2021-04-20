@@ -36,7 +36,7 @@ class NoxCore
 	static Launcher_Name := A_WorkingDir "\nox.exe"
 	static conf_user_yaml_file := "conf.user.yaml"
 	static conf_default_yaml_file := "conf.default.yaml"
-	static app_data_ini_file := NoxCore._APP_DATA_DIR "app_data_auto_gen.ini"
+	static app_data_ini_file := NoxCore._APP_DATA_DIR "data.ini"
 	static icon_default := NoxCore._ICON_DIR "1.ico"
 	static icon_suspend := NoxCore._ICON_DIR "2.ico"
 	static icon_pause := NoxCore._ICON_DIR "4.ico"
@@ -54,7 +54,7 @@ class NoxCore
 	static help_addr := "https://github.com/no5ix/nox#features"
 	;
 	static FeatureObj =
-	static versionObj =
+	static version =
 	static UserData := {}
 	; callback
 	static OnExitCmd := []
@@ -78,7 +78,7 @@ class NoxCore
         	FileCreateDir, % NoxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
-
+		this.version := NoxCore.GetConfig("ver")
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()

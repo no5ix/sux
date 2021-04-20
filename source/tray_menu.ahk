@@ -37,7 +37,7 @@ class TrayMenu
 	; Tray Menu
 	Update_Tray_Menu()
 	{
-		; version_str := lang("About") " v" this.versionObj["version"]
+		version_str := lang("About") " v" NoxCore.version
 		autorun := NoxCore.GetConfig("autorun", 0)
 		; autoupdate := NoxCore.GetConfig("auto_update", 0)
 		; bigVer := NoxCore.GetBiggerRemVersion()
@@ -61,7 +61,7 @@ class TrayMenu
 		; 	,[lang("Reset Program"), "NoxCore.ResetProgram"]])
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
-			,[[lang("About"), "TrayMenu.AboutNox"]
+			,[[version_str, "TrayMenu.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]
 			,[lang("Donate"), NoxCore.donate_page]
 			; ,[check_update_name, "NoxCore.Check_update"]
@@ -100,8 +100,8 @@ class TrayMenu
 		Gui, nox_About: New
 		Gui nox_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, Font, s12
-		; s := "NoxCore v" NoxCore.versionObj["version"]
-		; Gui, Add, Text,, % s
+		s := "nox v" NoxCore.version
+		Gui, Add, Text,, % s
 		s := "<a href=""" NoxCore.Project_Home_Page """>" lang("Home Page") "</a>"
 		Gui, Add, Link,, % s
 		s := "<a href=""" NoxCore.Project_Issue_page """>" lang("Feedback") "</a>"
