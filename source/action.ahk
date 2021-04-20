@@ -60,8 +60,9 @@ DoubleHitWebSearch(){
 }
 
 WebSearchCurSelectedText() {
-    gui_spawn_func := "gui_spawn"
-    %gui_spawn_func%(GetCurSelectedText())
+    ; gui_spawn_func := "gui_spawn"
+    ; %gui_spawn_func%(GetCurSelectedText())
+    gui_spawn(GetCurSelectedText())
 }
 
 SwitchInputMethod() {

@@ -20,7 +20,6 @@ global THEME_CONF_REGISTER_MAP
 
 last_search_str = ""
 trim_gui_user_input = ""
-auto_destory_gui_duration := -6666  ; millisecond
 
 
 
@@ -159,7 +158,9 @@ gui_spawn(curr_select_text="") {
 	yScrnOffset := A_ScreenHeight / 4
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, xCenter  y%yScrnOffset%, myGUI
-	; SetTimer, gui_destroy, %auto_destory_gui_duration%
+
+	auto_destory_gui_period := -6666  ; millisecond
+	SetTimer, gui_destroy, %auto_destory_gui_period%
 	return
 }
 
