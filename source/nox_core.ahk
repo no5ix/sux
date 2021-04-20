@@ -27,6 +27,44 @@ lang(key)
 }
 
 
+cur_http_req =
+last_resp_txt := ""
+
+get_remote_data_ini(url)
+{
+	global cur_http_req
+	cur_http_req := ComObjCreate("Msxml2.XMLHTTP")
+	; 打开启用异步的请求.
+	; cur_http_req.open("GET", "https://www.autohotkey.com/download/1.1/version.txt", true)
+	; cur_http_req.open("GET", "https://raw.githubusercontent.com/no5ix/nox/master/app_data/data.ini", true)
+	cur_http_req.open("GET", url, true)
+	; 设置回调函数 [需要 v1.1.17+].
+	cur_http_req.onreadystatechange := Func("on_get_remote_data_ini_ready")
+	; 发送请求. Ready() 将在其完成后被调用.
+	cur_http_req.send()
+
+}
+
+on_get_remote_data_ini_ready() {
+	global cur_http_req
+	; m(cur_http_req)
+	; m(cur_http_req.responseText)
+	; if (cur_http_req.status == 200) ; 完成.
+	; m(cur_http_req.status)
+	if (cur_http_req.readyState != 4)  ; 没有完成.
+		return
+	if (cur_http_req.status == 200 && last_resp_txt != cur_http_req.responseText) {
+		; FileAppend, % cur_http_req.responseText, jj_remote.ini
+		if FileExist(NoxCore.remote_data_ini_file)
+			FileDelete, % NoxCore.remote_data_ini_file
+		FileAppend, % cur_http_req.responseText, % NoxCore.remote_data_ini_file
+		; m(NoxCore.get_remote_config("ver"))
+
+	}
+}
+
+
+
 class NoxCore
 {
 	; dir
@@ -36,7 +74,8 @@ class NoxCore
 	static Launcher_Name := A_WorkingDir "\nox.exe"
 	static conf_user_yaml_file := "conf.user.yaml"
 	static conf_default_yaml_file := "conf.default.yaml"
-	static app_data_ini_file := NoxCore._APP_DATA_DIR "data.ini"
+	static data_ini_file := NoxCore._APP_DATA_DIR "data.ini"
+	static remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
 	static icon_default := NoxCore._ICON_DIR "1.ico"
 	static icon_suspend := NoxCore._ICON_DIR "2.ico"
 	static icon_pause := NoxCore._ICON_DIR "4.ico"
@@ -91,50 +130,24 @@ class NoxCore
 	{
 		StringReplace, path, % path, \, /, All
 		url := NoxCore.remote_raw_addr path
-		m(url)
-		content := http.get(url)
-		remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
-		; UrlDownloadToFile, url,  %remote_data_ini_file%
-		; UrlDownloadToFile, url,  jj.txt
-		UrlDownloadToFile, https://raw.githubusercontent.com/no5ix/nox/master/app_data/data.ini, jj.txt
-		; m(content)
-		
-		; IniRead, output, % remote_data_ini_file, "nox", "ver"
-		; m(output)
-		; return % content
+		get_remote_data_ini(url)
 	}
 
 	get_remote_ver()
 	{
-		
-		; StringReplace, path, % path, \, /, All
-		; url := NoxCore.remote_raw_addr path
-		; m(url)
-		; ; content := http.get(url)
-		; remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
-		; UrlDownloadToFile, url, %remote_data_ini_file%
-		; ; m(content)
-		; ; UrlDownloadToFile, https://www.autohotkey.com/download/1.1/version.txt, xxd.txt
 
-		; IniRead, output, % remote_data_ini_file, "nox", "ver"
-		; m(output)
-
-		remoteVerTxt := NoxCore.Get_Remote_File(NoxCore.app_data_ini_file)
-		; m(remoteVerTxt)
-		; if(remoteVerTxt="") {
-		; 	return ""
-		; }
-		
-		; IniRead, output, % remoteVerTxt, "nox", "ver"
-		; m(output)
-		; remoteVerObj := Yaml(remoteVerTxt, 0)
-		; return remoteVerObj
+		NoxCore.Get_Remote_File(NoxCore.data_ini_file)
 	}
 
+	get_remote_config(key, default="", section="nox", autoWrite=true)
+	{
+		IniRead, output, % NoxCore.remote_data_ini_file, % section, % key, ""
+		return output
+	}
 
 	GetConfig(key, default="", section="nox", autoWrite=true)
 	{
-		IniRead, output, % NoxCore.app_data_ini_file, % section, % key
+		IniRead, output, % NoxCore.data_ini_file, % section, % key
 		if(output=="ERROR")
 		{
 			if(autoWrite) {
@@ -147,7 +160,7 @@ class NoxCore
 
 	SetConfig(key, value, section="nox")
 	{
-		IniWrite, % value, % NoxCore.app_data_ini_file, % section, % key
+		IniWrite, % value, % NoxCore.data_ini_file, % section, % key
 	}
 
 
