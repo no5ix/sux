@@ -232,7 +232,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - 托盘暂停 -->
 <!-- - auto install ahk -->
 <!-- - custom tray menu -->
-- rshift issue
+<!-- - rshift issue -->
+- git cmd not goto desktop
 - auto update/check update
 - add about nox version
 - add donate page
