@@ -266,8 +266,11 @@ class NoxCore
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		For key, value in NoxCore.GetFeatureCfg("additional-features", {})
+		For key, value in NoxCore.GetFeatureCfg("additional-features", {}) {
 			register_additional_features(key, value)
+			if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"])
+				SetTimer, DisableWin10AutoUpdate, 66666
+		}
 
 		For key, value in NoxCore.GetFeatureCfg("theme", {})
 			register_theme_conf(key, value)
@@ -363,8 +366,7 @@ register_hotkey(key_name, action, prefix="")
 			,lctrl: "<^", rctrl: ">^"
 			,lshift: "<+", rshift: ">+"
 			,lalt: "<!", ralt: ">!"
-			,lclick:  "LButton", rclick:  "RButton", wheelclick: "MButton" }
-			; ,wheel: ["wheelUp", "wheelDown"] }
+			,left_click:  "LButton", right_click:  "RButton", wheel_click: "MButton"}
 	key_split_arr := StrSplit(key_name, "_")
 	; DebugPrintVal(key_split_arr.Length())
 
@@ -372,7 +374,8 @@ register_hotkey(key_name, action, prefix="")
 	{
 		cur_symbol := key_split_arr[A_Index]
 		; if (key_split_arr.Length() == 1) 
-		maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
+		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
+		maped_symbol := map1[cur_symbol] 
 		if(maped_symbol=="") {
 			trans_key := str_array_concate(trans_key, [cur_symbol])
 		}

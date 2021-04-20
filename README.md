@@ -9,25 +9,25 @@ click img to see full video
 # IMPORTANT
   
 - Please run as administrator.
-- Please run in 32-bit mode (Open with AutoHotKey Unicode 32-bit).
 
 
 # Features
 
 * **personalized configuration** : u can modify `conf.user.yaml` to override all default configuration
-* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`)
-* **hot corners** : just like mac hot cornes
-* **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `default_conf.ahk` `WebSearchUrlMap`
+* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `hot-corner`-`hot-edge`
+* **hot corners** : just like mac hot cornes, see `hot-corner`-`hot-corner`
+* **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `conf.user.yaml`-`web-search`
     * use `Tab` to search multi line
-* **enhanced capslock** : just like Capslock+, see `capslock_plus.ahk`
-* **work with Everything** : Everything-Options-General-Keyboard-Show Window Hotkey: see `default_conf.ahk` : `CustomCommandLineMap["ev"]`
-* **double click triggers** (include `Alt`/`Ctrl`) : try double click `Alt` to open web search window. see `default_conf.ahk` : `DoubleClickAltTriggerFunc` & `DoubleClickCtrlTriggerFunc`
-* **custom theme** : two default theme(dark/light), and u can add ur own theme
+* **enhanced capslock** : just like Capslock+, see `conf.user.yaml`-`capslock_plus`
+* **work with Everything** : try double tap `Alt`, then input `ev `
+* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.yaml`-`theme`
 * **screen capture** : try `Capslock + Tab`
-* **disable win10 auto update**: see `default_conf.ahk` : `disable_win10_auto_update`
-* **start nox with windows**: try double click `Alt` then input `nw` command
-* **auto update when launch nox** : see `default_conf.ahk` : `auto_update_when_launch_nox`
-* **custom command line map**:  see `default_conf.ahk` : `CustomCommandLineMap`
+* **disable win10 auto update**: see `conf.user.yaml`-`additional-features`-`disable_win10_auto_update`
+* **start nox with windows**
+<!-- * **auto update when launch nox** : see `default_conf.ahk` : `auto_update_when_launch_nox` -->
+* **custom command line**:  see `conf.user.yaml`-`command`
+* **custom hotkey**:  see `conf.user.yaml`-`hotkey`
+* **clipboard-plus**:  clipboard history, try `win+alt+v`, see `conf.user.yaml`-`clipboard-plus`
 <!-- * **auto selection copy** : just like linux terminal -->
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
@@ -36,16 +36,68 @@ click img to see full video
 # CMDs
 
 * `nox` : nox official site
-* `nw` : start nox with windows or not
 * `cmd` : open a command prompt window on the current explorer path 
-* `rd` : reload this script
-* `dir` : open the directory for this script
-* `up` : update nox
-* `xy` : set second monitor xy for detecting IsCorner()
-<!-- * `wau` : turn on/off disable win10 auto update -->
-<!-- * `ev` : run Everything -->
-<!-- * `conf` : Edit user_conf -->
+* `git` : open a git bash window on the current explorer path 
+* `ev` : run Everything
 <!-- * `limit` : turn on/off limit mode -->
+
+
+# remarks
+
+- see [Chinese detail](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
+- see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
+
+- win: "#" 
+- ctrl: "^" 
+- shift: "+" 
+- alt: "!"
+- hover: "hover" 
+- capslock: "CapsLock"
+- lwin: "<#" 
+- rwin: ">#"
+- lctrl: "<^" 
+- rctrl: ">^"
+- lshift: "<+" 
+- rshift: ">+"
+- lalt: "<!" 
+- ralt: ">!"
+- left_click:  "LButton" 
+- right_click:  "RButton" 
+- wheel_click: "MButton"
+
+
+# hot-corner
+
+* LeftTopCorner: 
+	- hover: JumpToPrevTab
+* RightTopCorner: 
+	- hover: JumpToNextTab
+* LeftBottomCorner: 
+	- hover: 'send {LWin}'
+* RightBottomCorner: 
+	- hover: 'send !{Tab}'
+
+
+# hot-edge:
+
+- TopHalfLeftEdge: 
+	- ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
+- TopHalfRightEdge: 
+	- ctrl_8: 'explorer.exe'
+- BottomHalfLeftEdge:
+	- ctrl_8: 'send ^+t'
+- BottomHalfRightEdge: 
+	- ctrl_8: 'send {F5}'
+- LeftHalfBottomEdge: 
+	- ctrl_8: 'send #{Tab}'
+- LeftHalfTopEdge: 
+	- ctrl_8: 'send #{Left}'
+	- wheeldown: 'Send {volume_down}'
+	- wheelup: 'Send {volume_up}'
+- RightHalfTopEdge: 
+	- ctrl_8: 'send #{Right}'
+- RightHalfBottomEdge: 
+	- ctrl_8: 'send #a'
 
 
 # CapsLock+
@@ -160,8 +212,6 @@ click img to see full video
 
 Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github.com/no5ix/nox/releases) and unzip it then run nox.exe as admin !
 
-或者对于高级用户, 你也可以[安装好autohotkey环境](https://www.autohotkey.com/), 然后直接运行nox.ahk, 这样就可以自定义改各种配置和代码了, 改完之后`rd`即可.
-
 
 # TODO List
 
@@ -180,6 +230,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - hot corner: check on same monitor  -->
 <!-- - occasional: fix web search gui window lost caret - make caret center -->
 - 失焦则销毁
+- ext ahk
 <!-- - 第二个屏幕就显示nox在第二个屏幕上 -->
 <!-- - fix default lang -->
 
