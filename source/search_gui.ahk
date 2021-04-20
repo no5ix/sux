@@ -140,24 +140,27 @@ gui_spawn(curr_select_text="") {
 	Gui, Add, Button, x-10 y-10 w1 h1 +default gHandleGuiUserInput ; hidden button
 
 	MouseGetPos, Mouse_x
-
-	SysGet, mon_cnt, MonitorCount
-	xMidScrn := 0
-	last_mon_width := 0
-	Loop, % mon_cnt
-	{
-		SysGet, Mon, Monitor, % A_Index
-		_mon_width := (MonRight - MonLeft)
-		xMidScrn += _mon_width
-		last_mon_width := _mon_width
-		if (Mouse_x >= MonLeft && Mouse_x < MonRight)
-			break
-	}
-	xMidScrn -= last_mon_width / 2
-	xMidScrn -= THEME_CONF_REGISTER_MAP["nox_width"] / 2 
 	yScrnOffset := A_ScreenHeight / 4
-	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
-	; Gui, Show, xCenter  y%yScrnOffset%, myGUI
+	SysGet, mon_cnt, MonitorCount
+	if (mon_cnt == 1) {
+		Gui, Show, xCenter  y%yScrnOffset%, myGUI
+	}
+	else {
+		xMidScrn := 0
+		last_mon_width := 0
+		Loop, % mon_cnt
+		{
+			SysGet, Mon, Monitor, % A_Index
+			_mon_width := (MonRight - MonLeft)
+			xMidScrn += _mon_width
+			last_mon_width := _mon_width
+			if (Mouse_x >= MonLeft && Mouse_x < MonRight)
+				break
+		}
+		xMidScrn -= last_mon_width / 2
+		xMidScrn -= THEME_CONF_REGISTER_MAP["nox_width"] / 2 
+		Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
+	}
 
 	auto_destory_gui_period := -22222  ; millisecond
 	SetTimer, gui_destroy, %auto_destory_gui_period%
