@@ -13,7 +13,7 @@ Goto, SUB_TRAY_MENU_FILE_END_LABEL
 class TrayMenu
 {
 	init() {
-		this.Update_Tray_Menu()
+		this.update_tray_menu()
 		this.SetAutorun("config")
 	}
 
@@ -35,18 +35,17 @@ class TrayMenu
 	}
 
 	; Tray Menu
-	Update_Tray_Menu()
+	update_tray_menu()
 	{
 		version_str := lang("About") " v" NoxCore.version
 		autorun := NoxCore.GetConfig("autorun", 0)
-		; autoupdate := NoxCore.GetConfig("auto_update", 0)
-		; bigVer := NoxCore.GetBiggerRemVersion()
-		; if(bigVer!="") {
-		; 	check_update_name := lang("! New Version !") " v" bigVer
-		; }
-		; else {
-		; 	check_update_name := lang("Check Update")
-		; }
+		remote_ver_str := NoxCore.get_remote_config("ver")
+		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(NoxCore.version)) {
+			check_update_menu_name := lang("A New Version! ") "v" remote_ver_str
+		}
+		else {
+			check_update_menu_name := lang("Check Update")
+		}
 		lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
 		Menu, Tray, Tip, % this.ProgramName
 		xMenu.New("TrayLanguage"
@@ -64,10 +63,9 @@ class TrayMenu
 			,[[version_str, "TrayMenu.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]
 			,[lang("Donate"), NoxCore.donate_page]
-			; ,[check_update_name, "NoxCore.Check_update"]
+			,[check_update_menu_name, "NoxCore.CheckUpdate"]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
-			; ,[lang("AutoUpdate"), "NoxCore.SetAutoUpdate", {check: autoupdate}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			; ,[lang("Advanced"),, {"sub": "TrayAdvanced"}]
 			,[]
@@ -91,7 +89,7 @@ class TrayMenu
 	Standard_Tray_Menu(act="toggle")
 	{
 		NoxCore._switch_tray_standard_menu := (act="toggle")? !NoxCore._switch_tray_standard_menu :act
-		this.Update_Tray_Menu()
+		this.update_tray_menu()
 	}
 
 	AboutNox()

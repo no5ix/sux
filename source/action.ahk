@@ -104,15 +104,6 @@ ReloadNox() {
 	Reload
 }
 
-; UpdateNox() {
-; 	MsgBox, 4,, Would you like to update nox?
-; 	IfMsgBox Yes
-; 	{
-; 		gui_destroy()
-; 		; Gosub gui_spawn
-; 		UpdateNoxImpl(0)
-; 	}
-; }
 
 SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
 	global ADDITIONAL_FEATURES_REGISTER_MAP

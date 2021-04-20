@@ -19,13 +19,22 @@ lang(key)
 {
 	global LANGUAGE_CONF_MAP
 	lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
-	if (lang == NoxCore.Default_lang)
+	if (lang == NoxCore.Default_lang) {
 		ret := LANGUAGE_CONF_MAP[key]
+		if !ret
+			ret := key
+	}
 	else
 		ret := key
 	return ret
 }
 
+
+
+CheckUpdate()
+{
+	NoxCore.get_remote_file(NoxCore.data_ini_file)
+}
 
 cur_http_req =
 last_resp_txt := ""
@@ -42,7 +51,6 @@ get_remote_data_ini(url)
 	cur_http_req.onreadystatechange := Func("on_get_remote_data_ini_ready")
 	; 发送请求. Ready() 将在其完成后被调用.
 	cur_http_req.send()
-
 }
 
 on_get_remote_data_ini_ready() {
@@ -58,8 +66,7 @@ on_get_remote_data_ini_ready() {
 		if FileExist(NoxCore.remote_data_ini_file)
 			FileDelete, % NoxCore.remote_data_ini_file
 		FileAppend, % cur_http_req.responseText, % NoxCore.remote_data_ini_file
-		; m(NoxCore.get_remote_config("ver"))
-
+		NoxCore.handle_new_version()
 	}
 }
 
@@ -81,8 +88,6 @@ class NoxCore
 	static icon_pause := NoxCore._ICON_DIR "4.ico"
 	static icon_suspend_pause := NoxCore._ICON_DIR "3.ico"
 	; update
-	static check_update_first_after := 1
-	static check_update_period := 1000*3600*24
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/nox"
 	static Project_Issue_page := "https://github.com/no5ix/nox/issues"
@@ -119,24 +124,30 @@ class NoxCore
 
 		this.HandleConfYaml()
 		this.version := NoxCore.GetConfig("ver")
+		CheckUpdate()
+
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()
-
-		this.get_remote_ver()
 	}
 
-	Get_Remote_File(path)
+	handle_new_version() {		
+		remote_ver_str := NoxCore.get_remote_config("ver")
+		if (get_version_sum(remote_ver_str) > get_version_sum(this.version)) {
+			TrayMenu.update_tray_menu()
+			MsgBox, 4,, % lang("There is a new version nox, would you like to check it out?")
+			IfMsgBox Yes
+			{
+				run, % NoxCore.remote_download_html
+			}
+		}
+	}
+
+	get_remote_file(path)
 	{
 		StringReplace, path, % path, \, /, All
 		url := NoxCore.remote_raw_addr path
 		get_remote_data_ini(url)
-	}
-
-	get_remote_ver()
-	{
-
-		NoxCore.Get_Remote_File(NoxCore.data_ini_file)
 	}
 
 	get_remote_config(key, default="", section="nox", autoWrite=true)
@@ -221,7 +232,7 @@ class NoxCore
 		else {
 			Pause, Off
 		}
-		NoxCore.Update_Tray_Menu()
+		NoxCore.update_tray_menu()
 	}
 
 	OnClipboardChange(func)
@@ -255,6 +266,11 @@ class NoxCore
 		NoxCore.FeatureObj := Yaml(NoxCore.conf_user_yaml_file)
 
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+		
+		check_update_interval_hour := NoxCore.GetFeatureCfg("check-update-interval-hour", 2)
+		check_update_millisec := check_update_interval_hour * 3600 * 1000
+		SetTimer, CheckUpdate, % check_update_millisec
+
 		if(NoxCore.GetFeatureCfg("hotkey.enable", 0))
 		{
 			For key, value in NoxCore.GetFeatureCfg("hotkey.buildin", {})

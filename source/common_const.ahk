@@ -20,8 +20,11 @@ global mouse_double_click_timeout := 666
 
 LANGUAGE_CONF_MAP := {"Donate": "捐赠!让作者更有动力给nox加新功能! ^_^"
     ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
+    ,"There is a new version nox, would you like to check it out?": "nox有新版本, 你要看看有啥新功能吗?"
     ,"About": "关于"
     ,"Help": "帮助"
+    ,"Check Update": "检查更新"
+    ,"A New Version! ": "有新版本! "
     ,"Start With Windows": "开机启动"
     ,"Language": "语言"
     ,"Open nox Folder": "打开nox文件夹"

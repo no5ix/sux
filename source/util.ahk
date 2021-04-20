@@ -23,6 +23,20 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 }
 
 
+get_version_sum(version_str) {
+	ver_arr := StrSplit(version_str, ".")
+	ver_arr_len := ver_arr.Length()
+	x_num = 1
+	ver_sum = 0
+	loop % ver_arr_len {
+		ver_sum += ver_arr[ver_arr_len-A_Index+1] * x_num
+		x_num *= 10
+	}
+	return ver_sum
+}
+
+
+
 DownloadFileWithProgressBar(UrlToFile, SaveFileAs, Overwrite := True, UseProgressBar := True) {
     ;Check if the file already exists and if we must not overwrite it
       If (!Overwrite && FileExist(SaveFileAs))
