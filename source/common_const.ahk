@@ -19,6 +19,7 @@ global mouse_double_click_timeout := 666
 
 
 LANGUAGE_CONF_MAP := {"Donate": "捐赠!让作者更有动力给nox加新功能! ^_^"
+    ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
     ,"About": "关于"
     ,"Help": "帮助"
     ,"Start With Windows": "开机启动"

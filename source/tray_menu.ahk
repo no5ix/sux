@@ -60,7 +60,7 @@ class TrayMenu
 		; 	,[]
 		; 	,[lang("Reset Program"), "NoxCore.ResetProgram"]])
 		TrayMenuList := []
-		TrayMenuList := xArray.merge(TrayMenuList
+		TrayMenuList := EnhancedArray.merge(TrayMenuList
 			,[[lang("About"), "TrayMenu.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]
 			,[lang("Donate"), NoxCore.donate_page]

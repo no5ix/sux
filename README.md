@@ -233,13 +233,13 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - custom tray menu -->
 <!-- - rshift issue -->
 <!-- - git cmd not goto desktop -->
-- 
-- auto update/check update
+- check update
 - add about nox version
 <!-- - add donate page -->
 - add icon
 - update readme
 - hot corner/edge/capslock switcher to tray menu
+- auto update
 <!-- - fix bug: cant open conf.user.yaml with notepad -->
 <!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->

@@ -561,9 +561,9 @@ RunAsAdmin() {
 ; }
 
 
-class xArray
+class EnhancedArray
 {
-	; xArray.merge
+	; EnhancedArray.merge
 	merge(arr1, arr2)
 	{
 		Loop, % arr2.MaxIndex()
@@ -572,14 +572,14 @@ class xArray
 		}
 		return % arr1
 	}
-	; xArray.remove
+	; EnhancedArray.remove
 	remove(arr, value)
 	{
 		Loop, % arr.MaxIndex()
 		{
 			if(arr[A_Index]=value) {
 				arr.RemoveAt(A_Index)
-				return % xArray.remove(arr, value)
+				return % EnhancedArray.remove(arr, value)
 			}
 		}
 		return % arr

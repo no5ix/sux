@@ -30,35 +30,22 @@ lang(key)
 class NoxCore
 {
 	; dir
-	static _MAIN_WORKDIR := ""
-	static _JSON_DIR := "data/"
 	static _ICON_DIR := "icon/"
-	; static _LANG_DIR := "lang/"
-	static _CONF_DIR := "conf/"
 	static _APP_DATA_DIR := "app_data/"
-	static _Update_bkp_DIR := "_bkp/"
-	static _Update_dl_DIR := "_bkp/dl/"
-	static _Update_bkp_folder_prefix := "_auto_"
 	; file
 	static Launcher_Name := A_WorkingDir "\nox.exe"
-	static Ext_ahk_file := "NoxCore.Ext.ahk"
-	static version_yaml_file := NoxCore._CONF_DIR "version.yaml"
 	static conf_user_yaml_file := "conf.user.yaml"
 	static conf_default_yaml_file := "conf.default.yaml"
 	static app_data_ini_file := NoxCore._APP_DATA_DIR "app_data_auto_gen.ini"
-	static user_data_file := NoxCore._JSON_DIR "NoxCore.Data." A_ComputerName ".json"
 	static icon_default := NoxCore._ICON_DIR "1.ico"
 	static icon_suspend := NoxCore._ICON_DIR "2.ico"
 	static icon_pause := NoxCore._ICON_DIR "4.ico"
 	static icon_suspend_pause := NoxCore._ICON_DIR "3.ico"
 	; remote file path
 	static remote_branch := "master"
-	static remote_update_dl_dir := NoxCore.remote_releases_dir "beta0/"
 	; update
 	static check_update_first_after := 1
 	static check_update_period := 1000*3600*24
-	static Bkp_limit := 5
-	static update_list_path := NoxCore._CONF_DIR "update_list.json"
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/nox"
 	static Project_Issue_page := "https://github.com/no5ix/nox/issues"
@@ -66,11 +53,8 @@ class NoxCore
 	static remote_download_html := "https://github.com/no5ix/nox/releases"
 	static help_addr := "https://github.com/no5ix/nox#features"
 	;
-	; setting object (read only, for feature configuration)
 	static FeatureObj =
-	; version object (read only, for check update)
 	static versionObj =
-	; running user data (e.g. clipboard history), read after run & write before exit
 	static UserData := {}
 	; callback
 	static OnExitCmd := []
@@ -80,7 +64,6 @@ class NoxCore
 	; static var
 	static ProgramName := "nox"
 	static Default_lang := "cn"
-	static Editor = notepad
 	static Browser := "default"
 
 	init()
