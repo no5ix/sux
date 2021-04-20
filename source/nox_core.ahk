@@ -62,9 +62,9 @@ class NoxCore
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/nox"
 	static Project_Issue_page := "https://github.com/no5ix/nox/issues"
-	static donate_page := "https://github.com/no5ix/nox"
+	static donate_page := "https://github.com/no5ix/nox#%E6%8D%90%E8%B5%A0"
 	static remote_download_html := "https://github.com/no5ix/nox/releases"
-	static help_addr := "https://github.com/no5ix/nox"
+	static help_addr := "https://github.com/no5ix/nox#features"
 	;
 	; setting object (read only, for feature configuration)
 	static FeatureObj =

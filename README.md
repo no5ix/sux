@@ -217,9 +217,10 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 
 捐赠! 让作者更有动力给nox加新功能! ^_^
 
-- ![微信](/img/wechat_donate.png)
-
-- ![支付宝](/img/alipay_donate.png)
+- 微信
+  - ![微信](/img/wechat_donate.png)
+- 支付宝
+  - ![支付宝](/img/alipay_donate.png)
 
 
 # TODO List
