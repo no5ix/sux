@@ -47,7 +47,9 @@ class TrayMenu
 		; else {
 		; 	check_update_name := lang("Check Update")
 		; }
+		m("ggs")
 		lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
+		m(lang)
 		Menu, Tray, Tip, % this.ProgramName
 		xMenu.New("TrayLanguage"
 			,[["English", "NoxCore.SetLang", {check: lang=="en"}]
@@ -60,22 +62,6 @@ class TrayMenu
 		; 	,[]
 		; 	,[lang("Reset Program"), "NoxCore.ResetProgram"]])
 		TrayMenuList := []
-		; debug_show := NoxCore.debugConfig("show", 0)
-		; if(NoxCore._DEBUG_||debug_show) {
-		; 	TrayMenuList := xArray.merge(TrayMenuList
-		; 		,[["DEBUG Mode: " (NoxCore._DEBUG_?"ON":"OFF"), "NoxCore.debug_mode"],[]])
-		; }
-		; if(NoxCore._DEBUG_) {
-		; 	TrayMenuList := xArray.merge(TrayMenuList
-		; 		,[["ZIP files", "NoxCore._ZIP_nox_self"]
-		; 		,["Generate_update_list.json", "NoxCore._reGenerate_update_list"]
-		; 		,["Count_Download_Online", "NoxCore._SumGithubDownloadCount"]
-		; 		,[]
-		; 		,["config.ini", "notepad " NoxCore.app_data_ini_file]
-		; 		,["core.ahk", "edit: script/NoxCore.Core.ahk"]
-		; 		,["version.yaml", "edit:" NoxCore.version_yaml_file]
-		; 		,[]])
-		; }
 		TrayMenuList := xArray.merge(TrayMenuList
 			,[[lang("About"), "TrayMenu.AboutNox"]
 			,[lang("Help"), NoxCore.help_addr]

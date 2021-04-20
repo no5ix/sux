@@ -107,6 +107,8 @@ class NoxCore
 		IniRead, output, % NoxCore.app_data_ini_file, % section, % key
 		if(output=="ERROR")
 		{
+			if (key == "lang")
+				m("lllang")
 			if(autoWrite) {
 				NoxCore.SetConfig(key, default, section)
 			}
@@ -123,8 +125,10 @@ class NoxCore
 
 	SetLang(act="itemname")
 	{
+		m(act)
 		if(act="itemname")
 		{
+			lang_map := {"English": "en", "中文": "cn"}
 			lang := lang_map[A_ThisMenuItem]
 		}
 		else {
