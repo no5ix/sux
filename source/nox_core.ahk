@@ -41,8 +41,6 @@ class NoxCore
 	static icon_suspend := NoxCore._ICON_DIR "2.ico"
 	static icon_pause := NoxCore._ICON_DIR "4.ico"
 	static icon_suspend_pause := NoxCore._ICON_DIR "3.ico"
-	; remote file path
-	static remote_branch := "master"
 	; update
 	static check_update_first_after := 1
 	static check_update_period := 1000*3600*24
@@ -52,6 +50,9 @@ class NoxCore
 	static donate_page := "https://github.com/no5ix/nox#%E6%8D%90%E8%B5%A0"
 	static remote_download_html := "https://github.com/no5ix/nox/releases"
 	static help_addr := "https://github.com/no5ix/nox#features"
+	; remote file path
+	static stable_branch := "master"
+	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/nox/" NoxCore.stable_branch "/"
 	;
 	static FeatureObj =
 	static version =
@@ -82,6 +83,52 @@ class NoxCore
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()
+
+		this.get_remote_ver()
+	}
+
+	Get_Remote_File(path)
+	{
+		StringReplace, path, % path, \, /, All
+		url := NoxCore.remote_raw_addr path
+		m(url)
+		content := http.get(url)
+		remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
+		; UrlDownloadToFile, url,  %remote_data_ini_file%
+		; UrlDownloadToFile, url,  jj.txt
+		UrlDownloadToFile, https://raw.githubusercontent.com/no5ix/nox/master/app_data/data.ini, jj.txt
+		; m(content)
+		
+		; IniRead, output, % remote_data_ini_file, "nox", "ver"
+		; m(output)
+		; return % content
+	}
+
+	get_remote_ver()
+	{
+		
+		; StringReplace, path, % path, \, /, All
+		; url := NoxCore.remote_raw_addr path
+		; m(url)
+		; ; content := http.get(url)
+		; remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
+		; UrlDownloadToFile, url, %remote_data_ini_file%
+		; ; m(content)
+		; ; UrlDownloadToFile, https://www.autohotkey.com/download/1.1/version.txt, xxd.txt
+
+		; IniRead, output, % remote_data_ini_file, "nox", "ver"
+		; m(output)
+
+		remoteVerTxt := NoxCore.Get_Remote_File(NoxCore.app_data_ini_file)
+		; m(remoteVerTxt)
+		; if(remoteVerTxt="") {
+		; 	return ""
+		; }
+		
+		; IniRead, output, % remoteVerTxt, "nox", "ver"
+		; m(output)
+		; remoteVerObj := Yaml(remoteVerTxt, 0)
+		; return remoteVerObj
 	}
 
 
