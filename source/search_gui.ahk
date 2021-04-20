@@ -159,7 +159,7 @@ gui_spawn(curr_select_text="") {
 	Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	; Gui, Show, xCenter  y%yScrnOffset%, myGUI
 
-	auto_destory_gui_period := -6666  ; millisecond
+	auto_destory_gui_period := -8888  ; millisecond
 	SetTimer, gui_destroy, %auto_destory_gui_period%
 	return
 }
