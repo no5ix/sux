@@ -18,7 +18,7 @@ global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
 
 
-LANGUAGE_CONF_MAP := {"Donate": "捐赠!让作者更有动力给nox加新功能! ^_^"
+LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给nox加新功能! ^_^"
     ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
     ,"There is a new version nox, would you like to check it out?": "nox有新版本, 你要看看有啥新功能吗?"
     ,"This is the lastest version.": "这已经是最新版本."
