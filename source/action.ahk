@@ -31,7 +31,7 @@ SwitchCapsState() {
 
 ScreenShot() {
     ; ; screen capture
-    param = %A_ScriptDir%\source\printscrn.dll\PrScrn
+    param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
     DllCall(param)
 }
 

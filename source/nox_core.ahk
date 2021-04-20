@@ -366,16 +366,14 @@ register_hotkey(key_name, action, prefix="")
 			,lctrl: "<^", rctrl: ">^"
 			,lshift: "<+", rshift: ">+"
 			,lalt: "<!", ralt: ">!"
-			,left_click:  "LButton", right_click:  "RButton", wheel_click: "MButton"}
+			,lbutton:  "LButton", rbutton:  "RButton", mbutton: "MButton"}
 	key_split_arr := StrSplit(key_name, "_")
-	; DebugPrintVal(key_split_arr.Length())
 
 	Loop, % key_split_arr.MaxIndex()
 	{
 		cur_symbol := key_split_arr[A_Index]
-		; if (key_split_arr.Length() == 1) 
-		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
-		maped_symbol := map1[cur_symbol] 
+		maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
+		; maped_symbol := map1[cur_symbol] 
 		if(maped_symbol=="") {
 			trans_key := str_array_concate(trans_key, [cur_symbol])
 		}

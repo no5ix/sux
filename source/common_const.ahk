@@ -18,7 +18,7 @@ global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
 
 
-LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给nox加新功能!"
+LANGUAGE_CONF_MAP := {"Donate": "捐赠!让作者更有动力给nox加新功能! ^_^"
     ,"About": "关于"
     ,"Help": "帮助"
     ,"Start With Windows": "开机启动"

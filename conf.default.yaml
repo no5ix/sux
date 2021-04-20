@@ -46,7 +46,7 @@ hotkey:
   buildin:
     ctrl_8: SimulateClickDown
     ctrl_shift_alt_m: MaxMinWindow
-    rshift: SwitchInputMethod
+    # rshift: SwitchInputMethod
     ~alt: DoubleHitWebSearch
   custom:
 capslock_plus:

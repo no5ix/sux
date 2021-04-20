@@ -61,9 +61,9 @@ click img to see full video
 - rshift: ">+"
 - lalt: "<!" 
 - ralt: ">!"
-- left_click:  "LButton" 
-- right_click:  "RButton" 
-- wheel_click: "MButton"
+- lbutton:  "LButton" 
+- rbutton:  "RButton" 
+- mbutton: "MButton"
 
 
 # hot-corner
@@ -213,6 +213,15 @@ click img to see full video
 Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github.com/no5ix/nox/releases) and unzip it then run nox.exe as admin !
 
 
+# 捐赠
+
+捐赠! 让作者更有动力给nox加新功能! ^_^
+
+- ![微信](/img/wechat_donate.png)
+
+- ![支付宝](/img/alipay_donate.png)
+
+
 # TODO List
 
 <!-- - refractor HandleMouseOnEdges -->
@@ -222,7 +231,13 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - 托盘暂停 -->
 <!-- - auto install ahk -->
 <!-- - custom tray menu -->
+- rshift issue
+- auto update/check update
+- add about nox version
+- add donate page
+- add icon
 - update readme
+- hot corner/edge/capslock switcher to tray menu
 <!-- - fix bug: cant open conf.user.yaml with notepad -->
 <!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
@@ -230,19 +245,14 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - hot corner: check on same monitor  -->
 <!-- - occasional: fix web search gui window lost caret - make caret center -->
 - 失焦则销毁
-- ext ahk
 <!-- - 第二个屏幕就显示nox在第二个屏幕上 -->
 <!-- - fix default lang -->
 
-- add donate page
-- add icon
-- add about nox version
-- hot corner/edge/capslock switcher to tray menu
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
 <!-- - gitignore user conf -->
 <!-- - start with win -->
+- ext ahk
 <!-- - auto compile -->
-- auto update/check update
 <!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateNoxImpl的锅 -->
 <!-- - suspend img -->
 <!-- - internal Everything -->
