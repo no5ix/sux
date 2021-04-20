@@ -233,12 +233,12 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - custom tray menu -->
 <!-- - rshift issue -->
 <!-- - git cmd not goto desktop -->
-- check update
-- add about nox version
+<!-- - check update -->
+<!-- - add about nox version -->
 <!-- - add donate page -->
 - add icon
-- update readme
 - hot corner/edge/capslock switcher to tray menu
+- update readme
 - auto update
 <!-- - fix bug: cant open conf.user.yaml with notepad -->
 <!-- - refactor tray menu code -->
