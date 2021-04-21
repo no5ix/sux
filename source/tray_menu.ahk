@@ -8,10 +8,14 @@ Goto, SUB_TRAY_MENU_FILE_END_LABEL
 
 
 #Include %A_ScriptDir%\source\nox_core.ahk
-; #Include %A_ScriptDir%\source\util.ahk
+#Include %A_ScriptDir%\source\action.ahk
 
 class TrayMenu
 {
+	static ICON_DIR := "app_data/"
+	static icon_default := TrayMenu.ICON_DIR "nox_default.ico"
+	static icon_disable := TrayMenu.ICON_DIR "nox_disable.ico"
+
 	init() {
 		this.update_tray_menu()
 		this.SetAutorun("config")
@@ -47,17 +51,10 @@ class TrayMenu
 			check_update_menu_name := lang("Check Update")
 		}
 		lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
-		Menu, Tray, Tip, % this.ProgramName
+		Menu, Tray, Tip, % NoxCore.ProgramName
 		xMenu.New("TrayLanguage"
 			,[["English", "NoxCore.SetLang", {check: lang=="en"}]
 			, ["中文", "NoxCore.SetLang", {check: lang=="cn"}]])
-		; xMenu.New("TrayAdvanced"
-		; 	,[["Suspend Hotkey", "NoxCore.SetSuspend", {check: A_IsSuspended}]
-		; 	,["Pause Thread", "NoxCore.SetPause", {check: A_IsPaused}]
-		; 	,[]
-		; 	,[lang("AHK Standard Menu"), "NoxCore.Standard_Tray_Menu", {check: NoxCore._switch_tray_standard_menu}]
-		; 	,[]
-		; 	,[lang("Reset Program"), "NoxCore.ResetProgram"]])
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
 			,[[version_str, "TrayMenu.AboutNox"]
@@ -67,19 +64,14 @@ class TrayMenu
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
 			,["Language",, {"sub": "TrayLanguage"}]
-			; ,[lang("Advanced"),, {"sub": "TrayAdvanced"}]
 			,[]
 			,[lang("Open nox Folder"), A_WorkingDir]
-			; ,[lang("Edit Ext.ahk"), "edit:" NoxCore.Ext_ahk_file]
 			,[lang("Edit Config File"), "NoxCore.Edit_conf_yaml"]
-			; ,[]
-			; ,[lang("Open AutoHotkey.exe Folder"), "Sub_nox_EXE_Loc"]
-			; ,[lang("AutoHotKey Help"), "Sub_nox_AHKHelp"]
 			,[]
 			,[lang("Disable"), "NoxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
-			,[lang("Restart nox"), "NoxCore.ReloadNox"]
+			,[lang("Restart nox"), "ReloadNox"]
 			,[lang("Exit"), "NoxCore.ExitNox"] ])
-		this.SetMenu(TrayMenuList, NoxCore._switch_tray_standard_menu)
+		this.SetMenu(TrayMenuList)
 		Menu, Tray, Default, % lang("Disable")
 		Menu, Tray, Click, 1
 		this.Update_Icon()
@@ -94,7 +86,6 @@ class TrayMenu
 
 	AboutNox()
 	{
-		; lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
 		Gui, nox_About: New
 		Gui nox_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, Font, s12
@@ -104,15 +95,7 @@ class TrayMenu
 		Gui, Add, Link,, % s
 		s := "<a href=""" NoxCore.Project_Issue_page """>" lang("Feedback") "</a>"
 		Gui, Add, Link,, % s
-		; s := "<a href=""" NoxCore.help_addr """>" lang("Help") "</a>"
-		; Gui, Add, Link,, % s
-		; s := "Author: XJK <a href=""mailto:jack8461@msn.cn"">jack8461@msn.cn</a>"
-		; Gui, Add, Link,, % s
-		; s := "<a href=""" NoxCore.donate_page """>" lang("Donate") "</a>"
-		; ; s .= " <a href=""https://www.zhihu.com/question/36847530/answer/92868539"">去知乎点赞!</a>"
-		; Gui, Add, Link,, % s
 		Gui, Add, Text
-		; Gui, Add, Button, Default gSub_Close_nox_About, Close
 		GuiControl, Focus, Close
 		Gui, Show,, About nox
 	}
@@ -125,80 +108,32 @@ class TrayMenu
 			this.SetIcon(this.icon_default)
 		}
 		Else if !setpause && setsuspend {
-			this.SetIcon(this.icon_pause)
+			this.SetIcon(this.icon_disable)
 		}
 		Else if setpause && !setsuspend {
-			this.SetIcon(this.icon_suspend)
+			this.SetIcon(this.icon_disable)
 		}
 		Else if setpause && setsuspend {
-			this.SetIcon(this.icon_suspend_pause)
+			this.SetIcon(this.icon_disable)
 		}
 	}
 
 	; Tray.SetIcon
 	SetIcon(path)
 	{
-		if(FileExist(path))
+		if(FileExist(path)) {
 			Menu, Tray, Icon, %path%,,1
+		}
 	}
 
 	; Tray.SetMenu
-	SetMenu(menuList, ahk_std_menu=0)
+	SetMenu(menuList)
 	{
 		Menu, Tray, DeleteAll
-		if(ahk_std_menu) {
-			Menu, Tray, Standard
-			Menu, Tray, Add
-		}
-		else {
-			Menu, Tray, NoStandard
-		}
+		Menu, Tray, NoStandard
 		xMenu.add("Tray", menuList)
 	}
 }
-
-
-; class Tray
-; {
-; 	; Tray.Tip
-; 	Tip(msg, seconds=1, opt=0x1)
-; 	{
-; 		; //BUG traytip弹出后，第一次单击托盘图标的动作将失效，第二次单击或显示托盘菜单后正常
-; 		TrayTip, % NoxCore.ProgramName, % msg, % seconds, % opt
-; 		Return
-; 		title := NoxCore.ProgramName
-; 		cmd = "%A_AhkPath%" "%A_ScriptDir%\NoxCore.Core.ahk" -traytip "%title%" "%msg%" "%opt%"
-; 		Run, %cmd%
-; 		Return
-; 	}
-
-; 	; Tray.SetMenu
-; 	SetMenu(menuList, ahk_std_menu=0)
-; 	{
-; 		Menu, Tray, DeleteAll
-; 		if(ahk_std_menu) {
-; 			Menu, Tray, Standard
-; 			Menu, Tray, Add
-; 		}
-; 		else {
-; 			Menu, Tray, NoStandard
-; 		}
-; 		xMenu.add("Tray", menuList)
-; 	}
-
-; 	; ; Tray.SetIcon
-; 	; SetIcon(path)
-; 	; {
-; 	; 	if(FileExist(path))
-; 	; 		Menu, Tray, Icon, %path%,,1
-; 	; }
-; }
-
-
-; //////////////////////////////////////////////////////////////////////////
-; //////////////////////////////////////////////////////////////////////////
-; //////////////////////////////////////////////////////////////////////////
-/*
 
 */
 class WinMenu

@@ -1,6 +1,6 @@
-An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
+An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
 
-Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
+Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
 
 [![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/nox/web_search.gif)](https://hulinhong.com/2020/01/09/nox_readme/)
 click img to see full video
@@ -236,7 +236,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - check update -->
 <!-- - add about nox version -->
 <!-- - add donate page -->
-- add icon
+<!-- - add icon -->
+<!-- - hover tray icon display nox -->
 - hot corner/edge/capslock switcher to tray menu
 - update readme
 - auto update
@@ -260,34 +261,6 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - internal Everything -->
 
 
-# Update Log
-
-## 2021.02.01
-
-- add '192.168' to IsRawUrl() function
-- HotCornersTopLeft/Right: activate the window currently under mouse cursor
-- fix bug: nox auto update
-- remove wau command
-- fix bug: 第一次启动nox的时候会出现两次设置monitor xy
-- add double rshift to ctrl+backspace and ctrl+space
-
-## 2020.12.16
-
-添加了二进制exe文件,ev命令现在是用CustomCommandLineMap来配置了
-
-## 2020.10.11
-
-* custom command line map,  see `default_conf.ahk` : `CustomCommandLineMap`
-
-## 2020.10.10
-
-* auto update when launch nox support, see `default_conf.ahk` : `auto_update_when_launch_nox`
-
-## 2020.10.09
-
-* start nox with windows support, try cmd `nw`
-
-
 <!-- # 设置开机以管理员权限启动
 
 1. 对“A.exe”创建快捷方式, 然后将这个快捷方式改名为“A” (不用改名为A.lnk, 因为windows的快捷方式默认扩展名就是lnk)
@@ -302,3 +275,7 @@ start C:\Users\b\Desktop\A.lnk
 createobject("wscript.shell").run "D:\A.bat",0
 ```
 5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中 -->
+
+# License
+
+GPL

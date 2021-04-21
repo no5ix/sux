@@ -83,7 +83,12 @@ on_get_remote_data_ini_ready() {
 			if (cur_http_req.status == 12007) {
 				msg := msg lang(" Maybe need a proxy.")
 			}
-			MsgBox,,, % msg ,6
+			msg := " Do you want to open the nox official website with your browser?"
+			MsgBox,4,, % msg ,6
+			IfMsgBox Yes
+			{
+				run, % NoxCore.remote_download_html
+			} 
 		}
 	}
 	check_update_from_launch := 0
@@ -94,7 +99,6 @@ on_get_remote_data_ini_ready() {
 class NoxCore
 {
 	; dir
-	static _ICON_DIR := "icon/"
 	static _APP_DATA_DIR := "app_data/"
 	; file
 	static Launcher_Name := A_WorkingDir "\nox.exe"
@@ -102,10 +106,6 @@ class NoxCore
 	static conf_default_yaml_file := "conf.default.yaml"
 	static data_ini_file := NoxCore._APP_DATA_DIR "data.ini"
 	static remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
-	static icon_default := NoxCore._ICON_DIR "1.ico"
-	static icon_suspend := NoxCore._ICON_DIR "2.ico"
-	static icon_pause := NoxCore._ICON_DIR "4.ico"
-	static icon_suspend_pause := NoxCore._ICON_DIR "3.ico"
 	; update
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/nox"
@@ -193,17 +193,12 @@ class NoxCore
 			lang := act
 		}
 		NoxCore.SetConfig("lang", lang)
-		NoxCore.ReloadNox()
+		Reload
 	}
 
 	ExitNox(show_msg=true)
 	{
 		ExitApp
-	}
-
-	ReloadNox()
-	{
-		Reload
 	}
 
 	SetDisable(act="toggle")
@@ -239,7 +234,7 @@ class NoxCore
 		else {
 			Pause, Off
 		}
-		NoxCore.update_tray_menu()
+		TrayMenu.update_tray_menu()
 	}
 
 	OnClipboardChange(func)
