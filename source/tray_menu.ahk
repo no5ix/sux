@@ -7,14 +7,14 @@ if(A_ScriptName=="tray_menu.ahk") {
 Goto, SUB_TRAY_MENU_FILE_END_LABEL
 
 
-#Include %A_ScriptDir%\source\nox_core.ahk
+#Include %A_ScriptDir%\source\sux_core.ahk
 #Include %A_ScriptDir%\source\action.ahk
 
 class TrayMenu
 {
 	static ICON_DIR := "app_data/"
-	static icon_default := TrayMenu.ICON_DIR "nox_default.ico"
-	static icon_disable := TrayMenu.ICON_DIR "nox_disable.ico"
+	static icon_default := TrayMenu.ICON_DIR "sux_default.ico"
+	static icon_disable := TrayMenu.ICON_DIR "sux_disable.ico"
 
 	init() {
 		this.update_tray_menu()
@@ -23,11 +23,11 @@ class TrayMenu
 
 	SetAutorun(act="toggle")
 	{
-		cfg := NoxCore.GetConfig("autorun", 0)
+		cfg := SuxCore.GetConfig("autorun", 0)
 		autorun := (act="config")? cfg :act
 		autorun := (act="toggle")? !cfg :autorun
-		Regedit.Autorun(autorun, NoxCore.ProgramName, NoxCore.Launcher_Name)
-		NoxCore.SetConfig("autorun", autorun)
+		Regedit.Autorun(autorun, SuxCore.ProgramName, SuxCore.Launcher_Name)
+		SuxCore.SetConfig("autorun", autorun)
 		if(autorun)
 		{
 			Menu, Tray, Check, % lang("Start With Windows")
@@ -41,36 +41,36 @@ class TrayMenu
 	; Tray Menu
 	update_tray_menu()
 	{
-		version_str := lang("About") " v" NoxCore.version
-		autorun := NoxCore.GetConfig("autorun", 0)
-		remote_ver_str := NoxCore.get_remote_config("ver")
-		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(NoxCore.version)) {
+		version_str := lang("About") " v" SuxCore.version
+		autorun := SuxCore.GetConfig("autorun", 0)
+		remote_ver_str := SuxCore.get_remote_config("ver")
+		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version! ") "v" remote_ver_str
 		}
 		else {
 			check_update_menu_name := lang("Check Update")
 		}
-		lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
-		Menu, Tray, Tip, % NoxCore.ProgramName
+		lang := SuxCore.GetConfig("lang", SuxCore.Default_lang)
+		Menu, Tray, Tip, % SuxCore.ProgramName
 		xMenu.New("TrayLanguage"
-			,[["English", "NoxCore.SetLang", {check: lang=="en"}]
-			, ["中文", "NoxCore.SetLang", {check: lang=="cn"}]])
+			,[["English", "SuxCore.SetLang", {check: lang=="en"}]
+			, ["中文", "SuxCore.SetLang", {check: lang=="cn"}]])
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
-			,[[version_str, "TrayMenu.AboutNox"]
-			,[lang("Help"), NoxCore.help_addr]
-			,[lang("Donate"), NoxCore.donate_page]
+			,[[version_str, "TrayMenu.AboutSux"]
+			,[lang("Help"), SuxCore.help_addr]
+			,[lang("Donate"), SuxCore.donate_page]
 			,[check_update_menu_name, "CheckUpdate"]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			,[]
-			,[lang("Open nox Folder"), A_WorkingDir]
-			,[lang("Edit Config File"), "NoxCore.Edit_conf_yaml"]
+			,[lang("Open sux Folder"), A_WorkingDir]
+			,[lang("Edit Config File"), "SuxCore.Edit_conf_yaml"]
 			,[]
-			,[lang("Disable"), "NoxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
-			,[lang("Restart nox"), "ReloadNox"]
-			,[lang("Exit"), "NoxCore.ExitNox"] ])
+			,[lang("Disable"), "SuxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
+			,[lang("Restart sux"), "ReloadSux"]
+			,[lang("Exit"), "SuxCore.ExitSux"] ])
 		this.SetMenu(TrayMenuList)
 		Menu, Tray, Default, % lang("Disable")
 		Menu, Tray, Click, 1
@@ -80,24 +80,24 @@ class TrayMenu
 	static _switch_tray_standard_menu := 0
 	Standard_Tray_Menu(act="toggle")
 	{
-		NoxCore._switch_tray_standard_menu := (act="toggle")? !NoxCore._switch_tray_standard_menu :act
+		SuxCore._switch_tray_standard_menu := (act="toggle")? !SuxCore._switch_tray_standard_menu :act
 		this.update_tray_menu()
 	}
 
-	AboutNox()
+	AboutSux()
 	{
-		Gui, nox_About: New
-		Gui nox_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
+		Gui, sux_About: New
+		Gui sux_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, Font, s12
-		s := "nox v" NoxCore.version
+		s := "sux v" SuxCore.version
 		Gui, Add, Text,, % s
-		s := "<a href=""" NoxCore.Project_Home_Page """>" lang("Home Page") "</a>"
+		s := "<a href=""" SuxCore.Project_Home_Page """>" lang("Home Page") "</a>"
 		Gui, Add, Link,, % s
-		s := "<a href=""" NoxCore.Project_Issue_page """>" lang("Feedback") "</a>"
+		s := "<a href=""" SuxCore.Project_Issue_page """>" lang("Feedback") "</a>"
 		Gui, Add, Link,, % s
 		Gui, Add, Text
 		GuiControl, Focus, Close
-		Gui, Show,, About nox
+		Gui, Show,, About sux
 	}
 
 	Update_Icon()
@@ -146,10 +146,10 @@ class WinMenu
 	{
 		if (this.ini_registered == 1)
 			Return
-		this.HideIDs := NoxCore.UserData["WinMenu_HideIDs"]
+		this.HideIDs := SuxCore.UserData["WinMenu_HideIDs"]
 		if not IsObject(this.HideIDs)
 			this.HideIDs := {}
-		NoxCore.OnExit("Sub_WinMenu_OnExit")
+		SuxCore.OnExit("Sub_WinMenu_OnExit")
 		this.ini_registered := 1
 	}
 
@@ -244,7 +244,7 @@ WinMenu.HideIDs.Remove(A_ThisMenuItem)
 Return
 
 Sub_WinMenu_OnExit:
-NoxCore.UserData["WinMenu_HideIDs"] := WinMenu.HideIDs
+SuxCore.UserData["WinMenu_HideIDs"] := WinMenu.HideIDs
 Return
 
 

@@ -18,23 +18,23 @@ global keyboard_double_click_timeout := 222
 global mouse_double_click_timeout := 666
 
 
-LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给nox加新功能! ^_^"
+LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
     ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
-    ,"There is a new version nox, would you like to check it out?": "nox有新版本, 你要看看有啥新功能吗?"
+    ,"There is a new version sux, would you like to check it out?": "sux有新版本, 你要看看有啥新功能吗?"
     ,"This is the lastest version.": "这已经是最新版本."
     ,"Can not connect to GitHub.": "无法连接到GitHub."
     ,"Maybe need a proxy.": "可能需要使用代理."
-    ,"Do you want to open the nox official website with your browser?": "是否要用浏览器打开nox官网查看?"
+    ,"Do you want to open the sux official website with your browser?": "是否要用浏览器打开sux官网查看?"
     ,"About": "关于"
     ,"Help": "帮助"
     ,"Check Update": "检查更新"
     ,"A New Version! ": "有新版本! "
     ,"Start With Windows": "开机启动"
     ,"Language": "语言"
-    ,"Open nox Folder": "打开nox文件夹"
+    ,"Open sux Folder": "打开sux文件夹"
     ,"Edit Config File": "编辑配置文件"
     ,"Disable": "禁用"
-    ,"Restart nox": "重启nox"
+    ,"Restart sux": "重启sux"
     ,"Exit": "退出"
     ,"Home Page": "主页"
     ,"Feedback": "反馈"}

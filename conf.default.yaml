@@ -1,17 +1,17 @@
-﻿File-Description: 可参考conf.default.yaml文件修改, 改了之后重启nox才会生效
+﻿File-Description: 可参考conf.default.yaml文件修改, 改了之后重启sux才会生效
 check-update-interval-hour: 2
 theme: 
   # # dark theme
-  # nox_width: 620
-  # nox_text_color: 'ffffff'
-  # nox_bg_color: '424242'
-  # nox_border_shadow_type: 'classic_shadow_type'
+  # sux_width: 620
+  # sux_text_color: 'ffffff'
+  # sux_bg_color: '424242'
+  # sux_border_shadow_type: 'classic_shadow_type'
   #
   # light theme 
-  nox_width: 620
-  nox_text_color: '000000'
-  nox_bg_color: 'ececec'
-  nox_border_shadow_type: 'modern_shadow_type'
+  sux_width: 620
+  sux_text_color: '000000'
+  sux_bg_color: 'ececec'
+  sux_border_shadow_type: 'modern_shadow_type'
 additional-features:
   disable_win10_auto_update: 0
 web-search:
@@ -39,7 +39,7 @@ command:
   buildin:
     cmd: 'cmd.exe'
     ev: 'C:\Program Files\Everything\Everything.exe'
-    nox: 'https://github.com/no5ix/nox'
+    sux: 'https://github.com/no5ix/sux'
     git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
 hotkey: 

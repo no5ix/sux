@@ -99,7 +99,7 @@ MaxMinWindow() {
 	;     WinRestore, A
 }
 
-ReloadNox() {
+ReloadSux() {
 	gui_destroy() ; removes the GUI even when the reload fails
 	Reload
 }
@@ -124,8 +124,8 @@ SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
 	}
 }
 
-; StartNoxWithWindows() { ; start nox with windows
-; 	HandleStartingNoxWithWindows()
+; StartSuxWithWindows() { ; start sux with windows
+; 	HandleStartingSuxWithWindows()
 ; 	gui_destroy()
 ; }
 

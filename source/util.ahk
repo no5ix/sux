@@ -377,7 +377,7 @@ run(command, throwErr := 1)
 	{
 		if(RegExMatch(command, "^https?://"))
 		{
-			brw := NoxCore.Browser
+			brw := SuxCore.Browser
 			if(brw=""||brw="default")
 				run, %command%
 			Else if(brw == "microsoft-edge:")
@@ -403,7 +403,7 @@ run(command, throwErr := 1)
 		}
 		else if(RegExMatch(command, "i)edit:\s*(.*)", f))
 		{
-			NoxCore.Edit(f1)
+			SuxCore.Edit(f1)
 			return
 		}
 		Try
@@ -433,7 +433,7 @@ run(command, throwErr := 1)
 					%func_name%(command)
 				}
 				else if (throwErr == 1)
-					MsgBox, 0x30, % NoxCore.ProgramName, % "Can't run command """ command """"
+					MsgBox, 0x30, % SuxCore.ProgramName, % "Can't run command """ command """"
 			; }
 		}
 	}
@@ -478,7 +478,7 @@ RunWaitMany(commands) {
 ; ; run single command and retrieve their output
 RunWaitOne(command, hide_window) {
 	; Get a temporary file path
-	tempFile := A_Temp "\" DllCall("GetCurrentProcessId") "_nox_temp.txt"                           ; "
+	tempFile := A_Temp "\" DllCall("GetCurrentProcessId") "_sux_temp.txt"                           ; "
 	; Run the console program hidden, redirecting its output to
 	; the temp. file (with a program other than powershell.exe or cmd.exe,
 	; prepend %ComSpec% /c; use 2> to redirect error output), and wait for it to exit.
@@ -593,26 +593,26 @@ RunAsAdmin() {
 ; 	}
 ; }
 
-; UpdateNoxImpl(from_launch) {
-; 	; ToolTipWithTimer("nox background updating, please wait...", 2222)
+; UpdateSuxImpl(from_launch) {
+; 	; ToolTipWithTimer("sux background updating, please wait...", 2222)
 ; 	; RunWait, cmd.exe /c git pull origin master,,hide
 ; 	run_result := RunWaitOne("git pull origin master", from_launch)
 ; 	; if (InStr(run_result, "Already up to date")) {
 ; 	if (RegExMatch(run_result, "Already.*up.*to.*date")) {
 ; 		if from_launch
 ; 			return
-; 		MsgBox,,, nox is already up to date. , 6
+; 		MsgBox,,, sux is already up to date. , 6
 ; 	}
 ; 	else if (!run_result || Instr(run_result, "FATAL:") || Instr(run_result, "fatal:") || Instr(run_result, "error:")){
-; 		msg_str := "nox update failed, " . (run_result ? "this is the error log: " . run_result : "please `git pull` to check.")
+; 		msg_str := "sux update failed, " . (run_result ? "this is the error log: " . run_result : "please `git pull` to check.")
 ; 		MsgBox,,, %msg_str%
 ; 	}
 ; 	else {
-; 		; MsgBox,,, nox update finished. , 6
-; 		msg_str := "nox update finished, would you like to see update log?"
+; 		; MsgBox,,, sux update finished. , 6
+; 		msg_str := "sux update finished, would you like to see update log?"
 ; 		MsgBox, 4,, %msg_str%, 6
 ; 		IfMsgBox Yes
-; 			Run	"https://github.com/no5ix/nox#update-log"
+; 			Run	"https://github.com/no5ix/sux#update-log"
 ; 		Reload
 ; 	}
 ; }

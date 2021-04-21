@@ -4,7 +4,7 @@
 
 
 ; #Include, %A_ScriptDir%\source
-; #Include, nox_core.ahk
+; #Include, sux_core.ahk
 ; #Include, yaml.ahk
 
 
@@ -17,13 +17,13 @@ if(A_ScriptName=="clipboard_plus.ahk") {
 Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 
 
-#Include %A_ScriptDir%\source\nox_core.ahk
+#Include %A_ScriptDir%\source\sux_core.ahk
 #Include %A_ScriptDir%\source\util.ahk
 
 
 ; event callback
 OnClipboardChange:
-RunArr(NoxCore.OnClipboardChangeCmd)
+RunArr(SuxCore.OnClipboardChangeCmd)
 Return
 
 
@@ -44,12 +44,12 @@ class ClipboardPlus
 	{
 		if (this.ini_registered == 1)
 			Return
-		NoxCore.OnClipboardChange("Sub_xClipboard_OnClipboardChange")
-		NoxCore.OnExit("Sub_xClipboard_OnExit")
-		this.Clips := NoxCore.UserData["xClipboard_Clips"]
-		this.FavourClips := NoxCore.UserData["xClipboard_FavourClips"]
-		this.ClipsFirstShowNum := NoxCore.GetFeatureCfg("clipboard-plus.ClipsFirstShowNum", 10)
-		this.ClipsTotalNum := NoxCore.GetFeatureCfg("clipboard-plus.ClipsTotalNum", 50)
+		SuxCore.OnClipboardChange("Sub_xClipboard_OnClipboardChange")
+		SuxCore.OnExit("Sub_xClipboard_OnExit")
+		this.Clips := SuxCore.UserData["xClipboard_Clips"]
+		this.FavourClips := SuxCore.UserData["xClipboard_FavourClips"]
+		this.ClipsFirstShowNum := SuxCore.GetFeatureCfg("clipboard-plus.ClipsFirstShowNum", 10)
+		this.ClipsTotalNum := SuxCore.GetFeatureCfg("clipboard-plus.ClipsTotalNum", 50)
 		if not IsObject(this.Clips)
 			this.Clips := []
 		if not IsObject(this.FavourClips)
@@ -171,8 +171,8 @@ while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.Clips.MaxIndex() > Clipb
 Return
 
 Sub_xClipboard_OnExit:
-NoxCore.UserData["xClipboard_Clips"] := ClipboardPlus.Clips
-NoxCore.UserData["xClipboard_FavourClips"] := ClipboardPlus.FavourClips
+SuxCore.UserData["xClipboard_Clips"] := ClipboardPlus.Clips
+SuxCore.UserData["xClipboard_FavourClips"] := ClipboardPlus.FavourClips
 Return
 
 

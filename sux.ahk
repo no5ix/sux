@@ -10,7 +10,7 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance
 
 
-SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在这里加这一行, 只放在 nox_core.ahk里的话, 会有bug
+SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在这里加这一行, 只放在 sux_core.ahk里的话, 会有bug
 
 
 -----------------------
@@ -18,7 +18,7 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\util.ahk
-#Include %A_ScriptDir%\source\nox_core.ahk
+#Include %A_ScriptDir%\source\sux_core.ahk
 #Include %A_ScriptDir%\source\search_gui.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
 
@@ -26,4 +26,4 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 RunAsAdmin()
-NoxCore.init()
+SuxCore.init()

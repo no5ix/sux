@@ -2,7 +2,7 @@ An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
 
-[![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/nox/web_search.gif)](https://hulinhong.com/2020/01/09/nox_readme/)
+[![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/web_search.gif)](https://hulinhong.com/2020/01/09/sux_readme/)
 click img to see full video
 
 
@@ -23,19 +23,19 @@ click img to see full video
 * **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.yaml`-`theme`
 * **screen capture** : try `Capslock + Tab`
 * **disable win10 auto update**: see `conf.user.yaml`-`additional-features`-`disable_win10_auto_update`
-* **start nox with windows**
+* **start sux with windows**
 * **custom command line**:  see `conf.user.yaml`-`command`
 * **custom hotkey**:  see `conf.user.yaml`-`hotkey`
 * **clipboard-plus**:  clipboard history, try `win+alt+v`, see `conf.user.yaml`-`clipboard-plus`
 <!-- * **auto selection copy** : just like linux terminal -->
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
-<!-- * **auto update when launch nox** : see `default_conf.ahk` : `auto_update_when_launch_nox` -->
+<!-- * **auto update when launch sux** : see `default_conf.ahk` : `auto_update_when_launch_sux` -->
 
 
 # CMDs
 
-* `nox` : nox official site
+* `sux` : sux official site
 * `cmd` : open a command prompt window on the current explorer path 
 * `git` : open a git bash window on the current explorer path 
 * `ev` : run Everything
@@ -121,7 +121,7 @@ click img to see full video
 * `CapsLock` & `V` :
     * `^`
 * `CapsLock` & `F` :
-	* copy current and pop out nox search window
+	* copy current and pop out sux search window
 	<!-- * with shift : `Ctrl`+`Shift`+`F` -->
 * `CapsLock` & `W` :
 	* `Shift`+`Ins`
@@ -209,12 +209,12 @@ click img to see full video
 
 # How to use
 
-Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github.com/no5ix/nox/releases) and unzip it then run nox.exe as admin !
+Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github.com/no5ix/sux/releases) and unzip it then run sux.exe as admin !
 
 
 # 捐赠
 
-捐赠! 让作者更有动力给nox加新功能! ^_^
+捐赠! 让作者更有动力给sux加新功能! ^_^
 
 - 微信
   - ![微信](/img/wechat_donate.png)
@@ -234,12 +234,14 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - rshift issue -->
 <!-- - git cmd not goto desktop -->
 <!-- - check update -->
-<!-- - add about nox version -->
+<!-- - add about sux version -->
 <!-- - add donate page -->
 <!-- - add icon -->
-<!-- - hover tray icon display nox -->
+<!-- - hover tray icon display sux -->
+- add more action
 - hot corner/edge/capslock switcher to tray menu
-- update readme
+- limit mode notify in full screen app
+- update chinese readme, add some gif/mp4
 - auto update
 <!-- - fix bug: cant open conf.user.yaml with notepad -->
 <!-- - refactor tray menu code -->
@@ -248,7 +250,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - hot corner: check on same monitor  -->
 <!-- - occasional: fix web search gui window lost caret - make caret center -->
 - 失焦则销毁
-<!-- - 第二个屏幕就显示nox在第二个屏幕上 -->
+<!-- - 第二个屏幕就显示sux在第二个屏幕上 -->
 <!-- - fix default lang -->
 
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
@@ -256,7 +258,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>nox.zip](https://github
 <!-- - start with win -->
 - ext ahk
 <!-- - auto compile -->
-<!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateNoxImpl的锅 -->
+<!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateSuxImpl的锅 -->
 <!-- - suspend img -->
 <!-- - internal Everything -->
 

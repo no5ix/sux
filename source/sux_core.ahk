@@ -1,9 +1,9 @@
 ﻿
-if(A_ScriptName=="nox_core.ahk") {
+if(A_ScriptName=="sux_core.ahk") {
 	ExitApp
 }
 ; with this label, you can include this file on top of the file
-Goto, SUB_NOX_CORE_FILE_END_LABEL
+Goto, SUB_SUX_CORE_FILE_END_LABEL
 
 
 #Include %A_ScriptDir%\source\common_const.ahk
@@ -18,8 +18,8 @@ Goto, SUB_NOX_CORE_FILE_END_LABEL
 lang(key)
 {
 	global LANGUAGE_CONF_MAP
-	lang := NoxCore.GetConfig("lang", NoxCore.Default_lang)
-	if (lang == NoxCore.Default_lang) {
+	lang := SuxCore.GetConfig("lang", SuxCore.Default_lang)
+	if (lang == SuxCore.Default_lang) {
 		ret := LANGUAGE_CONF_MAP[key]
 		if !ret
 			ret := key
@@ -36,7 +36,7 @@ CheckUpdate(from_launch=0)
 {
 	global check_update_from_launch
 	check_update_from_launch := from_launch
-	NoxCore.get_remote_file(NoxCore.data_ini_file)
+	SuxCore.get_remote_file(SuxCore.data_ini_file)
 }
 
 cur_http_req = 
@@ -62,16 +62,16 @@ on_get_remote_data_ini_ready() {
 		return
 	}
 	if (cur_http_req.status == 200) {
-		if FileExist(NoxCore.remote_data_ini_file)
-			FileDelete, % NoxCore.remote_data_ini_file
-		FileAppend, % cur_http_req.responseText, % NoxCore.remote_data_ini_file
-		remote_ver_str := NoxCore.get_remote_config("ver")
-		if (get_version_sum(remote_ver_str) > get_version_sum(NoxCore.version)) {
+		if FileExist(SuxCore.remote_data_ini_file)
+			FileDelete, % SuxCore.remote_data_ini_file
+		FileAppend, % cur_http_req.responseText, % SuxCore.remote_data_ini_file
+		remote_ver_str := SuxCore.get_remote_config("ver")
+		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
-			MsgBox, 4,, % lang("There is a new version nox, would you like to check it out?")
+			MsgBox, 4,, % lang("There is a new version sux, would you like to check it out?")
 			IfMsgBox Yes
 			{
-				run, % NoxCore.remote_download_html
+				run, % SuxCore.remote_download_html
 			}
 		}
 		else {
@@ -111,11 +111,11 @@ handle_req_failed() {
 		if (state_code == 12007 || state_code == 12029) {
 			msg := msg lang("Maybe need a proxy.") "`n"
 		}
-		msg := msg lang("Do you want to open the nox official website with your browser?")
+		msg := msg lang("Do you want to open the sux official website with your browser?")
 		MsgBox,4,, % msg ,8
 		IfMsgBox Yes
 		{
-			run, % NoxCore.remote_download_html
+			run, % SuxCore.remote_download_html
 		} 
 	}
 	check_update_from_launch := 0
@@ -123,26 +123,26 @@ handle_req_failed() {
 
 
 
-class NoxCore
+class SuxCore
 {
 	; dir
 	static _APP_DATA_DIR := "app_data/"
 	; file
-	static Launcher_Name := A_WorkingDir "\nox.exe"
+	static Launcher_Name := A_WorkingDir "\sux.exe"
 	static conf_user_yaml_file := "conf.user.yaml"
 	static conf_default_yaml_file := "conf.default.yaml"
-	static data_ini_file := NoxCore._APP_DATA_DIR "data.ini"
-	static remote_data_ini_file := NoxCore._APP_DATA_DIR "remote_data.ini"
+	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
+	static remote_data_ini_file := SuxCore._APP_DATA_DIR "remote_data.ini"
 	; update
 	; online
-	static Project_Home_Page := "https://github.com/no5ix/nox"
-	static Project_Issue_page := "https://github.com/no5ix/nox/issues"
-	static donate_page := "https://github.com/no5ix/nox#%E6%8D%90%E8%B5%A0"
-	static remote_download_html := "https://github.com/no5ix/nox/releases"
-	static help_addr := "https://github.com/no5ix/nox#features"
+	static Project_Home_Page := "https://github.com/no5ix/sux"
+	static Project_Issue_page := "https://github.com/no5ix/sux/issues"
+	static donate_page := "https://github.com/no5ix/sux#%E6%8D%90%E8%B5%A0"
+	static remote_download_html := "https://github.com/no5ix/sux/releases"
+	static help_addr := "https://github.com/no5ix/sux#features"
 	; remote file path
 	static stable_branch := "master"
-	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/nox/" NoxCore.stable_branch "/"
+	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
 	;
 	static FeatureObj =
 	static version =
@@ -153,7 +153,7 @@ class NoxCore
 	static OnPauseCmd := []
 	static OnSuspendCmd := []
 	; static var
-	static ProgramName := "nox"
+	static ProgramName := "sux"
 	static Default_lang := "cn"
 	static Browser := "default"
 
@@ -165,11 +165,11 @@ class NoxCore
 		CoordMode, ToolTip, Screen
 		CoordMode, Menu, Screen
 
-		if !FileExist(NoxCore._APP_DATA_DIR)  
-        	FileCreateDir, % NoxCore._APP_DATA_DIR
+		if !FileExist(SuxCore._APP_DATA_DIR)  
+        	FileCreateDir, % SuxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
-		this.version := NoxCore.GetConfig("ver")
+		this.version := SuxCore.GetConfig("ver")
 		CheckUpdate(1)
 
 		ClipboardPlus.init()
@@ -180,32 +180,32 @@ class NoxCore
 	get_remote_file(path)
 	{
 		StringReplace, path, % path, \, /, All
-		url := NoxCore.remote_raw_addr path
+		url := SuxCore.remote_raw_addr path
 		get_remote_data_ini(url)
 	}
 
-	get_remote_config(key, default="", section="nox", autoWrite=true)
+	get_remote_config(key, default="", section="sux", autoWrite=true)
 	{
-		IniRead, output, % NoxCore.remote_data_ini_file, % section, % key, ""
+		IniRead, output, % SuxCore.remote_data_ini_file, % section, % key, ""
 		return output
 	}
 
-	GetConfig(key, default="", section="nox", autoWrite=true)
+	GetConfig(key, default="", section="sux", autoWrite=true)
 	{
-		IniRead, output, % NoxCore.data_ini_file, % section, % key
+		IniRead, output, % SuxCore.data_ini_file, % section, % key
 		if(output=="ERROR")
 		{
 			if(autoWrite) {
-				NoxCore.SetConfig(key, default, section)
+				SuxCore.SetConfig(key, default, section)
 			}
 			return default
 		}
 		return output
 	}
 
-	SetConfig(key, value, section="nox")
+	SetConfig(key, value, section="sux")
 	{
-		IniWrite, % value, % NoxCore.data_ini_file, % section, % key
+		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
 	}
 
 
@@ -219,11 +219,11 @@ class NoxCore
 		else {
 			lang := act
 		}
-		NoxCore.SetConfig("lang", lang)
+		SuxCore.SetConfig("lang", lang)
 		Reload
 	}
 
-	ExitNox(show_msg=true)
+	ExitSux(show_msg=true)
 	{
 		ExitApp
 	}
@@ -231,12 +231,12 @@ class NoxCore
 	SetDisable(act="toggle")
 	{
 		setdisable := (act="toggle")? !(A_IsPaused&&A_IsSuspended): act
-		NoxCore.SetState(setdisable, setdisable)
+		SuxCore.SetState(setdisable, setdisable)
 	}
 
 	Edit_conf_yaml()
 	{
-		EditFile(NoxCore.conf_user_yaml_file)
+		EditFile(SuxCore.conf_user_yaml_file)
 	}
 
 	SetState(setsuspend="", setpause="")
@@ -244,10 +244,10 @@ class NoxCore
 		setsuspend := (setsuspend="")? A_IsSuspended: setsuspend
 		setpause := (setpause="")? A_IsPaused: setpause
 		if(!A_IsSuspended && setsuspend) {
-			RunArr(NoxCore.OnSuspendCmd)
+			RunArr(SuxCore.OnSuspendCmd)
 		}
 		if(!A_IsPaused && setpause) {
-			RunArr(NoxCore.OnPauseCmd)
+			RunArr(SuxCore.OnPauseCmd)
 		}
 		if(setsuspend) {
 			Suspend, On
@@ -273,7 +273,7 @@ class NoxCore
 	GetFeatureCfg(keyStr, default="")
 	{
 		keyArray := StrSplit(keyStr, ".")
-		obj := NoxCore.FeatureObj
+		obj := SuxCore.FeatureObj
 		Loop, % keyArray.MaxIndex()-1
 		{
 			cur_key := keyArray[A_Index]
@@ -292,81 +292,81 @@ class NoxCore
 		if(!FileExist(this.conf_user_yaml_file)) {
 			FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
 		}
-		NoxCore.FeatureObj := Yaml(NoxCore.conf_user_yaml_file)
+		SuxCore.FeatureObj := Yaml(SuxCore.conf_user_yaml_file)
 
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		
-		check_update_interval_hour := NoxCore.GetFeatureCfg("check-update-interval-hour", 2)
+		check_update_interval_hour := SuxCore.GetFeatureCfg("check-update-interval-hour", 2)
 		check_update_millisec := check_update_interval_hour * 3600 * 1000
 		SetTimer, CheckUpdate, % check_update_millisec
 
-		if(NoxCore.GetFeatureCfg("hotkey.enable", 0))
+		if(SuxCore.GetFeatureCfg("hotkey.enable", 0))
 		{
-			For key, value in NoxCore.GetFeatureCfg("hotkey.buildin", {})
+			For key, value in SuxCore.GetFeatureCfg("hotkey.buildin", {})
 				register_hotkey(key, value, "")
-			For key, value in NoxCore.GetFeatureCfg("hotkey.custom", {})
+			For key, value in SuxCore.GetFeatureCfg("hotkey.custom", {})
 				register_hotkey(key, value, "")
 		}
-		if(NoxCore.GetFeatureCfg("capslock_plus.enable", 0))
+		if(SuxCore.GetFeatureCfg("capslock_plus.enable", 0))
 		{
-			if (NoxCore.GetFeatureCfg("capslock_plus.buildin.capslock", 0) == 0) {
+			if (SuxCore.GetFeatureCfg("capslock_plus.buildin.capslock", 0) == 0) {
 				SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 			}
 
-			For key, value in NoxCore.GetFeatureCfg("capslock_plus.buildin", {})
+			For key, value in SuxCore.GetFeatureCfg("capslock_plus.buildin", {})
 				register_hotkey(key, value, "")
-			For key, value in NoxCore.GetFeatureCfg("capslock_plus.custom", {})
+			For key, value in SuxCore.GetFeatureCfg("capslock_plus.custom", {})
 				register_hotkey(key, value, "")
 		}
 		else {
 			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 
-		if(NoxCore.GetFeatureCfg("hot-corner.enable", 0))
+		if(SuxCore.GetFeatureCfg("hot-corner.enable", 0))
 		{
-			For border_key, border_action in NoxCore.GetFeatureCfg("hot-corner.action", {})
+			For border_key, border_action in SuxCore.GetFeatureCfg("hot-corner.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 			SetTimer, tick_hot_corners, %hot_corners_detect_interval%
 		}
 
-		if(NoxCore.GetFeatureCfg("hot-edge.enable", 0))
+		if(SuxCore.GetFeatureCfg("hot-edge.enable", 0))
 		{
-			For border_key, border_action in NoxCore.GetFeatureCfg("hot-edge.action", {})
+			For border_key, border_action in SuxCore.GetFeatureCfg("hot-edge.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 		}
 
 		comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
-		if(NoxCore.GetFeatureCfg("command.enable", 0))
+		if(SuxCore.GetFeatureCfg("command.enable", 0))
 		{
-			For key, value in NoxCore.GetFeatureCfg("command.buildin", {})
+			For key, value in SuxCore.GetFeatureCfg("command.buildin", {})
 				register_command(key, StrSplit(value, comma_delimiters_arr))
-			For key, value in NoxCore.GetFeatureCfg("command.custom", {})
+			For key, value in SuxCore.GetFeatureCfg("command.custom", {})
 				register_command(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		if(NoxCore.GetFeatureCfg("web-search.enable", 0))
+		if(SuxCore.GetFeatureCfg("web-search.enable", 0))
 		{
-			For key, value in NoxCore.GetFeatureCfg("web-search.buildin", {})
+			For key, value in SuxCore.GetFeatureCfg("web-search.buildin", {})
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
-			For key, value in NoxCore.GetFeatureCfg("web-search.custom", {})
+			For key, value in SuxCore.GetFeatureCfg("web-search.custom", {})
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		For key, value in NoxCore.GetFeatureCfg("additional-features", {}) {
+		For key, value in SuxCore.GetFeatureCfg("additional-features", {}) {
 			register_additional_features(key, value)
 			if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"])
 				SetTimer, DisableWin10AutoUpdate, 66666
 		}
 
-		For key, value in NoxCore.GetFeatureCfg("theme", {})
+		For key, value in SuxCore.GetFeatureCfg("theme", {})
 			register_theme_conf(key, value)
 
 
-		if(NoxCore.GetFeatureCfg("clipboard-plus.enable", 0))
+		if(SuxCore.GetFeatureCfg("clipboard-plus.enable", 0))
 		{
-			For key, value in NoxCore.GetFeatureCfg("clipboard-plus.hotkey", {})
+			For key, value in SuxCore.GetFeatureCfg("clipboard-plus.hotkey", {})
 				register_hotkey(key, value, "")
 		}
 	}
@@ -560,7 +560,7 @@ border_event_evoke()
 
 
 ; //////////////////////////////////////////////////////////////////////////
-SUB_NOX_CORE_FILE_END_LABEL:
+SUB_SUX_CORE_FILE_END_LABEL:
 	temp_nc := "blabla"
 
 

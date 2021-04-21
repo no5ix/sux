@@ -121,9 +121,9 @@ gui_spawn(curr_select_text="") {
 	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
 	
 	Gui, Margin, 0, 0
-	nox_bg_color := THEME_CONF_REGISTER_MAP["nox_bg_color"] 
-	Gui, Color, %nox_bg_color%, %nox_bg_color%
-	if (THEME_CONF_REGISTER_MAP["nox_border_shadow_type"] == "classic_shadow_type")
+	sux_bg_color := THEME_CONF_REGISTER_MAP["sux_bg_color"] 
+	Gui, Color, %sux_bg_color%, %sux_bg_color%
+	if (THEME_CONF_REGISTER_MAP["sux_border_shadow_type"] == "classic_shadow_type")
 		ShadowBorder(hMyGUI)
 	else
 		FrameShadow(hMyGUI)
@@ -131,8 +131,8 @@ gui_spawn(curr_select_text="") {
 	Gui, Font, s22, Segoe UI
 	; Gui, Font, s10, Segoe UI
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleGuiUserInput
-	gui_control_options := "xm+6 ym+6 w" . THEME_CONF_REGISTER_MAP["nox_width"] . " c" . THEME_CONF_REGISTER_MAP["nox_text_color"] . " -E0x200"
-	; gui_control_options := "w" . THEME_CONF_REGISTER_MAP["nox_width"] . " c" . THEME_CONF_REGISTER_MAP["nox_text_color"] . "  -E0x800000"
+	gui_control_options := "xm+6 ym+6 w" . THEME_CONF_REGISTER_MAP["sux_width"] . " c" . THEME_CONF_REGISTER_MAP["sux_text_color"] . " -E0x200"
+	; gui_control_options := "w" . THEME_CONF_REGISTER_MAP["sux_width"] . " c" . THEME_CONF_REGISTER_MAP["sux_text_color"] . "  -E0x800000"
 	Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
 	; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 	; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%
@@ -158,7 +158,7 @@ gui_spawn(curr_select_text="") {
 				break
 		}
 		xMidScrn -= last_mon_width / 2
-		xMidScrn -= THEME_CONF_REGISTER_MAP["nox_width"] / 2 
+		xMidScrn -= THEME_CONF_REGISTER_MAP["sux_width"] / 2 
 		Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 	}
 
