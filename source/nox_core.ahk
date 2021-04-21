@@ -83,20 +83,31 @@ on_get_remote_data_ini_ready() {
 		; m("xxd")
 		handle_req_failed()
 	}
+	cur_http_req = 
 	check_update_from_launch := 0
 }
 
 handle_req_failed() {
 	global cur_http_req
 	global check_update_from_launch
-	if (cur_http_req.readyState != 4) {  ; 没有完成.
-		return
-	}
+	; m("xx")
 	if !cur_http_req {
+	; m("xx1")
+		cur_http_req = 
 		return
 	}
-	state_code := cur_http_req.status
-	cur_http_req = 
+	if (cur_http_req.readyState != 4) {  ; 没有完成.
+	; m("xx2")
+		cur_http_req = 
+		; return
+		state_code := 12007
+	}
+	else {
+		state_code := cur_http_req.status
+		cur_http_req = 
+	}
+	m(check_update_from_launch)
+
 	if (check_update_from_launch == 0) {
 		msg := lang("Can not connect to GitHub.") "`n"
 		if (state_code == 12007 || state_code == 12029) {
@@ -109,6 +120,7 @@ handle_req_failed() {
 			run, % NoxCore.remote_download_html
 		} 
 	}
+	check_update_from_launch := 0
 }
 
 
