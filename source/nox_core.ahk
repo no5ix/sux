@@ -106,8 +106,6 @@ handle_req_failed() {
 		state_code := cur_http_req.status
 		cur_http_req = 
 	}
-	m(check_update_from_launch)
-
 	if (check_update_from_launch == 0) {
 		msg := lang("Can not connect to GitHub.") "`n"
 		if (state_code == 12007 || state_code == 12029) {
