@@ -39,7 +39,7 @@ CheckUpdate(from_launch=0)
 	NoxCore.get_remote_file(NoxCore.data_ini_file)
 }
 
-cur_http_req =
+cur_http_req = 
 
 get_remote_data_ini(url)
 {
@@ -51,7 +51,9 @@ get_remote_data_ini(url)
 	cur_http_req.onreadystatechange := Func("on_get_remote_data_ini_ready")
 	; 发送请求. Ready() 将在其完成后被调用.
 	cur_http_req.send()
+	SetTimer, handle_req_failed, -6666
 }
+
 
 on_get_remote_data_ini_ready() {
 	global cur_http_req
@@ -78,20 +80,35 @@ on_get_remote_data_ini_ready() {
 		}
 	}
 	else {
-		if (check_update_from_launch == 0) {
-			msg := lang("Can not connect to GitHub.")
-			if (cur_http_req.status == 12007) {
-				msg := msg lang(" Maybe need a proxy.")
-			}
-			msg := " Do you want to open the nox official website with your browser?"
-			MsgBox,4,, % msg ,6
-			IfMsgBox Yes
-			{
-				run, % NoxCore.remote_download_html
-			} 
-		}
+		; m("xxd")
+		handle_req_failed()
 	}
 	check_update_from_launch := 0
+}
+
+handle_req_failed() {
+	global cur_http_req
+	global check_update_from_launch
+	if (cur_http_req.readyState != 4) {  ; 没有完成.
+		return
+	}
+	if !cur_http_req {
+		return
+	}
+	state_code := cur_http_req.status
+	cur_http_req = 
+	if (check_update_from_launch == 0) {
+		msg := lang("Can not connect to GitHub.") "`n"
+		if (state_code == 12007 || state_code == 12029) {
+			msg := msg lang("Maybe need a proxy.") "`n"
+		}
+		msg := msg lang("Do you want to open the nox official website with your browser?")
+		MsgBox,4,, % msg ,8
+		IfMsgBox Yes
+		{
+			run, % NoxCore.remote_download_html
+		} 
+	}
 }
 
 
