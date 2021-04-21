@@ -1,3 +1,5 @@
+![sux](img/sux.svg)
+
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
