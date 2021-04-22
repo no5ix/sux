@@ -25,7 +25,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Can not connect to GitHub.": "无法连接到GitHub."
     ,"Maybe need a proxy.": "可能需要使用代理."
     ,"Do you want to open the sux official website with your browser?": "是否要用浏览器打开sux官网查看?"
-    ,"Double hit Alt to open this search box, hit Esc to close.": "双击Alt打开这个搜索框, 按Esc来关闭"
+    ,"Double hit Alt to open search box, hit Esc to close.": "双击Alt打开搜索框, 按Esc来关闭"
     ,"About": "关于"
     ,"Help": "帮助"
     ,"Check Update": "检查更新"
