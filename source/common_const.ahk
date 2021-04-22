@@ -56,3 +56,6 @@ ADDITIONAL_FEATURES_REGISTER_MAP := {}
 ; 记录theme与对应操作
 THEME_CONF_REGISTER_MAP := {}
 
+; 记录replace-string与对应操作
+STR_REPLACE_CONF_REGISTER_MAP := {}
+

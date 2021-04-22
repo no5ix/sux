@@ -241,6 +241,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add icon -->
 <!-- - hover tray icon display sux -->
 - 短语替换
+- 同时搜两个
 - add more action
 - add newbie tutorial
 - hot corner/edge/capslock switcher to tray menu

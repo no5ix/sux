@@ -13,8 +13,9 @@ theme:
   sux_bg_color: 'ececec'
   sux_border_shadow_type: 'modern_shadow_type'
 additional-features:
-  disable_win10_auto_update: 0
+  disable_win10_auto_update: 1
 replace-text:
+  enable: 1
   buildin:
     'h/': 'http://'
     'hs/': 'https://'
@@ -25,7 +26,7 @@ replace-text:
 web-search:
   enable: 1
   buildin:
-    default: 'bd'
+    default: 'gg', 'bd'
     gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
     bd: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
@@ -50,19 +51,26 @@ command:
     sux: 'https://github.com/no5ix/sux'
     git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
+    rd: Reloadsux
+    ahk: 'https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm'
+    blog: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\no5ix.github.io'
+    proj: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\sux'
+    test.py: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.py'
+    test.go: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.go'
+    test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.cpp'
 hotkey: 
   enable: 1
   buildin:
     ctrl_8: SimulateClickDown
     ctrl_shift_alt_m: MaxMinWindow
-    # rshift: SwitchInputMethod
+    rshift: SwitchInputMethod
     ~alt: DoubleHitWebSearch
     # ~ctrl: DoubleHitWebSearch
   custom:
 capslock_plus:
   enable: 1
   buildin:
-    # capslock: 'send {Esc}'
+    capslock: 'send {Esc}'
     capslock_tab: ScreenShot
     capslock_shift_tab: SwitchCapsState
     capslock_g: WebSearchSelectedText
@@ -132,36 +140,25 @@ hot-edge:
   action:
     TopHalfLeftEdge: 
       ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
-      wheeldown: GoTop
-      wheelup: GoBottom
     TopHalfRightEdge: 
       ctrl_8: OpenFileExplorer
-      wheeldown: GoTop
-      wheelup: GoBottom
     BottomHalfLeftEdge:
       ctrl_8: ReopenLastTab
-      MButton: OpenTaskView
-      wheeldown: GotoNextDesktop
-      wheelup: GotoPreDesktop
     BottomHalfRightEdge: 
       ctrl_8: RefreshTab
-      MButton: OpenTaskView
-      wheeldown: GotoNextDesktop
-      wheelup: GotoPreDesktop
+      # MButton: OpenTaskView
+      # wheeldown: GotoNextDesktop
+      # wheelup: GotoPreDesktop
     LeftHalfBottomEdge: 
       ctrl_8: OpenTaskView
-      MButton: MoveWindowToLeftSide
     LeftHalfTopEdge: 
       ctrl_8: MoveWindowToLeftSide
-      MButton: MoveWindowToLeftSide
       wheeldown: VolumeDown
       wheelup: VolumeUp
     RightHalfTopEdge: 
       ctrl_8: MoveWindowToRightSide
-      MButton: MoveWindowToRightSide
     RightHalfBottomEdge: 
       ctrl_8: OpenActionCenter
-      MButton: MoveWindowToLeftSide
       # wheeldown: GotoNextTab
       # # wheeldown: GotoPreApp
       # wheelup: GotoPreTab

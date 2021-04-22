@@ -356,6 +356,14 @@ class SuxCore
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
 		}
 
+		if(SuxCore.GetFeatureCfg("replace-text.enable", 0))
+		{
+			For key, value in SuxCore.GetFeatureCfg("replace-text.buildin", {})
+				register_replace_str(key, value)
+			For key, value in SuxCore.GetFeatureCfg("replace-text.custom", {})
+				register_replace_str(key, value)
+		}
+
 		For key, value in SuxCore.GetFeatureCfg("additional-features", {}) {
 			register_additional_features(key, value)
 			if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"])
@@ -367,7 +375,6 @@ class SuxCore
 
 		For key, value in SuxCore.GetFeatureCfg("theme", {})
 			register_theme_conf(key, value)
-
 
 		if(SuxCore.GetFeatureCfg("clipboard-plus.enable", 0))
 		{
@@ -424,13 +431,17 @@ register_command(key_name, action)
 	CMD_REGISTER_MAP[key_name] := action
 }
 
-
 register_web_search(key_name, action)
 {
 	global WEB_SEARCH_REGISTER_MAP
 	WEB_SEARCH_REGISTER_MAP[key_name] := action
 }
 
+register_replace_str(key_name, val)
+{
+	global STR_REPLACE_CONF_REGISTER_MAP
+	STR_REPLACE_CONF_REGISTER_MAP[key_name] := val
+}
 
 register_additional_features(key_name, val)
 {
@@ -438,13 +449,11 @@ register_additional_features(key_name, val)
 	ADDITIONAL_FEATURES_REGISTER_MAP[key_name] := val
 }
 
-
 register_theme_conf(key_name, val)
 {
 	global THEME_CONF_REGISTER_MAP
 	THEME_CONF_REGISTER_MAP[key_name] := val
 }
-
 
 register_hotkey(key_name, action, prefix="")
 {
