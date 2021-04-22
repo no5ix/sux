@@ -43,15 +43,32 @@ class SearchGui {
 			Run %user_input%
 			return
 		}
-		if (search_key == "")
+		if (search_key == "") {
 			search_key := "default"
+
+		; if (search_key = "default") {
+			; for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
+			; 	; if (_index != search_flag_index) {
+			; 		SearchGui.WebSearch(user_input, _elem)
+			; 		; Sleep, 666
+			; 	; }
+			; }
+			; return
+		; }
+		}
 
 		; search_flag_index = 1
 		; search_flag := WEB_SEARCH_REGISTER_MAP[search_key][search_flag_index]
-		search_url := WEB_SEARCH_REGISTER_MAP[search_key]
-		if (search_url.Length() == 1) {
-			search_url := search_url[1]
-		}
+		; search_url := WEB_SEARCH_REGISTER_MAP[search_key]
+		; if (search_url.Length() == 1) {
+		; 	search_url := search_url[1]
+		; }
+		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key]
+			SearchGui.WebSearchImpl(user_input, search_url)
+	}
+
+	; WebSearchImpl(user_input, search_key="", search_url) {
+	WebSearchImpl(user_input, search_url) {
 		if (user_input == "") {	
 			if !InStr(search_url, "REPLACEME") {
 			; if (search_flag = "URL") {
@@ -75,15 +92,15 @@ class SearchGui {
 			; }
 		}
 
-		if (search_key = "default") {
-			for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
-				; if (_index != search_flag_index) {
-					SearchGui.WebSearch(user_input, _elem)
-					; Sleep, 666
-				; }
-			}
-			return
-		}
+		; if (search_key = "default") {
+		; 	for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
+		; 		; if (_index != search_flag_index) {
+		; 			SearchGui.WebSearch(user_input, _elem)
+		; 			; Sleep, 666
+		; 		; }
+		; 	}
+		; 	return
+		; }
 
 		safe_query := UriEncode(Trim(user_input))
 		StringReplace, search_final_url, search_url, REPLACEME, %safe_query%

@@ -26,13 +26,14 @@ replace-text:
 web-search:
   enable: 1
   buildin:
-    default: 'gg', 'bd'
+    default: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+    bg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
     bd: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
     yd: 'http://www.youdao.com/w/REPLACEME'
     bb: 'search.bilibili.com/all?keyword=REPLACEME'
-    jd: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8'
+    jd: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
     zh: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
     gh: 'https://github.com/search?q=REPLACEME'
     so: 'https://stackoverflow.com/search?q=REPLACEME'
