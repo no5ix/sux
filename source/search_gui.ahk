@@ -70,7 +70,7 @@ class SearchGui {
 			; pending_search_str := Clipboard
 			; if StrLen(pending_search_str) >= 88 {
 			; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
-			; 	SearchGui.search_gui_destroy()
+			; 	search_gui_destroy()
 			; 	return
 			; }
 		}
@@ -114,7 +114,7 @@ class SearchGui {
 
 
 	search_gui_spawn(curr_select_text="") {
-		SearchGui.search_gui_destroy()
+		search_gui_destroy()
 		; curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
@@ -167,24 +167,27 @@ class SearchGui {
 		}
 
 		auto_destory_gui_period := -22222  ; millisecond
-		gui_des := ObjBindMethod(this, "search_gui_destroy")
-		SetTimer, % gui_des, %auto_destory_gui_period%
+		; gui_des := ObjBindMethod(this, "search_gui_destroy")  ; 不建议用这个, 这个不会顶掉原先search_gui_destroy的timer的
+		; SetTimer, % gui_des, %auto_destory_gui_period%
+		SetTimer, search_gui_destroy, %auto_destory_gui_period%
 		return
 	}
 
-
-	search_gui_destroy() {
-		; Hide GUI
-		Gui, Destroy
-	}
 }
+
+
+search_gui_destroy() {
+	; Hide GUI
+	Gui, Destroy
+}
+
 
 ;-------------------------------------------------------------------------------
 ; GUI FUNCTIONS AND SUBROUTINES
 ;-------------------------------------------------------------------------------
 ; Automatically triggered on Escape key:
 GuiEscape:
-	SearchGui.search_gui_destroy()
+	search_gui_destroy()
 	return
 
 ; The callback function when the text changes in the input field.
@@ -197,14 +200,14 @@ HandleSearchGuiUserInput:
 
 	if !trim_gui_user_input
 	{
-		SearchGui.search_gui_destroy()
+		search_gui_destroy()
 	}
 	else
 	{
 		global CMD_REGISTER_MAP
 		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
-			SearchGui.search_gui_destroy()
+			search_gui_destroy()
 
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 			if (word_array[1] == "ev"){
@@ -258,7 +261,7 @@ HandleSearchGuiUserInput:
 		}
 		else
 		{
-			SearchGui.search_gui_destroy()
+			search_gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 
 			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]){

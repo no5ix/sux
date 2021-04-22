@@ -170,7 +170,6 @@ MaxMinWindow() {
 }
 
 ReloadSux() {
-	SearchGui.search_gui_destroy() ; removes the GUI even when the reload fails
 	Reload
 }
 
