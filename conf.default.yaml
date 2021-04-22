@@ -135,8 +135,8 @@ hot-edge:
       ctrl_8: OpenTaskView
     LeftHalfTopEdge: 
       ctrl_8: MoveWindowToLeftSide
-      wheeldown: VolumeUp
-      wheelup: VolumeDown
+      wheeldown: VolumeDown
+      wheelup: VolumeUp
     RightHalfTopEdge: 
       ctrl_8: MoveWindowToRightSide
     RightHalfBottomEdge: 
