@@ -63,8 +63,10 @@ class SearchGui {
 		; if (search_url.Length() == 1) {
 		; 	search_url := search_url[1]
 		; }
-		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key]
+		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key] {
 			SearchGui.WebSearchImpl(user_input, search_url)
+			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
+		}
 	}
 
 	; WebSearchImpl(user_input, search_key="", search_url) {
