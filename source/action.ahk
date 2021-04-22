@@ -5,6 +5,15 @@
 ReplaceAllText() {
 	send, ^a
 	ReplaceSelectedText()
+	
+	; ; Multi Monitor Support
+	; SysGet, mon_cnt, MonitorCount
+	; ; m(mon_cnt)
+	; Loop, % mon_cnt
+	; {
+	; 	SysGet, Mon, Monitor, % A_Index
+	; 	m(A_Index)
+	; }
 }
 
 ReplaceSelectedText() {

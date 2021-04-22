@@ -243,7 +243,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - 短语替换 -->
 - 同时搜两个
 - bug: 双屏tophalfleft
-- caps + alt
+<!-- - caps + alt -->
 - add more action
     <!-- - 最小化 -->
 - add newbie tutorial

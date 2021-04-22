@@ -514,6 +514,8 @@ get_border_code(X := "", Y := "", cornerPix = "")
 	}
 	; Multi Monitor Support
 	SysGet, mon_cnt, MonitorCount
+	; m(mon_cnt)
+	last_mon_width := 0
 	Loop, % mon_cnt
 	{
 		SysGet, Mon, Monitor, % A_Index
@@ -524,6 +526,9 @@ get_border_code(X := "", Y := "", cornerPix = "")
 	; ToolTipWithTimer(MonTop)
 		cur_mon_width := MonRight - MonLeft
 		cur_mon_height := MonBottom - MonTop
+		; m(A_Index)
+		; m(cur_mon_width)
+		; m(cur_mon_height)
 		if(X>=MonLeft && Y>= MonTop && X<MonRight && Y<MonBottom)
 		{
 			str =
@@ -542,7 +547,7 @@ get_border_code(X := "", Y := "", cornerPix = "")
 			}
 			if ( Y < MonTop + cornerPix ) {
 				if (str == "") {
-					if (X < cur_mon_width / 2)
+					if (X < last_mon_width + (cur_mon_width / 2))
 						str .= "TopHalfLeftEdge"
 					else
 						str .= "TopHalfRightEdge"
@@ -556,7 +561,7 @@ get_border_code(X := "", Y := "", cornerPix = "")
 			}
 			else if ( Y >= MonBottom - cornerPix) {
 				if (str == "") {
-					if (X < cur_mon_width / 2)
+					if (X < last_mon_width + (cur_mon_width / 2))
 						str .= "BottomHalfLeftEdge"
 					else
 						str .= "BottomHalfRightEdge"
@@ -570,6 +575,7 @@ get_border_code(X := "", Y := "", cornerPix = "")
 			}
 			return % str
 		}
+		last_mon_width := cur_mon_width
 	}
 	return ""
 }
