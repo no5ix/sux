@@ -79,7 +79,7 @@ class SearchGui {
 			for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
 				; if (_index != search_flag_index) {
 					SearchGui.WebSearch(user_input, _elem)
-					Sleep, 666
+					; Sleep, 666
 				; }
 			}
 			return
@@ -118,6 +118,7 @@ class SearchGui {
 		; curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
+		global last_search_str
 		last_search_str := curr_select_text ? curr_select_text : last_search_str
 
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border

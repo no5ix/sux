@@ -123,24 +123,24 @@ hot-edge:
     TopHalfLeftEdge: 
       ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
     TopHalfRightEdge: 
-      ctrl_8: 'explorer.exe'
+      ctrl_8: OpenFileExplorer
     BottomHalfLeftEdge:
       ctrl_8: ReopenLastTab
     BottomHalfRightEdge: 
       ctrl_8: RefreshTab
-      # MButton: 'send #{tab}'
-      # wheeldown: 'send ^#{right}'
-      # wheelup: 'send ^#{left}'
+      # MButton: OpenTaskView
+      # wheeldown: GotoNextDesktop
+      # wheelup: GotoPreDesktop
     LeftHalfBottomEdge: 
-      ctrl_8: 'send #{Tab}'
+      ctrl_8: OpenTaskView
     LeftHalfTopEdge: 
-      ctrl_8: 'send #{Left}'
-      wheeldown: 'Send {volume_down}'
-      wheelup: 'Send {volume_up}'
+      ctrl_8: MoveWindowToLeftSide
+      wheeldown: VolumeUp
+      wheelup: VolumeDown
     RightHalfTopEdge: 
-      ctrl_8: 'send #{Right}'
+      ctrl_8: MoveWindowToRightSide
     RightHalfBottomEdge: 
-      ctrl_8: 'send #a'
+      ctrl_8: OpenActionCenter
       # wheeldown: GotoNextTab
       # # wheeldown: GotoPreApp
       # wheelup: GotoPreTab

@@ -2,6 +2,66 @@
 #Include %A_ScriptDir%\source\search_gui.ahk
 
 
+MoveWindowToLeftSide() {
+	send, #{Left}
+}
+
+MoveWindowToRightSide() {
+	send, #{Right}
+}
+
+OpenFileExplorer() {
+	run explorer.exe
+}
+
+OpenActionCenter() {
+	send, #a
+}
+
+CloseCurrentWindow() {
+	send, !{F4}
+}
+
+GoUp() {
+	send, ^{Home}
+}
+
+GoDown() {
+	send, ^{End}
+}
+
+GoBack() {
+	send, !{Left}
+}
+
+GoForward() {
+	send, !{Right}
+}
+
+LockPc() {
+	send, #l
+}
+
+OpenTaskView() {
+	send, #{Tab}
+}
+
+VolumeUp() {
+	Send {volume_up}
+}
+
+VolumeDown() {
+	Send {volume_down}
+}
+
+GotoNextDesktop() {
+	send, ^#{Right}
+}
+
+GotoPreDesktop() {
+	send, ^#{Left}
+}
+
 RefreshTab() {
 	send {F5}
 }
