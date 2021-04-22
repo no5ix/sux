@@ -366,11 +366,6 @@ class SuxCore
 
 		For key, value in SuxCore.GetFeatureCfg("additional-features", {}) {
 			register_additional_features(key, value)
-			if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"])
-				SetTimer, DisableWin10AutoUpdate, 66666
-			else {
-				; EnableWin10AutoUpdate()
-			}
 		}
 
 		For key, value in SuxCore.GetFeatureCfg("theme", {})
@@ -447,6 +442,13 @@ register_additional_features(key_name, val)
 {
 	global ADDITIONAL_FEATURES_REGISTER_MAP
 	ADDITIONAL_FEATURES_REGISTER_MAP[key_name] := val
+	
+	if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"]) {
+		SetTimer, DisableWin10AutoUpdate, 6666
+	}
+	else {
+		; EnableWin10AutoUpdate()
+	}
 }
 
 register_theme_conf(key_name, val)
