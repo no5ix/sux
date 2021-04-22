@@ -116,7 +116,7 @@ DoubleHitWebSearch(){
 	{
 		; Too much time between presses, so this isn't a double-press.
 		ClickUpIfLbDown()
-		KeyWait, %A_ThisHotkey%  ; Wait for the key to be released.
+		KeyWait, %A_PriorKey%  ; Wait for the key to be released.
 		return
 	}
 	; if limit_mode {

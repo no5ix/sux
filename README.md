@@ -240,6 +240,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add donate page -->
 <!-- - add icon -->
 <!-- - hover tray icon display sux -->
+- 短语替换
 - add more action
 - add newbie tutorial
 - hot corner/edge/capslock switcher to tray menu
