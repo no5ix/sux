@@ -64,56 +64,56 @@ capslock_plus:
   buildin:
     # capslock: 'send {Esc}'
     capslock_tab: ScreenShot
-    capslock_shift_tab: SwitchCapsState
+    capslock_alt_tab: SwitchCapsState
     capslock_g: WebSearchSelectedText
     capslock_f: ReplaceAllText
-    capslock_shift_f: ReplaceSelectedText
+    capslock_alt_f: ReplaceSelectedText
     capslock_c: 'send ^/'
     capslock_v: 'send +6'
     capslock_w: 'send +{Ins}'
     capslock_e: 'send {Enter}'
     capslock_s: 'send +4'
     capslock_r: 'send ^y'
-    capslock_shift_r: 'send {F2}'
+    capslock_alt_r: 'send {F2}'
     capslock_d: 'send {Del}'
-    capslock_shift_d: 'send {BS}'
+    capslock_alt_d: 'send {BS}'
     capslock_y: 'send +8'
-    capslock_shift_y: 'send +5'
+    capslock_alt_y: 'send +5'
     capslock_u: 'send +1'
-    capslock_shift_u: 'send +2'
+    capslock_alt_u: 'send +2'
     capslock_h: 'send {Left}'
-    capslock_shift_h: 'send +{Left}'
+    capslock_alt_h: 'send +{Left}'
     capslock_j: 'send {Down}'
-    capslock_shift_j: 'send +{Down}'
+    capslock_alt_j: 'send +{Down}'
     capslock_k: 'send {Up}'
-    capslock_shift_k: 'send +{Up}'
+    capslock_alt_k: 'send +{Up}'
     capslock_l: 'send {Right}'
-    capslock_shift_l: 'send +{Right}'
+    capslock_alt_l: 'send +{Right}'
     capslock_p: 'send +7'
-    capslock_shift_p: 'send +3'
+    capslock_alt_p: 'send +3'
     capslock_i: 'send ^{Left}'
-    capslock_shift_i: 'send +^{Left}'
+    capslock_alt_i: 'send +^{Left}'
     capslock_o: 'send ^{Right}'
-    capslock_shift_o: 'send +^{Right}'
+    capslock_alt_o: 'send +^{Right}'
     capslock_9: 'send ['
-    capslock_shift_9: 'send {{}'
+    capslock_alt_9: 'send {{}'
     capslock_0: 'send ]'
-    capslock_shift_0: 'send {}}'
+    capslock_alt_0: 'send {}}'
     capslock_n: 'send ^{BS}'
-    capslock_shift_n: 'send +{Home}{Del}'
+    capslock_alt_n: 'send +{Home}{Del}'
     capslock_m: 'send ^{Del}'
-    capslock_shift_m: 'send +{End}{Del}'
+    capslock_alt_m: 'send +{End}{Del}'
     capslock_,: 'send {Home}'
-    capslock_shift_,: 'send +{Home}'
+    capslock_alt_,: 'send +{Home}'
     capslock_.: 'send {End}'
-    capslock_shift_.: 'send +{End}'
+    capslock_alt_.: 'send +{End}'
     capslock_;: 'send _'
-    capslock_shift_;: 'send -'
+    capslock_alt_;: 'send -'
     # 下面这行 cap_ 的后面有个单引号, 需要用双引号包起来
     "capslock_'": 'send ='
-    "capslock_shift_'": 'send +='
+    "capslock_alt_'": 'send +='
     capslock_/: 'send \'
-    capslock_shift_/: 'send +\'
+    capslock_alt_/: 'send +\'
   custom:
 hot-corner: 
   enable: 1
@@ -134,10 +134,12 @@ hot-edge:
       ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
       wheeldown: GoTop
       wheelup: GoBottom
+      MButton: MaxWindow
     TopHalfRightEdge: 
       ctrl_8: OpenFileExplorer
       wheeldown: GoTop
       wheelup: GoBottom
+      MButton: MinWindow
     BottomHalfLeftEdge:
       ctrl_8: ReopenLastTab
       MButton: OpenTaskView
@@ -161,7 +163,7 @@ hot-edge:
       MButton: MoveWindowToRightSide
     RightHalfBottomEdge: 
       ctrl_8: OpenActionCenter
-      MButton: MoveWindowToLeftSide
+      MButton: MoveWindowToRightSide
       # wheeldown: GotoNextTab
       # # wheeldown: GotoPreApp
       # wheelup: GotoPreTab

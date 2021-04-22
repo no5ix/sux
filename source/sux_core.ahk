@@ -502,6 +502,9 @@ register_hotkey(key_name, action, prefix="")
 			; m(original_key)
 			key := StrReplace(key, "CapsLock", "CapsLock & ")
 			key := StrReplace(key, "CapsLock & +", "CapsLock & ")
+			key := StrReplace(key, "CapsLock & !", "CapsLock & ")
+			key := StrReplace(key, "CapsLock & ^", "CapsLock & ")
+			; m(key)
 		}
 		; m(key "//" action)
 		; m(original_key "//" action)
@@ -540,7 +543,13 @@ register_hotkey(key_name, action, prefix="")
 SUB_HOTKEY_ZONE_ANYWAY:
 SUB_HOTKEY_ZONE_BORDER:
 	border_code := get_border_code()
-	pending_replace_str := GetKeyState("LShift", "P") ? "CapsLock+": "CapsLock"
+
+	pending_replace_str := "CapsLock"
+	pending_replace_str .= GetKeyState("LShift", "P") ? "+": ""
+	pending_replace_str .= GetKeyState("Alt", "P") ? "!": ""
+	pending_replace_str .= GetKeyState("Control", "P") ? "^": ""
+	; m(pending_replace_str)
+	
 	cur_hotkey := StrReplace(A_ThisHotkey, "CapsLock & ", pending_replace_str)
 	action := HOTKEY_REGISTER_MAP[border_code "|" cur_hotkey]
 	if(action="") {
