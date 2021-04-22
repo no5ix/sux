@@ -174,7 +174,7 @@ class SuxCore
 		CheckUpdate(1)
 
 		ClipboardPlus.init()
-		WinMenu.init()
+		; WinMenu.init()
 		TrayMenu.init()
 		SearchGui.init()
 	}

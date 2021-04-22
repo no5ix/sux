@@ -2,6 +2,18 @@
 #Include %A_ScriptDir%\source\search_gui.ahk
 
 
+RefreshTab() {
+	send {F5}
+}
+
+ReopenLastTab() {
+	send ^+t
+}
+
+GotoPreApp() {
+	send !{Tab}
+}
+
 JumpToPrevTab() {
 	ActivateWindowsUnderCursor()
 	Send {LControl Down}{LShift Down}

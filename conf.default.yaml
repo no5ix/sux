@@ -49,11 +49,11 @@ hotkey:
     ctrl_shift_alt_m: MaxMinWindow
     # rshift: SwitchInputMethod
     ~alt: DoubleHitWebSearch
+    # ~ctrl: DoubleHitWebSearch
   custom:
 capslock_plus:
   enable: 1
   buildin:
-    # ctrl: DoubleHitWebSearch
     # capslock: 'send {Esc}'
     capslock_tab: ScreenShot
     capslock_shift_tab: SwitchCapsState
@@ -109,31 +109,14 @@ hot-corner:
   enable: 1
   action: 
     LeftTopCorner: 
-      # RButton: winmenu.show
       hover: JumpToPrevTab
-      # shift_wheeldown: Sys.Screen.BrightnessDown
-      # shift_wheelup: Sys.Screen.BrightnessUp
       # MButton: 'send {volume_mute}'
-      # wheeldown: 'Send {volume_down}'
-      # wheelup: 'Send {volume_up}'
     RightTopCorner: 
       hover: JumpToNextTab
-      # RButton: xmenu_show_screen_rt_menu
-      # MButton: 'send {media_play_pause}'
-      # wheeldown: 'send {media_next}'
-      # wheelup: 'send {media_prev}'
     LeftBottomCorner: 
       hover: 'send {LWin}'
-      # RButton: xmenu_show_screen_rt_menu
-      # MButton: 'send {media_play_pause}'
-      # wheeldown: 'send {media_next}'
-      # wheelup: 'send {media_prev}'
     RightBottomCorner: 
-      hover: 'send !{Tab}'
-      # RButton: xmenu_show_screen_rt_menu
-      # MButton: 'send {media_play_pause}'
-      # wheeldown: 'send {media_next}'
-      # wheelup: 'send {media_prev}'
+      hover: GotoPreApp
 hot-edge:
   enable: 1
   action:
@@ -142,16 +125,14 @@ hot-edge:
     TopHalfRightEdge: 
       ctrl_8: 'explorer.exe'
     BottomHalfLeftEdge:
-      ctrl_8: 'send ^+t'
+      ctrl_8: ReopenLastTab
     BottomHalfRightEdge: 
-      ctrl_8: 'send {F5}'
+      ctrl_8: RefreshTab
       # MButton: 'send #{tab}'
       # wheeldown: 'send ^#{right}'
       # wheelup: 'send ^#{left}'
     LeftHalfBottomEdge: 
       ctrl_8: 'send #{Tab}'
-      # shift_wheeldown: Sys.Screen.BrightnessDown
-      # shift_wheelup: Sys.Screen.BrightnessUp
     LeftHalfTopEdge: 
       ctrl_8: 'send #{Left}'
       wheeldown: 'Send {volume_down}'
@@ -160,10 +141,9 @@ hot-edge:
       ctrl_8: 'send #{Right}'
     RightHalfBottomEdge: 
       ctrl_8: 'send #a'
-      # wheeldown: Sys.Win.GotoNextTab
-      # # wheeldown: Sys.Win.GotoPreApp
-      # wheelup: Sys.Win.GotoPreTab
-      # wheelup: Sys.Win.GotoNextApp
+      # wheeldown: GotoNextTab
+      # # wheeldown: GotoPreApp
+      # wheelup: GotoPreTab
 clipboard-plus: 
   enable: 1
   hotkey: 
