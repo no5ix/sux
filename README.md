@@ -244,7 +244,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - 同时搜两个 -->
 <!-- - bug: 双屏tophalfleft -->
 <!-- - caps + alt -->
-- add ver to code
+<!-- - add ver to code -->
 - limit mode notify in full screen app
     <!-- - 最小化 -->
 - add more action
