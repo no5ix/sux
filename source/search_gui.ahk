@@ -23,161 +23,171 @@ trim_gui_user_input = ""
 
 
 
-WebSearch(user_input, search_key="") {
-	global WEB_SEARCH_REGISTER_MAP
-	if (user_input == "" && search_key == "")
-		return
-	; 当只填了 url 而没填 search_key 的时候
-	if (IsRawUrl(user_input) && search_key == "") {
-		if not IsStandardRawUrl(user_input)
-			user_input := StringJoin("", ["http://", user_input]*)
-		Run %user_input%
-		return
-	}
-	if (search_key == "")
-		search_key := "default"
+class SearchGui {
 
-	; search_flag_index = 1
-	; search_flag := WEB_SEARCH_REGISTER_MAP[search_key][search_flag_index]
-	search_url := WEB_SEARCH_REGISTER_MAP[search_key]
-	if (search_url.Length() == 1) {
-		search_url := search_url[1]
+	init() {
+		; 预热一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
+		this.search_gui_spawn("Hello, sux.")	
+		; this.search_gui_spawn(lang("Double hit Alt to open this search box, hit Esc to close."))	
 	}
-	if (user_input == "") {	
-		if !InStr(search_url, "REPLACEME") {
-		; if (search_flag = "URL") {
-			Run %search_url%
+
+	WebSearch(user_input, search_key="") {
+		global WEB_SEARCH_REGISTER_MAP
+		if (user_input == "" && search_key == "")
 			return
-		} 
-		; domain_url just like: "https://www.google.com"
-		; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-		RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-		if not IsStandardRawUrl(domain_url)
-			domain_url := StringJoin("", ["http://", domain_url]*)
-		Run %domain_url%
-		return
-		; DebugPrintVal(pending_search_str)
-		; return
-		; pending_search_str := Clipboard
-		; if StrLen(pending_search_str) >= 88 {
-		; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
-		; 	gui_destroy()
-		; 	return
-		; }
-	}
+		; 当只填了 url 而没填 search_key 的时候
+		if (IsRawUrl(user_input) && search_key == "") {
+			if not IsStandardRawUrl(user_input)
+				user_input := StringJoin("", ["http://", user_input]*)
+			Run %user_input%
+			return
+		}
+		if (search_key == "")
+			search_key := "default"
 
-	if (search_key = "default") {
-		for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
-			; if (_index != search_flag_index) {
-				WebSearch(user_input, _elem)
-				Sleep, 666
+		; search_flag_index = 1
+		; search_flag := WEB_SEARCH_REGISTER_MAP[search_key][search_flag_index]
+		search_url := WEB_SEARCH_REGISTER_MAP[search_key]
+		if (search_url.Length() == 1) {
+			search_url := search_url[1]
+		}
+		if (user_input == "") {	
+			if !InStr(search_url, "REPLACEME") {
+			; if (search_flag = "URL") {
+				Run %search_url%
+				return
+			} 
+			; domain_url just like: "https://www.google.com"
+			; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+			RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
+			if not IsStandardRawUrl(domain_url)
+				domain_url := StringJoin("", ["http://", domain_url]*)
+			Run %domain_url%
+			return
+			; DebugPrintVal(pending_search_str)
+			; return
+			; pending_search_str := Clipboard
+			; if StrLen(pending_search_str) >= 88 {
+			; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
+			; 	search_gui_destroy()
+			; 	return
 			; }
 		}
+
+		if (search_key = "default") {
+			for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
+				; if (_index != search_flag_index) {
+					SearchGui.WebSearch(user_input, _elem)
+					Sleep, 666
+				; }
+			}
+			return
+		}
+
+		safe_query := UriEncode(Trim(user_input))
+		StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+		if not IsStandardRawUrl(search_final_url)
+			search_final_url := StringJoin("", ["http://", search_final_url]*)
+		Run, %search_final_url%
+	}
+
+
+	ShadowBorder(handle) {
+		DllCall("user32.dll\SetClassLongPtr", "ptr", handle, "int", -26, "ptr", DllCall("user32.dll\GetClassLongPtr", "ptr", handle, "int", -26, "uptr") | 0x20000)
+	}
+
+	FrameShadow(handle) {
+		DllCall("dwmapi\DwmIsCompositionEnabled","IntP",_ISENABLED) ; Get if DWM Manager is Enabled
+		if !_ISENABLED ; if DWM is not enabled, Make Basic Shadow
+			DllCall("SetClassLong","UInt",handle,"Int",-26,"Int",DllCall("GetClassLong","UInt",handle,"Int",-26)|0x20000)
+		else {
+			VarSetCapacity(_MARGINS,16)
+			NumPut(1,&_MARGINS,0,"UInt")
+			NumPut(1,&_MARGINS,4,"UInt")
+			NumPut(1,&_MARGINS,8,"UInt")
+			NumPut(1,&_MARGINS,12,"UInt")
+			DllCall("dwmapi\DwmSetWindowAttribute", "Ptr", handle, "UInt", 2, "Int*", 2, "UInt", 4)
+			DllCall("dwmapi\DwmExtendFrameIntoClientArea", "Ptr", handle, "Ptr", &_MARGINS)
+		}
+	}
+
+
+	search_gui_spawn(curr_select_text="") {
+		search_gui_destroy()
+		; curr_select_text := GetCurSelectedText()
+		; if (StrLen(curr_select_text) >= 60 || str)
+		; 	curr_select_text := ""
+		last_search_str := curr_select_text ? curr_select_text : last_search_str
+
+		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
+		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
+		
+		Gui, Margin, 0, 0
+		sux_bg_color := THEME_CONF_REGISTER_MAP["sux_bg_color"] 
+		Gui, Color, %sux_bg_color%, %sux_bg_color%
+		if (THEME_CONF_REGISTER_MAP["sux_border_shadow_type"] == "classic_shadow_type")
+			SearchGui.ShadowBorder(hMyGUI)
+		else
+			SearchGui.FrameShadow(hMyGUI)
+
+		Gui, Font, s22, Segoe UI
+		; Gui, Font, s10, Segoe UI
+		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleSearchGuiUserInput
+		gui_control_options := "xm+6 ym+6 w" . THEME_CONF_REGISTER_MAP["sux_width"] . " c" . THEME_CONF_REGISTER_MAP["sux_text_color"] . " -E0x200"
+		; gui_control_options := "w" . THEME_CONF_REGISTER_MAP["sux_width"] . " c" . THEME_CONF_REGISTER_MAP["sux_text_color"] . "  -E0x800000"
+		Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
+		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
+		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%
+
+		Gui, Add, Button, x-10 y-10 w1 h1 +default gHandleSearchGuiUserInput ; hidden button
+
+		MouseGetPos, Mouse_x
+		yScrnOffset := A_ScreenHeight / 4
+		SysGet, mon_cnt, MonitorCount
+		if (mon_cnt == 1) {
+			Gui, Show, xCenter  y%yScrnOffset%, myGUI
+		}
+		else {
+			xMidScrn := 0
+			last_mon_width := 0
+			Loop, % mon_cnt
+			{
+				SysGet, Mon, Monitor, % A_Index
+				_mon_width := (MonRight - MonLeft)
+				xMidScrn += _mon_width
+				last_mon_width := _mon_width
+				if (Mouse_x >= MonLeft && Mouse_x < MonRight)
+					break
+			}
+			xMidScrn -= last_mon_width / 2
+			xMidScrn -= THEME_CONF_REGISTER_MAP["sux_width"] / 2 
+			Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
+		}
+
+		auto_destory_gui_period := -22222  ; millisecond
+		SetTimer, search_gui_destroy, %auto_destory_gui_period%
 		return
 	}
-
-	safe_query := UriEncode(Trim(user_input))
-	StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-	if not IsStandardRawUrl(search_final_url)
-		search_final_url := StringJoin("", ["http://", search_final_url]*)
-	Run, %search_final_url%
 }
 
 
-ShadowBorder(handle) {
-    DllCall("user32.dll\SetClassLongPtr", "ptr", handle, "int", -26, "ptr", DllCall("user32.dll\GetClassLongPtr", "ptr", handle, "int", -26, "uptr") | 0x20000)
-}
-
-FrameShadow(handle) {
-	DllCall("dwmapi\DwmIsCompositionEnabled","IntP",_ISENABLED) ; Get if DWM Manager is Enabled
-	if !_ISENABLED ; if DWM is not enabled, Make Basic Shadow
-		DllCall("SetClassLong","UInt",handle,"Int",-26,"Int",DllCall("GetClassLong","UInt",handle,"Int",-26)|0x20000)
-	else {
-		VarSetCapacity(_MARGINS,16)
-		NumPut(1,&_MARGINS,0,"UInt")
-		NumPut(1,&_MARGINS,4,"UInt")
-		NumPut(1,&_MARGINS,8,"UInt")
-		NumPut(1,&_MARGINS,12,"UInt")
-		DllCall("dwmapi\DwmSetWindowAttribute", "Ptr", handle, "UInt", 2, "Int*", 2, "UInt", 4)
-		DllCall("dwmapi\DwmExtendFrameIntoClientArea", "Ptr", handle, "Ptr", &_MARGINS)
-	}
-}
 
 
-gui_destroy() {
+search_gui_destroy() {
 	; Hide GUI
 	Gui, Destroy
 }
-
-
-gui_spawn(curr_select_text="") {
-	gui_destroy()
-	; curr_select_text := GetCurSelectedText()
-	; if (StrLen(curr_select_text) >= 60 || str)
-	; 	curr_select_text := ""
-	last_search_str := curr_select_text ? curr_select_text : last_search_str
-
-	; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
-	Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
-	
-	Gui, Margin, 0, 0
-	sux_bg_color := THEME_CONF_REGISTER_MAP["sux_bg_color"] 
-	Gui, Color, %sux_bg_color%, %sux_bg_color%
-	if (THEME_CONF_REGISTER_MAP["sux_border_shadow_type"] == "classic_shadow_type")
-		ShadowBorder(hMyGUI)
-	else
-		FrameShadow(hMyGUI)
-
-	Gui, Font, s22, Segoe UI
-	; Gui, Font, s10, Segoe UI
-	; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleGuiUserInput
-	gui_control_options := "xm+6 ym+6 w" . THEME_CONF_REGISTER_MAP["sux_width"] . " c" . THEME_CONF_REGISTER_MAP["sux_text_color"] . " -E0x200"
-	; gui_control_options := "w" . THEME_CONF_REGISTER_MAP["sux_width"] . " c" . THEME_CONF_REGISTER_MAP["sux_text_color"] . "  -E0x800000"
-	Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
-	; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
-	; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%
-
-	Gui, Add, Button, x-10 y-10 w1 h1 +default gHandleGuiUserInput ; hidden button
-
-	MouseGetPos, Mouse_x
-	yScrnOffset := A_ScreenHeight / 4
-	SysGet, mon_cnt, MonitorCount
-	if (mon_cnt == 1) {
-		Gui, Show, xCenter  y%yScrnOffset%, myGUI
-	}
-	else {
-		xMidScrn := 0
-		last_mon_width := 0
-		Loop, % mon_cnt
-		{
-			SysGet, Mon, Monitor, % A_Index
-			_mon_width := (MonRight - MonLeft)
-			xMidScrn += _mon_width
-			last_mon_width := _mon_width
-			if (Mouse_x >= MonLeft && Mouse_x < MonRight)
-				break
-		}
-		xMidScrn -= last_mon_width / 2
-		xMidScrn -= THEME_CONF_REGISTER_MAP["sux_width"] / 2 
-		Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
-	}
-
-	auto_destory_gui_period := -22222  ; millisecond
-	SetTimer, gui_destroy, %auto_destory_gui_period%
-	return
-}
-
 
 ;-------------------------------------------------------------------------------
 ; GUI FUNCTIONS AND SUBROUTINES
 ;-------------------------------------------------------------------------------
 ; Automatically triggered on Escape key:
 GuiEscape:
-	gui_destroy()
+	search_gui_destroy()
 	return
 
 ; The callback function when the text changes in the input field.
-HandleGuiUserInput:
+HandleSearchGuiUserInput:
 	Gui, Submit, NoHide
 	; #Include %A_ScriptDir%\source\cmd.ahk
 
@@ -186,15 +196,14 @@ HandleGuiUserInput:
 
 	if !trim_gui_user_input
 	{
-		; WebSearch(Clipboard)
-		gui_destroy()
+		search_gui_destroy()
 	}
 	else
 	{
 		global CMD_REGISTER_MAP
 		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
-			gui_destroy()
+			search_gui_destroy()
 
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 			if (word_array[1] == "ev"){
@@ -248,14 +257,14 @@ HandleGuiUserInput:
 		}
 		else
 		{
-			gui_destroy()
+			search_gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 
 			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]){
-				WebSearch(word_array[2], word_array[1])
+				SearchGui.WebSearch(word_array[2], word_array[1])
 			}
 			else {
-				WebSearch(GuiUserInput)
+				SearchGui.WebSearch(GuiUserInput)
 			}
 		}
 	}

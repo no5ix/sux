@@ -241,6 +241,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add icon -->
 <!-- - hover tray icon display sux -->
 - add more action
+- add newbie tutorial
 - hot corner/edge/capslock switcher to tray menu
 - limit mode notify in full screen app
 - update chinese readme, add some gif/mp4

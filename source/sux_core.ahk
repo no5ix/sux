@@ -10,6 +10,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 #Include %A_ScriptDir%\source\yaml.ahk
 #Include %A_ScriptDir%\source\action.ahk
 #Include %A_ScriptDir%\source\tray_menu.ahk
+#Include %A_ScriptDir%\source\search_gui.ahk
 
 
 
@@ -175,6 +176,7 @@ class SuxCore
 		ClipboardPlus.init()
 		WinMenu.init()
 		TrayMenu.init()
+		SearchGui.init()
 	}
 
 	get_remote_file(path)

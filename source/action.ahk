@@ -38,7 +38,7 @@ ScreenShot() {
 DoubleHitWebSearch(){
 	; ; 不能这么写, 因为这样长按 alt 也会触发
 	; If (A_PriorHotKey = "~Alt") AND (A_TimeSincePriorHotkey < keyboard_double_click_timeout)
-	; 	gui_spawn()
+	; 	SearchGui.search_gui_spawn()
 	; if (A_PriorHotkey <> "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
@@ -53,16 +53,14 @@ DoubleHitWebSearch(){
 	; }
 	; %DoubleClickAltTriggerFunc%()
 	; return
-	; gui_spawn_func := "gui_spawn"  ; 这么写是为了让 common_const.ahk 和 gui.ahk 解耦, 独立开来, common 不应该依赖 gui
-	; %gui_spawn_func%()
-	gui_spawn()
+	SearchGui.search_gui_spawn()
 	return
 }
 
 WebSearchCurSelectedText() {
-    ; gui_spawn_func := "gui_spawn"
-    ; %gui_spawn_func%(GetCurSelectedText())
-    gui_spawn(GetCurSelectedText())
+    ; search_gui_spawn_func := "search_gui_spawn"
+    ; %search_gui_spawn_func%(GetCurSelectedText())
+    SearchGui.search_gui_spawn(GetCurSelectedText())
 }
 
 SwitchInputMethod() {
@@ -100,7 +98,7 @@ MaxMinWindow() {
 }
 
 ReloadSux() {
-	gui_destroy() ; removes the GUI even when the reload fails
+	search_gui_destroy() ; removes the GUI even when the reload fails
 	Reload
 }
 
@@ -111,7 +109,7 @@ SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
 	MsgBox, 4,, %msg_str%
 	IfMsgBox Yes
 	{
-		gui_destroy()
+		search_gui_destroy()
 		ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] := ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] ? 0 : 1
 		if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] == 0) {
 			SetTimer, DisableWin10AutoUpdate, off
@@ -126,7 +124,7 @@ SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
 
 ; StartSuxWithWindows() { ; start sux with windows
 ; 	HandleStartingSuxWithWindows()
-; 	gui_destroy()
+; 	search_gui_destroy()
 ; }
 
 SimulateClickDown() {
