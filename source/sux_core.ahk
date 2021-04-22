@@ -146,7 +146,7 @@ class SuxCore
 	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
 	;
 	static FeatureObj =
-	static version =
+	static version := "0.2.3"
 	static UserData := {}
 	; callback
 	static OnExitCmd := []
@@ -170,7 +170,7 @@ class SuxCore
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
-		this.version := SuxCore.GetConfig("ver")
+		; this.version := SuxCore.GetConfig("ver")
 		CheckUpdate(1)
 
 		ClipboardPlus.init()
