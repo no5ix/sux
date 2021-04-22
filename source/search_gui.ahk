@@ -26,9 +26,10 @@ trim_gui_user_input = ""
 class SearchGui {
 
 	init() {
-		; 预热一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
-		this.search_gui_spawn("Hello, sux.")	
-		SetTimer, GuiEscape, -1666
+		; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
+		Send, {Esc}
+		; this.search_gui_spawn("Hello, sux.")	
+		; SetTimer, GuiEscape, -1666
 	}
 
 	WebSearch(user_input, search_key="") {
@@ -69,7 +70,7 @@ class SearchGui {
 			; pending_search_str := Clipboard
 			; if StrLen(pending_search_str) >= 88 {
 			; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
-			; 	search_gui_destroy()
+			; 	SearchGui.search_gui_destroy()
 			; 	return
 			; }
 		}
@@ -113,7 +114,7 @@ class SearchGui {
 
 
 	search_gui_spawn(curr_select_text="") {
-		search_gui_destroy()
+		SearchGui.search_gui_destroy()
 		; curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
@@ -165,17 +166,16 @@ class SearchGui {
 		}
 
 		auto_destory_gui_period := -22222  ; millisecond
-		SetTimer, search_gui_destroy, %auto_destory_gui_period%
+		gui_des := ObjBindMethod(this, "search_gui_destroy")
+		SetTimer, % gui_des, %auto_destory_gui_period%
 		return
 	}
-}
 
 
-
-
-search_gui_destroy() {
-	; Hide GUI
-	Gui, Destroy
+	search_gui_destroy() {
+		; Hide GUI
+		Gui, Destroy
+	}
 }
 
 ;-------------------------------------------------------------------------------
@@ -183,7 +183,7 @@ search_gui_destroy() {
 ;-------------------------------------------------------------------------------
 ; Automatically triggered on Escape key:
 GuiEscape:
-	search_gui_destroy()
+	SearchGui.search_gui_destroy()
 	return
 
 ; The callback function when the text changes in the input field.
@@ -196,14 +196,14 @@ HandleSearchGuiUserInput:
 
 	if !trim_gui_user_input
 	{
-		search_gui_destroy()
+		SearchGui.search_gui_destroy()
 	}
 	else
 	{
 		global CMD_REGISTER_MAP
 		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
-			search_gui_destroy()
+			SearchGui.search_gui_destroy()
 
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 			if (word_array[1] == "ev"){
@@ -257,7 +257,7 @@ HandleSearchGuiUserInput:
 		}
 		else
 		{
-			search_gui_destroy()
+			SearchGui.search_gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 
 			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]){

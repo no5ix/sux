@@ -238,7 +238,7 @@ class SuxCore
 
 	Edit_conf_yaml()
 	{
-		EditFile(SuxCore.conf_user_yaml_file)
+		OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
 	}
 
 	SetState(setsuspend="", setpause="")
@@ -360,6 +360,9 @@ class SuxCore
 			register_additional_features(key, value)
 			if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"])
 				SetTimer, DisableWin10AutoUpdate, 66666
+			else {
+				; EnableWin10AutoUpdate()
+			}
 		}
 
 		For key, value in SuxCore.GetFeatureCfg("theme", {})

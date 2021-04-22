@@ -80,6 +80,10 @@ DownloadFileWithProgressBar(UrlToFile, SaveFileAs, Overwrite := True, UseProgres
       Return
 }
 
+OpenFolderAndSelectFile(file_path_str) {
+	Run %COMSPEC% /c explorer.exe /select`, "%file_path_str%",, Hide
+}
+
 EditFile(filename, admin := 0)
 {
 	if not FileExist(filename)
@@ -294,6 +298,11 @@ IsRawUrl(user_input){
 			return 1
 		}
 	return 0
+}
+
+EnableWin10AutoUpdate(){
+	run, cmd /c sc config wuauserv start= auto,,hide
+	run, cmd /c net start wuauserv,,hide
 }
 
 DisableWin10AutoUpdate(){

@@ -98,34 +98,10 @@ MaxMinWindow() {
 }
 
 ReloadSux() {
-	search_gui_destroy() ; removes the GUI even when the reload fails
+	SearchGui.search_gui_destroy() ; removes the GUI even when the reload fails
 	Reload
 }
 
-
-SwitchWin10AutoUpdate() { ;turn on/off disable win10 auto update
-	global ADDITIONAL_FEATURES_REGISTER_MAP
-	msg_str := "Would you like to turn " . (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] ? "off" : "on") . " disable win10 auto update?"
-	MsgBox, 4,, %msg_str%
-	IfMsgBox Yes
-	{
-		search_gui_destroy()
-		ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] := ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] ? 0 : 1
-		if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"] == 0) {
-			SetTimer, DisableWin10AutoUpdate, off
-			run, cmd /c sc config wuauserv start= auto,,hide
-			run, cmd /c net start wuauserv,,hide
-		} else {
-			DisableWin10AutoUpdate()
-			SetTimer, DisableWin10AutoUpdate, 66666
-		}
-	}
-}
-
-; StartSuxWithWindows() { ; start sux with windows
-; 	HandleStartingSuxWithWindows()
-; 	search_gui_destroy()
-; }
 
 SimulateClickDown() {
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
