@@ -28,7 +28,7 @@ class SearchGui {
 	init() {
 		; 预热一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
 		this.search_gui_spawn("Hello, sux.")	
-		; this.search_gui_spawn(lang("Double hit Alt to open this search box, hit Esc to close."))	
+		SetTimer, GuiEscape, -1666
 	}
 
 	WebSearch(user_input, search_key="") {
