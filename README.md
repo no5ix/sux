@@ -245,6 +245,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - bug: 双屏tophalfleft -->
 <!-- - caps + alt -->
 - add more action
+- add ver to code
     <!-- - 最小化 -->
 - add newbie tutorial
 - hot corner/edge/capslock switcher to tray menu
