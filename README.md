@@ -219,9 +219,9 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 捐赠! 让作者更有动力给sux加新功能! ^_^
 
 - 微信
-  - ![微信](/app_data/wechat_donate.png)
+  - ![微信](/app_data/donate_wechat.png)
 - 支付宝
-  - ![支付宝](/app_data/alipay_donate.png)
+  - ![支付宝](/app_data/donate_alipay.png)
 
 
 # TODO List

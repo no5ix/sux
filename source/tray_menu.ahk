@@ -17,8 +17,8 @@ class TrayMenu
 	static ASSET_DIR := "app_data/"
 	static icon_default := TrayMenu.ASSET_DIR "sux_default.ico"
 	static icon_disable := TrayMenu.ASSET_DIR "sux_disable.ico"
-	static donate_img_alipay := TrayMenu.ASSET_DIR "alipay_donate.png"
-	static donate_img_wechat := TrayMenu.ASSET_DIR "wechat_donate.png"
+	static donate_img_alipay := TrayMenu.ASSET_DIR "donate_alipay.png"
+	static donate_img_wechat := TrayMenu.ASSET_DIR "donate_wechat.png"
 
 
 	init() {
@@ -194,7 +194,7 @@ class TrayMenu
 		s := "支付宝"
 		Gui, Add, Text,, % s
 		Gui, Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
-		; Gui, Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\alipay_donate.png
+		; Gui, Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\donate_alipay.png
 		s := "微信"
 		Gui, Add, Text,, % s
 		Gui, Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
