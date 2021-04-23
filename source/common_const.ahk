@@ -10,10 +10,20 @@ global fake_lb_down := 0
 
 global CornerEdgeOffset := 8  ; adjust tolerance value (pixels to corner) if desired	
 
-global hot_corners_detect_interval := 88
+global tick_detect_interval := 88
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
+
+global tick_disable_win10_auto_interval := 66666
+
+
+global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
+global INI_LIMIT_MODE_IN_FULL_SCREEN := "limit-mode-in-full-screen"
+global INI_HOT_CORNER := "hot-corner"
+global INI_AUTORUN := "autorun"
+global INI_THEME := "theme"
+global INI_LANG := "lang"
 
 
 LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
@@ -24,6 +34,13 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Maybe need a proxy.": "可能需要使用代理."
     ,"Do you want to open it with your browser?": "是否要用浏览器打开sux官网查看?"
     ,"Double hit Alt to open search box, hit Esc to close.": "双击Alt打开搜索框, 按Esc来关闭"
+    ,"Light": "明"
+    ,"Dark": "暗"
+    ,"Disable Win10 Auto Update": "禁止Win10自动更新"
+    ,"Auto Disable sux In Full Screen": "全屏下自动禁用sux"
+    ,"Hot Corner": "触发角"
+    ,"Feature Switch": "功能开关"
+    ,"Theme": "主题"
     ,"About": "关于"
     ,"Help": "帮助"
     ,"Check Update": "检查更新"
@@ -47,9 +64,6 @@ CMD_REGISTER_MAP := {}
 
 ; 记录web-search与对应操作
 WEB_SEARCH_REGISTER_MAP := {}
-
-; 记录additional-features与对应操作
-ADDITIONAL_FEATURES_REGISTER_MAP := {}
 
 ; 记录theme与对应操作
 THEME_CONF_REGISTER_MAP := {}

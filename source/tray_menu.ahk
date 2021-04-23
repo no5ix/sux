@@ -10,6 +10,8 @@ Goto, SUB_TRAY_MENU_FILE_END_LABEL
 #Include %A_ScriptDir%\source\sux_core.ahk
 #Include %A_ScriptDir%\source\action.ahk
 
+
+
 class TrayMenu
 {
 	static ICON_DIR := "app_data/"
@@ -18,31 +20,112 @@ class TrayMenu
 
 	init() {
 		this.update_tray_menu()
-		this.SetAutorun("config")
+		; this.SetAutorun("config")
+		this.SetHotCorner("config")
+		this.SetLimitModeInFullScreen("config")
+		this.SetDisableWin10AutoUpdate("config")
 	}
 
+	SetDisableWin10AutoUpdate(act="toggle")
+	{
+		cfg := SuxCore.GetConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
+		switch := (act="config")? cfg : act
+		switch := (act="toggle")? !cfg : switch
+		SuxCore.SetConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, switch)
+		TrayMenu.update_tray_menu()
+		if (switch) {
+			DisableWin10AutoUpdate()
+			SetTimer, DisableWin10AutoUpdate, %tick_disable_win10_auto_interval%
+		}
+		else {
+			SetTimer, DisableWin10AutoUpdate, Delete
+			EnableWin10AutoUpdate()
+		}
+	}
+
+	SetLimitModeInFullScreen(act="toggle")
+	{
+		cfg := SuxCore.GetConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
+		switch := (act="config")? cfg : act
+		switch := (act="toggle")? !cfg : switch
+		SuxCore.SetConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, switch)
+		TrayMenu.update_tray_menu()
+		if (switch) {
+			global tick_detect_interval
+			SetTimer, HANDLE_LIMIT_MODE_IN_FULL_SCREEN, %tick_detect_interval%
+		}
+		else {
+			SetTimer, HANDLE_LIMIT_MODE_IN_FULL_SCREEN, Off
+		}
+	}
+	
 	SetAutorun(act="toggle")
 	{
-		cfg := SuxCore.GetConfig("autorun", 0)
-		autorun := (act="config")? cfg :act
-		autorun := (act="toggle")? !cfg :autorun
+		cfg := SuxCore.GetConfig(INI_AUTORUN, SuxCore.Default_autorun_switch)
+		autorun := (act="config")? cfg : act
+		autorun := (act="toggle")? !cfg : autorun
+		SuxCore.SetConfig(INI_AUTORUN, autorun)
+		TrayMenu.update_tray_menu()
 		Regedit.Autorun(autorun, SuxCore.ProgramName, SuxCore.Launcher_Name)
-		SuxCore.SetConfig("autorun", autorun)
-		if(autorun)
-		{
-			Menu, Tray, Check, % lang("Start With Windows")
+		; if(autorun)
+		; {
+		; 	Menu, Tray, Check, % lang("Start With Windows")
+		; }
+		; Else
+		; {
+		; 	Menu, Tray, UnCheck, % lang("Start With Windows")
+		; }
+	}
+
+	SetHotCorner(act="toggle")
+	{
+		cfg := SuxCore.GetConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
+		hot_corner_switch := (act="config")? cfg : act
+		hot_corner_switch := (act="toggle")? !cfg : hot_corner_switch
+		SuxCore.SetConfig(INI_HOT_CORNER, hot_corner_switch)
+		TrayMenu.update_tray_menu()
+		if (hot_corner_switch) {
+			global tick_detect_interval
+			SetTimer, TICK_HOT_CORNERS, %tick_detect_interval%
 		}
-		Else
-		{
-			Menu, Tray, UnCheck, % lang("Start With Windows")
+		else {
+			SetTimer, TICK_HOT_CORNERS, Off
 		}
+	}
+
+	SetTheme(act="itemname")
+	{
+		if(act="itemname")
+		{
+			cur_theme_map := {"Light": "light", "Dark": "dark"}
+			cur_theme := cur_theme_map[A_ThisMenuItem]
+		}
+		else {
+			cur_theme := act
+		}
+		SuxCore.SetConfig(INI_THEME, cur_theme)
+		TrayMenu.update_tray_menu()
+	}
+
+	SetLang(act="itemname")
+	{
+		if(act="itemname")
+		{
+			lang_map := {"English": "en", "中文": "cn"}
+			lang := lang_map[A_ThisMenuItem]
+		}
+		else {
+			lang := act
+		}
+		SuxCore.SetConfig(INI_LANG, lang)
+		TrayMenu.update_tray_menu()
 	}
 
 	; Tray Menu
 	update_tray_menu()
 	{
-		version_str := lang("About") " v" SuxCore.version
-		autorun := SuxCore.GetConfig("autorun", 0)
+		version_str := lang("About") " sux v" SuxCore.version
+		autorun := SuxCore.GetConfig(INI_AUTORUN, 0)
 		remote_ver_str := SuxCore.get_remote_config("ver")
 		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version! ") "v" remote_ver_str
@@ -50,11 +133,23 @@ class TrayMenu
 		else {
 			check_update_menu_name := lang("Check Update")
 		}
-		lang := SuxCore.GetConfig("lang", SuxCore.Default_lang)
+		lang := SuxCore.GetConfig(INI_LANG, SuxCore.Default_lang)
+		cur_theme := SuxCore.GetConfig(INI_THEME, SuxCore.Default_theme)
+		hot_corner_switch := SuxCore.GetConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
+		limit_mode_in_full_screen_switch := SuxCore.GetConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
+		disable_win10_auto_update_switch := SuxCore.GetConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
+
 		Menu, Tray, Tip, % SuxCore.ProgramName
 		xMenu.New("TrayLanguage"
-			,[["English", "SuxCore.SetLang", {check: lang=="en"}]
-			, ["中文", "SuxCore.SetLang", {check: lang=="cn"}]])
+			,[["English", "TrayMenu.SetLang", {check: lang=="en"}]
+			, ["中文", "TrayMenu.SetLang", {check: lang=="cn"}]])
+		xMenu.New("SearchGuiTheme"
+			,[[lang("Light"), "TrayMenu.SetTheme", {check: cur_theme=="light"}]
+			, [lang("Dark"), "TrayMenu.SetTheme", {check: cur_theme=="dark"}]])
+		xMenu.New("SensitiveFeatureSwitch"
+			,[[lang("Hot Corner"), "TrayMenu.SetHotCorner", {check: hot_corner_switch==1}]
+			, [lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {check: limit_mode_in_full_screen_switch==1}]
+			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {check: disable_win10_auto_update_switch==1}]])
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
 			,[[version_str, "TrayMenu.AboutSux"]
@@ -64,6 +159,8 @@ class TrayMenu
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
 			,["Language",, {"sub": "TrayLanguage"}]
+			,[lang("Theme"),, {"sub": "SearchGuiTheme"}]
+			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
 			,[]
 			,[lang("Open sux Folder"), A_WorkingDir]
 			,[lang("Edit Config File"), "SuxCore.Edit_conf_yaml"]
@@ -97,7 +194,8 @@ class TrayMenu
 		Gui, Add, Link,, % s
 		Gui, Add, Text
 		GuiControl, Focus, Close
-		Gui, Show,, About sux
+		s := lang("About") . " sux"
+		Gui, Show,, % s
 	}
 
 	Update_Icon()
@@ -242,6 +340,50 @@ class xMenu
 Sub_xMenu_Open:
 Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
 Return
+
+
+TICK_HOT_CORNERS:
+	global limit_mode
+	; ToolTipWithTimer("gg23smd")
+	if (limit_mode) {
+		
+	; ToolTipWithTimer("gg2smd")
+		return
+	}
+	; ToolTipWithTimer("ggsmd")
+
+	global HOTKEY_REGISTER_MAP
+	; ToolTipWithTimer("ggsmd")
+	border_code := get_border_code()
+	; ToolTipWithTimer(border_code)
+	if (InStr(border_code, "Corner")) {
+		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
+		; ToolTipWithTimer(border_code "|" "hover")
+		ToolTipWithTimer(action)
+		; ToolTipWithTimer("thc")
+
+		run(action)
+		Loop 
+		{
+			if (get_border_code() == "")
+				break ; exits loop when mouse is no longer in the corner
+		}
+	}
+	Return
+
+
+HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
+	global limit_mode
+	if (IsFullscreen()) {
+		if (limit_mode == 0) {
+			ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode."))
+			limit_mode := 1
+		}
+	}
+	else {
+		limit_mode := 0
+	}
+	Return
 
 
 ; //////////////////////////////////////////////////////////////////////////

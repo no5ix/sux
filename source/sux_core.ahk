@@ -126,17 +126,6 @@ handle_req_failed() {
 }
 
 
-HandleLimitModeInFullScreen() {
-	global limit_mode
-	if (IsFullscreen()) {
-		ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode."))
-		limit_mode := 1
-	}
-	else {
-		limit_mode := 0
-	}
-}
-
 
 
 class SuxCore
@@ -171,6 +160,11 @@ class SuxCore
 	; static var
 	static ProgramName := "sux"
 	static Default_lang := "cn"
+	static Default_theme := "light"
+	static Default_autorun_switch := 0
+	static Default_hot_corner_switch := 0
+	static Default_limit_mode_in_full_screen_switch := 1
+	static Default_disable_win10_auto_update_switch := 0
 	static Browser := "default"
 
 	init()
@@ -223,21 +217,6 @@ class SuxCore
 	SetConfig(key, value, section="sux")
 	{
 		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
-	}
-
-
-	SetLang(act="itemname")
-	{
-		if(act="itemname")
-		{
-			lang_map := {"English": "en", "中文": "cn"}
-			lang := lang_map[A_ThisMenuItem]
-		}
-		else {
-			lang := act
-		}
-		SuxCore.SetConfig("lang", lang)
-		Reload
 	}
 
 	ExitSux(show_msg=true)
@@ -339,14 +318,12 @@ class SuxCore
 			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 
-		if(SuxCore.GetFeatureCfg("hot-corner.enable", 0))
+		if(SuxCore.GetFeatureCfg("hot-corner", {}))
 		{
-			global hot_corners_detect_interval
 			For border_key, border_action in SuxCore.GetFeatureCfg("hot-corner.action", {}) {
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 			}
-			SetTimer, tick_hot_corners, %hot_corners_detect_interval%
 		}
 
 		if(SuxCore.GetFeatureCfg("hot-edge.enable", 0))
@@ -387,12 +364,12 @@ class SuxCore
 				register_replace_str(key, value)
 		}
 
-		For key, value in SuxCore.GetFeatureCfg("additional-features", {}) {
-			register_additional_features(key, value)
+		For theme_type, theme_info in SuxCore.GetFeatureCfg("theme", {}) {
+			cur_theme_info := {}
+			For theme_key, theme_val in theme_info
+				cur_theme_info[theme_key] := theme_val
+			register_theme_conf(theme_type, cur_theme_info)
 		}
-
-		For key, value in SuxCore.GetFeatureCfg("theme", {})
-			register_theme_conf(key, value)
 
 		if(SuxCore.GetFeatureCfg("clipboard-plus.enable", 0))
 		{
@@ -404,35 +381,6 @@ class SuxCore
 	}
 }
 
-
-tick_hot_corners() {
-	global limit_mode
-	; ToolTipWithTimer("gg23smd")
-	if (limit_mode) {
-		
-	; ToolTipWithTimer("gg2smd")
-		return
-	}
-	; ToolTipWithTimer("ggsmd")
-
-	global HOTKEY_REGISTER_MAP
-	; ToolTipWithTimer("ggsmd")
-	border_code := get_border_code()
-	; ToolTipWithTimer(border_code)
-	if (InStr(border_code, "Corner")) {
-		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
-		; ToolTipWithTimer(border_code "|" "hover")
-		ToolTipWithTimer(action)
-		; ToolTipWithTimer("thc")
-
-		run(action)
-		Loop 
-		{
-			if (get_border_code() == "")
-				break ; exits loop when mouse is no longer in the corner
-		}
-	}
-}
 
 
 ; 把两个字符串数组交叉连接起来
@@ -472,19 +420,6 @@ register_replace_str(key_name, val)
 {
 	global STR_REPLACE_CONF_REGISTER_MAP
 	STR_REPLACE_CONF_REGISTER_MAP[key_name] := val
-}
-
-register_additional_features(key_name, val)
-{
-	global ADDITIONAL_FEATURES_REGISTER_MAP
-	ADDITIONAL_FEATURES_REGISTER_MAP[key_name] := val
-	
-	if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"]) {
-		SetTimer, DisableWin10AutoUpdate, 66666
-	}
-	else {
-		; EnableWin10AutoUpdate()
-	}
 }
 
 register_theme_conf(key_name, val)
@@ -603,6 +538,9 @@ register_hotkey(key_name, action, prefix="")
 ; HOTKEY evoke
 */
 SUB_HOTKEY_ZONE_DOUBLE_HIT:
+	global limit_mode
+	if (limit_mode)
+		return
 	global keyboard_double_click_timeout
 	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{

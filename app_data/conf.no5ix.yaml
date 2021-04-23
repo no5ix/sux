@@ -1,18 +1,16 @@
-﻿File-Description: Take effect after sux restart. 改了之后重启sux才会生效.
+﻿File-Description: You can override all the buildin conf at custom block, take effect after sux restart. 你可以在custom块里覆盖所有的buildin(内置)配置, 改了之后重启sux生效.
 check-update-interval-hour: 2
 theme: 
-  # dark:
-  #   sux_width: 620
-  #   sux_text_color: 'ffffff'
-  #   sux_bg_color: '424242'
-  #   sux_border_shadow_type: 'classic_shadow_type'
-  # light:
-  sux_width: 620
-  sux_text_color: '000000'
-  sux_bg_color: 'ececec'
-  sux_border_shadow_type: 'modern_shadow_type'
-additional-features:
-  disable_win10_auto_update: 1
+  dark:
+    sux_width: 620
+    sux_text_color: 'ffffff'
+    sux_bg_color: '424242'
+    sux_border_shadow_type: 'classic_shadow_type'
+  light:
+    sux_width: 620
+    sux_text_color: '000000'
+    sux_bg_color: 'ececec'
+    sux_border_shadow_type: 'modern_shadow_type'
 replace-text:
   enable: 1
   shortcut-key: 
