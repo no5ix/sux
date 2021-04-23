@@ -52,7 +52,8 @@ command:
     sux: 'https://github.com/no5ix/sux'
     git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
-    rd: Reloadsux
+    sw: StartSuxAhkWithWin
+    rd: ReloadSux
     ahk: 'https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm'
     blog: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\no5ix.github.io'
     proj: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\sux'

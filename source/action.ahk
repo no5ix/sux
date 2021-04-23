@@ -2,6 +2,42 @@
 #Include %A_ScriptDir%\source\search_gui.ahk
 
 
+
+StartSuxAhkWithWin() {
+	msg_str := "Would you like to start sux with windows? Yes(Enable) or No(Disable)"
+	MsgBox, 3,, %msg_str%
+	IfMsgBox Cancel
+		return
+
+	Name_no_ext := "sux"
+	Name := "sux.ahk"
+	Dir = %A_ScriptDir%
+	sux_ahk_file_path =  %A_ScriptFullPath%
+
+	IfExist, %A_Startup%\%Name_no_ext%.lnk
+	{
+		IfMsgBox No
+		{
+			FileDelete, %A_Startup%\%Name_no_ext%.lnk
+			MsgBox, %Name% removed from the Startup folder.
+		}
+		else {
+			MsgBox, %Name% already added to Startup folder for auto-launch with Windows.
+		}
+	}
+	Else
+	{
+		IfMsgBox Yes
+		{
+			FileCreateShortcut, "%sux_ahk_file_path%"
+				, %A_Startup%\%Name_no_ext%.lnk
+				, %Dir%   ; Line wrapped using line continuation
+			MsgBox, %Name% added to Startup folder for auto-launch with Windows.
+		}
+	}
+}
+
+
 ReplaceAllText() {
 	send, ^a
 	ReplaceSelectedText()
