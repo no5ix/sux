@@ -149,10 +149,11 @@ class SearchGui {
 
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
 		Gui, Color, %sux_bg_color%, %sux_bg_color%
-		if (cur_theme_info["sux_border_shadow_type"] == "classic_shadow_type")
-			SearchGui.ShadowBorder(hMyGUI)
-		else
+		if (cur_theme_info["sux_border_shadow_type"] == "modern_shadow_type") {
+			; SearchGui.ShadowBorder(hMyGUI)
+		; else
 			SearchGui.FrameShadow(hMyGUI)
+		}
 
 		Gui, Font, s22, Segoe UI
 		; Gui, Font, s10, Segoe UI

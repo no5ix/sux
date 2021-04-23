@@ -175,6 +175,7 @@ class TrayMenu
 		Menu, Tray, Default, % lang("Disable")
 		Menu, Tray, Click, 1
 		this.Update_Icon()
+		ActivateWindowsUnderCursor()  ; 没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
 	}
 
 	static _switch_tray_standard_menu := 0

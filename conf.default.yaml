@@ -5,7 +5,7 @@ theme:
     sux_width: 620
     sux_text_color: 'ffffff'
     sux_bg_color: '424242'
-    sux_border_shadow_type: 'classic_shadow_type'
+    sux_border_shadow_type:
   light:
     sux_width: 620
     sux_text_color: '000000'
