@@ -341,6 +341,7 @@ class SuxCore
 
 		if(SuxCore.GetFeatureCfg("hot-corner.enable", 0))
 		{
+			global hot_corners_detect_interval
 			For border_key, border_action in SuxCore.GetFeatureCfg("hot-corner.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
@@ -553,24 +554,35 @@ register_hotkey(key_name, action, prefix="")
 			key := StrReplace(key, "CapsLock & ^", "CapsLock & ")
 			; m(key)
 		}
-		; m(key "//" action)
-		; m(original_key "//" action)
-		; DebugPrintVal(HOTKEY_REGISTER_MAP[key])
+
+		; if (key_name == "rshift") {
+		; 	m(key "//" action)
+		; 	m(original_key "//" action)
+		; }
+
 		arr := StrSplit(key, "|")
 		
 		if (arr[2] == "hover") {
 			Continue
 		}
 		if (Instr(key_name, "doublehit_")) {
-			; m(original_key)
-			; m(key "//" action)
-			; m(arr[2])
+			; if (key_name == "doublehit_rshift") {
+			; 	m(original_key)
+			; 	m(key "//" action)
+			; 	m(arr[2])
+			; }
 			HOTKEY_REGISTER_MAP[key_name] := action
 			Hotkey, IF
 			Hotkey, % arr[2], SUB_HOTKEY_ZONE_DOUBLE_HIT
 			return
 		}
 		else {
+			
+			; if (key_name == "rshift") {
+			; 	m(arr[1])
+			; 	m(arr[2])
+			; }
+
 			HOTKEY_REGISTER_MAP[original_key] := action
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
@@ -581,14 +593,6 @@ register_hotkey(key_name, action, prefix="")
 				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ANYWAY
 			}
 		}
-		
-; DebugPrintVal(key)
-; DebugPrintVal(action)
-		; if (instr(original_key, "#")){
-		; 	m(arr[2])
-		; 	m(action)
-		; }
-; m(arr[2])
 	}
 }
 

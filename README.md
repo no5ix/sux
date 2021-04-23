@@ -246,8 +246,11 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - caps + alt -->
 <!-- - add ver to code -->
 - limit mode notify in full screen app
-- search/replace conf key modify
-    <!-- - 最小化 -->
+- hot corner bug
+- rshift bug
+- theme dark/light tray menu
+<!-- - search/replace conf key modify -->
+<!-- - 最小化 -->
 - add more action
 - add newbie tutorial
 - hot corner/edge/capslock switcher to tray menu

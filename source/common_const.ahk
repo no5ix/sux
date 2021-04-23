@@ -14,7 +14,6 @@ global hot_corners_detect_interval := 88
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
-global mouse_double_click_timeout := 666
 
 
 LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
