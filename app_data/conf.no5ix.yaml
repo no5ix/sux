@@ -125,7 +125,6 @@ capslock_plus:
     capslock_shift_/: 'send +\'
   custom:
 hot-corner: 
-  enable: 1
   action: 
     LeftTopCorner: 
       hover: JumpToPrevTab
