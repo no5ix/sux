@@ -35,6 +35,9 @@ check_update_from_launch = 0
 
 CheckUpdate(from_launch=0)
 {
+	global limit_mode
+	if (limit_mode)
+		return
 	global check_update_from_launch
 	check_update_from_launch := from_launch
 	SuxCore.get_remote_file(SuxCore.data_ini_file)
@@ -120,6 +123,18 @@ handle_req_failed() {
 		} 
 	}
 	check_update_from_launch := 0
+}
+
+
+HandleLimitModeInFullScreen() {
+	global limit_mode
+	if (IsFullscreen()) {
+		ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode."))
+		limit_mode := 1
+	}
+	else {
+		limit_mode := 0
+	}
 }
 
 
@@ -381,6 +396,9 @@ class SuxCore
 
 
 tick_hot_corners() {
+	global limit_mode
+	if (limit_mode)
+		return
 	global HOTKEY_REGISTER_MAP
 	; ToolTipWithTimer("ggsmd")
 	border_code := get_border_code()
@@ -444,7 +462,7 @@ register_additional_features(key_name, val)
 	ADDITIONAL_FEATURES_REGISTER_MAP[key_name] := val
 	
 	if (ADDITIONAL_FEATURES_REGISTER_MAP["disable_win10_auto_update"]) {
-		SetTimer, DisableWin10AutoUpdate, 6666
+		SetTimer, DisableWin10AutoUpdate, 66666
 	}
 	else {
 		; EnableWin10AutoUpdate()
@@ -544,6 +562,9 @@ register_hotkey(key_name, action, prefix="")
 */
 SUB_HOTKEY_ZONE_ANYWAY:
 SUB_HOTKEY_ZONE_BORDER:
+	global limit_mode
+	if (limit_mode)
+		return
 	border_code := get_border_code()
 
 	pending_replace_str := "CapsLock"

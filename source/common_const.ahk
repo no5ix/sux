@@ -2,6 +2,7 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 global limit_mode := 0
 global old_limit_mode := limit_mode
 
@@ -10,8 +11,6 @@ global fake_lb_down := 0
 global CornerEdgeOffset := 8  ; adjust tolerance value (pixels to corner) if desired	
 
 global hot_corners_detect_interval := 88
-
-global auto_limit_mode_when_full_screen := 0  ; if 1, turn off double shift/ctrl/alt & hot edges/corners when full screen
 
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222

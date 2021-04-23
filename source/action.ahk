@@ -232,10 +232,10 @@ SwitchInputMethod() {
 		KeyWait, RShift
 		return
 	}
-	if limit_mode {
-		ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
-		return
-	}
+	; if limit_mode {
+	; 	ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
+	; 	return
+	; }
 	; Send, ^{Space}
 	Send, ^+{Left}
 	; Sleep, 66
