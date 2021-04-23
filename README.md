@@ -251,8 +251,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - theme dark/light tray menu -->
 <!-- - search/replace conf key modify -->
 <!-- - 最小化 -->
-- TEST double rshift/single rshift exist together
-- 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
+<!-- - TEST double rshift/single rshift exist together -->
+<!-- - 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应 -->
 <!-- - 暗模式的其他gui的阴影不正常 -->
 - add more action
 - add newbie tutorial

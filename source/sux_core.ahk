@@ -492,7 +492,6 @@ register_hotkey(key_name, action, prefix="")
 }
 
 
-
 /*
 ; HOTKEY evoke
 */
@@ -500,16 +499,28 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	global limit_mode
 	if (limit_mode)
 		return
+	; ToolTipWithTimer(A_TimeSincePriorHotkey)
 	global keyboard_double_click_timeout
+	cur_key := StrReplace(A_ThisHotkey, "~")
 	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
 		ClickUpIfLbDown()
-		KeyWait, %A_PriorKey%  ; Wait for the key to be released.
+		; ToolTipWithTimer(A_PriorKey)  ; LAlt
+		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
+		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
+		KeyWait, % cur_key ; Wait for the key to be released.
+		; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
+		; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
+		; KeyWait, Alt  ; Wait for the key to be released.
+		; ToolTipWithTimer(A_PriorKey)
 		return
 	}
-	; m(A_ThisHotkey)
-	cur_key := StrReplace(A_ThisHotkey, "~")
+	
+	; ToolTipWithTimer(A_ThisHotkey)
+	; ToolTipWithTimer("12123")
+	; cur_key := StrReplace(A_ThisHotkey, "~")
 	action := HOTKEY_REGISTER_MAP["doublehit_" cur_key]
 	; m(action)
 	; if(action="") {
