@@ -48,8 +48,8 @@ class ClipboardPlus
 		SuxCore.OnExit("Sub_xClipboard_OnExit")
 		this.Clips := SuxCore.UserData["xClipboard_Clips"]
 		this.FavourClips := SuxCore.UserData["xClipboard_FavourClips"]
-		this.ClipsFirstShowNum := SuxCore.GetFeatureCfg("clipboard-plus.ClipsFirstShowNum", 10)
-		this.ClipsTotalNum := SuxCore.GetFeatureCfg("clipboard-plus.ClipsTotalNum", 50)
+		this.ClipsFirstShowNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsFirstShowNum", 10)
+		this.ClipsTotalNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsTotalNum", 50)
 		if not IsObject(this.Clips)
 			this.Clips := []
 		if not IsObject(this.FavourClips)

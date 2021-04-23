@@ -19,7 +19,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 lang(key)
 {
 	global LANGUAGE_CONF_MAP
-	lang := SuxCore.GetConfig("lang", SuxCore.Default_lang)
+	lang := SuxCore.GetIniConfig("lang", SuxCore.Default_lang)
 	if (lang == SuxCore.Default_lang) {
 		ret := LANGUAGE_CONF_MAP[key]
 		if !ret
@@ -69,7 +69,7 @@ on_get_remote_data_ini_ready() {
 		if FileExist(SuxCore.remote_data_ini_file)
 			FileDelete, % SuxCore.remote_data_ini_file
 		FileAppend, % cur_http_req.responseText, % SuxCore.remote_data_ini_file
-		remote_ver_str := SuxCore.get_remote_config("ver")
+		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
 			MsgBox, 4,, % lang("There is a new version sux, would you like to check it out?")
@@ -179,7 +179,7 @@ class SuxCore
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
-		; this.version := SuxCore.GetConfig("ver")
+		; this.version := SuxCore.GetIniConfig("ver")
 		CheckUpdate(1)
 
 		ClipboardPlus.init()
@@ -195,69 +195,28 @@ class SuxCore
 		get_remote_data_ini(url)
 	}
 
-	get_remote_config(key, default="", section="sux", autoWrite=true)
+	get_remote_ini_config(key, default="", section="sux", autoWrite=true)
 	{
 		IniRead, output, % SuxCore.remote_data_ini_file, % section, % key, ""
 		return output
 	}
 
-	GetConfig(key, default="", section="sux", autoWrite=true)
+	GetIniConfig(key, default="", section="sux", autoWrite=true)
 	{
 		IniRead, output, % SuxCore.data_ini_file, % section, % key
-		if(output=="ERROR")
+		if(output=="ERROR" || output == "")
 		{
 			if(autoWrite) {
-				SuxCore.SetConfig(key, default, section)
+				SuxCore.SetIniConfig(key, default, section)
 			}
 			return default
 		}
 		return output
 	}
 
-	SetConfig(key, value, section="sux")
+	SetIniConfig(key, value, section="sux")
 	{
 		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
-	}
-
-	ExitSux(show_msg=true)
-	{
-		ExitApp
-	}
-
-	SetDisable(act="toggle")
-	{
-		setdisable := (act="toggle")? !(A_IsPaused&&A_IsSuspended): act
-		SuxCore.SetState(setdisable, setdisable)
-	}
-
-	Edit_conf_yaml()
-	{
-		OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
-	}
-
-	SetState(setsuspend="", setpause="")
-	{
-		setsuspend := (setsuspend="")? A_IsSuspended: setsuspend
-		setpause := (setpause="")? A_IsPaused: setpause
-		if(!A_IsSuspended && setsuspend) {
-			RunArr(SuxCore.OnSuspendCmd)
-		}
-		if(!A_IsPaused && setpause) {
-			RunArr(SuxCore.OnPauseCmd)
-		}
-		if(setsuspend) {
-			Suspend, On
-		}
-		else {
-			Suspend, Off
-		}
-		if(setpause) {
-			Pause, On, 1
-		}
-		else {
-			Pause, Off
-		}
-		TrayMenu.update_tray_menu()
 	}
 
 	OnClipboardChange(func)
@@ -265,8 +224,7 @@ class SuxCore
 		this.OnClipboardChangeCmd.Insert(func)
 	}
 
-	; feature.yaml
-	GetFeatureCfg(keyStr, default="")
+	GetYamlCfg(keyStr, default="")
 	{
 		keyArray := StrSplit(keyStr, ".")
 		obj := SuxCore.FeatureObj
@@ -292,90 +250,90 @@ class SuxCore
 
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		
-		check_update_interval_hour := SuxCore.GetFeatureCfg("check-update-interval-hour", 2)
+		check_update_interval_hour := SuxCore.GetYamlCfg("check-update-interval-hour", 2)
 		check_update_millisec := check_update_interval_hour * 3600 * 1000
 		SetTimer, CheckUpdate, % check_update_millisec
 
-		if(SuxCore.GetFeatureCfg("hotkey.enable", 0))
+		if(SuxCore.GetYamlCfg("hotkey.enable", 0))
 		{
-			For key, value in SuxCore.GetFeatureCfg("hotkey.buildin", {})
+			For key, value in SuxCore.GetYamlCfg("hotkey.buildin", {})
 				register_hotkey(key, value, "")
-			For key, value in SuxCore.GetFeatureCfg("hotkey.custom", {})
+			For key, value in SuxCore.GetYamlCfg("hotkey.custom", {})
 				register_hotkey(key, value, "")
 		}
-		if(SuxCore.GetFeatureCfg("capslock_plus.enable", 0))
+		if(SuxCore.GetYamlCfg("capslock_plus.enable", 0))
 		{
-			if (SuxCore.GetFeatureCfg("capslock_plus.buildin.capslock", 0) == 0) {
+			if (SuxCore.GetYamlCfg("capslock_plus.buildin.capslock", 0) == 0) {
 				SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 			}
 
-			For key, value in SuxCore.GetFeatureCfg("capslock_plus.buildin", {})
+			For key, value in SuxCore.GetYamlCfg("capslock_plus.buildin", {})
 				register_hotkey(key, value, "")
-			For key, value in SuxCore.GetFeatureCfg("capslock_plus.custom", {})
+			For key, value in SuxCore.GetYamlCfg("capslock_plus.custom", {})
 				register_hotkey(key, value, "")
 		}
 		else {
 			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 
-		if(SuxCore.GetFeatureCfg("hot-corner", {}))
+		if(SuxCore.GetYamlCfg("hot-corner", {}))
 		{
-			For border_key, border_action in SuxCore.GetFeatureCfg("hot-corner.action", {}) {
+			For border_key, border_action in SuxCore.GetYamlCfg("hot-corner.action", {}) {
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 			}
 		}
 
-		if(SuxCore.GetFeatureCfg("hot-edge.enable", 0))
+		if(SuxCore.GetYamlCfg("hot-edge.enable", 0))
 		{
-			For border_key, border_action in SuxCore.GetFeatureCfg("hot-edge.action", {})
+			For border_key, border_action in SuxCore.GetYamlCfg("hot-edge.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 		}
 
 		comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
-		if(SuxCore.GetFeatureCfg("command.enable", 0))
+		if(SuxCore.GetYamlCfg("command.enable", 0))
 		{
-			For key, value in SuxCore.GetFeatureCfg("command.buildin", {})
+			For key, value in SuxCore.GetYamlCfg("command.buildin", {})
 				register_command(key, StrSplit(value, comma_delimiters_arr))
-			For key, value in SuxCore.GetFeatureCfg("command.custom", {})
+			For key, value in SuxCore.GetYamlCfg("command.custom", {})
 				register_command(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		if(SuxCore.GetFeatureCfg("web-search.enable", 0))
+		if(SuxCore.GetYamlCfg("web-search.enable", 0))
 		{
 			_temp_map := {"normal-search": "SearchGui.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
-			For key, value in SuxCore.GetFeatureCfg("web-search.shortcut-key", {})
+			For key, value in SuxCore.GetYamlCfg("web-search.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
-			For key, value in SuxCore.GetFeatureCfg("web-search.buildin", {})
+			For key, value in SuxCore.GetYamlCfg("web-search.buildin", {})
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
-			For key, value in SuxCore.GetFeatureCfg("web-search.custom", {})
+			For key, value in SuxCore.GetYamlCfg("web-search.custom", {})
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		if(SuxCore.GetFeatureCfg("replace-text.enable", 0))
+		if(SuxCore.GetYamlCfg("replace-text.enable", 0))
 		{
 			_temp_map := {"replace-all-text": "ReplaceAllText", "replace-selected-text":"ReplaceSelectedText"}
-			For key, value in SuxCore.GetFeatureCfg("replace-text.shortcut-key", {})
+			For key, value in SuxCore.GetYamlCfg("replace-text.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
-			For key, value in SuxCore.GetFeatureCfg("replace-text.buildin", {})
+			For key, value in SuxCore.GetYamlCfg("replace-text.buildin", {})
 				register_replace_str(key, value)
-			For key, value in SuxCore.GetFeatureCfg("replace-text.custom", {})
+			For key, value in SuxCore.GetYamlCfg("replace-text.custom", {})
 				register_replace_str(key, value)
 		}
 
-		For theme_type, theme_info in SuxCore.GetFeatureCfg("theme", {}) {
+		For theme_type, theme_info in SuxCore.GetYamlCfg("theme", {}) {
 			cur_theme_info := {}
 			For theme_key, theme_val in theme_info
 				cur_theme_info[theme_key] := theme_val
 			register_theme_conf(theme_type, cur_theme_info)
 		}
 
-		if(SuxCore.GetFeatureCfg("clipboard-plus.enable", 0))
+		if(SuxCore.GetYamlCfg("clipboard-plus.enable", 0))
 		{
-			; For key, value in SuxCore.GetFeatureCfg("clipboard-plus.shortcut-key", {})
+			; For key, value in SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", {})
 			; 	register_hotkey(key, value, "")
-			shortcut_key := SuxCore.GetFeatureCfg("clipboard-plus.shortcut-key", "win_alt_v")
+			shortcut_key := SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", "win_alt_v")
 			register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
 		}
 	}
@@ -532,6 +490,7 @@ register_hotkey(key_name, action, prefix="")
 		}
 	}
 }
+
 
 
 /*

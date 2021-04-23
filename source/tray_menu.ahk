@@ -28,10 +28,10 @@ class TrayMenu
 
 	SetDisableWin10AutoUpdate(act="toggle")
 	{
-		cfg := SuxCore.GetConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
+		cfg := SuxCore.GetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
-		SuxCore.SetConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, switch)
+		SuxCore.SetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, switch)
 		TrayMenu.update_tray_menu()
 		if (switch) {
 			DisableWin10AutoUpdate()
@@ -45,10 +45,10 @@ class TrayMenu
 
 	SetLimitModeInFullScreen(act="toggle")
 	{
-		cfg := SuxCore.GetConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
+		cfg := SuxCore.GetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
-		SuxCore.SetConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, switch)
+		SuxCore.SetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, switch)
 		TrayMenu.update_tray_menu()
 		if (switch) {
 			global tick_detect_interval
@@ -61,10 +61,10 @@ class TrayMenu
 	
 	SetAutorun(act="toggle")
 	{
-		cfg := SuxCore.GetConfig(INI_AUTORUN, SuxCore.Default_autorun_switch)
+		cfg := SuxCore.GetIniConfig(INI_AUTORUN, SuxCore.Default_autorun_switch)
 		autorun := (act="config")? cfg : act
 		autorun := (act="toggle")? !cfg : autorun
-		SuxCore.SetConfig(INI_AUTORUN, autorun)
+		SuxCore.SetIniConfig(INI_AUTORUN, autorun)
 		TrayMenu.update_tray_menu()
 		Regedit.Autorun(autorun, SuxCore.ProgramName, SuxCore.Launcher_Name)
 		; if(autorun)
@@ -79,10 +79,10 @@ class TrayMenu
 
 	SetHotCorner(act="toggle")
 	{
-		cfg := SuxCore.GetConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
+		cfg := SuxCore.GetIniConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
 		hot_corner_switch := (act="config")? cfg : act
 		hot_corner_switch := (act="toggle")? !cfg : hot_corner_switch
-		SuxCore.SetConfig(INI_HOT_CORNER, hot_corner_switch)
+		SuxCore.SetIniConfig(INI_HOT_CORNER, hot_corner_switch)
 		TrayMenu.update_tray_menu()
 		if (hot_corner_switch) {
 			global tick_detect_interval
@@ -97,13 +97,16 @@ class TrayMenu
 	{
 		if(act="itemname")
 		{
-			cur_theme_map := {"Light": "light", "Dark": "dark"}
-			cur_theme := cur_theme_map[A_ThisMenuItem]
+			; m(A_ThisMenuItem)
+			; m(A_ThisMenu)
+			; m(A_ThisMenuItemPos)
+			cur_theme_list := ["light", "dark"]
+			cur_theme := cur_theme_list[A_ThisMenuItemPos]
 		}
 		else {
 			cur_theme := act
 		}
-		SuxCore.SetConfig(INI_THEME, cur_theme)
+		SuxCore.SetIniConfig(INI_THEME, cur_theme)
 		TrayMenu.update_tray_menu()
 	}
 
@@ -117,7 +120,7 @@ class TrayMenu
 		else {
 			lang := act
 		}
-		SuxCore.SetConfig(INI_LANG, lang)
+		SuxCore.SetIniConfig(INI_LANG, lang)
 		TrayMenu.update_tray_menu()
 	}
 
@@ -125,24 +128,24 @@ class TrayMenu
 	update_tray_menu()
 	{
 		version_str := lang("About") " sux v" SuxCore.version
-		autorun := SuxCore.GetConfig(INI_AUTORUN, 0)
-		remote_ver_str := SuxCore.get_remote_config("ver")
+		autorun := SuxCore.GetIniConfig(INI_AUTORUN, 0)
+		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version! ") "v" remote_ver_str
 		}
 		else {
 			check_update_menu_name := lang("Check Update")
 		}
-		lang := SuxCore.GetConfig(INI_LANG, SuxCore.Default_lang)
-		cur_theme := SuxCore.GetConfig(INI_THEME, SuxCore.Default_theme)
-		hot_corner_switch := SuxCore.GetConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
-		limit_mode_in_full_screen_switch := SuxCore.GetConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
-		disable_win10_auto_update_switch := SuxCore.GetConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
+		lang := SuxCore.GetIniConfig(INI_LANG, SuxCore.Default_lang)
+		cur_theme := SuxCore.GetIniConfig(INI_THEME, SuxCore.Default_theme)
+		hot_corner_switch := SuxCore.GetIniConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
+		limit_mode_in_full_screen_switch := SuxCore.GetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
+		disable_win10_auto_update_switch := SuxCore.GetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
 
 		Menu, Tray, Tip, % SuxCore.ProgramName
 		xMenu.New("TrayLanguage"
-			,[["English", "TrayMenu.SetLang", {check: lang=="en"}]
-			, ["中文", "TrayMenu.SetLang", {check: lang=="cn"}]])
+			,[["中文", "TrayMenu.SetLang", {check: lang=="cn"}]
+			, ["English", "TrayMenu.SetLang", {check: lang=="en"}]])
 		xMenu.New("SearchGuiTheme"
 			,[[lang("Light"), "TrayMenu.SetTheme", {check: cur_theme=="light"}]
 			, [lang("Dark"), "TrayMenu.SetTheme", {check: cur_theme=="dark"}]])
@@ -163,11 +166,11 @@ class TrayMenu
 			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
 			,[]
 			,[lang("Open sux Folder"), A_WorkingDir]
-			,[lang("Edit Config File"), "SuxCore.Edit_conf_yaml"]
+			,[lang("Edit Config File"), "TrayMenu.Edit_conf_yaml"]
 			,[]
-			,[lang("Disable"), "SuxCore.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
+			,[lang("Disable"), "TrayMenu.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
 			,[lang("Restart sux"), "ReloadSux"]
-			,[lang("Exit"), "SuxCore.ExitSux"] ])
+			,[lang("Exit"), "TrayMenu.ExitSux"] ])
 		this.SetMenu(TrayMenuList)
 		Menu, Tray, Default, % lang("Disable")
 		Menu, Tray, Click, 1
@@ -230,6 +233,47 @@ class TrayMenu
 		Menu, Tray, DeleteAll
 		Menu, Tray, NoStandard
 		xMenu.add("Tray", menuList)
+	}
+
+	ExitSux(show_msg=true)
+	{
+		ExitApp
+	}
+
+	Edit_conf_yaml()
+	{
+		OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
+	}
+
+	SetDisable(act="toggle")
+	{
+		setdisable := (act="toggle")? !(A_IsPaused&&A_IsSuspended): act
+		TrayMenu.SetState(setdisable, setdisable)
+	}
+
+	SetState(setsuspend="", setpause="")
+	{
+		setsuspend := (setsuspend="")? A_IsSuspended: setsuspend
+		setpause := (setpause="")? A_IsPaused: setpause
+		if(!A_IsSuspended && setsuspend) {
+			RunArr(SuxCore.OnSuspendCmd)
+		}
+		if(!A_IsPaused && setpause) {
+			RunArr(SuxCore.OnPauseCmd)
+		}
+		if(setsuspend) {
+			Suspend, On
+		}
+		else {
+			Suspend, Off
+		}
+		if(setpause) {
+			Pause, On, 1
+		}
+		else {
+			Pause, Off
+		}
+		TrayMenu.update_tray_menu()
 	}
 }
 

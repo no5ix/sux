@@ -144,7 +144,7 @@ class SearchGui {
 		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
 		Gui, Margin, 0, 0
 
-		cur_theme_type := SuxCore.GetConfig("theme", SuxCore.Default_theme)
+		cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
 		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
 
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
