@@ -381,9 +381,11 @@ class xMenu
 	}
 }
 
+
 Sub_xMenu_Open:
 Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
 Return
+
 
 
 TICK_HOT_CORNERS:
@@ -425,9 +427,13 @@ HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
 		}
 	}
 	else {
-		limit_mode := 0
+		if (limit_mode == 1) {
+			ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode."))
+			limit_mode := 0
+		}
 	}
 	Return
+
 
 
 ; //////////////////////////////////////////////////////////////////////////
