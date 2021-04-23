@@ -1,10 +1,10 @@
-![sux](img/sux.svg)
+![sux](app_data/sux.svg)
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
 
-[![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/web_search.gif)](https://hulinhong.com/2020/01/09/sux_readme/)
+[![](https://github.com/no5ix/no5ix.github.io/blob/source/source/app_data/sux/web_search.gif)](https://hulinhong.com/2020/01/09/sux_readme/)
 click img to see full video
 
 
@@ -219,9 +219,9 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 捐赠! 让作者更有动力给sux加新功能! ^_^
 
 - 微信
-  - ![微信](/img/wechat_donate.png)
+  - ![微信](/app_data/wechat_donate.png)
 - 支付宝
-  - ![支付宝](/img/alipay_donate.png)
+  - ![支付宝](/app_data/alipay_donate.png)
 
 
 # TODO List
@@ -254,6 +254,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - TEST double rshift/single rshift exist together -->
 <!-- - 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应 -->
 <!-- - 暗模式的其他gui的阴影不正常 -->
+<!-- - add donate gui pic -->
 - add more action
 - add newbie tutorial
 <!-- - hot corner/edge/capslock switcher to tray menu -->

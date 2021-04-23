@@ -14,9 +14,12 @@ Goto, SUB_TRAY_MENU_FILE_END_LABEL
 
 class TrayMenu
 {
-	static ICON_DIR := "app_data/"
-	static icon_default := TrayMenu.ICON_DIR "sux_default.ico"
-	static icon_disable := TrayMenu.ICON_DIR "sux_disable.ico"
+	static ASSET_DIR := "app_data/"
+	static icon_default := TrayMenu.ASSET_DIR "sux_default.ico"
+	static icon_disable := TrayMenu.ASSET_DIR "sux_disable.ico"
+	static donate_img_alipay := TrayMenu.ASSET_DIR "alipay_donate.png"
+	static donate_img_wechat := TrayMenu.ASSET_DIR "wechat_donate.png"
+
 
 	init() {
 		this.update_tray_menu()
@@ -157,7 +160,7 @@ class TrayMenu
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
 			,[[version_str, "TrayMenu.AboutSux"]
 			,[lang("Help"), SuxCore.help_addr]
-			,[lang("Donate"), SuxCore.donate_page]
+			,[lang("Donate"), "TrayMenu.ShowDonatePic"]
 			,[check_update_menu_name, "CheckUpdate"]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
@@ -184,8 +187,23 @@ class TrayMenu
 		this.update_tray_menu()
 	}
 
-	AboutSux()
-	{
+	ShowDonatePic() {
+		Gui, sux_donate: New
+		Gui sux_donate:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
+		Gui, Font, s12
+		s := "支付宝"
+		Gui, Add, Text,, % s
+		Gui, Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
+		; Gui, Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\alipay_donate.png
+		s := "微信"
+		Gui, Add, Text,, % s
+		Gui, Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
+		GuiControl, Focus, Close
+		s := lang("Donate")
+		Gui, Show,, % s
+	}
+
+	AboutSux() {
 		Gui, sux_About: New
 		Gui sux_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, Font, s12
