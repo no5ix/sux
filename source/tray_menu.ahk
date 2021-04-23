@@ -32,7 +32,7 @@ class TrayMenu
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
 		SuxCore.SetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, switch)
-		TrayMenu.update_tray_menu()
+		; TrayMenu.update_tray_menu()
 		if (switch) {
 			DisableWin10AutoUpdate()
 			SetTimer, DisableWin10AutoUpdate, %tick_disable_win10_auto_interval%
@@ -49,7 +49,7 @@ class TrayMenu
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
 		SuxCore.SetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, switch)
-		TrayMenu.update_tray_menu()
+		; TrayMenu.update_tray_menu()
 		if (switch) {
 			global tick_detect_interval
 			SetTimer, HANDLE_LIMIT_MODE_IN_FULL_SCREEN, %tick_detect_interval%
@@ -65,7 +65,7 @@ class TrayMenu
 		autorun := (act="config")? cfg : act
 		autorun := (act="toggle")? !cfg : autorun
 		SuxCore.SetIniConfig(INI_AUTORUN, autorun)
-		TrayMenu.update_tray_menu()
+		; TrayMenu.update_tray_menu()
 		Regedit.Autorun(autorun, SuxCore.ProgramName, SuxCore.Launcher_Name)
 		; if(autorun)
 		; {
@@ -83,7 +83,7 @@ class TrayMenu
 		hot_corner_switch := (act="config")? cfg : act
 		hot_corner_switch := (act="toggle")? !cfg : hot_corner_switch
 		SuxCore.SetIniConfig(INI_HOT_CORNER, hot_corner_switch)
-		TrayMenu.update_tray_menu()
+		; TrayMenu.update_tray_menu()
 		if (hot_corner_switch) {
 			global tick_detect_interval
 			SetTimer, TICK_HOT_CORNERS, %tick_detect_interval%
@@ -107,7 +107,7 @@ class TrayMenu
 			cur_theme := act
 		}
 		SuxCore.SetIniConfig(INI_THEME, cur_theme)
-		TrayMenu.update_tray_menu()
+		; TrayMenu.update_tray_menu()
 	}
 
 	SetLang(act="itemname")
@@ -121,7 +121,7 @@ class TrayMenu
 			lang := act
 		}
 		SuxCore.SetIniConfig(INI_LANG, lang)
-		TrayMenu.update_tray_menu()
+		; TrayMenu.update_tray_menu()
 	}
 
 	; Tray Menu
@@ -175,7 +175,7 @@ class TrayMenu
 		Menu, Tray, Default, % lang("Disable")
 		Menu, Tray, Click, 1
 		this.Update_Icon()
-		ActivateWindowsUnderCursor()  ; 没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
+		; ActivateWindowsUnderCursor()  ; 没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
 	}
 
 	static _switch_tray_standard_menu := 0
@@ -384,7 +384,11 @@ class xMenu
 
 
 Sub_xMenu_Open:
+; ActiveHwnd := WinExist("A")
 Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
+TrayMenu.update_tray_menu()
+; WinActivate
+; WinActivate, ahk_id %ActiveHwnd%	
 Return
 
 
