@@ -1,13 +1,12 @@
 ﻿File-Description: Take effect after sux restart. 改了之后重启sux才会生效.
 check-update-interval-hour: 2
 theme: 
-  # # dark theme
-  # sux_width: 620
-  # sux_text_color: 'ffffff'
-  # sux_bg_color: '424242'
-  # sux_border_shadow_type: 'classic_shadow_type'
-  #
-  # light theme 
+  # dark:
+  #   sux_width: 620
+  #   sux_text_color: 'ffffff'
+  #   sux_bg_color: '424242'
+  #   sux_border_shadow_type: 'classic_shadow_type'
+  # light:
   sux_width: 620
   sux_text_color: '000000'
   sux_bg_color: 'ececec'
@@ -16,6 +15,9 @@ additional-features:
   disable_win10_auto_update: 1
 replace-text:
   enable: 1
+  shortcut-key: 
+    replace-all-text: capslock_g
+    replace-selected-text: capslock_shift_g
   buildin:
     'h/': 'http://'
     'hs/': 'https://'
@@ -25,13 +27,17 @@ replace-text:
   custom:
 web-search:
   enable: 1
+  shortcut-key: 
+    # normal-search: doublehit_ctrl
+    normal-search: doublehit_alt
+    search-selected-text: capslock_f
   buildin:
     default: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     bg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
     bd: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
-    yd: 'http://www.youdao.com/w/REPLACEME'
+    yd: 'https://www.youdao.com/w/REPLACEME'
     bb: 'search.bilibili.com/all?keyword=REPLACEME'
     jd: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
     zh: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
@@ -66,8 +72,6 @@ hotkey:
     ctrl_8: SimulateClickDown
     ctrl_shift_alt_m: MaxMinWindow
     rshift: SwitchInputMethod
-    ~alt: DoubleHitWebSearch
-    # ~ctrl: DoubleHitWebSearch
   custom:
 capslock_plus:
   enable: 1
@@ -75,7 +79,6 @@ capslock_plus:
     capslock: 'send {Esc}'
     capslock_tab: ScreenShot
     capslock_shift_tab: SwitchCapsState
-    capslock_g: WebSearchSelectedText
     capslock_c: 'send ^/'
     capslock_v: 'send +6'
     capslock_w: 'send +{Ins}'
@@ -164,7 +167,6 @@ hot-edge:
       # wheelup: GotoPreTab
 clipboard-plus: 
   enable: 1
-  hotkey: 
-    win_alt_v: ClipboardPlus.ShowAllClips
+  shortcut-key: win_alt_v
   ClipsFirstShowNum: 10
   ClipsTotalNum: 50

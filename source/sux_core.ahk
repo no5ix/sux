@@ -365,6 +365,9 @@ class SuxCore
 
 		if(SuxCore.GetFeatureCfg("web-search.enable", 0))
 		{
+			_temp_map := {"normal-search": "SearchGui.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
+			For key, value in SuxCore.GetFeatureCfg("web-search.shortcut-key", {})
+				register_hotkey(value, _temp_map[key], "")
 			For key, value in SuxCore.GetFeatureCfg("web-search.buildin", {})
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
 			For key, value in SuxCore.GetFeatureCfg("web-search.custom", {})
@@ -489,19 +492,39 @@ register_hotkey(key_name, action, prefix="")
 	StringLower, key_name, key_name
 	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
 			,hover: "hover", capslock: "CapsLock"
-			,doubleclick: "doubleclick"
 			,lwin: "<#", rwin: ">#"
 			,lctrl: "<^", rctrl: ">^"
 			,lshift: "<+", rshift: ">+"
 			,lalt: "<!", ralt: ">!"
 			,lbutton:  "LButton", rbutton:  "RButton", mbutton: "MButton"}
-	key_split_arr := StrSplit(key_name, "_")
+
+	; if Instr(key_name, "hover")
+	; if Instr(key_name, "doublehit_")
+	; 	m(double_hit_ltrimed_key)
+	; m(key_name)
+	double_hit_ltrimed_key := StrReplace(key_name, "doublehit_")
+	; if Instr(key_name, "hover")
+	; if Instr(key_name, "doublehit_")
+	; 	m(double_hit_ltrimed_key)
+
+	key_split_arr := StrSplit(double_hit_ltrimed_key, "_")
+	; key_split_arr := StrSplit(key_name, "_")
 
 	Loop, % key_split_arr.MaxIndex()
 	{
 		cur_symbol := key_split_arr[A_Index]
-		maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
-		; maped_symbol := map1[cur_symbol] 
+		if (key_split_arr.Length() == 1) {
+			if (Instr(key_name, "doublehit_")) {
+				; m(double_hit_ltrimed_key)
+				maped_symbol := "~" . double_hit_ltrimed_key
+			}
+			else
+				maped_symbol := double_hit_ltrimed_key
+		}
+		else { 
+		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
+			maped_symbol := map1[cur_symbol] 
+		}
 		if(maped_symbol=="") {
 			trans_key := str_array_concate(trans_key, [cur_symbol])
 		}
@@ -522,8 +545,6 @@ register_hotkey(key_name, action, prefix="")
 		key := prefix_trans_keys[A_Index]
 		; StringUpper, key, key
 		original_key := key
-		; if (instr(original_key, "#"))
-		; 	m(original_key)
 		if !(original_key = "|CapsLock") {
 			; m(original_key)
 			key := StrReplace(key, "CapsLock", "CapsLock & ")
@@ -534,13 +555,31 @@ register_hotkey(key_name, action, prefix="")
 		}
 		; m(key "//" action)
 		; m(original_key "//" action)
-
-		HOTKEY_REGISTER_MAP[original_key] := action
 		; DebugPrintVal(HOTKEY_REGISTER_MAP[key])
 		arr := StrSplit(key, "|")
 		
 		if (arr[2] == "hover") {
 			Continue
+		}
+		if (Instr(key_name, "doublehit_")) {
+			; m(original_key)
+			; m(key "//" action)
+			; m(arr[2])
+			HOTKEY_REGISTER_MAP[key_name] := action
+			Hotkey, IF
+			Hotkey, % arr[2], SUB_HOTKEY_ZONE_DOUBLE_HIT
+			return
+		}
+		else {
+			HOTKEY_REGISTER_MAP[original_key] := action
+			if(arr[1]!="") {
+				Hotkey, IF, border_event_evoke()
+				Hotkey, % arr[2], SUB_HOTKEY_ZONE_BORDER
+			}
+			else {
+				Hotkey, IF
+				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ANYWAY
+			}
 		}
 		
 ; DebugPrintVal(key)
@@ -550,15 +589,6 @@ register_hotkey(key_name, action, prefix="")
 		; 	m(action)
 		; }
 ; m(arr[2])
-
-		if(arr[1]!="") {
-			Hotkey, IF, border_event_evoke()
-			Hotkey, % arr[2], SUB_HOTKEY_ZONE_BORDER
-		}
-		else {
-			Hotkey, IF
-			Hotkey, % arr[2], SUB_HOTKEY_ZONE_ANYWAY
-		}
 	}
 }
 
@@ -566,6 +596,26 @@ register_hotkey(key_name, action, prefix="")
 /*
 ; HOTKEY evoke
 */
+SUB_HOTKEY_ZONE_DOUBLE_HIT:
+	global keyboard_double_click_timeout
+	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	{
+		; Too much time between presses, so this isn't a double-press.
+		ClickUpIfLbDown()
+		KeyWait, %A_PriorKey%  ; Wait for the key to be released.
+		return
+	}
+	; m(A_ThisHotkey)
+	cur_key := StrReplace(A_ThisHotkey, "~")
+	action := HOTKEY_REGISTER_MAP["doublehit_" cur_key]
+	; m(action)
+	; if(action="") {
+	; 	return
+	; }
+	run(action)
+Return
+
+
 SUB_HOTKEY_ZONE_ANYWAY:
 SUB_HOTKEY_ZONE_BORDER:
 	global limit_mode

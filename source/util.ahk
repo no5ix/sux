@@ -355,6 +355,8 @@ IsMouseActiveWindowAtSameMonitor() {
 ; 参数可以是cmd命令，代码中的sub，function，网址，b站av号，还可以扩展
 run(command, throwErr := 1)
 {
+	if !command
+		return
 	if (command.Length() == 1)
 	{
 		command := command[1]
