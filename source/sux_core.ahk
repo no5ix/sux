@@ -108,11 +108,11 @@ handle_req_failed() {
 		cur_http_req = 
 	}
 	if (check_update_from_launch == 0) {
-		msg := lang("Can not connect to GitHub.") "`n"
-		if (state_code == 12007 || state_code == 12029) {
+		msg := lang("Can not connect to sux official website.") "`n"
+		; if (state_code == 12007 || state_code == 12029) {
 			msg := msg lang("Maybe need a proxy.") "`n"
-		}
-		msg := msg lang("Do you want to open the sux official website with your browser?")
+		; }
+		msg := msg lang("Do you want to open it with your browser?")
 		MsgBox,4,, % msg ,8
 		IfMsgBox Yes
 		{
