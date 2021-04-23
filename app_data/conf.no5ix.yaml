@@ -76,8 +76,6 @@ capslock_plus:
     capslock_tab: ScreenShot
     capslock_shift_tab: SwitchCapsState
     capslock_g: WebSearchSelectedText
-    capslock_f: ReplaceAllText
-    capslock_shift_f: ReplaceSelectedText
     capslock_c: 'send ^/'
     capslock_v: 'send +6'
     capslock_w: 'send +{Ins}'

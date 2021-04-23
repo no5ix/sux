@@ -373,6 +373,9 @@ class SuxCore
 
 		if(SuxCore.GetFeatureCfg("replace-text.enable", 0))
 		{
+			_temp_map := {"replace-all-text": "ReplaceAllText", "replace-selected-text":"ReplaceSelectedText"}
+			For key, value in SuxCore.GetFeatureCfg("replace-text.shortcut-key", {})
+				register_hotkey(value, _temp_map[key], "")
 			For key, value in SuxCore.GetFeatureCfg("replace-text.buildin", {})
 				register_replace_str(key, value)
 			For key, value in SuxCore.GetFeatureCfg("replace-text.custom", {})
@@ -388,8 +391,10 @@ class SuxCore
 
 		if(SuxCore.GetFeatureCfg("clipboard-plus.enable", 0))
 		{
-			For key, value in SuxCore.GetFeatureCfg("clipboard-plus.hotkey", {})
-				register_hotkey(key, value, "")
+			; For key, value in SuxCore.GetFeatureCfg("clipboard-plus.shortcut-key", {})
+			; 	register_hotkey(key, value, "")
+			shortcut_key := SuxCore.GetFeatureCfg("clipboard-plus.shortcut-key", "win_alt_v")
+			register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
 		}
 	}
 }
@@ -484,6 +489,7 @@ register_hotkey(key_name, action, prefix="")
 	StringLower, key_name, key_name
 	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
 			,hover: "hover", capslock: "CapsLock"
+			,doubleclick: "doubleclick"
 			,lwin: "<#", rwin: ">#"
 			,lctrl: "<^", rctrl: ">^"
 			,lshift: "<+", rshift: ">+"
