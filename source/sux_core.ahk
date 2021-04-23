@@ -342,9 +342,10 @@ class SuxCore
 		if(SuxCore.GetFeatureCfg("hot-corner.enable", 0))
 		{
 			global hot_corners_detect_interval
-			For border_key, border_action in SuxCore.GetFeatureCfg("hot-corner.action", {})
+			For border_key, border_action in SuxCore.GetFeatureCfg("hot-corner.action", {}) {
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
+			}
 			SetTimer, tick_hot_corners, %hot_corners_detect_interval%
 		}
 
@@ -406,15 +407,23 @@ class SuxCore
 
 tick_hot_corners() {
 	global limit_mode
-	if (limit_mode)
+	; ToolTipWithTimer("gg23smd")
+	if (limit_mode) {
+		
+	; ToolTipWithTimer("gg2smd")
 		return
+	}
+	; ToolTipWithTimer("ggsmd")
+
 	global HOTKEY_REGISTER_MAP
 	; ToolTipWithTimer("ggsmd")
 	border_code := get_border_code()
+	; ToolTipWithTimer(border_code)
 	if (InStr(border_code, "Corner")) {
 		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
 		; ToolTipWithTimer(border_code "|" "hover")
-		; ToolTipWithTimer(action)
+		ToolTipWithTimer(action)
+		; ToolTipWithTimer("thc")
 
 		run(action)
 		Loop 
@@ -486,11 +495,10 @@ register_theme_conf(key_name, val)
 
 register_hotkey(key_name, action, prefix="")
 {
-
 	global HOTKEY_REGISTER_MAP
 	trans_key := []
-	
 	StringLower, key_name, key_name
+	
 	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
 			,hover: "hover", capslock: "CapsLock"
 			,lwin: "<#", rwin: ">#"
@@ -507,7 +515,6 @@ register_hotkey(key_name, action, prefix="")
 	; if Instr(key_name, "hover")
 	; if Instr(key_name, "doublehit_")
 	; 	m(double_hit_ltrimed_key)
-
 	key_split_arr := StrSplit(double_hit_ltrimed_key, "_")
 	; key_split_arr := StrSplit(key_name, "_")
 
@@ -537,7 +544,6 @@ register_hotkey(key_name, action, prefix="")
 			trans_key := str_array_concate(trans_key, [maped_symbol])
 		}
 	}
-		; m(trans_key)
 
 	prefix_arr := StrSplit(prefix, "/")
 	prefix_trans_keys := str_array_concate(prefix_arr, trans_key, "|")
@@ -559,12 +565,7 @@ register_hotkey(key_name, action, prefix="")
 		; 	m(key "//" action)
 		; 	m(original_key "//" action)
 		; }
-
 		arr := StrSplit(key, "|")
-		
-		if (arr[2] == "hover") {
-			Continue
-		}
 		if (Instr(key_name, "doublehit_")) {
 			; if (key_name == "doublehit_rshift") {
 			; 	m(original_key)
@@ -577,13 +578,14 @@ register_hotkey(key_name, action, prefix="")
 			return
 		}
 		else {
-			
 			; if (key_name == "rshift") {
 			; 	m(arr[1])
 			; 	m(arr[2])
 			; }
-
 			HOTKEY_REGISTER_MAP[original_key] := action
+			if (arr[2] == "hover") {
+				Continue
+			}
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
 				Hotkey, % arr[2], SUB_HOTKEY_ZONE_BORDER
