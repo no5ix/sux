@@ -203,30 +203,30 @@ WebSearchSelectedText() {
 
 
 
-SwitchInputMethod() {
-	global keyboard_double_click_timeout
-	cur_key := StrReplace(A_ThisHotkey, "~")
-	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
-	{
-		; Too much time between presses, so this isn't a double-press.
-		; ClickUpIfLbDown()
-		Send, ^{Space}
-		; ToolTipWithTimer(A_PriorKey)  ; LAlt
-		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
-		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
-		KeyWait, % cur_key ; Wait for the key to be released.
-		; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
-		; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
-		; KeyWait, Alt  ; Wait for the key to be released.
-		; ToolTipWithTimer(A_PriorKey)
-		return
-	}
+SwitchInputMethodAndDeleteAll() {
+	; global keyboard_double_click_timeout
+	; cur_key := StrReplace(A_ThisHotkey, "~")
+	; if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	; ; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
+	; {
+	; 	; Too much time between presses, so this isn't a double-press.
+	; 	; ClickUpIfLbDown()
+	; 	Send, ^{Space}
+	; 	; ToolTipWithTimer(A_PriorKey)  ; LAlt
+	; 	; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
+	; 	; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
+	; 	KeyWait, % cur_key ; Wait for the key to be released.
+	; 	; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
+	; 	; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
+	; 	; KeyWait, Alt  ; Wait for the key to be released.
+	; 	; ToolTipWithTimer(A_PriorKey)
+	; 	return
+	; }
 	; if LIMIT_MODE {
 	; 	ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
 	; 	return
 	; }
-	; Send, ^{Space}
+	Send, ^{Space}
 	Send, ^+{Left}
 	; Sleep, 66
 	Send, {Del}

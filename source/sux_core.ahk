@@ -10,8 +10,8 @@ cur_http_req =
 CAPS_REPLACER := "CapsLock & "
 DOUBLE_HIT_KEY_PREFIX := "doublehit_"
 
-DOUBLE_HIT_TILDE := "~"
-; DOUBLE_HIT_TILDE := " Up"
+DOUBLE_HIT_DECORATOR := "~"
+; DOUBLE_HIT_DECORATOR := " Up"
 
 SINGLE_DOUBLE_HIT_MAP := {}
 
@@ -346,6 +346,32 @@ class SuxCore
 			shortcut_key := SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", "win_alt_v")
 			register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
 		}
+
+		global SINGLE_DOUBLE_HIT_MAP
+		global HOTKEY_REGISTER_MAP
+		for ltrimed_key_name, original_key_2_action_map in SINGLE_DOUBLE_HIT_MAP {
+					; m(ltrimed_key_name)
+
+			if (original_key_2_action_map.Count() == 1) {
+					m(ltrimed_key_name)
+
+				for key, action in original_key_2_action_map {
+					register_hotkey(key, action, "", 1)
+				}
+			}
+			else {
+				for key, action in original_key_2_action_map {
+					m(key "//" action)
+					if (Instr(key, DOUBLE_HIT_KEY_PREFIX)) {
+						register_hotkey(key, action, "", 1)
+					}
+					else {
+						HOTKEY_REGISTER_MAP[key] := action
+					}
+				}
+			}
+		}
+
 	}
 }
 
@@ -398,12 +424,13 @@ register_theme_conf(key_name, val)
 
 
 
-register_hotkey(key_name, action, prefix="")
+register_hotkey(key_name, action, prefix="", handle_single_double_hit=0)
 {
 	global HOTKEY_REGISTER_MAP
-	global DOUBLE_HIT_TILDE
+	global DOUBLE_HIT_DECORATOR
 	global DOUBLE_HIT_KEY_PREFIX
 	global CAPS_REPLACER
+	global SINGLE_DOUBLE_HIT_MAP
 
 	trans_key := []
 	StringLower, key_name, key_name
@@ -425,18 +452,28 @@ register_hotkey(key_name, action, prefix="")
 	; 	m(double_hit_ltrimed_key)
 	key_split_arr := StrSplit(double_hit_ltrimed_key, "_")
 	; key_split_arr := StrSplit(key_name, "_")
-
+	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": ""}
 	Loop, % key_split_arr.MaxIndex()
 	{
 		cur_symbol := key_split_arr[A_Index]
 		if (key_split_arr.Length() == 1) {
-			if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
+			if (handle_single_double_hit == 0 && !excluede_single_key_map.HasKey(double_hit_ltrimed_key)) {
 				; m(double_hit_ltrimed_key)
-				maped_symbol := DOUBLE_HIT_TILDE . double_hit_ltrimed_key
-				; maped_symbol := double_hit_ltrimed_key . DOUBLE_HIT_TILDE
+				if !SINGLE_DOUBLE_HIT_MAP.HasKey(double_hit_ltrimed_key)
+					SINGLE_DOUBLE_HIT_MAP[double_hit_ltrimed_key] := {}
+				SINGLE_DOUBLE_HIT_MAP[double_hit_ltrimed_key][key_name] := action
+				return
 			}
-			else
-				maped_symbol := double_hit_ltrimed_key
+			else {
+				if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
+					; m(double_hit_ltrimed_key)
+					maped_symbol := DOUBLE_HIT_DECORATOR . double_hit_ltrimed_key
+					; maped_symbol := double_hit_ltrimed_key . DOUBLE_HIT_DECORATOR
+				}
+				else {
+					maped_symbol := double_hit_ltrimed_key
+				}
+			}
 		}
 		else { 
 		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
@@ -476,6 +513,7 @@ register_hotkey(key_name, action, prefix="")
 		; }
 		arr := StrSplit(key, "|")
 		if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
+		; if (key_split_arr.Length() == 1 && !excluede_single_key_map.HasKey(double_hit_ltrimed_key)) {
 			; if (key_name == "doublehit_rshift") {
 			; 	m(original_key)
 			; 	m(key "//" action)
@@ -514,15 +552,16 @@ register_hotkey(key_name, action, prefix="")
 SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	global LIMIT_MODE
 	global HOTKEY_REGISTER_MAP
-	global DOUBLE_HIT_TILDE
+	global DOUBLE_HIT_DECORATOR
 	global DOUBLE_HIT_KEY_PREFIX
+
 	if (LIMIT_MODE)
 		return
 	; ToolTipWithTimer(A_TimeSincePriorHotkey)
 	; ToolTipWithTimer(A_ThisHotkey)
 	global keyboard_double_click_timeout
 	; cur_key := StrReplace(A_ThisHotkey, "~")
-	cur_key := StrReplace(A_ThisHotkey, DOUBLE_HIT_TILDE)
+	cur_key := StrReplace(A_ThisHotkey, DOUBLE_HIT_DECORATOR)
 	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
@@ -531,6 +570,7 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 		; ToolTipWithTimer(A_PriorKey)  ; LAlt
 		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
 		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
+		run(HOTKEY_REGISTER_MAP[cur_key])  ; single hit key action
 		KeyWait, % cur_key ; Wait for the key to be released.
 		; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
 		; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
@@ -542,7 +582,7 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	; ToolTipWithTimer(A_ThisHotkey)
 	; cur_key := StrReplace(A_ThisHotkey, "~")
 	; action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX cur_key]
-	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX cur_key]
+	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . cur_key]
 	; m(action)
 	; if(action="") {
 	; 	return

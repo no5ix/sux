@@ -69,7 +69,8 @@ hotkey:
   buildin:
     ctrl_8: SimulateClickDown
     ctrl_shift_alt_m: MaxMinWindow
-    rshift: SwitchInputMethod
+    doublehit_rshift: SwitchInputMethodAndDeleteAll
+    rshift: 'send ^{Space}'
   custom:
 capslock_plus:
   enable: 1
