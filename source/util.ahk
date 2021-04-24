@@ -592,11 +592,11 @@ RunAsAdmin() {
 
 
 ; LimitModeWhenFullScreen() {
-; 	limit_mode := IsFullscreen() ? 1 : 0
-; 	if (old_limit_mode = 0 and limit_mode = 1) or (old_limit_mode = 1 and limit_mode = 0)
+; 	LIMIT_MODE := IsFullscreen() ? 1 : 0
+; 	if (old_limit_mode = 0 and LIMIT_MODE = 1) or (old_limit_mode = 1 and LIMIT_MODE = 0)
 ; 	{
-; 		ToolTipWithTimer("limit mode is " . (limit_mode ? "on. NOTICE: corner triggers is disabled." : "off"), 1111)
-; 		old_limit_mode := limit_mode
+; 		ToolTipWithTimer("limit mode is " . (LIMIT_MODE ? "on. NOTICE: corner triggers is disabled." : "off"), 1111)
+; 		old_limit_mode := LIMIT_MODE
 ; 	}
 ; }
 

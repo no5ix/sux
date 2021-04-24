@@ -412,9 +412,9 @@ Return
 
 
 TICK_HOT_CORNERS:
-	global limit_mode
+	global LIMIT_MODE
 	; ToolTipWithTimer("gg23smd")
-	if (limit_mode) {
+	if (LIMIT_MODE) {
 		
 	; ToolTipWithTimer("gg2smd")
 		return
@@ -442,17 +442,17 @@ TICK_HOT_CORNERS:
 
 
 HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
-	global limit_mode
+	global LIMIT_MODE
 	if (IsFullscreen()) {
-		if (limit_mode == 0) {
+		if (LIMIT_MODE == 0) {
 			ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode."))
-			limit_mode := 1
+			LIMIT_MODE := 1
 		}
 	}
 	else {
-		if (limit_mode == 1) {
+		if (LIMIT_MODE == 1) {
 			ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode."))
-			limit_mode := 0
+			LIMIT_MODE := 0
 		}
 	}
 	Return

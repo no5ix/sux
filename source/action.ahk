@@ -222,7 +222,7 @@ SwitchInputMethod() {
 		; ToolTipWithTimer(A_PriorKey)
 		return
 	}
-	; if limit_mode {
+	; if LIMIT_MODE {
 	; 	ToolTipWithTimer("	limit mode is on, double RShift is disabled.", 2000)
 	; 	return
 	; }

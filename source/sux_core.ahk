@@ -3,6 +3,19 @@ if(A_ScriptName=="sux_core.ahk") {
 	ExitApp
 }
 ; with this label, you can include this file on top of the file
+
+
+check_update_from_launch = 0
+cur_http_req = 
+CAPS_REPLACER := "CapsLock & "
+DOUBLE_HIT_KEY_PREFIX := "doublehit_"
+
+DOUBLE_HIT_TILDE := "~"
+; DOUBLE_HIT_TILDE := " Up"
+
+SINGLE_DOUBLE_HIT_MAP := {}
+
+
 Goto, SUB_SUX_CORE_FILE_END_LABEL
 
 
@@ -31,19 +44,16 @@ lang(key)
 }
 
 
-check_update_from_launch = 0
-
 CheckUpdate(from_launch=0)
 {
-	global limit_mode
-	if (limit_mode)
+	global LIMIT_MODE
+	if (LIMIT_MODE)
 		return
 	global check_update_from_launch
 	check_update_from_launch := from_launch
 	SuxCore.get_remote_file(SuxCore.data_ini_file)
 }
 
-cur_http_req = 
 
 get_remote_data_ini(url)
 {
@@ -386,9 +396,15 @@ register_theme_conf(key_name, val)
 	THEME_CONF_REGISTER_MAP[key_name] := val
 }
 
+
+
 register_hotkey(key_name, action, prefix="")
 {
 	global HOTKEY_REGISTER_MAP
+	global DOUBLE_HIT_TILDE
+	global DOUBLE_HIT_KEY_PREFIX
+	global CAPS_REPLACER
+
 	trans_key := []
 	StringLower, key_name, key_name
 	
@@ -401,12 +417,11 @@ register_hotkey(key_name, action, prefix="")
 			,lbutton:  "LButton", rbutton:  "RButton", mbutton: "MButton"}
 
 	; if Instr(key_name, "hover")
-	; if Instr(key_name, "doublehit_")
+	; if Instr(key_name, DOUBLE_HIT_KEY_PREFIX)
 	; 	m(double_hit_ltrimed_key)
-	; m(key_name)
-	double_hit_ltrimed_key := StrReplace(key_name, "doublehit_")
+	double_hit_ltrimed_key := StrReplace(key_name, DOUBLE_HIT_KEY_PREFIX)
 	; if Instr(key_name, "hover")
-	; if Instr(key_name, "doublehit_")
+	; if Instr(key_name, DOUBLE_HIT_KEY_PREFIX)
 	; 	m(double_hit_ltrimed_key)
 	key_split_arr := StrSplit(double_hit_ltrimed_key, "_")
 	; key_split_arr := StrSplit(key_name, "_")
@@ -415,9 +430,10 @@ register_hotkey(key_name, action, prefix="")
 	{
 		cur_symbol := key_split_arr[A_Index]
 		if (key_split_arr.Length() == 1) {
-			if (Instr(key_name, "doublehit_")) {
+			if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
 				; m(double_hit_ltrimed_key)
-				maped_symbol := "~" . double_hit_ltrimed_key
+				maped_symbol := DOUBLE_HIT_TILDE . double_hit_ltrimed_key
+				; maped_symbol := double_hit_ltrimed_key . DOUBLE_HIT_TILDE
 			}
 			else
 				maped_symbol := double_hit_ltrimed_key
@@ -447,10 +463,10 @@ register_hotkey(key_name, action, prefix="")
 		original_key := key
 		if !(original_key = "|CapsLock") {
 			; m(original_key)
-			key := StrReplace(key, "CapsLock", "CapsLock & ")
-			key := StrReplace(key, "CapsLock & +", "CapsLock & ")
-			key := StrReplace(key, "CapsLock & !", "CapsLock & ")
-			key := StrReplace(key, "CapsLock & ^", "CapsLock & ")
+			key := StrReplace(key, "CapsLock", CAPS_REPLACER)
+			key := StrReplace(key, "CapsLock & +", CAPS_REPLACER)
+			key := StrReplace(key, "CapsLock & !", CAPS_REPLACER)
+			key := StrReplace(key, "CapsLock & ^", CAPS_REPLACER)
 			; m(key)
 		}
 
@@ -459,7 +475,7 @@ register_hotkey(key_name, action, prefix="")
 		; 	m(original_key "//" action)
 		; }
 		arr := StrSplit(key, "|")
-		if (Instr(key_name, "doublehit_")) {
+		if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
 			; if (key_name == "doublehit_rshift") {
 			; 	m(original_key)
 			; 	m(key "//" action)
@@ -496,12 +512,17 @@ register_hotkey(key_name, action, prefix="")
 ; HOTKEY evoke
 */
 SUB_HOTKEY_ZONE_DOUBLE_HIT:
-	global limit_mode
-	if (limit_mode)
+	global LIMIT_MODE
+	global HOTKEY_REGISTER_MAP
+	global DOUBLE_HIT_TILDE
+	global DOUBLE_HIT_KEY_PREFIX
+	if (LIMIT_MODE)
 		return
 	; ToolTipWithTimer(A_TimeSincePriorHotkey)
+	; ToolTipWithTimer(A_ThisHotkey)
 	global keyboard_double_click_timeout
-	cur_key := StrReplace(A_ThisHotkey, "~")
+	; cur_key := StrReplace(A_ThisHotkey, "~")
+	cur_key := StrReplace(A_ThisHotkey, DOUBLE_HIT_TILDE)
 	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
@@ -519,9 +540,9 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	}
 	
 	; ToolTipWithTimer(A_ThisHotkey)
-	; ToolTipWithTimer("12123")
 	; cur_key := StrReplace(A_ThisHotkey, "~")
-	action := HOTKEY_REGISTER_MAP["doublehit_" cur_key]
+	; action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX cur_key]
+	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX cur_key]
 	; m(action)
 	; if(action="") {
 	; 	return
@@ -532,8 +553,11 @@ Return
 
 SUB_HOTKEY_ZONE_ANYWAY:
 SUB_HOTKEY_ZONE_BORDER:
-	global limit_mode
-	if (limit_mode)
+	global LIMIT_MODE
+	global HOTKEY_REGISTER_MAP
+	global CAPS_REPLACER
+
+	if (LIMIT_MODE)
 		return
 	border_code := get_border_code()
 
@@ -543,7 +567,7 @@ SUB_HOTKEY_ZONE_BORDER:
 	pending_replace_str .= GetKeyState("Control", "P") ? "^": ""
 	; m(pending_replace_str)
 	
-	cur_hotkey := StrReplace(A_ThisHotkey, "CapsLock & ", pending_replace_str)
+	cur_hotkey := StrReplace(A_ThisHotkey, CAPS_REPLACER, pending_replace_str)
 	action := HOTKEY_REGISTER_MAP[border_code "|" cur_hotkey]
 	if(action="") {
 		; 鼠标移到边缘但触发普通热键时

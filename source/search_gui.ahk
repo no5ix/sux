@@ -10,6 +10,10 @@ if(A_ScriptName=="search_gui.ahk") {
 	ExitApp
 }
 
+
+last_search_str = ""
+trim_gui_user_input = ""
+
 ; with this label, you can include this file on top of the file
 Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
@@ -18,8 +22,6 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 global THEME_CONF_REGISTER_MAP
 
 
-last_search_str = ""
-trim_gui_user_input = ""
 
 
 
