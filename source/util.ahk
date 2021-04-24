@@ -23,6 +23,18 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 }
 
 
+ClickUpIfLbDown()
+{
+	global fake_lb_down
+	if fake_lb_down
+	{
+		fake_lb_down = 0
+		Click Up
+		; ToolTipWithTimer("simulate click UP.", 1111)
+	}
+}
+
+
 get_version_sum(version_str) {
 	ver_arr := StrSplit(version_str, ".")
 	ver_arr_len := ver_arr.Length()
@@ -146,17 +158,6 @@ StrPutVar(Str, ByRef Var, Enc = "")
 	Len := StrPut(Str, Enc) * (Enc = "UTF-16" || Enc = "CP1200" ? 2 : 1)
 	VarSetCapacity(Var, Len, 0)
 	Return, StrPut(Str, &Var, Enc)
-}
-
-
-ClickUpIfLbDown()
-{
-	if fake_lb_down
-	{
-		fake_lb_down = 0
-		Click Up
-		; ToolTipWithTimer("simulate click UP.", 1111)
-	}
 }
 
 
@@ -494,6 +495,22 @@ RunWaitOne(command, hide_window) {
 }
 
 
+RunAsAdmin() {
+	full_command_line := DllCall("GetCommandLine", "str")
+	if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
+	{
+		try
+		{
+			if A_IsCompiled
+				Run *RunAs "%A_ScriptFullPath%" /restart
+			else
+				Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
+		}
+		ExitApp
+	}
+}
+
+
 get_border_code(X := "", Y := "", cornerPix = "")
 {
 	if (X = "") or (Y = "")
@@ -573,34 +590,7 @@ get_border_code(X := "", Y := "", cornerPix = "")
 }
 
 
-
-RunAsAdmin() {
-	full_command_line := DllCall("GetCommandLine", "str")
-	if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
-	{
-		try
-		{
-			if A_IsCompiled
-				Run *RunAs "%A_ScriptFullPath%" /restart
-			else
-				Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
-		}
-		ExitApp
-	}
-}
-
-
-
-; LimitModeWhenFullScreen() {
-; 	LIMIT_MODE := IsFullscreen() ? 1 : 0
-; 	if (old_limit_mode = 0 and LIMIT_MODE = 1) or (old_limit_mode = 1 and LIMIT_MODE = 0)
-; 	{
-; 		ToolTipWithTimer("limit mode is " . (LIMIT_MODE ? "on. NOTICE: corner triggers is disabled." : "off"), 1111)
-; 		old_limit_mode := LIMIT_MODE
-; 	}
-; }
-
-; UpdateSuxImpl(from_launch) {
+; UpdateSuxWithGit(from_launch) {
 ; 	; ToolTipWithTimer("sux background updating, please wait...", 2222)
 ; 	; RunWait, cmd.exe /c git pull origin master,,hide
 ; 	run_result := RunWaitOne("git pull origin master", from_launch)

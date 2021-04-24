@@ -350,18 +350,13 @@ class SuxCore
 		global SINGLE_DOUBLE_HIT_MAP
 		global HOTKEY_REGISTER_MAP
 		for ltrimed_key_name, original_key_2_action_map in SINGLE_DOUBLE_HIT_MAP {
-					; m(ltrimed_key_name)
-
 			if (original_key_2_action_map.Count() == 1) {
-					m(ltrimed_key_name)
-
 				for key, action in original_key_2_action_map {
 					register_hotkey(key, action, "", 1)
 				}
 			}
 			else {
 				for key, action in original_key_2_action_map {
-					m(key "//" action)
 					if (Instr(key, DOUBLE_HIT_KEY_PREFIX)) {
 						register_hotkey(key, action, "", 1)
 					}
@@ -566,7 +561,6 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
-		; ClickUpIfLbDown()
 		; ToolTipWithTimer(A_PriorKey)  ; LAlt
 		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
 		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt

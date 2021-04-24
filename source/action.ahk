@@ -270,4 +270,16 @@ SimulateClickDown() {
 	SetMouseDelay, 0
 	fake_lb_down = 1
 	Click Down
+	static is_already_def_rbutton := 0
+	; m(is_already_def_rbutton)
+	if (is_already_def_rbutton == 0) {
+		Hotkey, ~RButton, SUB_TILDE_RBUTTON
+		is_already_def_rbutton := 1
+	}
 }
+
+
+SUB_TILDE_RBUTTON:
+	m(1)
+	ClickUpIfLbDown()
+	Return

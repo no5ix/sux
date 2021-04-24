@@ -257,8 +257,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add donate gui pic -->
 - add more action
 <!-- - click down 之后记得释放 -->
-- 浏览器中, click down之后双击就没选中了
-- rshift双击和单击可以分开conf
+<!-- - 浏览器中, click down之后双击就没选中了 -->
+<!-- - rshift双击和单击可以分开conf -->
 - add newbie tutorial
 <!-- - hot corner/edge/capslock switcher to tray menu -->
 - update chinese readme, add some gif/mp4
