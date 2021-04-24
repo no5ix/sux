@@ -1,4 +1,4 @@
-﻿File-Description: You can override all the buildin conf at custom block, take effect after sux restart. 你可以在custom块里覆盖所有的buildin(内置)配置, 改了之后重启sux生效.
+﻿File-Description: You can override all the buildin conf at custom block or buildin conf itself, take effect after sux restart. 你可以在custom块里覆盖所有的buildin(内置)配置, 改了之后重启sux生效.
 check-update-interval-hour: 2
 theme: 
   dark:
@@ -11,18 +11,11 @@ theme:
     sux_text_color: '000000'
     sux_bg_color: 'ececec'
     sux_border_shadow_type: 'modern_shadow_type'
-replace-text:
+clipboard-plus: 
   enable: 1
-  shortcut-key: 
-    replace-all-text: capslock_g
-    replace-selected-text: capslock_alt_g
-  buildin:
-    'h/': 'http://'
-    'hs/': 'https://'
-    'qc@': '@qq.com'
-    'gc@': '@gmail.com'
-    '16@': '@163.com'
-  custom:
+  shortcut-key: win_alt_v
+  ClipsFirstShowNum: 10
+  ClipsTotalNum: 50
 web-search:
   enable: 1
   shortcut-key: 
@@ -48,6 +41,69 @@ web-search:
     yk: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
     lc: 'https://leetcode-cn.com/problemset/all/?search=REPLACEME'
   custom:
+replace-text:
+  enable: 1
+  shortcut-key: 
+    replace-all-text: capslock_g
+    replace-selected-text: capslock_alt_g
+  buildin:
+    'h/': 'http://'
+    'hs/': 'https://'
+    'qc@': '@qq.com'
+    'gc@': '@gmail.com'
+    '16@': '@163.com'
+  custom:
+hot-corner: 
+  action: 
+    LeftTopCorner: 
+      hover: JumpToPrevTab
+      # MButton: 'send {volume_mute}'
+    RightTopCorner: 
+      hover: JumpToNextTab
+    LeftBottomCorner: 
+      hover: 'send {LWin}'
+    RightBottomCorner: 
+      hover: GotoPreApp
+hot-edge:
+  enable: 1
+  action:
+    TopHalfLeftEdge: 
+      ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
+      wheeldown: GoTop
+      wheelup: GoBottom
+      MButton: MaxWindow
+    TopHalfRightEdge: 
+      ctrl_8: OpenFileExplorer
+      wheeldown: GoTop
+      wheelup: GoBottom
+      MButton: MinWindow
+    BottomHalfLeftEdge:
+      ctrl_8: ReopenLastTab
+      MButton: OpenTaskView
+      wheeldown: GotoNextDesktop
+      wheelup: GotoPreDesktop
+    BottomHalfRightEdge: 
+      ctrl_8: RefreshTab
+      MButton: OpenTaskView
+      wheeldown: GotoNextDesktop
+      wheelup: GotoPreDesktop
+    LeftHalfBottomEdge: 
+      ctrl_8: OpenTaskView
+      MButton: MoveWindowToLeftSide
+    LeftHalfTopEdge: 
+      ctrl_8: MoveWindowToLeftSide
+      MButton: MoveWindowToLeftSide
+      wheeldown: VolumeDown
+      wheelup: VolumeUp
+    RightHalfTopEdge: 
+      ctrl_8: MoveWindowToRightSide
+      MButton: MoveWindowToRightSide
+    RightHalfBottomEdge: 
+      ctrl_8: OpenActionCenter
+      MButton: MoveWindowToRightSide
+      # wheeldown: GotoNextTab
+      # # wheeldown: GotoPreApp
+      # wheelup: GotoPreTab
 command: 
   enable: 1
   buildin:
@@ -117,59 +173,3 @@ capslock_plus:
     capslock_/: 'send \'
     capslock_alt_/: 'send +\'
   custom:
-hot-corner: 
-  action: 
-    LeftTopCorner: 
-      hover: JumpToPrevTab
-      # MButton: 'send {volume_mute}'
-    RightTopCorner: 
-      hover: JumpToNextTab
-    LeftBottomCorner: 
-      hover: 'send {LWin}'
-    RightBottomCorner: 
-      hover: GotoPreApp
-hot-edge:
-  enable: 1
-  action:
-    TopHalfLeftEdge: 
-      ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
-      wheeldown: GoTop
-      wheelup: GoBottom
-      MButton: MaxWindow
-    TopHalfRightEdge: 
-      ctrl_8: OpenFileExplorer
-      wheeldown: GoTop
-      wheelup: GoBottom
-      MButton: MinWindow
-    BottomHalfLeftEdge:
-      ctrl_8: ReopenLastTab
-      MButton: OpenTaskView
-      wheeldown: GotoNextDesktop
-      wheelup: GotoPreDesktop
-    BottomHalfRightEdge: 
-      ctrl_8: RefreshTab
-      MButton: OpenTaskView
-      wheeldown: GotoNextDesktop
-      wheelup: GotoPreDesktop
-    LeftHalfBottomEdge: 
-      ctrl_8: OpenTaskView
-      MButton: MoveWindowToLeftSide
-    LeftHalfTopEdge: 
-      ctrl_8: MoveWindowToLeftSide
-      MButton: MoveWindowToLeftSide
-      wheeldown: VolumeDown
-      wheelup: VolumeUp
-    RightHalfTopEdge: 
-      ctrl_8: MoveWindowToRightSide
-      MButton: MoveWindowToRightSide
-    RightHalfBottomEdge: 
-      ctrl_8: OpenActionCenter
-      MButton: MoveWindowToRightSide
-      # wheeldown: GotoNextTab
-      # # wheeldown: GotoPreApp
-      # wheelup: GotoPreTab
-clipboard-plus: 
-  enable: 1
-  shortcut-key: win_alt_v
-  ClipsFirstShowNum: 10
-  ClipsTotalNum: 50
