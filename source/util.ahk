@@ -357,20 +357,19 @@ run(command, throwErr := 1)
 {
 	if !command
 		return
-	if (command.Length() == 1)
-	{
+	ToolTipWithTimer(command, 1111)
+	ClickUpIfLbDown()
+
+	if (command.Length() == 1) {
 		command := command[1]
 	}
 	
-	if(IsLabel(command))
-	{
+	if(IsLabel(command)) {
 		Gosub, %command%
 	}
-	else if (IsFunc(command))
-	{
+	else if (IsFunc(command)) {
 		Array := StrSplit(command, ".")
-		If (Array.MaxIndex() >= 2)
-		{
+		If (Array.MaxIndex() >= 2) {
 			cls := Array[1]
 			cls := %cls%
 			Loop, % Array.MaxIndex() - 2
@@ -379,15 +378,12 @@ run(command, throwErr := 1)
 			}
 			return cls[Array[Array.MaxIndex()]]()
 		}
-		Else
-		{
+		Else {
 			return %command%()
 		}
 	}
-	Else
-	{
-		if(RegExMatch(command, "^https?://"))
-		{
+	Else {
+		if(RegExMatch(command, "^https?://")) {
 			brw := SuxCore.Browser
 			if(brw=""||brw="default")
 				run, %command%
@@ -397,23 +393,19 @@ run(command, throwErr := 1)
 				run, %brw% %command%
 			Return
 		}
-		else if(RegExMatch(command, "i)av(\d+)", avn))
-		{
+		else if(RegExMatch(command, "i)av(\d+)", avn)) {
 			run("http://www.bilibili.com/video/av" avn1)
 			return
 		}
-		else if(RegExMatch(command, "i)send (.*)", sd))
-		{
+		else if(RegExMatch(command, "i)send (.*)", sd)) {
 			send, % sd1
 			return
 		}
-		else if(RegExMatch(command, "i)m:(.*)", msg))
-		{
+		else if(RegExMatch(command, "i)m:(.*)", msg)) {
 			m(msg1)
 			return
 		}
-		else if(RegExMatch(command, "i)edit:\s*(.*)", f))
-		{
+		else if(RegExMatch(command, "i)edit:\s*(.*)", f)) {
 			SuxCore.Edit(f1)
 			return
 		}
@@ -429,8 +421,7 @@ run(command, throwErr := 1)
 			; run %command%
 			Return
 		}
-		Catch
-		{
+		Catch {
 			; Try
 			; {
 			; 	m(command)
@@ -438,8 +429,7 @@ run(command, throwErr := 1)
 			; }
 			; Catch
 			; {
-				if(IsFunc("run_user"))
-				{
+				if(IsFunc("run_user")) {
 					func_name = run_user
 					%func_name%(command)
 				}

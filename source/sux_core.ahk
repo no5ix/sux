@@ -506,7 +506,7 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
-		ClickUpIfLbDown()
+		; ClickUpIfLbDown()
 		; ToolTipWithTimer(A_PriorKey)  ; LAlt
 		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
 		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
