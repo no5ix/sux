@@ -428,7 +428,7 @@ TICK_HOT_CORNERS:
 	if (InStr(border_code, "Corner")) {
 		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
 		; ToolTipWithTimer(border_code "|" "hover")
-		ToolTipWithTimer(action)
+		ToolTipWithTimer(action, 1111)
 		; ToolTipWithTimer("thc")
 
 		run(action)

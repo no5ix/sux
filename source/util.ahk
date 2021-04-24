@@ -357,7 +357,7 @@ run(command, throwErr := 1)
 {
 	if !command
 		return
-	ToolTipWithTimer(command, 1111)
+	; ToolTipWithTimer(command, 1111)
 	ClickUpIfLbDown()
 
 	if (command.Length() == 1) {
