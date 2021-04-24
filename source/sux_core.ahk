@@ -145,7 +145,7 @@ class SuxCore
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	static conf_user_yaml_file := "conf.user.yaml"
-	static conf_default_yaml_file := "conf.default.yaml"
+	static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf.default.yaml"
 	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
 	static remote_data_ini_file := SuxCore._APP_DATA_DIR "remote_data.ini"
 	; update
