@@ -128,7 +128,7 @@ handle_req_failed() {
 		cur_http_req = 
 	}
 	if (check_update_from_launch == 0) {
-		msg := lang("Can not connect to sux official website.") "`n"
+		msg := lang("Unable to connect to the sux official website.") "`n"
 		; if (state_code == 12007 || state_code == 12029) {
 			msg := msg lang("Maybe need a proxy.") "`n"
 		; }
