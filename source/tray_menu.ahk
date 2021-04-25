@@ -413,24 +413,16 @@ Return
 
 TICK_HOT_CORNERS:
 	global LIMIT_MODE
-	; ToolTipWithTimer("gg23smd")
 	if (LIMIT_MODE) {
-		
-	; ToolTipWithTimer("gg2smd")
 		return
 	}
-	; ToolTipWithTimer("ggsmd")
-
 	global HOTKEY_REGISTER_MAP
-	; ToolTipWithTimer("ggsmd")
 	border_code := get_border_code()
 	; ToolTipWithTimer(border_code)
 	if (InStr(border_code, "Corner")) {
 		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
 		; ToolTipWithTimer(border_code "|" "hover")
 		ToolTipWithTimer(action, 1111)
-		; ToolTipWithTimer("thc")
-
 		run(action)
 		Loop 
 		{

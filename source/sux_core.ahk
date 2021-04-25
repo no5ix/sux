@@ -595,13 +595,13 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 ; HOTKEY evoke
 */
 SUB_HOTKEY_ZONE_MULTI_HIT:
+	if (LIMIT_MODE)
+		return
 	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
 	if HOTKEY_REGISTER_MAP.HasKey(TRIPLE_HIT_KEY_PREFIX . cur_key)
 		final_timeout := keyboard_triple_click_timeout
 	else
 		final_timeout := keyboard_double_click_timeout
-	if (LIMIT_MODE)
-		return
 	if (MULTI_HIT_CNT > 0) ; SetTimer 已经启动, 所以我们记录键击.
 	{
 		MULTI_HIT_CNT += 1
@@ -713,6 +713,9 @@ Return
 
 border_event_evoke()
 {
+	global LIMIT_MODE
+	if (LIMIT_MODE)
+		return
 	global HOTKEY_REGISTER_MAP
 	border_code := get_border_code()
 	; ToolTipWithTimer(border_code)
