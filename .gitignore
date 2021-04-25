@@ -3,6 +3,6 @@ build/
 
 user_extension.ahk
 conf.user.yaml
-remote_data.ini
+remote_ver.ini
 data.ini
 sux.exe

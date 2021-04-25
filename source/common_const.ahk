@@ -44,7 +44,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"About": "关于"
     ,"Help": "帮助"
     ,"Check Update": "检查更新"
-    ,"A New Version! ": "有新版本! "
+    ,"A New Version v": "有新版本 v"
     ,"Start With Windows": "开机启动"
     ,"Language": "语言"
     ,"Open sux Folder": "打开sux文件夹"
