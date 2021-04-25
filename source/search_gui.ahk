@@ -160,7 +160,7 @@ class SearchGui {
 		Gui, Font, s22, Segoe UI
 		; Gui, Font, s10, Segoe UI
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleSearchGuiUserInput
-		gui_control_options := "xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
+		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
