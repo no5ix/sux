@@ -196,7 +196,7 @@ class SuxCore
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
-		; this.version := SuxCore.GetIniConfig("ver")
+		SuxCore.SetIniConfig("ver", SuxCore.version)
 		CheckUpdate(1)
 
 		ClipboardPlus.init()

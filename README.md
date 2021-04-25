@@ -255,6 +255,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - 暗模式的其他gui的阴影不正常 -->
 <!-- - add donate gui pic -->
 - add more action
+- fix check update
 <!-- - click down 之后记得释放 -->
 <!-- - 浏览器中, click down之后双击就没选中了 -->
 <!-- - rshift双击和单击可以分开conf -->
