@@ -202,8 +202,7 @@ WebSearchSelectedText() {
 }
 
 
-
-SwitchInputMethodAndDeleteAll() {
+SwitchInputMethodAndDeleteLeft() {
 	; global keyboard_double_click_timeout
 	; cur_key := StrReplace(A_ThisHotkey, "~")
 	; if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
@@ -232,6 +231,7 @@ SwitchInputMethodAndDeleteAll() {
 	Send, {Del}
 	return
 }
+
 
 MaxMinWindow() {
 	ActivateWindowsUnderCursor()
@@ -265,16 +265,14 @@ ReloadSux() {
 }
 
 
+
 SimulateClickDown() {
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 	SetMouseDelay, 0
 	fake_lb_down = 1
 	Click Down
-	static is_already_def_rbutton := 0
-	if (is_already_def_rbutton == 0) {
-		Hotkey, RButton, SUB_TILDE_RBUTTON
-		is_already_def_rbutton := 1
-	}
+	Hotkey, RButton, SUB_TILDE_RBUTTON
+	Hotkey, RButton, On
 }
 
 

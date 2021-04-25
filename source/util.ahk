@@ -28,6 +28,7 @@ ClickUpIfLbDown()
 	global fake_lb_down
 	if fake_lb_down
 	{
+		Hotkey, RButton, Off  ;; 防止wgesture这类右键手势软件失效
 		fake_lb_down = 0
 		Click Up
 		; ToolTipWithTimer("simulate click UP.", 1111)

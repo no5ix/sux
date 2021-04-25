@@ -9,13 +9,20 @@ check_update_from_launch = 0
 cur_http_req = 
 CAPS_REPLACER := "CapsLock & "
 DOUBLE_HIT_KEY_PREFIX := "doublehit_"
+TRIPLE_HIT_KEY_PREFIX := "triplehit_"
 
-DOUBLE_HIT_DECORATOR := "~"
-; DOUBLE_HIT_DECORATOR := " Up"
+MULTI_HIT_DECORATOR := "~"
+; MULTI_HIT_DECORATOR := " Up"
 
-SINGLE_DOUBLE_HIT_MAP := {}
+MULTI_HIT_MAP := {}
+
+HANDLE_SINGLE_DOUBLE_HIT_MODE_1 := 1
+HANDLE_SINGLE_DOUBLE_HIT_MODE_2 := 2
+
+MULTI_HIT_CNT := 0
 
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Goto, SUB_SUX_CORE_FILE_END_LABEL
 
 
@@ -347,22 +354,43 @@ class SuxCore
 			register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
 		}
 
-		global SINGLE_DOUBLE_HIT_MAP
+		global MULTI_HIT_MAP
 		global HOTKEY_REGISTER_MAP
-		for ltrimed_key_name, original_key_2_action_map in SINGLE_DOUBLE_HIT_MAP {
-			if (original_key_2_action_map.Count() == 1) {
+		global HANDLE_SINGLE_DOUBLE_HIT_MODE_1
+		global HANDLE_SINGLE_DOUBLE_HIT_MODE_2
+		global MULTI_HIT_DECORATOR
+		for ltrimed_key_name, original_key_2_action_map in MULTI_HIT_MAP {
+			if (original_key_2_action_map.Count() == 1 && !original_key_2_action_map.HasKey(TRIPLE_HIT_KEY_PREFIX . ltrimed_key_name)) {
 				for key, action in original_key_2_action_map {
-					register_hotkey(key, action, "", 1)
+					; m(key)
+					register_hotkey(key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_1)
 				}
 			}
 			else {
+				; m(ltrimed_key_name)
+				; register_hotkey(ltrimed_key_name, MULTI_HIT_MAP[ltrimed_key_name][ltr], "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)
+				; is_already_set := 0
+				if (original_key_2_action_map.HasKey(ltrimed_key_name)) {
+					register_hotkey(ltrimed_key_name, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
+				}
+				else {
+					register_hotkey(MULTI_HIT_DECORATOR . ltrimed_key_name, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
+				}
 				for key, action in original_key_2_action_map {
-					if (Instr(key, DOUBLE_HIT_KEY_PREFIX)) {
-						register_hotkey(key, action, "", 1)
-					}
-					else {
-						HOTKEY_REGISTER_MAP[key] := action
-					}
+					; m(key)
+					HOTKEY_REGISTER_MAP[key] := action
+
+					; if (Instr(key, DOUBLE_HIT_KEY_PREFIX)) {
+					; 	HOTKEY_REGISTER_MAP[key] := action
+					; 	; register_hotkey(key, action, "", 1)
+					; }
+					; else {
+						; if (is_already_set == 0) {
+						; 	register_hotkey(key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)
+						; 	is_already_set := 1
+						; }
+					; 	; HOTKEY_REGISTER_MAP[key] := action
+					; }
 				}
 			}
 		}
@@ -392,7 +420,6 @@ str_array_concate(arr, app, deli="")
 	return % ret
 }
 
-
 register_command(key_name, action)
 {
 	global CMD_REGISTER_MAP
@@ -419,17 +446,31 @@ register_theme_conf(key_name, val)
 
 
 
-register_hotkey(key_name, action, prefix="", handle_single_double_hit=0)
+register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 {
 	global HOTKEY_REGISTER_MAP
-	global DOUBLE_HIT_DECORATOR
+	global MULTI_HIT_DECORATOR
 	global DOUBLE_HIT_KEY_PREFIX
+	global TRIPLE_HIT_KEY_PREFIX
 	global CAPS_REPLACER
-	global SINGLE_DOUBLE_HIT_MAP
+	global MULTI_HIT_MAP
+	global HANDLE_SINGLE_DOUBLE_HIT_MODE_1
+	global HANDLE_SINGLE_DOUBLE_HIT_MODE_2
 
-	trans_key := []
 	StringLower, key_name, key_name
+	multi_hit_ltrimed_key := StrReplace(key_name, DOUBLE_HIT_KEY_PREFIX)
+	multi_hit_ltrimed_key := StrReplace(multi_hit_ltrimed_key, TRIPLE_HIT_KEY_PREFIX)
+	; m(multi_hit_ltrimed_key)
+	key_split_arr := StrSplit(multi_hit_ltrimed_key, "_")
+	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": ""}
 	
+	if (key_split_arr.Length() == 1 && handle_single_double_hit_mode == 0 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
+	; if (handle_single_double_hit_mode == 0 && (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX))) {
+		if !MULTI_HIT_MAP.HasKey(multi_hit_ltrimed_key)
+			MULTI_HIT_MAP[multi_hit_ltrimed_key] := {}
+		MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := action
+		return
+	}
 	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
 			,hover: "hover", capslock: "CapsLock"
 			,lwin: "<#", rwin: ">#"
@@ -440,35 +481,33 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit=0)
 
 	; if Instr(key_name, "hover")
 	; if Instr(key_name, DOUBLE_HIT_KEY_PREFIX)
-	; 	m(double_hit_ltrimed_key)
-	double_hit_ltrimed_key := StrReplace(key_name, DOUBLE_HIT_KEY_PREFIX)
+	; 	m(multi_hit_ltrimed_key)
+	; multi_hit_ltrimed_key := StrReplace(key_name, DOUBLE_HIT_KEY_PREFIX)
 	; if Instr(key_name, "hover")
 	; if Instr(key_name, DOUBLE_HIT_KEY_PREFIX)
-	; 	m(double_hit_ltrimed_key)
-	key_split_arr := StrSplit(double_hit_ltrimed_key, "_")
-	; key_split_arr := StrSplit(key_name, "_")
-	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": ""}
+	; 	m(multi_hit_ltrimed_key)
+	trans_key := []
 	Loop, % key_split_arr.MaxIndex()
 	{
 		cur_symbol := key_split_arr[A_Index]
 		if (key_split_arr.Length() == 1) {
-			if (handle_single_double_hit == 0 && !excluede_single_key_map.HasKey(double_hit_ltrimed_key)) {
-				; m(double_hit_ltrimed_key)
-				if !SINGLE_DOUBLE_HIT_MAP.HasKey(double_hit_ltrimed_key)
-					SINGLE_DOUBLE_HIT_MAP[double_hit_ltrimed_key] := {}
-				SINGLE_DOUBLE_HIT_MAP[double_hit_ltrimed_key][key_name] := action
-				return
-			}
-			else {
-				if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
-					; m(double_hit_ltrimed_key)
-					maped_symbol := DOUBLE_HIT_DECORATOR . double_hit_ltrimed_key
-					; maped_symbol := double_hit_ltrimed_key . DOUBLE_HIT_DECORATOR
-				}
-				else {
-					maped_symbol := double_hit_ltrimed_key
-				}
-			}
+			; if (handle_single_double_hit_mode == 0 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
+			; 	; m(multi_hit_ltrimed_key)
+			; 	if !MULTI_HIT_MAP.HasKey(multi_hit_ltrimed_key)
+			; 		MULTI_HIT_MAP[multi_hit_ltrimed_key] := {}
+			; 	MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := action
+			; 	return
+			; }
+			; else {
+				; if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX)) {
+				; 	; m(multi_hit_ltrimed_key)
+				; 	maped_symbol := MULTI_HIT_DECORATOR . multi_hit_ltrimed_key
+				; 	; maped_symbol := multi_hit_ltrimed_key . MULTI_HIT_DECORATOR
+				; }
+				; else {
+					maped_symbol := multi_hit_ltrimed_key
+				; }
+			; }
 		}
 		else { 
 		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
@@ -506,18 +545,42 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit=0)
 		; 	m(key "//" action)
 		; 	m(original_key "//" action)
 		; }
+		; if (key_name == "doublehit_rshift")
+		; 	m(handle_single_double_hit_mode)
+		; if (key_name == "rshift")
+		; 	m(handle_single_double_hit_mode)
+
 		arr := StrSplit(key, "|")
-		if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
-		; if (key_split_arr.Length() == 1 && !excluede_single_key_map.HasKey(double_hit_ltrimed_key)) {
+		if (handle_single_double_hit_mode == HANDLE_SINGLE_DOUBLE_HIT_MODE_2) {
+			; m(key_name)
+			; HOTKEY_REGISTER_MAP[key_name] := action
+			if(arr[1]!="") {
+				Hotkey, IF, border_event_evoke()
+				Hotkey, % arr[2], SUB_HOTKEY_ZONE_MULTI_HIT
+			}
+			else {
+				; m(arr[2])
+				Hotkey, IF
+				Hotkey, % arr[2], SUB_HOTKEY_ZONE_MULTI_HIT
+			}
+		}
+		else if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
+		; if (key_split_arr.Length() == 1 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
 			; if (key_name == "doublehit_rshift") {
 			; 	m(original_key)
 			; 	m(key "//" action)
 			; 	m(arr[2])
 			; }
+			; m(key_name)
 			HOTKEY_REGISTER_MAP[key_name] := action
-			Hotkey, IF
-			Hotkey, % arr[2], SUB_HOTKEY_ZONE_DOUBLE_HIT
-			return
+			if(arr[1]!="") {
+				Hotkey, IF, border_event_evoke()
+				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT
+			}
+			else {
+				Hotkey, IF
+				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT
+			}
 		}
 		else {
 			; if (key_name == "rshift") {
@@ -544,10 +607,65 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit=0)
 /*
 ; HOTKEY evoke
 */
-SUB_HOTKEY_ZONE_DOUBLE_HIT:
+SUB_HOTKEY_ZONE_MULTI_HIT:
 	global LIMIT_MODE
 	global HOTKEY_REGISTER_MAP
-	global DOUBLE_HIT_DECORATOR
+	global MULTI_HIT_DECORATOR
+	global DOUBLE_HIT_KEY_PREFIX
+	global TRIPLE_HIT_KEY_PREFIX
+	global MULTI_HIT_CNT
+
+	if (LIMIT_MODE)
+		return
+
+	if (MULTI_HIT_CNT > 0) ; SetTimer 已经启动, 所以我们记录键击.
+	{
+		MULTI_HIT_CNT += 1
+		return
+	}
+	; 否则, 这是新开始系列中的首次按下. 把次数设为 1 并启动
+	; 计时器:
+	MULTI_HIT_CNT := 1
+	SetTimer, MULTI_HIT_TIMER_CB, -400 ; 在 400 毫秒内等待更多的键击.
+	return
+
+
+MULTI_HIT_TIMER_CB:
+	global LIMIT_MODE
+	global HOTKEY_REGISTER_MAP
+	global MULTI_HIT_DECORATOR
+	global DOUBLE_HIT_KEY_PREFIX
+	global TRIPLE_HIT_KEY_PREFIX
+	global MULTI_HIT_CNT
+
+	if (MULTI_HIT_CNT = 1) ; 此键按下了一次.
+	{
+		action := HOTKEY_REGISTER_MAP[A_ThisHotkey]
+		; run(action)
+	}
+	else if (MULTI_HIT_CNT = 2) ; 此键按下了两次.
+	{
+		action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . A_ThisHotkey]
+		; run(action)
+	}
+	else if (MULTI_HIT_CNT > 2)
+	{
+		; MsgBox, Three or more clicks detected.
+		action := HOTKEY_REGISTER_MAP[TRIPLE_HIT_KEY_PREFIX . A_ThisHotkey]
+		; run(action)
+	}
+	; 不论触发了上面的哪个动作, 都对 count 进行重置
+	; 为下一个系列的按下做准备:
+	run(action)
+	MULTI_HIT_CNT := 0
+	Return
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT:
+	global LIMIT_MODE
+	global HOTKEY_REGISTER_MAP
+	global MULTI_HIT_DECORATOR
 	global DOUBLE_HIT_KEY_PREFIX
 
 	if (LIMIT_MODE)
@@ -556,7 +674,7 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 	; ToolTipWithTimer(A_ThisHotkey)
 	global keyboard_double_click_timeout
 	; cur_key := StrReplace(A_ThisHotkey, "~")
-	cur_key := StrReplace(A_ThisHotkey, DOUBLE_HIT_DECORATOR)
+	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
 	if (A_PriorHotkey <> A_ThisHotkey or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
@@ -564,7 +682,7 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 		; ToolTipWithTimer(A_PriorKey)  ; LAlt
 		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
 		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
-		run(HOTKEY_REGISTER_MAP[cur_key])  ; single hit key action
+		; run(HOTKEY_REGISTER_MAP[cur_key])  ; single hit key action
 		KeyWait, % cur_key ; Wait for the key to be released.
 		; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
 		; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
@@ -572,10 +690,8 @@ SUB_HOTKEY_ZONE_DOUBLE_HIT:
 		; ToolTipWithTimer(A_PriorKey)
 		return
 	}
-	
 	; ToolTipWithTimer(A_ThisHotkey)
 	; cur_key := StrReplace(A_ThisHotkey, "~")
-	; action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX cur_key]
 	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . cur_key]
 	; m(action)
 	; if(action="") {
