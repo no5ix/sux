@@ -371,11 +371,12 @@ class SuxCore
 				; register_hotkey(ltrimed_key_name, MULTI_HIT_MAP[ltrimed_key_name][ltr], "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)
 				; is_already_set := 0
 				if (original_key_2_action_map.HasKey(ltrimed_key_name)) {
-					register_hotkey(ltrimed_key_name, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
+					final_key := ltrimed_key_name
 				}
 				else {
-					register_hotkey(MULTI_HIT_DECORATOR . ltrimed_key_name, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
+					final_key := MULTI_HIT_DECORATOR . ltrimed_key_name
 				}
+				register_hotkey(final_key, "", "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
 				for key, action in original_key_2_action_map {
 					; m(key)
 					HOTKEY_REGISTER_MAP[key] := action
@@ -499,14 +500,14 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 			; 	return
 			; }
 			; else {
-				; if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX)) {
+				if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX)) {
 				; 	; m(multi_hit_ltrimed_key)
-				; 	maped_symbol := MULTI_HIT_DECORATOR . multi_hit_ltrimed_key
+					maped_symbol := MULTI_HIT_DECORATOR . multi_hit_ltrimed_key
 				; 	; maped_symbol := multi_hit_ltrimed_key . MULTI_HIT_DECORATOR
-				; }
-				; else {
+				}
+				else {
 					maped_symbol := multi_hit_ltrimed_key
-				; }
+				}
 			; }
 		}
 		else { 
@@ -569,7 +570,7 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 			; if (key_name == "doublehit_rshift") {
 			; 	m(original_key)
 			; 	m(key "//" action)
-			; 	m(arr[2])
+				; m(arr[2])
 			; }
 			; m(key_name)
 			HOTKEY_REGISTER_MAP[key_name] := action
@@ -638,20 +639,23 @@ MULTI_HIT_TIMER_CB:
 	global TRIPLE_HIT_KEY_PREFIX
 	global MULTI_HIT_CNT
 
+	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
 	if (MULTI_HIT_CNT = 1) ; 此键按下了一次.
 	{
-		action := HOTKEY_REGISTER_MAP[A_ThisHotkey]
+		action := HOTKEY_REGISTER_MAP[cur_key]
 		; run(action)
 	}
 	else if (MULTI_HIT_CNT = 2) ; 此键按下了两次.
 	{
-		action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . A_ThisHotkey]
+		; m(cur_key)
+		action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . cur_key]
 		; run(action)
 	}
 	else if (MULTI_HIT_CNT > 2)
 	{
+		; m(cur_key)
 		; MsgBox, Three or more clicks detected.
-		action := HOTKEY_REGISTER_MAP[TRIPLE_HIT_KEY_PREFIX . A_ThisHotkey]
+		action := HOTKEY_REGISTER_MAP[TRIPLE_HIT_KEY_PREFIX . cur_key]
 		; run(action)
 	}
 	; 不论触发了上面的哪个动作, 都对 count 进行重置
