@@ -58,34 +58,34 @@ CheckUpdate(from_launch=0)
 		return
 	global check_update_from_launch
 	check_update_from_launch := from_launch
-	SuxCore.get_remote_file(SuxCore.data_ini_file)
+	SuxCore.get_remote_file(SuxCore.ver_ini_file)
 }
 
 
-get_remote_data_ini(url)
+get_remote_ver_data_ini(url)
 {
 	global cur_http_req
 	cur_http_req := ComObjCreate("Msxml2.XMLHTTP")
 	; 打开启用异步的请求.
 	cur_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
-	cur_http_req.onreadystatechange := Func("on_get_remote_data_ini_ready")
+	cur_http_req.onreadystatechange := Func("on_get_remote_ver_data_ini_ready")
 	; 发送请求. Ready() 将在其完成后被调用.
 	cur_http_req.send()
 	SetTimer, handle_req_failed, -6666
 }
 
 
-on_get_remote_data_ini_ready() {
+on_get_remote_ver_data_ini_ready() {
 	global cur_http_req
 	global check_update_from_launch
 	if (cur_http_req.readyState != 4) {  ; 没有完成.
 		return
 	}
 	if (cur_http_req.status == 200) {
-		if FileExist(SuxCore.remote_data_ini_file)
-			FileDelete, % SuxCore.remote_data_ini_file
-		FileAppend, % cur_http_req.responseText, % SuxCore.remote_data_ini_file
+		if FileExist(SuxCore.remote_ver_ini_file)
+			FileDelete, % SuxCore.remote_ver_ini_file
+		FileAppend, % cur_http_req.responseText, % SuxCore.remote_ver_ini_file
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
@@ -154,7 +154,8 @@ class SuxCore
 	static conf_user_yaml_file := "conf.user.yaml"
 	static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf.default.yaml"
 	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
-	static remote_data_ini_file := SuxCore._APP_DATA_DIR "remote_data.ini"
+	static ver_ini_file := SuxCore._APP_DATA_DIR "ver.ini"
+	static remote_ver_ini_file := SuxCore._APP_DATA_DIR "remote_ver.ini"
 	; update
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/sux"
@@ -167,7 +168,7 @@ class SuxCore
 	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
 	;
 	static FeatureObj =
-	static version := "0.2.3"
+	static version =
 	static UserData := {}
 	; callback
 	static OnExitCmd := []
@@ -196,7 +197,8 @@ class SuxCore
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
-		SuxCore.SetIniConfig("ver", SuxCore.version)
+		SuxCore.version := SuxCore.get_local_ver()
+
 		CheckUpdate(1)
 
 		ClipboardPlus.init()
@@ -209,12 +211,25 @@ class SuxCore
 	{
 		StringReplace, path, % path, \, /, All
 		url := SuxCore.remote_raw_addr path
-		get_remote_data_ini(url)
+		get_remote_ver_data_ini(url)
 	}
 
 	get_remote_ini_config(key, default="", section="sux", autoWrite=true)
 	{
-		IniRead, output, % SuxCore.remote_data_ini_file, % section, % key, ""
+		IniRead, output, % SuxCore.remote_ver_ini_file, % section, % key, ""
+		return output
+	}
+
+	get_local_ver(default="", section="sux", autoWrite=true)
+	{
+		IniRead, output, % SuxCore.ver_ini_file, % section, ver
+		if(output=="ERROR" || output == "")
+		{
+			if(autoWrite) {
+				SuxCore.SetIniConfig(key, default, section)
+			}
+			return default
+		}
 		return output
 	}
 
