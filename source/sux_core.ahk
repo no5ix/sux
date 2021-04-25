@@ -359,6 +359,7 @@ class SuxCore
 		global HANDLE_SINGLE_DOUBLE_HIT_MODE_1
 		global HANDLE_SINGLE_DOUBLE_HIT_MODE_2
 		global MULTI_HIT_DECORATOR
+		global TRIPLE_HIT_KEY_PREFIX
 		for ltrimed_key_name, original_key_2_action_map in MULTI_HIT_MAP {
 			if (original_key_2_action_map.Count() == 1 && !original_key_2_action_map.HasKey(TRIPLE_HIT_KEY_PREFIX . ltrimed_key_name)) {
 				for key, action in original_key_2_action_map {
@@ -367,9 +368,7 @@ class SuxCore
 				}
 			}
 			else {
-				; m(ltrimed_key_name)
-				; register_hotkey(ltrimed_key_name, MULTI_HIT_MAP[ltrimed_key_name][ltr], "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)
-				; is_already_set := 0
+				;; 核心思想就是: 比如 alt有单击也有双击则用`alt`, 如果没有单击则用`~alt`
 				if (original_key_2_action_map.HasKey(ltrimed_key_name)) {
 					final_key := ltrimed_key_name
 				}
@@ -378,20 +377,7 @@ class SuxCore
 				}
 				register_hotkey(final_key, "", "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
 				for key, action in original_key_2_action_map {
-					; m(key)
 					HOTKEY_REGISTER_MAP[key] := action
-
-					; if (Instr(key, DOUBLE_HIT_KEY_PREFIX)) {
-					; 	HOTKEY_REGISTER_MAP[key] := action
-					; 	; register_hotkey(key, action, "", 1)
-					; }
-					; else {
-						; if (is_already_set == 0) {
-						; 	register_hotkey(key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)
-						; 	is_already_set := 1
-						; }
-					; 	; HOTKEY_REGISTER_MAP[key] := action
-					; }
 				}
 			}
 		}
@@ -609,16 +595,13 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 ; HOTKEY evoke
 */
 SUB_HOTKEY_ZONE_MULTI_HIT:
-	global LIMIT_MODE
-	global HOTKEY_REGISTER_MAP
-	global MULTI_HIT_DECORATOR
-	global DOUBLE_HIT_KEY_PREFIX
-	global TRIPLE_HIT_KEY_PREFIX
-	global MULTI_HIT_CNT
-
+	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
+	if HOTKEY_REGISTER_MAP.HasKey(TRIPLE_HIT_KEY_PREFIX . cur_key)
+		final_timeout := keyboard_triple_click_timeout
+	else
+		final_timeout := keyboard_double_click_timeout
 	if (LIMIT_MODE)
 		return
-
 	if (MULTI_HIT_CNT > 0) ; SetTimer 已经启动, 所以我们记录键击.
 	{
 		MULTI_HIT_CNT += 1
@@ -627,18 +610,11 @@ SUB_HOTKEY_ZONE_MULTI_HIT:
 	; 否则, 这是新开始系列中的首次按下. 把次数设为 1 并启动
 	; 计时器:
 	MULTI_HIT_CNT := 1
-	SetTimer, MULTI_HIT_TIMER_CB, -400 ; 在 400 毫秒内等待更多的键击.
+	SetTimer, MULTI_HIT_TIMER_CB, -%final_timeout% ; 在 final_timeout 毫秒内等待更多的键击.
 	return
 
 
 MULTI_HIT_TIMER_CB:
-	global LIMIT_MODE
-	global HOTKEY_REGISTER_MAP
-	global MULTI_HIT_DECORATOR
-	global DOUBLE_HIT_KEY_PREFIX
-	global TRIPLE_HIT_KEY_PREFIX
-	global MULTI_HIT_CNT
-
 	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
 	if (MULTI_HIT_CNT = 1) ; 此键按下了一次.
 	{
