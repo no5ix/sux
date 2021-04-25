@@ -438,6 +438,12 @@ TICK_HOT_CORNERS:
 HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
 	global LIMIT_MODE
 	if (IsFullscreen()) {
+		; WinGetClass, class, A
+		; MsgBox, The active window's class is "%class%".
+		if (WinExist(ahk_exe sux.exe)) {  ;; 因为截图也是全屏模式, 所以要避免截图的时候进入limit_mode
+		; 	; m(1)
+			return
+		}
 		if (LIMIT_MODE == 0) {
 			ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode."))
 			LIMIT_MODE := 1
