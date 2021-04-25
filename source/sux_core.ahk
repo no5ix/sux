@@ -642,6 +642,7 @@ MULTI_HIT_TIMER_CB:
 	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
 	if (MULTI_HIT_CNT = 1) ; 此键按下了一次.
 	{
+		; m(cur_key)
 		action := HOTKEY_REGISTER_MAP[cur_key]
 		; run(action)
 	}
