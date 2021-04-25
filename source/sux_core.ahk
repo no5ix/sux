@@ -5,7 +5,11 @@ if(A_ScriptName=="sux_core.ahk") {
 ; with this label, you can include this file on top of the file
 
 
-check_update_from_launch = 0
+check_update_caller = 0
+CHECK_UPDATE_CALLER_TRAY = 0
+CHECK_UPDATE_CALLER_LAUNCH = 1
+CHECK_UPDATE_CALLER_AUTO_CHECK = 2
+
 cur_http_req = 
 CAPS_REPLACER := "CapsLock & "
 DOUBLE_HIT_KEY_PREFIX := "doublehit_"
@@ -51,13 +55,19 @@ lang(key)
 }
 
 
+check_update_from_auto_check()
+{
+	global CHECK_UPDATE_CALLER_AUTO_CHECK
+	CheckUpdate(CHECK_UPDATE_CALLER_AUTO_CHECK)
+}
+
 CheckUpdate(from_launch=0)
 {
 	global LIMIT_MODE
 	if (LIMIT_MODE)
 		return
-	global check_update_from_launch
-	check_update_from_launch := from_launch
+	global check_update_caller
+	check_update_caller := from_launch
 	SuxCore.get_remote_file(SuxCore.ver_ini_file)
 }
 
@@ -78,7 +88,9 @@ get_remote_ver_data_ini(url)
 
 on_get_remote_ver_data_ini_ready() {
 	global cur_http_req
-	global check_update_from_launch
+	global check_update_caller
+	global CHECK_UPDATE_CALLER_TRAY
+	global CHECK_UPDATE_CALLER_AUTO_CHECK
 	if (cur_http_req.readyState != 4) {  ; 没有完成.
 		return
 	}
@@ -96,7 +108,7 @@ on_get_remote_ver_data_ini_ready() {
 			}
 		}
 		else {
-			if (check_update_from_launch == 0)
+			if (check_update_caller == CHECK_UPDATE_CALLER_TRAY)  ;; check_update_from_tray
 				MsgBox,,, % lang("This is the lastest version.") ,6
 		}
 	}
@@ -105,12 +117,14 @@ on_get_remote_ver_data_ini_ready() {
 		handle_req_failed()
 	}
 	cur_http_req = 
-	check_update_from_launch := 0
+	check_update_caller := CHECK_UPDATE_CALLER_AUTO_CHECK
 }
 
 handle_req_failed() {
 	global cur_http_req
-	global check_update_from_launch
+	global check_update_caller
+	global CHECK_UPDATE_CALLER_TRAY
+	global CHECK_UPDATE_CALLER_AUTO_CHECK
 	; m("xx")
 	if !cur_http_req {
 	; m("xx1")
@@ -127,7 +141,7 @@ handle_req_failed() {
 		state_code := cur_http_req.status
 		cur_http_req = 
 	}
-	if (check_update_from_launch == 0) {
+	if (check_update_caller == CHECK_UPDATE_CALLER_TRAY) {  ;; check_update_from_tray
 		msg := lang("Unable to connect to the sux official website.") "`n"
 		; if (state_code == 12007 || state_code == 12029) {
 			msg := msg lang("Maybe need a proxy.") "`n"
@@ -139,7 +153,7 @@ handle_req_failed() {
 			run, % SuxCore.remote_download_html
 		} 
 	}
-	check_update_from_launch := 0
+	check_update_caller := CHECK_UPDATE_CALLER_AUTO_CHECK
 }
 
 
@@ -198,13 +212,19 @@ class SuxCore
 
 		this.HandleConfYaml()
 		SuxCore.version := SuxCore.get_local_ver()
-
-		CheckUpdate(1)
+		global CHECK_UPDATE_CALLER_LAUNCH
+		CheckUpdate(CHECK_UPDATE_CALLER_LAUNCH)
 
 		ClipboardPlus.init()
 		; WinMenu.init()
 		TrayMenu.init()
 		SearchGui.init()
+	}
+
+	check_update_from_tray()
+	{
+		global CHECK_UPDATE_CALLER_TRAY
+		CheckUpdate(CHECK_UPDATE_CALLER_TRAY)
 	}
 
 	get_remote_file(path)
@@ -284,7 +304,8 @@ class SuxCore
 		
 		check_update_interval_hour := SuxCore.GetYamlCfg("check-update-interval-hour", 2)
 		check_update_millisec := check_update_interval_hour * 3600 * 1000
-		SetTimer, CheckUpdate, % check_update_millisec
+		; check_update_millisec := 6666
+		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if(SuxCore.GetYamlCfg("hotkey.enable", 0))
 		{

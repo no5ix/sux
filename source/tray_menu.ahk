@@ -135,9 +135,11 @@ class TrayMenu
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version v") remote_ver_str . " !" lang(" Click me to chekc it out!")
+			check_update_menu_func := SuxCore.remote_download_html
 		}
 		else {
 			check_update_menu_name := lang("Check Update")
+			check_update_menu_func := "SuxCore.check_update_from_tray"
 		}
 		lang := SuxCore.GetIniConfig(INI_LANG, SuxCore.Default_lang)
 		cur_theme := SuxCore.GetIniConfig(INI_THEME, SuxCore.Default_theme)
@@ -161,7 +163,7 @@ class TrayMenu
 			,[[version_str, "TrayMenu.AboutSux"]
 			,[lang("Help"), SuxCore.help_addr]
 			,[lang("Donate"), "TrayMenu.ShowDonatePic"]
-			,[check_update_menu_name, "CheckUpdate"]
+			,[check_update_menu_name, check_update_menu_func]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
 			,["Language",, {"sub": "TrayLanguage"}]
