@@ -257,7 +257,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 - add more action
 <!-- - 看看caps+的词语替换如何做的 -->
 - 改default的上下左右快捷键
-- 看怎么调用js
+<!-- - 看怎么调用js -->
 - suspend img
 - 弄个有道翻译面板
 <!-- - fix check update -->

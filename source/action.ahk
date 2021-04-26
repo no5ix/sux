@@ -1,6 +1,6 @@
 ﻿#Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\search_gui.ahk
-
+#Include %A_ScriptDir%\source\js_eval.ahk
 
 
 StartSuxAhkWithWin() {
@@ -39,6 +39,16 @@ StartSuxAhkWithWin() {
 
 
 ReplaceCurrentLineText() {
+	
+	; eval(var i=0,j=101; while(j--)i+=j;)
+	; m(eval("date()"))
+	; m(eval("average(1,2,3,4,6,6)"))
+	; result:= (eval("date()"))
+	; result:= (JsEval.eval("date()"))
+	; result:= (JsEval.eval("time()"))
+	; MsgBox,,,%result%
+	; return
+
 	send, {Home}
 	Sleep, 66
 	send, +{End}
