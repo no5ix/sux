@@ -1,5 +1,6 @@
 ﻿
 #Include %A_ScriptDir%\source\common_const.ahk
+#Include %A_ScriptDir%\source\js_eval.ahk
 
 
 m(str := "")
@@ -367,7 +368,7 @@ IsMouseActiveWindowAtSameMonitor() {
 
 
 ; 万能的run 函数
-; 参数可以是cmd命令，代码中的sub，function，网址，b站av号，还可以扩展
+; 参数可以是cmd命令，代码中的sub，function，网址d
 run(command, throwErr := 1)
 {
 	global LIMIT_MODE
@@ -400,6 +401,11 @@ run(command, throwErr := 1)
 			return %command%()
 		}
 	}
+	else if (Instr(command, "jsfunc_")) {
+		JsEval.eval(command)
+		; res := JsEval.eval(command)
+		; m(res)
+	}
 	Else {
 		if(RegExMatch(command, "^https?://")) {
 			brw := SuxCore.Browser
@@ -410,10 +416,6 @@ run(command, throwErr := 1)
 			Else
 				run, %brw% %command%
 			Return
-		}
-		else if(RegExMatch(command, "i)av(\d+)", avn)) {
-			run("http://www.bilibili.com/video/av" avn1)
-			return
 		}
 		else if(RegExMatch(command, "i)send (.*)", sd)) {
 			send, % sd1

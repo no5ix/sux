@@ -39,14 +39,9 @@ StartSuxAhkWithWin() {
 
 
 ReplaceCurrentLineText() {
-	
-	; eval(var i=0,j=101; while(j--)i+=j;)
-	; m(eval("date()"))
-	; m(eval("average(1,2,3,4,6,6)"))
-	; result:= (eval("date()"))
-	; result:= (JsEval.eval("date()"))
-	; result:= (JsEval.eval("time()"))
+	; result := (JsEval.eval("jsfunc_date()"))
 	; MsgBox,,,%result%
+	; run("jsfunc_date()")
 	; return
 
 	send, {Home}

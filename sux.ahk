@@ -16,11 +16,11 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 -----------------------
 
 
-#Include %A_ScriptDir%\source\common_const.ahk
+; #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\util.ahk
 #Include %A_ScriptDir%\source\sux_core.ahk
-#Include %A_ScriptDir%\source\search_gui.ahk
-#Include %A_ScriptDir%\source\clipboard_plus.ahk
+; #Include %A_ScriptDir%\source\search_gui.ahk
+; #Include %A_ScriptDir%\source\clipboard_plus.ahk
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
