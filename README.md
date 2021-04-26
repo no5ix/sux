@@ -256,6 +256,10 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add donate gui pic -->
 - add more action
 - 看看caps+的词语替换如何做的
+- 改default的上下左右快捷键
+- 看怎么调用js
+- suspend img
+- 弄个有道翻译面板
 <!-- - fix check update -->
 <!-- - click down 之后记得释放 -->
 <!-- - 浏览器中, click down之后双击就没选中了 -->
@@ -280,7 +284,6 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 - ext ahk
 <!-- - auto compile -->
 <!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateSuxImpl的锅 -->
-<!-- - suspend img -->
 <!-- - internal Everything -->
 
 

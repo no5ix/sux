@@ -366,7 +366,7 @@ class SuxCore
 
 		if(SuxCore.GetYamlCfg("replace-text.enable", 0))
 		{
-			_temp_map := {"replace-all-text": "ReplaceAllText", "replace-selected-text":"ReplaceSelectedText"}
+			_temp_map := {"replace-current-line-text": "ReplaceCurrentLineText", "replace-selected-text":"ReplaceSelectedText"}
 			For key, value in SuxCore.GetYamlCfg("replace-text.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
 			For key, value in SuxCore.GetYamlCfg("replace-text.buildin", {})

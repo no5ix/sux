@@ -44,7 +44,7 @@ web-search:
 replace-text:
   enable: 1
   shortcut-key: 
-    replace-all-text: capslock_g
+    replace-current-line-text: capslock_g
     replace-selected-text: capslock_shift_g
   buildin:
     'h/': 'http://'
