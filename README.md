@@ -255,7 +255,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - 暗模式的其他gui的阴影不正常 -->
 <!-- - add donate gui pic -->
 - add more action
-- 看看caps+的词语替换如何做的
+<!-- - 看看caps+的词语替换如何做的 -->
 - 改default的上下左右快捷键
 - 看怎么调用js
 - suspend img
