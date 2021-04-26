@@ -402,8 +402,8 @@ run(command, throwErr := 1)
 		}
 	}
 	else if (Instr(command, "jsfunc_")) {
-		JsEval.eval(command)
-		; res := JsEval.eval(command)
+		JsEval.eval(command . "()")
+		; res := JsEval.eval(command . "()")
 		; m(res)
 	}
 	Else {
