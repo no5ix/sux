@@ -98,6 +98,10 @@ OpenFolderAndSelectFile(file_path_str) {
 	Run %COMSPEC% /c explorer.exe /select`, "%file_path_str%",, Hide
 }
 
+OpenFolder(folder_path_str) {
+	Run %COMSPEC% /c explorer.exe "%folder_path_str%",, Hide
+}
+
 EditFile(filename, admin := 0)
 {
 	if not FileExist(filename)
