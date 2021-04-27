@@ -221,21 +221,22 @@ class SearchHandler {
 		Menu, SearchSelectedText_Menu, Disable, % selected_text
 		Menu, SearchSelectedText_Menu, Add
 		
-		global WEB_SEARCH_REGISTER_MAP
+		global WEB_SEARCH_TITLE_2_KEY_MAP
 		global SHORTCUT_KEY_INDEX_ARR
 		index := 1
 		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
-		for key_name, search_url in WEB_SEARCH_REGISTER_MAP {
+		for title, key_name in WEB_SEARCH_TITLE_2_KEY_MAP {
+			; m(title)
 			if (index <= shortcut_cnt) {
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, SearchSelectedText_Menu, Add, "&" . SHORTCUT_KEY_INDEX_ARR[index] ".      " key_name, SearchSelectedText_Menu_Click
+				Menu, SearchSelectedText_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[index] ".      " title, SearchSelectedText_Menu_Click
 			}
 			Else {
-				Menu, SearchSelectedText_Menu_More, Add, % index ".      " key_name, SearchSelectedText_Menu_MoreClick
+				Menu, SearchSelectedText_Menu_More, Add, % index ".      " title, SearchSelectedText_Menu_MoreClick
 			}
 			index += 1
 		}
-		if (WEB_SEARCH_REGISTER_MAP.Count() > shortcut_cnt)
+		if (WEB_SEARCH_TITLE_2_KEY_MAP.Count() > shortcut_cnt)
 			Menu, SearchSelectedText_Menu, Add, % lang("More"), :SearchSelectedText_Menu_More
 
 		Menu, SearchSelectedText_Menu, Show
@@ -247,13 +248,14 @@ class SearchHandler {
 
 ; All Clips Menu
 SearchSelectedText_Menu_Click:
-idx := WEB_SEARCH_REGISTER_MAP.MaxIndex() - A_ThisMenuItemPos + 1
-WebSearch(GetCurSelectedText(), key)
+; idx := WEB_SEARCH_TITLE_2_KEY_MAP.MaxIndex() - A_ThisMenuItemPos + 1
+SearchHandler.WebSearch(GetCurSelectedText(), WEB_SEARCH_TITLE_2_KEY_MAP[A_ThisMenuItem])
 Return
 
 SearchSelectedText_Menu_MoreClick:
-idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
-paste_cur_selected_text(idx)
+; idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
+; paste_cur_selected_text(idx)
+SearchHandler.WebSearch(GetCurSelectedText(), WEB_SEARCH_TITLE_2_KEY_MAP[A_ThisMenuItem])
 Return
 
 
