@@ -301,7 +301,3 @@ start C:\Users\b\Desktop\A.lnk
 createobject("wscript.shell").run "D:\A.bat",0
 ```
 5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中 -->
-
-# License
-
-GPL

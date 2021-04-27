@@ -1,12 +1,13 @@
 ﻿
 class JsEval
 {
-    static obj = 
-    static user_ext_file := "user_extension.js"
+    static com_obj = 
+    static _JS_DIR := "app_data/"
+    static user_ext_file := JsEval._JS_DIR . "user_extension.js"
 
     init() 
     {
-        JsEval.obj := ComObjCreate("HTMLfile")
+        JsEval.com_obj := ComObjCreate("HTMLfile")
         JsEval.FixIE(11)
         JsEval.load_script()
     }
@@ -15,12 +16,12 @@ class JsEval
     {
         if (FileExist(JsEval.user_ext_file))
         {
-            JsEval.obj.write("<script>")
+            JsEval.com_obj.write("<script>")
             loop, Read, % JsEval.user_ext_file
             {
-                JsEval.obj.write(A_LoopReadLine . "`n")
+                JsEval.com_obj.write(A_LoopReadLine . "`n")
             }
-            JsEval.obj.write("</script>")
+            JsEval.com_obj.write("</script>")
         }
     }
 
@@ -28,8 +29,8 @@ class JsEval
     {
         JsEval.load_script()
         exp := JsEval.escapeString(exp)
-        JsEval.obj.write("<body><script>(function(){var t=document.body;t.innerText='';t.innerText=eval('" . exp . "');})()</script></body>")
-        return inStr(cabbage:=JsEval.obj.body.innerText, "body") ? "ERROR" : cabbage
+        JsEval.com_obj.write("<body><script>(function(){var t=document.body;t.innerText='';t.innerText=eval('" . exp . "');})()</script></body>")
+        return inStr(cabbage:=JsEval.com_obj.body.innerText, "body") ? "ERROR" : cabbage
     }
 
     escapeString(string)
