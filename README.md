@@ -18,7 +18,7 @@ click img to see full video
 * **personalized configuration** : u can modify `conf.user.yaml` to override all default configuration
 * **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `hot-corner`-`hot-edge`
 * **hot corners** : just like mac hot cornes, see `hot-corner`-`hot-corner`
-* **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `conf.user.yaml`-`web-search`
+* **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `conf.user.yaml`-`search-plus`
 * **enhanced capslock** : just like Capslock+, see `conf.user.yaml`-`capslock_plus`
 * **work with Everything** : try double tap `Alt`, then input `ev `
 * **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.yaml`-`theme`
