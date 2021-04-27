@@ -23,22 +23,35 @@ web-search:
     search-selected-text: capslock_f
   buildin:
     default: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+      label: Default
     bg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+      label: Google & Baidu
     gg: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
+      label:  Google
     bd: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+      label:  Baidu
     bi: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
+      label:  Bing
     yd: 'https://www.youdao.com/w/REPLACEME'
+      label:  Youdao
     bb: 'search.bilibili.com/all?keyword=REPLACEME'
+      label:  Bilibili
     jd: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
+      label:  Jd
     zh: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
+      label:  Zhihu
     gh: 'https://github.com/search?q=REPLACEME'
+      label:  Github
     so: 'https://stackoverflow.com/search?q=REPLACEME'
+      label:  Stackoverflow
     yt: 'https://www.youtube.com/results?search_query=REPLACEME'
+      label:  Youtube
     ph: 'https://www.pornhub.com/video/search?search=REPLACEME'
+      label:  Pornhub
     db: 'https://www.douban.com/search?q=REPLACEME'
-    qm: 'https://www.qimai.cn/search/index/country/cn/search/REPLACEME'
+      label:  Douban
     yk: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
-    lc: 'https://leetcode-cn.com/problemset/all/?search=REPLACEME'
+      label:  Youku
   custom:
 replace-text:
   enable: 1

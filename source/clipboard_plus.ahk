@@ -41,8 +41,8 @@ class ClipboardPlus
 
 	ShowAllClips()
 	{
-		ClipsCount := this.ClipboardHistoryArr.MaxIndex()
-		if (ClipsCount < 1) {
+		clipboard_history_cnt := this.ClipboardHistoryArr.MaxIndex()
+		if (clipboard_history_cnt < 1) {
 			ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
 			Return
 		}
@@ -55,18 +55,21 @@ class ClipboardPlus
 			Menu, Clipborad_Plus_Menu_More, DeleteAll
 		}
 		global SHORTCUT_KEY_INDEX_ARR
-		cnt := SHORTCUT_KEY_INDEX_ARR.Count()
-		Loop, % ClipsCount
+		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
+		Loop, % clipboard_history_cnt
 		{
-			idx := ClipsCount - A_Index + 1
+			idx := clipboard_history_cnt - A_Index + 1
 			keyName := this.ClipboardHistoryArr[idx][2]
-			if (A_Index <= cnt)
-				Menu, Clipborad_Plus_Menu, Add, % (A_Index<cnt ? "&":"") SHORTCUT_KEY_INDEX_ARR[A_Index] ".      " keyName, Sub_xClipboard_AllClips_Click
+			if (A_Index <= shortcut_cnt) {
+				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
+				Menu, Clipborad_Plus_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[A_Index] ".      " keyName, Sub_xClipboard_AllClips_Click
 				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
-			Else
-				Menu, Clipborad_Plus_Menu_More, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_MoreClick
+			}
+			Else {
+				Menu, Clipborad_Plus_Menu_More, Add, % A_Index ".      " keyName, Sub_xClipboard_AllClips_MoreClick
+			}
 		}
-		if (ClipsCount > cnt)
+		if (clipboard_history_cnt > shortcut_cnt)
 			Menu, Clipborad_Plus_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
 		Menu, Clipborad_Plus_Menu, Show
 	}
