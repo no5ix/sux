@@ -15,7 +15,7 @@ clipboard-plus:
   enable: 1
   shortcut-key: win_alt_v
   ClipsTotalNum: 50
-web-search:
+search-plus:
   enable: 1
   shortcut-key: 
     # normal-search: doublehit_ctrl

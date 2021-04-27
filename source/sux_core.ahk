@@ -354,15 +354,15 @@ class SuxCore
 				register_command(key, StrSplit(value, comma_delimiters_arr))
 		}
 
-		if(SuxCore.GetYamlCfg("web-search.enable", 0))
+		if(SuxCore.GetYamlCfg("search-plus.enable", 0))
 		{
 			_temp_map := {"normal-search": "SearchPlus.search_gui_spawn", "search-selected-text":"HandleSearchSelectedText"}
-			For key, value in SuxCore.GetYamlCfg("web-search.shortcut-key", {})
+			For key, value in SuxCore.GetYamlCfg("search-plus.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
-			For title, key_url_info in SuxCore.GetYamlCfg("web-search.buildin", {}) {
+			For title, key_url_info in SuxCore.GetYamlCfg("search-plus.buildin", {}) {
 				register_web_search(title, key_url_info["key"], StrSplit(key_url_info["url"], comma_delimiters_arr))
 			}
-			For title, key_url_info in SuxCore.GetYamlCfg("web-search.custom", {}) {
+			For title, key_url_info in SuxCore.GetYamlCfg("search-plus.custom", {}) {
 				register_web_search(title, key_url_info["key"], StrSplit(key_url_info["url"], comma_delimiters_arr))
 			}
 		}
