@@ -3,6 +3,13 @@
 #Include %A_ScriptDir%\source\js_eval.ahk
 
 
+
+
+WebSearchSelectedText() {
+	SearchHandler.ShowSelectedTextMenu()
+}
+
+
 StartSuxAhkWithWin() {
 	msg_str := "Would you like to start sux with windows? Yes(Enable) or No(Disable)"
 	MsgBox, 3,, %msg_str%
@@ -207,12 +214,6 @@ ScreenShot() {
     ; ; screen capture
     param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
     DllCall(param)
-}
-
-WebSearchSelectedText() {
-    ; search_gui_spawn_func := "search_gui_spawn"
-    ; %search_gui_spawn_func%(GetCurSelectedText())
-    SearchGui.search_gui_spawn(GetCurSelectedText())
 }
 
 

@@ -30,53 +30,45 @@ Return
 
 class ClipboardPlus
 {
-	static Clips := []
-	static SearchArr := []
-	static ClipsFirstShowNum = 
+	static ClipboardHistoryArr := []
 	static ClipsTotalNum = 
 
 	init()
 	{
 		SuxCore.OnClipboardChange("Sub_xClipboard_OnClipboardChange")
-		this.Clips := SuxCore.UserData["xClipboard_Clips"]
-		this.ClipsFirstShowNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsFirstShowNum", 10)
 		this.ClipsTotalNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsTotalNum", 50)
-		if not IsObject(this.Clips)
-			this.Clips := []
 	}
 
 	ShowAllClips()
 	{
-		Try
-		{
-			Menu, xClipboard_AllclipsMenu, DeleteAll
+		ClipsCount := this.ClipboardHistoryArr.MaxIndex()
+		if (ClipsCount < 1) {
+			ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
+			Return
 		}
 		Try
 		{
-			Menu, xClipboard_AllclipsMenu_More, DeleteAll
+			Menu, Clipborad_Plus_Menu, DeleteAll
 		}
-		; Try
-		; {
-		; 	Menu, xClipboard_AllclipsMenu_Favour, DeleteAll
-		; }
-		ClipsCount := this.Clips.MaxIndex()
-		shortcut_key_index_arr := ["q", "w", "e", "r", "a", "s", "d", "f", "g", "z", "x", "c", "v", "t", "b"]
+		Try
+		{
+			Menu, Clipborad_Plus_Menu_More, DeleteAll
+		}
+		global SHORTCUT_KEY_INDEX_ARR
+		cnt := SHORTCUT_KEY_INDEX_ARR.Count()
 		Loop, % ClipsCount
 		{
 			idx := ClipsCount - A_Index + 1
-			keyName := this.Clips[idx][2]
-			if (A_Index <= this.ClipsFirstShowNum)
-				Menu, xClipboard_AllclipsMenu, Add, % (A_Index<10?"&":"") shortcut_key_index_arr[A_Index] ".      " keyName, Sub_xClipboard_AllClips_Click
-				; Menu, xClipboard_AllclipsMenu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
+			keyName := this.ClipboardHistoryArr[idx][2]
+			if (A_Index <= cnt)
+				Menu, Clipborad_Plus_Menu, Add, % (A_Index<cnt ? "&":"") SHORTCUT_KEY_INDEX_ARR[A_Index] ".      " keyName, Sub_xClipboard_AllClips_Click
+				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
 			Else
-				Menu, xClipboard_AllclipsMenu_More, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_MoreClick
+				Menu, Clipborad_Plus_Menu_More, Add, % A_Index ". " keyName, Sub_xClipboard_AllClips_MoreClick
 		}
-		if (ClipsCount >= this.ClipsFirstShowNum)
-			Menu, xClipboard_AllclipsMenu, Add, % "More Clips", :xClipboard_AllclipsMenu_More
-		if (ClipsCount > 0)
-			Menu, xClipboard_AllclipsMenu, Show
-		else
-			ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
+		if (ClipsCount > cnt)
+			Menu, Clipborad_Plus_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
+		Menu, Clipborad_Plus_Menu, Show
 	}
 
 	_Trim(str_ori, add_time := 1)
@@ -131,7 +123,7 @@ class ClipboardPlus
 
 
 paste_cur_selected_text(idx) {
-	cur_selected_str :=ClipboardPlus.Clips[idx][1]
+	cur_selected_str :=ClipboardPlus.ClipboardHistoryArr[idx][1]
 	ClipSaved := ClipboardAll 
 	Clipboard := cur_selected_str   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
 	Sleep, 66                             ; copy selected text to clipboard-plus
@@ -141,22 +133,22 @@ paste_cur_selected_text(idx) {
 }
 
 
-; All Clips Menu
+; All ClipboardHistoryArr Menu
 Sub_xClipboard_AllClips_Click:
-idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1
+idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 paste_cur_selected_text(idx)
 Return
 
 Sub_xClipboard_AllClips_MoreClick:
-idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - ClipboardPlus.ClipsFirstShowNum
+idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
 paste_cur_selected_text(idx)
 Return
 
 ; OnEvent
 Sub_xClipboard_OnClipboardChange:
-ClipboardPlus._AddArrClip(ClipboardPlus.Clips, Clipboard)
-while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.Clips.MaxIndex() > ClipboardPlus.ClipsTotalNum)
-	ClipboardPlus.Clips.Remove(1)
+ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, Clipboard)
+while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.ClipboardHistoryArr.MaxIndex() > ClipboardPlus.ClipsTotalNum)
+	ClipboardPlus.ClipboardHistoryArr.Remove(1)
 Return
 
 

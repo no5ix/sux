@@ -25,7 +25,7 @@ global THEME_CONF_REGISTER_MAP
 
 
 
-class SearchGui {
+class SearchHandler {
 
 	init() {
 		; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
@@ -51,7 +51,7 @@ class SearchGui {
 		; if (search_key = "default") {
 			; for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
 			; 	; if (_index != search_flag_index) {
-			; 		SearchGui.WebSearch(user_input, _elem)
+			; 		SearchHandler.WebSearch(user_input, _elem)
 			; 		; Sleep, 666
 			; 	; }
 			; }
@@ -66,7 +66,8 @@ class SearchGui {
 		; 	search_url := search_url[1]
 		; }
 		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key] {
-			SearchGui.WebSearchImpl(user_input, search_url)
+			; m(_index "//" search_url)
+			SearchHandler.WebSearchImpl(user_input, search_url)
 			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 		}
 	}
@@ -99,7 +100,7 @@ class SearchGui {
 		; if (search_key = "default") {
 		; 	for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
 		; 		; if (_index != search_flag_index) {
-		; 			SearchGui.WebSearch(user_input, _elem)
+		; 			SearchHandler.WebSearch(user_input, _elem)
 		; 			; Sleep, 666
 		; 		; }
 		; 	}
@@ -152,9 +153,9 @@ class SearchGui {
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
 		Gui, Color, %sux_bg_color%, %sux_bg_color%
 		if (cur_theme_info["sux_border_shadow_type"] == "modern_shadow_type") {
-			; SearchGui.ShadowBorder(hMyGUI)
+			; SearchHandler.ShadowBorder(hMyGUI)
 		; else
-			SearchGui.FrameShadow(hMyGUI)
+			SearchHandler.FrameShadow(hMyGUI)
 		}
 
 		Gui, Font, s22, Segoe UI
@@ -198,7 +199,60 @@ class SearchGui {
 		return
 	}
 
+	
+	ShowSelectedTextMenu() {
+		global WEB_SEARCH_REGISTER_MAP
+		; search_gui_spawn_func := "search_gui_spawn"
+		; %search_gui_spawn_func%(GetCurSelectedText())
+		; SearchHandler.search_gui_spawn(GetCurSelectedText())
+		try {
+			Menu, xClipboard_clipMenu_xxd, DeleteAll
+		}
+
+		selected_text := GetCurSelectedText()
+		if !selected_text {
+			ToolTipWithTimer(lang("Please select something."))
+			Return
+		}
+
+		Menu, SearchSelectedText_Menu, Add, % selected_text, Sub_Nothing
+		Menu, SearchSelectedText_Menu, Disable, % selected_text
+		Menu, SearchSelectedText_Menu, Add
+		
+		global SHORTCUT_KEY_INDEX_ARR
+		index := 1
+		cnt := SHORTCUT_KEY_INDEX_ARR.Count()
+		for key_name, search_url in WEB_SEARCH_REGISTER_MAP {
+			if (index <= cnt)
+				Menu, SearchSelectedText_Menu, Add, % (index<10 ? "&":"") SHORTCUT_KEY_INDEX_ARR[index] ".      " key_name, SearchSelectedText_Menu_Click
+			Else
+				Menu, Clipborad_Plus_Menu_More, Add, % index ". " keyName, SearchSelectedText_Menu_MoreClick
+			index += 1
+		}
+		if (ClipsCount > cnt)
+			Menu, SearchSelectedText_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
+
+		Menu, SearchSelectedText_Menu, Show
+	} 
+
 }
+
+
+
+; All Clips Menu
+SearchSelectedText_Menu_Click:
+idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1
+paste_cur_selected_text(idx)
+Return
+
+SearchSelectedText_Menu_MoreClick:
+idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
+paste_cur_selected_text(idx)
+Return
+
+
+Sub_Nothing:
+return
 
 
 search_gui_destroy() {
@@ -290,10 +344,10 @@ HandleSearchGuiUserInput:
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 
 			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]){
-				SearchGui.WebSearch(word_array[2], word_array[1])
+				SearchHandler.WebSearch(word_array[2], word_array[1])
 			}
 			else {
-				SearchGui.WebSearch(GuiUserInput)
+				SearchHandler.WebSearch(GuiUserInput)
 			}
 		}
 	}

@@ -14,7 +14,6 @@ theme:
 clipboard-plus: 
   enable: 1
   shortcut-key: win_alt_v
-  ClipsFirstShowNum: 10
   ClipsTotalNum: 50
 web-search:
   enable: 1
