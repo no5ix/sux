@@ -34,7 +34,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 #Include %A_ScriptDir%\source\yaml.ahk
 #Include %A_ScriptDir%\source\action.ahk
 #Include %A_ScriptDir%\source\tray_menu.ahk
-#Include %A_ScriptDir%\source\search_gui.ahk
+#Include %A_ScriptDir%\source\search_plus.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
 
@@ -218,7 +218,7 @@ class SuxCore
 		ClipboardPlus.init()
 		; WinMenu.init()
 		TrayMenu.init()
-		SearchHandler.init()
+		SearchPlus.init()
 		JsEval.init()
 	}
 
@@ -356,7 +356,7 @@ class SuxCore
 
 		if(SuxCore.GetYamlCfg("web-search.enable", 0))
 		{
-			_temp_map := {"normal-search": "SearchHandler.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
+			_temp_map := {"normal-search": "SearchPlus.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
 			For key, value in SuxCore.GetYamlCfg("web-search.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
 			For title, key_url_info in SuxCore.GetYamlCfg("web-search.buildin", {}) {

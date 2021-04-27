@@ -1,12 +1,12 @@
 ﻿#Include %A_ScriptDir%\source\common_const.ahk
-#Include %A_ScriptDir%\source\search_gui.ahk
+#Include %A_ScriptDir%\source\search_plus.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
 
 
 
 
 WebSearchSelectedText() {
-	SearchHandler.ShowSelectedTextMenu()
+	SearchPlus.ShowSelectedTextMenu()
 }
 
 

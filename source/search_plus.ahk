@@ -6,7 +6,7 @@
 ; global gui_state := closed
 
 
-if(A_ScriptName=="search_gui.ahk") {
+if(A_ScriptName=="search_plus.ahk") {
 	ExitApp
 }
 
@@ -26,7 +26,7 @@ global THEME_CONF_REGISTER_MAP
 
 
 
-class SearchHandler {
+class SearchPlus {
 
 	init() {
 		; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
@@ -51,7 +51,7 @@ class SearchHandler {
 		}
 		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key] {
 			; m(_index "//" search_url)
-			SearchHandler.WebSearchImpl(user_input, search_url)
+			SearchPlus.WebSearchImpl(user_input, search_url)
 			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 		}
 	}
@@ -117,9 +117,9 @@ class SearchHandler {
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
 		Gui, Color, %sux_bg_color%, %sux_bg_color%
 		if (cur_theme_info["sux_border_shadow_type"] == "modern_shadow_type") {
-			; SearchHandler.ShadowBorder(hMyGUI)
+			; SearchPlus.ShadowBorder(hMyGUI)
 		; else
-			SearchHandler.FrameShadow(hMyGUI)
+			SearchPlus.FrameShadow(hMyGUI)
 		}
 
 		Gui, Font, s22, Segoe UI
@@ -167,7 +167,7 @@ class SearchHandler {
 	ShowSelectedTextMenu() {
 		; search_gui_spawn_func := "search_gui_spawn"
 		; %search_gui_spawn_func%(GetCurSelectedText())
-		; SearchHandler.search_gui_spawn(GetCurSelectedText())
+		; SearchPlus.search_gui_spawn(GetCurSelectedText())
 		try {
 			Menu, SearchSelectedText_Menu, DeleteAll
 		}
@@ -216,12 +216,12 @@ dec_cnt := cur_sel_text ? 2 : 0
 ; m(A_ThisMenuItemPos)
 ; m(WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt])
 ; m(WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
-SearchHandler.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
+SearchPlus.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
 Return
 
 SearchSelectedText_Menu_MoreClick:
 cur_sel_text := GetCurSelectedText()
-SearchHandler.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]])
+SearchPlus.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]])
 Return
 
 
@@ -240,25 +240,21 @@ GuiEscape:
 	search_gui_destroy()
 	return
 
-; The callback function when the text changes in the input field.
 HandleSearchGuiUserInput:
 	Gui, Submit, NoHide
-	; #Include %A_ScriptDir%\source\cmd.ahk
 
 	trim_gui_user_input := Trim(GuiUserInput)
 	last_search_str := trim_gui_user_input
+	search_gui_destroy()
 
 	if !trim_gui_user_input
 	{
-		search_gui_destroy()
 	}
 	else
 	{
 		global CMD_REGISTER_MAP
 		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
 		{
-			search_gui_destroy()
-
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
 			if (word_array[1] == "ev"){
 				;;; everything search
@@ -311,14 +307,12 @@ HandleSearchGuiUserInput:
 		}
 		else
 		{
-			search_gui_destroy()
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-
-			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]){
-				SearchHandler.WebSearch(word_array[2], word_array[1])
+			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]) {
+				SearchPlus.WebSearch(word_array[2], word_array[1])
 			}
 			else {
-				SearchHandler.WebSearch(GuiUserInput)
+				SearchPlus.WebSearch(GuiUserInput)
 			}
 		}
 	}
