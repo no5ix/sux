@@ -36,6 +36,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 #Include %A_ScriptDir%\source\tray_menu.ahk
 #Include %A_ScriptDir%\source\search_gui.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
+#Include %A_ScriptDir%\source\clipboard_plus.ahk
 
 
 
