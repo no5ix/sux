@@ -218,7 +218,7 @@ class SuxCore
 		ClipboardPlus.init()
 		; WinMenu.init()
 		TrayMenu.init()
-		SearchGui.init()
+		SearchHandler.init()
 		JsEval.init()
 	}
 
@@ -356,7 +356,7 @@ class SuxCore
 
 		if(SuxCore.GetYamlCfg("web-search.enable", 0))
 		{
-			_temp_map := {"normal-search": "SearchGui.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
+			_temp_map := {"normal-search": "SearchHandler.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
 			For key, value in SuxCore.GetYamlCfg("web-search.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
 			For key, value in SuxCore.GetYamlCfg("web-search.buildin", {})
@@ -444,16 +444,16 @@ str_array_concate(arr, app, deli="")
 	return % ret
 }
 
-register_command(key_name, action)
+register_command(key_name, action_array)
 {
 	global CMD_REGISTER_MAP
-	CMD_REGISTER_MAP[key_name] := action
+	CMD_REGISTER_MAP[key_name] := action_array
 }
 
-register_web_search(key_name, action)
+register_web_search(key_name, action_array)
 {
 	global WEB_SEARCH_REGISTER_MAP
-	WEB_SEARCH_REGISTER_MAP[key_name] := action
+	WEB_SEARCH_REGISTER_MAP[key_name] := action_array
 }
 
 register_replace_str(key_name, val)
