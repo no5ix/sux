@@ -28,6 +28,9 @@ web-search:
     Google & Baidu:
       key: bg
       url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+    Everything:
+      key: ev
+      url: 'C:\Program Files\Everything\Everything.exe'
     Google:
       key: gg
       url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
@@ -122,7 +125,6 @@ command:
   enable: 1
   buildin:
     cmd: 'cmd.exe'
-    ev: 'C:\Program Files\Everything\Everything.exe'
     sux: 'https://github.com/no5ix/sux'
     git: 'C:\Program Files\Git\bin\bash.exe --login'
   custom:
