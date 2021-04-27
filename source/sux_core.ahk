@@ -581,12 +581,12 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 			; HOTKEY_REGISTER_MAP[key_name] := action
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
-				Hotkey, % arr[2], SUB_HOTKEY_ZONE_MULTI_HIT
+				Hotkey, % arr[2], SUB_MULTI_HIT
 			}
 			else {
 				; m(arr[2])
 				Hotkey, IF
-				Hotkey, % arr[2], SUB_HOTKEY_ZONE_MULTI_HIT
+				Hotkey, % arr[2], SUB_MULTI_HIT
 			}
 		}
 		else if (Instr(key_name, DOUBLE_HIT_KEY_PREFIX)) {
@@ -600,11 +600,11 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 			HOTKEY_REGISTER_MAP[key_name] := action
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
-				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT
+				Hotkey, % arr[2], SUB_ONLY_DOUBLE_HIT
 			}
 			else {
 				Hotkey, IF
-				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT
+				Hotkey, % arr[2], SUB_ONLY_DOUBLE_HIT
 			}
 		}
 		else {
@@ -618,11 +618,11 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 			}
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
-				Hotkey, % arr[2], SUB_HOTKEY_ZONE_BORDER
+				Hotkey, % arr[2], SUB_NORMAL_HIT
 			}
 			else {
 				Hotkey, IF
-				Hotkey, % arr[2], SUB_HOTKEY_ZONE_ANYWAY
+				Hotkey, % arr[2], SUB_NORMAL_HIT
 			}
 		}
 	}
@@ -632,7 +632,7 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 /*
 ; HOTKEY evoke
 */
-SUB_HOTKEY_ZONE_MULTI_HIT:
+SUB_MULTI_HIT:
 	if (LIMIT_MODE)
 		return
 	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
@@ -681,7 +681,7 @@ MULTI_HIT_TIMER_CB:
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
-SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT:
+SUB_ONLY_DOUBLE_HIT:
 	global LIMIT_MODE
 	global HOTKEY_REGISTER_MAP
 	global MULTI_HIT_DECORATOR
@@ -720,8 +720,7 @@ SUB_HOTKEY_ZONE_ONLY_DOUBLE_HIT:
 Return
 
 
-SUB_HOTKEY_ZONE_ANYWAY:
-SUB_HOTKEY_ZONE_BORDER:
+SUB_NORMAL_HIT:
 	global LIMIT_MODE
 	global HOTKEY_REGISTER_MAP
 	global CAPS_REPLACER
