@@ -22,7 +22,7 @@ web-search:
     normal-search: doublehit_alt
     search-selected-text: capslock_f
   buildin:
-    Default:
+    _Default:
       key: default
       url: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     Google & Baidu:

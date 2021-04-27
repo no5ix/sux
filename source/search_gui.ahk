@@ -18,6 +18,7 @@ trim_gui_user_input = ""
 Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 #Include %A_ScriptDir%\source\common_const.ahk
+#Include %A_ScriptDir%\source\sux_core.ahk
 
 global THEME_CONF_REGISTER_MAP
 
@@ -176,8 +177,6 @@ class SearchHandler {
 
 		selected_text := GetCurSelectedText()
 		if selected_text {
-			; ToolTipWithTimer(lang("Please select something."))
-			; Return
 			Menu, SearchSelectedText_Menu, Add, % selected_text, Sub_Nothing
 			Menu, SearchSelectedText_Menu, Disable, % selected_text
 			Menu, SearchSelectedText_Menu, Add
@@ -186,12 +185,16 @@ class SearchHandler {
 		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR
 		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
-		dot_space_str := ".      "
+		dot_space_str := ".`t"
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			; m(title)
 			if (index <= shortcut_cnt) {
+				_cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[index]
+				;; 如果快捷键为空格的话, 得特殊处理
+				_cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . lang("space") : _cur_shortcut_str
+				; m(_cur_shortcut_str)
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, SearchSelectedText_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[index] . dot_space_str . StrReplace(title, "&", "&&"), SearchSelectedText_Menu_Click
+				Menu, SearchSelectedText_Menu, Add, % "&" . _cur_shortcut_str . dot_space_str . StrReplace(title, "&", "&&"), SearchSelectedText_Menu_Click
 			}
 			Else {
 				Menu, SearchSelectedText_Menu_More, Add, % index . dot_space_str . title, SearchSelectedText_Menu_MoreClick

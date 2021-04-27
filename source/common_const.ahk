@@ -2,28 +2,6 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
-global LIMIT_MODE := 0
-
-global fake_lb_down := 0
-
-global CornerEdgeOffset := 8  ; adjust tolerance value (pixels to corner) if desired	
-
-global tick_detect_interval := 88
-
-; ; millisecond, the smaller the value, the faster you have to double-click
-global keyboard_double_click_timeout := 222
-global keyboard_triple_click_timeout := 333
-
-global tick_disable_win10_auto_interval := 66666
-
-global SHORTCUT_KEY_INDEX_ARR := ["q", "w", "e", "r", "a", "s", "d", "f", "g", "z", "x", "c", "v", "t", "b"]
-
-global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
-global INI_LIMIT_MODE_IN_FULL_SCREEN := "limit-mode-in-full-screen"
-global INI_HOT_CORNER := "hot-corner"
-global INI_AUTORUN := "autorun"
-global INI_THEME := "theme"
-global INI_LANG := "lang"
 
 
 LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
@@ -38,6 +16,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Double hit Alt to open search box, hit Esc to close.": "双击Alt打开搜索框, 按Esc来关闭"
     ,"Light": "明"
     ,"Dark": "暗"
+    ,"space": "空格"
     ,"Disable Win10 Auto Update": "禁止Win10自动更新"
     ,"Auto Disable sux In Full Screen": "全屏下自动禁用sux"
     ,"Hot Corner": "触发角"
@@ -56,6 +35,30 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Exit": "退出"
     ,"Home Page": "主页"
     ,"Feedback": "反馈"}
+
+
+global LIMIT_MODE := 0
+
+global fake_lb_down := 0
+
+global CornerEdgeOffset := 8  ; adjust tolerance value (pixels to corner) if desired	
+
+global tick_detect_interval := 88
+
+; ; millisecond, the smaller the value, the faster you have to double-click
+global keyboard_double_click_timeout := 222
+global keyboard_triple_click_timeout := 333
+
+global tick_disable_win10_auto_interval := 66666
+
+global SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "e", "r", "a", "s", "d", "f", "g", "z", "x", "c", "v", "t", "b"]
+
+global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
+global INI_LIMIT_MODE_IN_FULL_SCREEN := "limit-mode-in-full-screen"
+global INI_HOT_CORNER := "hot-corner"
+global INI_AUTORUN := "autorun"
+global INI_THEME := "theme"
+global INI_LANG := "lang"
 
 
 ; 记录快捷键与对应操作
