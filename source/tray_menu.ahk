@@ -170,7 +170,7 @@ class TrayMenu
 			,[lang("Theme"),, {"sub": "SearchGuiTheme"}]
 			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
 			,[]
-			,[lang("Open sux Folder"), A_WorkingDir]
+			,[lang("Open sux Folder"), "TrayMenu.OpenSuxFolder"]
 			,[lang("Edit Config File"), "TrayMenu.Edit_conf_yaml"]
 			,[]
 			,[lang("Disable"), "TrayMenu.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
@@ -263,6 +263,12 @@ class TrayMenu
 	Edit_conf_yaml()
 	{
 		OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
+	}
+
+	OpenSuxFolder()
+	{
+		; OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
+		OpenFolder(A_WorkingDir)
 	}
 
 	SetDisable(act="toggle")
