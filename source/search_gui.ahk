@@ -186,14 +186,15 @@ class SearchHandler {
 		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR
 		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
+		dot_space_str := ".      "
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			; m(title)
 			if (index <= shortcut_cnt) {
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, SearchSelectedText_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[index] ".  " StrReplace(title, "&", "&&"), SearchSelectedText_Menu_Click
+				Menu, SearchSelectedText_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[index] . dot_space_str . StrReplace(title, "&", "&&"), SearchSelectedText_Menu_Click
 			}
 			Else {
-				Menu, SearchSelectedText_Menu_More, Add, % index ".  " title, SearchSelectedText_Menu_MoreClick
+				Menu, SearchSelectedText_Menu_More, Add, % index . dot_space_str . title, SearchSelectedText_Menu_MoreClick
 			}
 		}
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt)

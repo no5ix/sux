@@ -60,13 +60,14 @@ class ClipboardPlus
 		{
 			idx := clipboard_history_cnt - A_Index + 1
 			keyName := this.ClipboardHistoryArr[idx][2]
+			dot_space_str := ".      "
 			if (A_Index <= shortcut_cnt) {
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, Clipborad_Plus_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[A_Index] ".      " keyName, Sub_xClipboard_AllClips_Click
+				Menu, Clipborad_Plus_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[A_Index] . dot_space_str . keyName, Sub_xClipboard_AllClips_Click
 				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " keyName, Sub_xClipboard_AllClips_Click
 			}
 			Else {
-				Menu, Clipborad_Plus_Menu_More, Add, % A_Index ".      " keyName, Sub_xClipboard_AllClips_MoreClick
+				Menu, Clipborad_Plus_Menu_More, Add, % A_Index . dot_space_str . keyName, Sub_xClipboard_AllClips_MoreClick
 			}
 		}
 		if (clipboard_history_cnt > shortcut_cnt)
