@@ -356,7 +356,7 @@ class SuxCore
 
 		if(SuxCore.GetYamlCfg("web-search.enable", 0))
 		{
-			_temp_map := {"normal-search": "SearchPlus.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
+			_temp_map := {"normal-search": "SearchPlus.search_gui_spawn", "search-selected-text":"HandleSearchSelectedText"}
 			For key, value in SuxCore.GetYamlCfg("web-search.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
 			For title, key_url_info in SuxCore.GetYamlCfg("web-search.buildin", {}) {
@@ -454,10 +454,10 @@ register_command(key_name, action_array)
 
 register_web_search(title, key_name, action_array)
 {
-	global WEB_SEARCH_REGISTER_MAP
+	global WEB_SEARCH_KEY_2_URL_MAP
 	global WEB_SEARCH_TITLE_2_KEY_MAP
 	global WEB_SEARCH_TITLE_LIST
-	WEB_SEARCH_REGISTER_MAP[key_name] := action_array
+	WEB_SEARCH_KEY_2_URL_MAP[key_name] := action_array
 	WEB_SEARCH_TITLE_2_KEY_MAP[title] := key_name
 	WEB_SEARCH_TITLE_LIST.Insert(title)
 }
