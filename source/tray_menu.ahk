@@ -409,13 +409,13 @@ class xMenu
 
 
 Sub_xMenu_Open:
-; ActiveHwnd := WinExist("A")
-Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
-TrayMenu.update_tray_menu()
-Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
-; WinActivate
-; WinActivate, ahk_id %ActiveHwnd%	
-Return
+	; ActiveHwnd := WinExist("A")
+	Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
+	TrayMenu.update_tray_menu()
+	Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
+	; WinActivate
+	; WinActivate, ahk_id %ActiveHwnd%	
+	Return
 
 
 
@@ -444,7 +444,8 @@ TICK_HOT_CORNERS:
 HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
 	global LIMIT_MODE
 	if (IsFullscreen()) {
-		WinGetClass, class, A
+		; WinGetClass, class, A
+		; ToolTipWithTimer(class)
 		if (WinActive("ahk_class #32770")) {  ;; #32770是截图的ahk_class, 因为截图也是全屏模式, 所以要避免截图的时候进入limit_mode
 			Return
 		}
