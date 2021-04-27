@@ -356,13 +356,21 @@ class SuxCore
 
 		if(SuxCore.GetYamlCfg("web-search.enable", 0))
 		{
+			global WEB_SEARCH_LABEL_2_KEY_MAP
 			_temp_map := {"normal-search": "SearchHandler.search_gui_spawn", "search-selected-text":"WebSearchSelectedText"}
 			For key, value in SuxCore.GetYamlCfg("web-search.shortcut-key", {})
 				register_hotkey(value, _temp_map[key], "")
-			For key, value in SuxCore.GetYamlCfg("web-search.buildin", {})
+			For key, value in SuxCore.GetYamlCfg("web-search.buildin", {}) {
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
-			For key, value in SuxCore.GetYamlCfg("web-search.custom", {})
+				; _label := SuxCore.GetYamlCfg("web-search.buildin." key ".label", "")
+				; m("web-search.buildin." key ".label")
+				; WEB_SEARCH_LABEL_2_KEY_MAP[_label ? _label: key] :=  key
+			}
+			For key, value in SuxCore.GetYamlCfg("web-search.custom", {}) {
 				register_web_search(key, StrSplit(value, comma_delimiters_arr))
+				; _label := SuxCore.GetYamlCfg("web-search.buildin." key ".label", "")
+				; WEB_SEARCH_LABEL_2_KEY_MAP[_label ? _label: key] :=  key
+			}
 		}
 
 		if(SuxCore.GetYamlCfg("replace-text.enable", 0))
