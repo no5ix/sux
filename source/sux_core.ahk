@@ -183,11 +183,9 @@ class SuxCore
 	static stable_branch := "master"
 	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
 	;
-	static FeatureObj =
+	static UserYamlConfObj =
 	static version =
-	static UserData := {}
 	; callback
-	static OnExitCmd := []
 	static OnClipboardChangeCmd := []
 	static OnPauseCmd := []
 	static OnSuspendCmd := []
@@ -282,7 +280,7 @@ class SuxCore
 	GetYamlCfg(keyStr, default="")
 	{
 		keyArray := StrSplit(keyStr, ".")
-		obj := SuxCore.FeatureObj
+		obj := SuxCore.UserYamlConfObj
 		Loop, % keyArray.MaxIndex()-1
 		{
 			cur_key := keyArray[A_Index]
@@ -301,7 +299,7 @@ class SuxCore
 		if(!FileExist(this.conf_user_yaml_file)) {
 			FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
 		}
-		SuxCore.FeatureObj := Yaml(SuxCore.conf_user_yaml_file)
+		SuxCore.UserYamlConfObj := Yaml(SuxCore.conf_user_yaml_file)
 
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		

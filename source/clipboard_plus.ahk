@@ -30,31 +30,19 @@ Return
 
 class ClipboardPlus
 {
-	static ClsName := "clipboard-plus"
-	static ini_registered := 0
 	static Clips := []
-	static FavourClips := []
-	static BrowserArr := []
-	static BrowserItemName := ""
 	static SearchArr := []
 	static ClipsFirstShowNum = 
 	static ClipsTotalNum = 
 
 	init()
 	{
-		if (this.ini_registered == 1)
-			Return
 		SuxCore.OnClipboardChange("Sub_xClipboard_OnClipboardChange")
-		SuxCore.OnExit("Sub_xClipboard_OnExit")
 		this.Clips := SuxCore.UserData["xClipboard_Clips"]
-		this.FavourClips := SuxCore.UserData["xClipboard_FavourClips"]
 		this.ClipsFirstShowNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsFirstShowNum", 10)
 		this.ClipsTotalNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsTotalNum", 50)
 		if not IsObject(this.Clips)
 			this.Clips := []
-		if not IsObject(this.FavourClips)
-			this.FavourClips := []
-		this.ini_registered := 1
 	}
 
 	ShowAllClips()
@@ -152,6 +140,7 @@ paste_cur_selected_text(idx) {
 	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
 }
 
+
 ; All Clips Menu
 Sub_xClipboard_AllClips_Click:
 idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1
@@ -170,10 +159,6 @@ while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.Clips.MaxIndex() > Clipb
 	ClipboardPlus.Clips.Remove(1)
 Return
 
-Sub_xClipboard_OnExit:
-SuxCore.UserData["xClipboard_Clips"] := ClipboardPlus.Clips
-SuxCore.UserData["xClipboard_FavourClips"] := ClipboardPlus.FavourClips
-Return
 
 
 ; //////////////////////////////////////////////////////////////////////////
