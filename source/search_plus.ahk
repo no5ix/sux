@@ -210,19 +210,18 @@ class SearchPlus {
 		Menu, SearchSelectedText_Menu, Show
 	} 
 
-	handle_everything(pending_search_str)
-	{
-		m(pending_replace_str)
+	handle_everything(pending_search_str) {
 		; global WEB_SEARCH_TITLE_2_KEY_MAP
 		global WEB_SEARCH_KEY_2_URL_MAP
 		;;; everything search
 		; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-		everything_exe_path := WEB_SEARCH_KEY_2_URL_MAP["ev"]
+		everything_exe_path := WEB_SEARCH_KEY_2_URL_MAP["ev"][1]
 		run, %everything_exe_path%
-		m(pending_replace_str)
+		; m(everything_exe_path)
+		; m(pending_search_str)
 		WinWaitActive, ahk_exe Everything.exe, , 2.222
 		if ErrorLevel
-			MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+			MsgBox,,, please install Everything and set its path in conf.user.yaml
 		; else if (word_array[2]){
 		else if (pending_search_str){
 			
