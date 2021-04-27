@@ -25,7 +25,7 @@ web-search:
     Default:
       key: default
       url: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-    Google&Baidu:
+    Google & Baidu:
       key: bg
       url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     Google:

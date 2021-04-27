@@ -67,6 +67,7 @@ CMD_REGISTER_MAP := {}
 ; 记录web-search与对应操作
 WEB_SEARCH_REGISTER_MAP := {}
 WEB_SEARCH_TITLE_2_KEY_MAP := {}
+WEB_SEARCH_TITLE_LIST := []
 
 ; 记录theme与对应操作
 THEME_CONF_REGISTER_MAP := {}

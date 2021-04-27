@@ -47,24 +47,7 @@ class SearchHandler {
 		}
 		if (search_key == "") {
 			search_key := "default"
-
-		; if (search_key = "default") {
-			; for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
-			; 	; if (_index != search_flag_index) {
-			; 		SearchHandler.WebSearch(user_input, _elem)
-			; 		; Sleep, 666
-			; 	; }
-			; }
-			; return
-		; }
 		}
-
-		; search_flag_index = 1
-		; search_flag := WEB_SEARCH_REGISTER_MAP[search_key][search_flag_index]
-		; search_url := WEB_SEARCH_REGISTER_MAP[search_key]
-		; if (search_url.Length() == 1) {
-		; 	search_url := search_url[1]
-		; }
 		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key] {
 			; m(_index "//" search_url)
 			SearchHandler.WebSearchImpl(user_input, search_url)
@@ -72,11 +55,9 @@ class SearchHandler {
 		}
 	}
 
-	; WebSearchImpl(user_input, search_key="", search_url) {
 	WebSearchImpl(user_input, search_url) {
 		if (user_input == "") {	
 			if !InStr(search_url, "REPLACEME") {
-			; if (search_flag = "URL") {
 				Run %search_url%
 				return
 			} 
@@ -87,25 +68,7 @@ class SearchHandler {
 				domain_url := StringJoin("", ["http://", domain_url]*)
 			Run %domain_url%
 			return
-			; DebugPrintVal(pending_search_str)
-			; return
-			; pending_search_str := Clipboard
-			; if StrLen(pending_search_str) >= 88 {
-			; 	ToolTipWithTimer("ClipBoard string is too long. Please input some short pending search string.", 2222)
-			; 	search_gui_destroy()
-			; 	return
-			; }
 		}
-
-		; if (search_key = "default") {
-		; 	for _index, _elem in WEB_SEARCH_REGISTER_MAP[search_key] {
-		; 		; if (_index != search_flag_index) {
-		; 			SearchHandler.WebSearch(user_input, _elem)
-		; 			; Sleep, 666
-		; 		; }
-		; 	}
-		; 	return
-		; }
 
 		safe_query := UriEncode(Trim(user_input))
 		StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
@@ -212,55 +175,51 @@ class SearchHandler {
 		}
 
 		selected_text := GetCurSelectedText()
-		if !selected_text {
-			ToolTipWithTimer(lang("Please select something."))
-			Return
+		if selected_text {
+			; ToolTipWithTimer(lang("Please select something."))
+			; Return
+			Menu, SearchSelectedText_Menu, Add, % selected_text, Sub_Nothing
+			Menu, SearchSelectedText_Menu, Disable, % selected_text
+			Menu, SearchSelectedText_Menu, Add
 		}
-
-		Menu, SearchSelectedText_Menu, Add, % selected_text, Sub_Nothing
-		Menu, SearchSelectedText_Menu, Disable, % selected_text
-		Menu, SearchSelectedText_Menu, Add
 		
-		global WEB_SEARCH_TITLE_2_KEY_MAP
+		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR
-		index := 1
 		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
-		for title, key_name in WEB_SEARCH_TITLE_2_KEY_MAP {
+		for index, title in WEB_SEARCH_TITLE_LIST {
 			; m(title)
 			if (index <= shortcut_cnt) {
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, SearchSelectedText_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[index] ".      " title, SearchSelectedText_Menu_Click
+				Menu, SearchSelectedText_Menu, Add, % "&" . SHORTCUT_KEY_INDEX_ARR[index] ".  " StrReplace(title, "&", "&&"), SearchSelectedText_Menu_Click
 			}
 			Else {
-				Menu, SearchSelectedText_Menu_More, Add, % index ".      " title, SearchSelectedText_Menu_MoreClick
+				Menu, SearchSelectedText_Menu_More, Add, % index ".  " title, SearchSelectedText_Menu_MoreClick
 			}
-			index += 1
 		}
-		if (WEB_SEARCH_TITLE_2_KEY_MAP.Count() > shortcut_cnt)
+		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt)
 			Menu, SearchSelectedText_Menu, Add, % lang("More"), :SearchSelectedText_Menu_More
-
 		Menu, SearchSelectedText_Menu, Show
 	} 
-
 }
-
-
-
-; All Clips Menu
-SearchSelectedText_Menu_Click:
-; idx := WEB_SEARCH_TITLE_2_KEY_MAP.MaxIndex() - A_ThisMenuItemPos + 1
-SearchHandler.WebSearch(GetCurSelectedText(), WEB_SEARCH_TITLE_2_KEY_MAP[A_ThisMenuItem])
-Return
-
-SearchSelectedText_Menu_MoreClick:
-; idx := ClipboardPlus.Clips.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
-; paste_cur_selected_text(idx)
-SearchHandler.WebSearch(GetCurSelectedText(), WEB_SEARCH_TITLE_2_KEY_MAP[A_ThisMenuItem])
-Return
 
 
 Sub_Nothing:
 return
+
+SearchSelectedText_Menu_Click:
+cur_sel_text := GetCurSelectedText()
+dec_cnt := cur_sel_text ? 2 : 0
+; m(A_ThisMenuItemPos)
+; m(WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt])
+; m(WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
+SearchHandler.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
+Return
+
+SearchSelectedText_Menu_MoreClick:
+cur_sel_text := GetCurSelectedText()
+SearchHandler.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]])
+Return
+
 
 
 search_gui_destroy() {

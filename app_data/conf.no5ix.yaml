@@ -21,11 +21,10 @@ web-search:
     # normal-search: doublehit_ctrl
     normal-search: doublehit_alt
     search-selected-text: capslock_f
-  buildin:
     Default:
       key: default
       url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-    Google&Baidu:
+    Google & Baidu:
       key: bg
       url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     Google:
@@ -65,9 +64,6 @@ web-search:
       key: db
       url: 'https://www.douban.com/search?q=REPLACEME'
     Youku:
-      key: yk
-      url: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
-    Youkus:
       key: yk
       url: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
   custom:

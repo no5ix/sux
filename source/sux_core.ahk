@@ -456,8 +456,10 @@ register_web_search(title, key_name, action_array)
 {
 	global WEB_SEARCH_REGISTER_MAP
 	global WEB_SEARCH_TITLE_2_KEY_MAP
+	global WEB_SEARCH_TITLE_LIST
 	WEB_SEARCH_REGISTER_MAP[key_name] := action_array
 	WEB_SEARCH_TITLE_2_KEY_MAP[title] := key_name
+	WEB_SEARCH_TITLE_LIST.Insert(title)
 }
 
 register_replace_str(key_name, val)
