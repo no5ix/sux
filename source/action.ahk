@@ -5,7 +5,7 @@
 
 
 
-WebSearchSelectedText() {
+HandleSearchSelectedText() {
 	SearchPlus.ShowSelectedTextMenu()
 }
 

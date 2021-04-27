@@ -35,29 +35,34 @@ class SearchPlus {
 		; SetTimer, GuiEscape, -1666
 	}
 
-	WebSearch(user_input, search_key="") {
-		global WEB_SEARCH_REGISTER_MAP
-		if (user_input == "" && search_key == "")
+	HandleSearch(search_str, search_key="") {
+		global WEB_SEARCH_KEY_2_URL_MAP
+		if (search_str == "" && search_key == "")
 			return
+		if (search_key == "ev") {
+			SearchPlus.handle_everything(search_str)
+			return
+		}
+
 		; 当只填了 url 而没填 search_key 的时候
-		if (IsRawUrl(user_input) && search_key == "") {
-			if not IsStandardRawUrl(user_input)
-				user_input := StringJoin("", ["http://", user_input]*)
-			Run %user_input%
+		if (IsRawUrl(search_str) && search_key == "") {
+			if not IsStandardRawUrl(search_str)
+				search_str := StringJoin("", ["http://", search_str]*)
+			Run %search_str%
 			return
 		}
 		if (search_key == "") {
 			search_key := "default"
 		}
-		for _index, search_url in WEB_SEARCH_REGISTER_MAP[search_key] {
+		for _index, search_url in WEB_SEARCH_KEY_2_URL_MAP[search_key] {
 			; m(_index "//" search_url)
-			SearchPlus.WebSearchImpl(user_input, search_url)
+			SearchPlus.HandleSearchImpl(search_str, search_url)
 			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 		}
 	}
 
-	WebSearchImpl(user_input, search_url) {
-		if (user_input == "") {	
+	HandleSearchImpl(search_str, search_url) {
+		if (search_str == "") {	
 			if !InStr(search_url, "REPLACEME") {
 				Run %search_url%
 				return
@@ -71,7 +76,7 @@ class SearchPlus {
 			return
 		}
 
-		safe_query := UriEncode(Trim(user_input))
+		safe_query := UriEncode(Trim(search_str))
 		StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 		if not IsStandardRawUrl(search_final_url)
 			search_final_url := StringJoin("", ["http://", search_final_url]*)
@@ -124,14 +129,14 @@ class SearchPlus {
 
 		Gui, Font, s22, Segoe UI
 		; Gui, Font, s10, Segoe UI
-		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gHandleSearchGuiUserInput
+		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%
 
-		Gui, Add, Button, x-10 y-10 w1 h1 +default gHandleSearchGuiUserInput ; hidden button
+		Gui, Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
 
 		MouseGetPos, Mouse_x
 		yScrnOffset := A_ScreenHeight / 4
@@ -204,78 +209,69 @@ class SearchPlus {
 			Menu, SearchSelectedText_Menu, Add, % lang("More"), :SearchSelectedText_Menu_More
 		Menu, SearchSelectedText_Menu, Show
 	} 
-}
 
-
-Sub_Nothing:
-return
-
-SearchSelectedText_Menu_Click:
-cur_sel_text := GetCurSelectedText()
-dec_cnt := cur_sel_text ? 2 : 0
-; m(A_ThisMenuItemPos)
-; m(WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt])
-; m(WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
-SearchPlus.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
-Return
-
-SearchSelectedText_Menu_MoreClick:
-cur_sel_text := GetCurSelectedText()
-SearchPlus.WebSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]])
-Return
-
-
-
-search_gui_destroy() {
-	; Hide GUI
-	Gui, Destroy
-}
-
-
-;-------------------------------------------------------------------------------
-; GUI FUNCTIONS AND SUBROUTINES
-;-------------------------------------------------------------------------------
-; Automatically triggered on Escape key:
-GuiEscape:
-	search_gui_destroy()
-	return
-
-HandleSearchGuiUserInput:
-	Gui, Submit, NoHide
-
-	trim_gui_user_input := Trim(GuiUserInput)
-	last_search_str := trim_gui_user_input
-	search_gui_destroy()
-
-	if !trim_gui_user_input
+	handle_everything(pending_search_str)
 	{
+		m(pending_replace_str)
+		; global WEB_SEARCH_TITLE_2_KEY_MAP
+		global WEB_SEARCH_KEY_2_URL_MAP
+		;;; everything search
+		; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
+		everything_exe_path := WEB_SEARCH_KEY_2_URL_MAP["ev"]
+		run, %everything_exe_path%
+		m(pending_replace_str)
+		WinWaitActive, ahk_exe Everything.exe, , 2.222
+		if ErrorLevel
+			MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+		; else if (word_array[2]){
+		else if (pending_search_str){
+			
+			; pending_search_str := word_array[2]
+			; last_search_str := gui_user_input
+			; Sleep, 88
+			; SendRaw, %trim_gui_user_input%
+			; Sleep, 222
+			; SendRaw, %last_search_str%
+			Send, {Blind}{Text}%pending_search_str%
+		}
 	}
-	else
+
+	HandleSearchGuiUserInput(gui_user_input)
 	{
-		global CMD_REGISTER_MAP
-		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input) || SubStr(trim_gui_user_input, 1, 3) == "ev ")
+		global last_search_str
+		global WEB_SEARCH_KEY_2_URL_MAP
+		trim_gui_user_input := Trim(gui_user_input)
+		last_search_str := trim_gui_user_input
+
+		if !trim_gui_user_input
 		{
-			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			if (word_array[1] == "ev"){
-				;;; everything search
-				; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-				everything_exe_path := CMD_REGISTER_MAP["ev"][1]
-				run, %everything_exe_path%
-				WinWaitActive, ahk_exe Everything.exe, , 2.222
-				if ErrorLevel
-					MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-				else if (word_array[2]){
+			return
+		}
+		global CMD_REGISTER_MAP
+		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input))
+		{
+			; word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
+			; if (word_array[1] == "ev"){
+			; 	; ;;; everything search
+			; 	; ; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
+			; 	; everything_exe_path := CMD_REGISTER_MAP["ev"][1]
+			; 	; run, %everything_exe_path%
+			; 	; WinWaitActive, ahk_exe Everything.exe, , 2.222
+			; 	; if ErrorLevel
+			; 	; 	MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
+			; 	; else if (word_array[2]){
 					
-					pending_search_str := word_array[2]
-					; last_search_str := GuiUserInput
-					; Sleep, 88
-					; SendRaw, %trim_gui_user_input%
-					; Sleep, 222
-					; SendRaw, %last_search_str%
-					Send, {Blind}{Text}%pending_search_str%
-				}
-				return
-			}
+			; 	; 	pending_search_str := word_array[2]
+			; 	; 	; last_search_str := gui_user_input
+			; 	; 	; Sleep, 88
+			; 	; 	; SendRaw, %trim_gui_user_input%
+			; 	; 	; Sleep, 222
+			; 	; 	; SendRaw, %last_search_str%
+			; 	; 	Send, {Blind}{Text}%pending_search_str%
+			; 	; }
+			; 	SearchPlus.handle_everything(word_array[2])
+			; 	return
+			; }
 
 			; if (word_array[1] == "git" || word_array[1] == "cmd"){
 			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop", "git" : "cd ~/Desktop"}
@@ -308,15 +304,57 @@ HandleSearchGuiUserInput:
 		else
 		{
 			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			if WEB_SEARCH_REGISTER_MAP.HasKey(word_array[1]) {
-				SearchPlus.WebSearch(word_array[2], word_array[1])
+			if WEB_SEARCH_KEY_2_URL_MAP.HasKey(word_array[1]) {
+				SearchPlus.HandleSearch(word_array[2], word_array[1])
 			}
 			else {
-				SearchPlus.WebSearch(GuiUserInput)
+				SearchPlus.HandleSearch(gui_user_input)
 			}
 		}
 	}
 
+}
+
+
+Sub_Nothing:
+return
+
+SearchSelectedText_Menu_Click:
+cur_sel_text := GetCurSelectedText()
+dec_cnt := cur_sel_text ? 2 : 0
+; m(A_ThisMenuItemPos)
+; m(WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt])
+; m(WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
+SearchPlus.HandleSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
+Return
+
+SearchSelectedText_Menu_MoreClick:
+cur_sel_text := GetCurSelectedText()
+SearchPlus.HandleSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]])
+Return
+
+
+
+search_gui_destroy() {
+	; Hide GUI
+	Gui, Destroy
+}
+
+
+
+;-------------------------------------------------------------------------------
+; GUI FUNCTIONS AND SUBROUTINES
+;-------------------------------------------------------------------------------
+
+; Automatically triggered on Escape key:
+GuiEscape:
+	search_gui_destroy()
+	return
+
+Sub_HandleSearchGuiUserInput:
+	Gui, Submit, NoHide
+	search_gui_destroy()
+	SearchPlus.HandleSearchGuiUserInput(GuiUserInput)
 return
 
 
