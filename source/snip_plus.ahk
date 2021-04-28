@@ -42,6 +42,7 @@ class SnipPlus
 		; 	_old_temp_clip_file_size := 0
 		; }
 
+		clipboardOld := ClipboardAll
 		SnipPlus.AreaScreenShot()
 		; ClipWait, 2
 		; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
@@ -64,8 +65,14 @@ class SnipPlus
 		img_path := SnipPlus._TEMP_SNIP_IMG_DIR SnipPlus._TEMP_SNIP_IMG_PREFIX SnipPlus.temp_snip_img_index ".png"
 		SnipPlus.Convert(ClipboardAll, img_path)
 		
+		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+
+		if (!FileExist(img_path)) {
+			; m("not exi")
+			Return
+		}
 
 		cur_gui_name := "sux_snipshot_" . SnipPlus.temp_snip_img_index
 		Gui, %cur_gui_name%: New
