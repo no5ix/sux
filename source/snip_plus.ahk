@@ -24,13 +24,16 @@ class SnipPlus
 		FileCreateDir, % SnipPlus._TEMP_SNIP_IMG_DIR
 	}
 
+	AreaScreenShot()
+	{
+		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
+		DllCall(prscrn_param)
+	}
+
 	AreaScreenShotAndSuspend()
 	{
 		old_clipboard := Clipboard 
-
-		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
-		DllCall(prscrn_param)
-
+		SnipPlus.AreaScreenShot()
 		if (Clipboard == old_clipboard) {
 			return
 		}
