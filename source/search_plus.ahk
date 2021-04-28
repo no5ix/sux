@@ -283,9 +283,12 @@ class SearchPlus {
 				if (use_cur_path) {
 					Send, !d
 					final_cmd_str := StringJoin(" ", CMD_REGISTER_MAP[trim_gui_user_input]*) . "`n"
-					SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
+					; m(final_cmd_str)
+					; SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
 					; SendRaw, cmd
 					; Send, {Enter}
+					Send, {Blind}{Text}%final_cmd_str%
+					; SendRaw, %final_cmd_str%
 					return
 				}
 			}
@@ -298,7 +301,8 @@ class SearchPlus {
 				WinWaitActive, ahk_exe %file_name%,, 2222
 				if !ErrorLevel {
 					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[trim_gui_user_input] . "`n"
-					SendInput, %cd_user_desktop_cmd_input%
+					; SendInput, %cd_user_desktop_cmd_input%
+					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
 				}
 			}
 			; }
