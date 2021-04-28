@@ -75,6 +75,7 @@ class SnipPlus
 			DllCall( "DeleteObject", "Ptr",hBM )
 		}       
 		if (!FileExist(img_path)) {
+			ToolTipWithTimer("Save snipped pic failed.")
 			Return
 		}
 
