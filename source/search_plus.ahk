@@ -106,11 +106,11 @@ class SearchPlus {
 
 	search_gui_spawn(curr_select_text="") {
 		search_gui_destroy()
-		; curr_select_text := GetCurSelectedText()
+		curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
 		global last_search_str
-		last_search_str := curr_select_text ? curr_select_text : last_search_str
+		final_search_str := curr_select_text ? curr_select_text : last_search_str
 
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
@@ -132,9 +132,9 @@ class SearchPlus {
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
-		Gui, Add, Edit, %gui_control_options% vGuiUserInput, %last_search_str%
+		Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
-		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %last_search_str%
+		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 
 		Gui, Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
 
