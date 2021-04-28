@@ -182,8 +182,10 @@ class SearchPlus {
 
 		selected_text := GetCurSelectedText()
 		if selected_text {
-			Menu, SearchSelectedText_Menu, Add, % selected_text, Sub_Nothing
-			Menu, SearchSelectedText_Menu, Disable, % selected_text
+			sub_selected_text := SubStr(selected_text, 1, 2) . " ..."
+			; m(sub_selected_text)
+			Menu, SearchSelectedText_Menu, Add, % sub_selected_text, Sub_Nothing
+			Menu, SearchSelectedText_Menu, Disable, % sub_selected_text
 			Menu, SearchSelectedText_Menu, Add
 		}
 		
