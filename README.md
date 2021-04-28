@@ -256,7 +256,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add donate gui pic -->
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 - add more action
-- check update失败, 点击"取消"打开浏览器的时候有乱切换软件的bug
+<!-- - check update失败, 点击"取消"打开浏览器的时候有乱切换软件的bug -->
 <!-- - 限制menu宽度 -->
 <!-- - 看看caps+的词语替换如何做的 -->
 - 改default的上下左右快捷键
