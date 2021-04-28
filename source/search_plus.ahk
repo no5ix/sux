@@ -199,7 +199,7 @@ class SearchPlus {
 			if (index <= shortcut_cnt) {
 				_cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[index]
 				;; 如果快捷键为空格的话, 得特殊处理
-				_cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . lang("space") : _cur_shortcut_str
+				_cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
 				; m(_cur_shortcut_str)
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
 				Menu, SearchSelectedText_Menu, Add, % "&" . _cur_shortcut_str . dot_space_str . StrReplace(title, "&", "&&"), SearchSelectedText_Menu_Click
