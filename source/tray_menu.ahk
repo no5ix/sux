@@ -411,8 +411,11 @@ class xMenu
 Sub_xMenu_Open:
 	; ActiveHwnd := WinExist("A")
 	Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
-	TrayMenu.update_tray_menu()
+
+	;; 下面这两行不能调换顺序, 否则会有乱切换软件的bug
 	Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
+	TrayMenu.update_tray_menu()
+
 	; WinActivate
 	; WinActivate, ahk_id %ActiveHwnd%	
 	Return
