@@ -46,21 +46,21 @@ class SnipPlus
 		SnipPlus.AreaScreenShot()
 
 		; ; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
-		; ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为0, 也就是说没内容写入文件
-		; FileAppend, %ClipboardAll%, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
-		; FileGetSize, _new_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
+		; ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为一个较小的size, 也就是说没内容写入文件
+		FileAppend, %ClipboardAll%, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
+		FileGetSize, _new_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE, K
 
-		; if (_new_temp_clip_file_size == 0)
-		; {
-		; 	; m(_new_temp_clip_file_size)
-		; 	; m(_old_temp_clip_file_size)
-		; 	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-		; 	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-		; 	return
-		; }
+		if (_new_temp_clip_file_size < 6)  ;; 经测试, 小于6KB则说明用户没有截图
+		{
+			; m(_new_temp_clip_file_size)
+			; m(_old_temp_clip_file_size)
+			ToolTipWithTimer("Nothing snipped.")
+			Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+			clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+			return
+		}
 
 		hBM := SnipPlus.CB_hBMP_Get()  
-
 		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		clipboardOld := ""   ; Free the memory in case the clipboard was very large.
