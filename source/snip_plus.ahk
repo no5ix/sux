@@ -44,35 +44,37 @@ class SnipPlus
 
 		clipboardOld := ClipboardAll
 		SnipPlus.AreaScreenShot()
-		; ClipWait, 2
-		; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
-		 ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为0, 也就是说没内容写入文件
-		FileAppend, %ClipboardAll%, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
-		FileGetSize, _new_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 
-			; m(_old_temp_clip_file_size)
-			; m(_new_temp_clip_file_size)
-		; if (_new_temp_clip_file_size == _old_temp_clip_file_size)
-		; ToolTipWithTimer(_new_temp_clip_file_size)
-		if (_new_temp_clip_file_size == 0)
-		{
-			; m(_new_temp_clip_file_size)
-			; m(_old_temp_clip_file_size)
-			Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-			clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-			return
-		}
+		; ; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
+		; ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为0, 也就是说没内容写入文件
+		; FileAppend, %ClipboardAll%, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
+		; FileGetSize, _new_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 
-		SnipPlus.temp_snip_img_index += 1
-		img_path := SnipPlus._TEMP_SNIP_IMG_DIR SnipPlus._TEMP_SNIP_IMG_PREFIX SnipPlus.temp_snip_img_index ".png"
-		SnipPlus.Convert(ClipboardAll, img_path)
-		
+		; if (_new_temp_clip_file_size == 0)
+		; {
+		; 	; m(_new_temp_clip_file_size)
+		; 	; m(_old_temp_clip_file_size)
+		; 	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		; 	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+		; 	return
+		; }
+
+		hBM := SnipPlus.CB_hBMP_Get()  
+
 		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		clipboardOld := ""   ; Free the memory in case the clipboard was very large.
 
+		SnipPlus.temp_snip_img_index += 1
+		img_path := SnipPlus._TEMP_SNIP_IMG_DIR SnipPlus._TEMP_SNIP_IMG_PREFIX SnipPlus.temp_snip_img_index ".png"
+		
+		If (hBM) {
+			SnipPlus.GDIP("Startup")
+			SnipPlus.SavePicture(hBM, img_path) 
+			SnipPlus.GDIP("Shutdown")
+			DllCall( "DeleteObject", "Ptr",hBM )
+		}       
 		if (!FileExist(img_path)) {
-			; m("not exi")
 			Return
 		}
 
@@ -101,205 +103,47 @@ class SnipPlus
 
 		GuiControl, Focus, Close
 		MouseGetPos, Mouse_x, Mouse_y
-		Gui, Show, x%Mouse_x% y%Mouse_y%, % SnipPlus.temp_snip_img_index
+		final_x := Mouse_x - 88
+		final_y := Mouse_y - 8
+		Gui, Show, x%final_x% y%final_y%, % SnipPlus.temp_snip_img_index
 		; Gui, Show
 	}
 
-	;; 不推荐用这个, 透明的也母鸡到底是截了哪儿
-	CaptureScreenwithTransparentWindowsAndMouseCursor(aRect = 0, bCursor = False, sFile = "")
-	{
-		If	!aRect
-		{
-			SysGet, Mon, Monitor, 1
-			nL := MonLeft
-			nT := MonTop
-			nW := MonRight - MonLeft
-			nH := MonBottom - MonTop
-		}
-		Else If	aRect = 1
-			WinGetPos, nL, nT, nW, nH, A
-		Else If	aRect = 2
-		{
-			WinGet, hWnd, ID, A
-			VarSetCapacity(rt, 16, 0)
-			DllCall("GetClientRect" , "Uint", hWnd, "Uint", &rt)
-			DllCall("ClientToScreen", "Uint", hWnd, "Uint", &rt)
-			nL := NumGet(rt, 0, "int")
-			nT := NumGet(rt, 4, "int")
-			nW := NumGet(rt, 8)
-			nH := NumGet(rt,12)
-		}
-		Else If	aRect = 3
-		{
-			MouseGetPos, x1, y1
-			Sleep, 5000
-			MouseGetPos, x2, y2
-			nL := x1
-			nT := y1
-			nW := x2 - x1
-			nH := y2 - y1
-		}
-		Else
-		{
-			StringSplit, rt, aRect, `,, %A_Space%%A_Tab%
-			nL := rt1
-			nT := rt2
-			nW := rt3 - rt1
-			nH := rt4 - rt2
-			znW := rt5
-			znH := rt6
-		}
 
-		mDC := DllCall("CreateCompatibleDC", "Uint", 0)
-		hBM := SnipPlus.CreateDIBSection(mDC, nW, nH)
-		oBM := DllCall("SelectObject", "Uint", mDC, "Uint", hBM)
-		hDC := DllCall("GetDC", "Uint", 0)
-		DllCall("BitBlt", "Uint", mDC, "int", 0, "int", 0, "int", nW, "int", nH, "Uint", hDC, "int", nL, "int", nT, "Uint", 0x40000000 | 0x00CC0020)
-		DllCall("ReleaseDC", "Uint", 0, "Uint", hDC)
-		If	bCursor
-			SnipPlus.CaptureCursor(mDC, nL, nT)
-		DllCall("SelectObject", "Uint", mDC, "Uint", oBM)
-		DllCall("DeleteDC", "Uint", mDC)
-		If	znW && znH
-			hBM := SnipPlus.Zoomer(hBM, nW, nH, znW, znH)
-		If	sFile = 0
-			SnipPlus.SetClipboardData(hBM)
-		Else	SnipPlus.Convert(hBM, sFile), DllCall("DeleteObject", "Uint", hBM)
+	;; https://www.autohotkey.com/boards/viewtopic.php?t=67716
+	CB_hBMP_Get() {  ;;                                                  ; By SKAN on D293 @ bit.ly/2L81pmP
+		Local OK := [0,0,0,0]
+			OK.1 := DllCall( "OpenClipboard", "Ptr",0 )
+		OK.2 := OK.1 ? DllCall( "IsClipboardFormatAvailable", "UInt",8 ) : 0  ; CF_BITMAP
+		OK.3 := OK.2 ? DllCall( "GetClipboardData", "UInt", 2, "Ptr" )   : 0
+		OK.4 := OK.1 ? DllCall( "CloseClipboard" ) : 0  
+		Return OK.3 ? DllCall( "CopyImage", "Ptr",OK.3, "Int",0, "Int",0, "Int",0, "UInt",0x200C, "Ptr" )
+				+ ( ErrorLevel := 0 ) : ( ErrorLevel := !OK.2 ? 1 : 2 ) >> 2          
 	}
 
-	CaptureCursor(hDC, nL, nT)
-	{
-		VarSetCapacity(mi, 20, 0)
-		mi := Chr(20)
-		DllCall("GetCursorInfo", "Uint", &mi)
-		bShow   := NumGet(mi, 4)
-		hCursor := NumGet(mi, 8)
-		xCursor := NumGet(mi,12)
-		yCursor := NumGet(mi,16)
+	SavePicture(hBM, sFile) {
+		Local V,  pBM := VarSetCapacity(V,16,0)>>8,  Ext := LTrim(SubStr(sFile,-3),"."),  E := [0,0,0,0]
+		Local Enc := 0x557CF400 | Round({"bmp":0, "jpg":1,"jpeg":1,"gif":2,"tif":5,"tiff":5,"png":6}[Ext])
+		E[1] := DllCall("gdi32\GetObjectType", "Ptr",hBM ) <> 7
+		E[2] := E[1] ? 0 : DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Ptr",hBM, "UInt",0, "PtrP",pBM)
+		NumPut(0x2EF31EF8,NumPut(0x0000739A,NumPut(0x11D31A04,NumPut(Enc+0,V,"UInt"),"UInt"),"UInt"),"UInt")
+		E[3] := pBM ? DllCall("gdiplus\GdipSaveImageToFile", "Ptr",pBM, "WStr",sFile, "Ptr",&V, "UInt",0) : 1
+		E[4] := pBM ? DllCall("gdiplus\GdipDisposeImage", "Ptr",pBM) : 1
+		Return E[1] ? 0 : E[2] ? -1 : E[3] ? -2 : E[4] ? -3 : 1  
+	} 
 
-		VarSetCapacity(ni, 20, 0)
-		DllCall("GetIconInfo", "Uint", hCursor, "Uint", &ni)
-		xHotspot := NumGet(ni, 4)
-		yHotspot := NumGet(ni, 8)
-		hBMMask  := NumGet(ni,12)
-		hBMColor := NumGet(ni,16)
-
-		If	bShow
-			DllCall("DrawIcon", "Uint", hDC, "int", xCursor - xHotspot - nL, "int", yCursor - yHotspot - nT, "Uint", hCursor)
-		If	hBMMask
-			DllCall("DeleteObject", "Uint", hBMMask)
-		If	hBMColor
-			DllCall("DeleteObject", "Uint", hBMColor)
+	GDIP(C:="Startup") {
+		Static SI:=Chr(!(VarSetCapacity(Si,24,0)>>16)), pToken:=0, hMod:=0, Res:=0, AOK:=0
+		If (AOK := (C="Startup" and pToken=0) Or (C<>"Startup" and pToken<>0))  {
+			If (C="Startup") {
+					hMod := DllCall("LoadLibrary", "Str","gdiplus.dll", "Ptr")
+					Res  := DllCall("gdiplus\GdiplusStartup", "PtrP",pToken, "Ptr",&SI, "UInt",0)
+			} Else { 
+					Res  := DllCall("gdiplus\GdiplusShutdown", "Ptr",pToken )
+					DllCall("FreeLibrary", "Ptr",hMod),   hMod:=0,   pToken:=0
+		}}  
+		Return (AOK ? !Res : Res:=0)    
 	}
-
-	Zoomer(hBM, nW, nH, znW, znH)
-	{
-		mDC1 := DllCall("CreateCompatibleDC", "Uint", 0)
-		mDC2 := DllCall("CreateCompatibleDC", "Uint", 0)
-		zhBM := SnipPlus.CreateDIBSection(mDC2, znW, znH)
-		oBM1 := DllCall("SelectObject", "Uint", mDC1, "Uint",  hBM)
-		oBM2 := DllCall("SelectObject", "Uint", mDC2, "Uint", zhBM)
-		DllCall("SetStretchBltMode", "Uint", mDC2, "int", 4)
-		DllCall("StretchBlt", "Uint", mDC2, "int", 0, "int", 0, "int", znW, "int", znH, "Uint", mDC1, "int", 0, "int", 0, "int", nW, "int", nH, "Uint", 0x00CC0020)
-		DllCall("SelectObject", "Uint", mDC1, "Uint", oBM1)
-		DllCall("SelectObject", "Uint", mDC2, "Uint", oBM2)
-		DllCall("DeleteDC", "Uint", mDC1)
-		DllCall("DeleteDC", "Uint", mDC2)
-		DllCall("DeleteObject", "Uint", hBM)
-		Return	zhBM
-	}
-
-	Convert(sFileFr = "", sFileTo = "")
-	{
-		If	sFileTo  =
-			sFileTo := A_ScriptDir . "\screen.bmp"
-		SplitPath, sFileTo, , sDirTo, sExtTo, sNameTo
-
-		If Not	hGdiPlus := DllCall("LoadLibrary", "str", "gdiplus.dll")
-			Return	sFileFr+0 ? SnipPlus.SaveHBITMAPToFile(sFileFr, sDirTo . "\" . sNameTo . ".bmp") : ""
-		VarSetCapacity(si, 16, 0), si := Chr(1)
-		DllCall("gdiplus\GdiplusStartup", "UintP", pToken, "Uint", &si, "Uint", 0)
-
-		If	!sFileFr
-		{
-			DllCall("OpenClipboard", "Uint", 0)
-			If	 DllCall("IsClipboardFormatAvailable", "Uint", 2) && (hBM:=DllCall("GetClipboardData", "Uint", 2))
-			DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Uint", hBM, "Uint", 0, "UintP", pImage)
-			DllCall("CloseClipboard")
-		}
-		Else If	sFileFr Is Integer
-			DllCall("gdiplus\GdipCreateBitmapFromHBITMAP", "Uint", sFileFr, "Uint", 0, "UintP", pImage)
-		Else	DllCall("gdiplus\GdipLoadImageFromFile", "Uint", SnipPlus.Unicode4Ansi(wFileFr,sFileFr), "UintP", pImage)
-
-		DllCall("gdiplus\GdipGetImageEncodersSize", "UintP", nCount, "UintP", nSize)
-		VarSetCapacity(ci, nSize)
-		DllCall("gdiplus\GdipGetImageEncoders", "Uint", nCount, "Uint", nSize, "Uint", &ci)
-		Loop,	%nCount%
-		{
-			If	!InStr(SnipPlus.Ansi4Unicode(NumGet(ci, 76 * (A_Index - 1) + 44)), "." . sExtTo)
-				Continue
-			pCodec := &ci + 76 * (A_Index - 1)
-				Break
-		}
-
-		If	pImage
-			pCodec	? DllCall("gdiplus\GdipSaveImageToFile", "Uint", pImage, "Uint", SnipPlus.Unicode4Ansi(wFileTo,sFileTo), "Uint", pCodec, "Uint", 0) : DllCall("gdiplus\GdipCreateHBITMAPFromBitmap", "Uint", pImage, "UintP", hBitmap, "Uint", 0) . SnipPlus.SetClipboardData(hBitmap), DllCall("gdiplus\GdipDisposeImage", "Uint", pImage)
-
-		DllCall("gdiplus\GdiplusShutdown" , "Uint", pToken)
-		DllCall("FreeLibrary", "Uint", hGdiPlus)
-	}
-
-	CreateDIBSection(hDC, nW, nH, bpp = 32, ByRef pBits = "")
-	{
-		NumPut(VarSetCapacity(bi, 40, 0), bi)
-		NumPut(nW, bi, 4)
-		NumPut(nH, bi, 8)
-		NumPut(bpp, NumPut(1, bi, 12, "UShort"), 0, "Ushort")
-		NumPut(0,  bi,16)
-		Return	DllCall("gdi32\CreateDIBSection", "Uint", hDC, "Uint", &bi, "Uint", 0, "UintP", pBits, "Uint", 0, "Uint", 0)
-	}
-
-	SaveHBITMAPToFile(hBitmap, sFile)
-	{
-		DllCall("GetObject", "Uint", hBitmap, "int", VarSetCapacity(oi,84,0), "Uint", &oi)
-		hFile:=	DllCall("CreateFile", "Uint", &sFile, "Uint", 0x40000000, "Uint", 0, "Uint", 0, "Uint", 2, "Uint", 0, "Uint", 0)
-		DllCall("WriteFile", "Uint", hFile, "int64P", 0x4D42|14+40+NumGet(oi,44)<<16, "Uint", 6, "UintP", 0, "Uint", 0)
-		DllCall("WriteFile", "Uint", hFile, "int64P", 54<<32, "Uint", 8, "UintP", 0, "Uint", 0)
-		DllCall("WriteFile", "Uint", hFile, "Uint", &oi+24, "Uint", 40, "UintP", 0, "Uint", 0)
-		DllCall("WriteFile", "Uint", hFile, "Uint", NumGet(oi,20), "Uint", NumGet(oi,44), "UintP", 0, "Uint", 0)
-		DllCall("CloseHandle", "Uint", hFile)
-	}
-
-	SetClipboardData(hBitmap)
-	{
-		DllCall("GetObject", "Uint", hBitmap, "int", VarSetCapacity(oi,84,0), "Uint", &oi)
-		hDIB :=	DllCall("GlobalAlloc", "Uint", 2, "Uint", 40+NumGet(oi,44))
-		pDIB :=	DllCall("GlobalLock", "Uint", hDIB)
-		DllCall("RtlMoveMemory", "Uint", pDIB, "Uint", &oi+24, "Uint", 40)
-		DllCall("RtlMoveMemory", "Uint", pDIB+40, "Uint", NumGet(oi,20), "Uint", NumGet(oi,44))
-		DllCall("GlobalUnlock", "Uint", hDIB)
-		DllCall("DeleteObject", "Uint", hBitmap)
-		DllCall("OpenClipboard", "Uint", 0)
-		DllCall("EmptyClipboard")
-		DllCall("SetClipboardData", "Uint", 8, "Uint", hDIB)
-		DllCall("CloseClipboard")
-	}
-
-	Unicode4Ansi(ByRef wString, sString)
-	{
-		nSize := DllCall("MultiByteToWideChar", "Uint", 0, "Uint", 0, "Uint", &sString, "int", -1, "Uint", 0, "int", 0)
-		VarSetCapacity(wString, nSize * 2)
-		DllCall("MultiByteToWideChar", "Uint", 0, "Uint", 0, "Uint", &sString, "int", -1, "Uint", &wString, "int", nSize)
-		Return	&wString
-	}
-
-	Ansi4Unicode(pString)   
-	{
-		nSize := DllCall("WideCharToMultiByte", "Uint", 0, "Uint", 0, "Uint", pString, "int", -1, "Uint", 0, "int",  0, "Uint", 0, "Uint", 0)
-		VarSetCapacity(sString, nSize)
-		DllCall("WideCharToMultiByte", "Uint", 0, "Uint", 0, "Uint", pString, "int", -1, "str", sString, "int", nSize, "Uint", 0, "Uint", 0)
-		Return	sString
-	}   
 }
 
 
@@ -313,22 +157,3 @@ SUB_CLICK_SNIP_IMG:
 	else
 		WinSet, Transparent, 22
 	Return
-
-
-; SUB_SNIP_FULL_SCREEN:
-; ; #n::
-; 	Name=%A_Now%
-; 	SnipPlus.CaptureScreenwithTransparentWindowsAndMouseCursor(0,0,"Screen.PNG")
-; 	FileMove, Screen.PNG,E:\My Documents\My Pictures\Screenshots\%Name%.PNG
-; 	SnipPlus.Convert(ClipboardAll, "Screen1.PNG")
-; 	Return
-
-
-; SUB_SNIP_AREA:
-; ; #j::
-; 	CoordMode, Mouse, Screen
-; 	SnipPlus.CaptureScreenwithTransparentWindowsAndMouseCursor(3,0,"Screen.PNG")
-; 	Name=%A_Now%
-; 	FileMove, Screen.PNG,E:\My Documents\My Pictures\Screenshots\%Name%.PNG
-; 	CoordMode, Mouse, Relative
-; 	Return
