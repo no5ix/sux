@@ -77,7 +77,7 @@ ReplaceSelectedText() {
 	; Send, ^a
 	; Sleep, 66
 	; Send, ^c
-	Clipboard:=""
+	Clipboard := ""
     SendInput, ^{insert}
     ClipWait, 0.1
 	; Sleep, 66
