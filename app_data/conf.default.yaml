@@ -157,7 +157,7 @@ capslock_plus:
   buildin:
     # capslock: 'send {Esc}'
     capslock_tab: ScreenShot
-    capslock_shift_tab: ScreenShotAndSuspend
+    capslock_alt_tab: ScreenShotAndSuspend
     capslock_`: SwitchCapsState
     capslock_c: 'send ^/'
     capslock_v: 'send +6'
