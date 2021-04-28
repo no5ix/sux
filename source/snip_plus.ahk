@@ -58,6 +58,8 @@ class SnipPlus
 		{
 			; m(_new_temp_clip_file_size)
 			; m(_old_temp_clip_file_size)
+			Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+			clipboardOld := ""   ; Free the memory in case the clipboard was very large.
 			return
 		}
 
