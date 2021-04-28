@@ -1,6 +1,7 @@
 ﻿#Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\search_plus.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
+#Include %A_ScriptDir%\source\snip_plus.ahk
 
 
 
@@ -44,6 +45,10 @@ StartSuxAhkWithWin() {
 	}
 }
 
+
+ScreenShot() {
+	SnipPlus.AreaScreenShotAndSuspend()
+}
 
 ReplaceCurrentLineText() {
 	; result := (JsEval.eval("jsfunc_date()"))
@@ -208,12 +213,6 @@ SwitchCapsState() {
     {
         SetCapsLockState, AlwaysOn
     }
-}
-
-ScreenShot() {
-    ; ; screen capture
-    param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
-    DllCall(param)
 }
 
 

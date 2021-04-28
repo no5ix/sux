@@ -37,6 +37,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 #Include %A_ScriptDir%\source\search_plus.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
+#Include %A_ScriptDir%\source\snip_plus.ahk
 
 
 
@@ -189,6 +190,7 @@ class SuxCore
 	static OnClipboardChangeCmd := []
 	static OnPauseCmd := []
 	static OnSuspendCmd := []
+	static OnExitCmd := []
 	; static var
 	static ProgramName := "sux"
 	static Default_lang := "cn"
@@ -211,15 +213,25 @@ class SuxCore
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
 		this.HandleConfYaml()
+
+		; register onexit sub
+		OnExit, Sub_OnExit
+
 		SuxCore.version := SuxCore.get_local_ver()
 		global CHECK_UPDATE_CALLER_LAUNCH
 		CheckUpdate(CHECK_UPDATE_CALLER_LAUNCH)
 
 		ClipboardPlus.init()
-		; WinMenu.init()
 		TrayMenu.init()
 		SearchPlus.init()
 		JsEval.init()
+		SnipPlus.init()
+	}
+
+	; callback register
+	OnExit(func)
+	{
+		this.OnExitCmd.Insert(func)
 	}
 
 	check_update_from_tray()
@@ -773,6 +785,9 @@ border_event_evoke()
 
 
 
+Sub_OnExit:
+RunArr(SuxCore.OnExitCmd)
+ExitApp
 
 
 ; //////////////////////////////////////////////////////////////////////////

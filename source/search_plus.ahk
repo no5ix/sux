@@ -305,7 +305,6 @@ class SearchPlus {
 					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
 				}
 			}
-			; }
 		}
 		else
 		{
