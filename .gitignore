@@ -1,12 +1,8 @@
 .vscode/
 build/
+temp_snip_dir/
 
-user_extension.ahk
 conf.user.yaml
 remote_ver.ini
 data.ini
 sux.exe
-
-temp_snip_dir/
-temp_snip_*.png
-temp_clipboard_*.clip
