@@ -47,6 +47,10 @@ StartSuxAhkWithWin() {
 
 
 ScreenShot() {
+	SnipPlus.AreaScreenShot()
+}
+
+ScreenShotAndSuspend() {
 	SnipPlus.AreaScreenShotAndSuspend()
 }
 
