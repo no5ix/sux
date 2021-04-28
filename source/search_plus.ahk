@@ -195,6 +195,7 @@ class SearchPlus {
 		dot_space_str := ".`t"
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			; m(title)
+			; Menu, SearchSelectedText_Menu, Add
 			if (index <= shortcut_cnt) {
 				_cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[index]
 				;; 如果快捷键为空格的话, 得特殊处理
