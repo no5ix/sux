@@ -178,7 +178,7 @@ StrPutVar(Str, ByRef Var, Enc = "")
 GetCurSelectedText() {
 	clipboardOld := ClipboardAll            ; backup clipboard
 	; Send, ^c
-	Clipboard:=""
+	Clipboard := ""
     SendInput, ^{insert}
     ClipWait, 0.1
 	; Sleep, 66
@@ -186,17 +186,15 @@ GetCurSelectedText() {
 	; Loop % Array.MaxIndex()   ; More traditional approach.
 	if(!ErrorLevel) {
 		; Sleep, 66                             ; copy selected text to clipboard
-		if (Clipboard != clipboardOld) {
-			cur_selected_text := Clipboard                ; store selected text
-			Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-			clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-			StringRight, lastChar, cur_selected_text, 1
-			if(Asc(lastChar)!=10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
-			{
-				return cur_selected_text
-			}
+		cur_selected_text := Clipboard                ; store selected text
+		StringRight, lastChar, cur_selected_text, 1
+		if(Asc(lastChar)!=10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
+		{
+			return cur_selected_text
 		}
 	}
+	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
 	return
 }
 
