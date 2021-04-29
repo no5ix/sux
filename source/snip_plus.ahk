@@ -86,8 +86,10 @@ class SnipPlus
 		Gui, Margin, 0, 0
 
 		; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
+		; ; CustomColor := "White"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
 		; Gui +LastFound  ; 避免显示任务栏按钮和 alt-tab 菜单项.
 		; Gui, Color, %CustomColor%
+		; WinSet, TransColor, Off
 		; WinSet, TransColor, %CustomColor% 150
 
 		; Gui +LastFound  ; 
@@ -150,11 +152,31 @@ class SnipPlus
 
 
 SUB_CLICK_SNIP_IMG:
-	; m("clikkkkkkk")
 	Gui +LastFound  ; 
 	WinGet, cur_transparent_level, Transparent
 	if (cur_transparent_level < 255)
 		WinSet, Transparent, 255
 	else
 		WinSet, Transparent, 22
+
+	; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
+	; ; CustomColor := "White"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
+	; Gui +LastFound  ; 避免显示任务栏按钮和 alt-tab 菜单项.
+	; ; Gui, Color, %CustomColor%
+	; WinSet, TransColor, Off
+	; WinSet, TransColor, %CustomColor% 150
+
+	; Gui +LastFound  ; 
+	; MouseGetPos, MouseX, MouseY
+	; PixelGetColor, MouseRGB, %MouseX%, %MouseY%, RGB
+	; ; 似乎有必要首先关闭任何现有的透明度:
+	; WinSet, TransColor, Off
+	; WinSet, TransColor, %MouseRGB%
+	
+	; MouseGetPos, MouseX, MouseY, MouseWin
+	; PixelGetColor, MouseRGB, %MouseX%, %MouseY%, RGB
+	; ; 似乎有必要首先关闭任何现有的透明度:
+	; WinSet, TransColor, Off, ahk_id %MouseWin%
+	; WinSet, TransColor, %MouseRGB% 66, ahk_id %MouseWin%
+
 	Return
