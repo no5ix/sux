@@ -19,8 +19,8 @@ search-plus:
   enable: 1
   shortcut-key: 
     # normal-search: doublehit_ctrl
-    normal-search: capslock_w
-    search-selected-text: capslock_alt_w
+    normal-search: capslock_q
+    search-selected-text: capslock_alt_q
   buildin:
     _Default:
       key: default
@@ -156,8 +156,8 @@ capslock_plus:
   enable: 1
   buildin:
     # capslock: 'send {Esc}'
-    capslock_q: ScreenShot
-    capslock_alt_q: ScreenShotAndSuspend
+    capslock_w: ScreenShot
+    capslock_alt_w: ScreenShotAndSuspend
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_alt_v: 'send +6'

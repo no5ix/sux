@@ -20,8 +20,8 @@ search-plus:
   shortcut-key: 
     # normal-search: doublehit_ctrl
     # normal-search: doublehit_alt
-    normal-search: capslock_w
-    search-selected-text: capslock_shift_w
+    normal-search: capslock_f
+    search-selected-text: capslock_shift_f
   buildin:
     _Default:
       key: default
@@ -151,14 +151,12 @@ capslock_plus:
   enable: 1
   buildin:
     capslock: 'send {Esc}'
-    capslock_q: ScreenShot
-    capslock_shift_q: ScreenShotAndSuspend
+    capslock_w: ScreenShot
+    capslock_shift_w: ScreenShotAndSuspend
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_shift_v: 'send +6'
     #
-    capslock_f: 'send ^f'
-    capslock_shift_f: 'send ^!f'
     capslock_c: 'send ^/'
     capslock_e: 'send {Enter}'
     capslock_s: 'send +4'
