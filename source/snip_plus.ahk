@@ -29,6 +29,8 @@ class SnipPlus
 	AreaScreenShot()
 	{
 		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
+		; prscrn_param = %A_ScriptDir%\app_data\TXGYMailCamera.dll\CameraWindow
+		; prscrn_param = %A_ScriptDir%\app_data\PrScrn2.dll\PrScrn
 		DllCall(prscrn_param)
 	}
 
