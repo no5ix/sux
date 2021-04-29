@@ -105,7 +105,13 @@ class SearchPlus {
 
 
 	search_gui_spawn(curr_select_text="") {
-		search_gui_destroy()
+		; search_gui_destroy()
+		static hMyGUI =
+		if (WinExist("ahk_id " hMyGUI)) {
+			; ToolTipWithTimer(hmyGUI)
+			WinActivate, ahk_id %hMyGUI%
+			Return
+		}
 		curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
@@ -113,7 +119,7 @@ class SearchPlus {
 		final_search_str := curr_select_text ? curr_select_text : last_search_str
 
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
-		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI 
+		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI
 		Gui, Margin, 0, 0
 
 		cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
@@ -161,10 +167,10 @@ class SearchPlus {
 			Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 		}
 
-		auto_destory_gui_period := -22222  ; millisecond
+		global auto_destory_search_plus_gui_period
 		; gui_des := ObjBindMethod(this, "search_gui_destroy")  ; 不建议用这个, 这个不会顶掉原先search_gui_destroy的timer的
 		; SetTimer, % gui_des, %auto_destory_gui_period%
-		SetTimer, search_gui_destroy, %auto_destory_gui_period%
+		SetTimer, search_gui_destroy, %auto_destory_search_plus_gui_period%
 		return
 	}
 
