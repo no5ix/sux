@@ -136,9 +136,15 @@ class ClipboardPlus
 paste_cur_selected_text(idx) {
 	cur_selected_str :=ClipboardPlus.ClipboardHistoryArr[idx][1]
 	ClipSaved := ClipboardAll 
+	Clipboard := ""
 	Clipboard := cur_selected_str   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
-	Sleep, 66                             ; copy selected text to clipboard-plus
-	Send, ^v
+    ClipWait, 0.1
+	; Sleep, 66
+	; Read from the array:
+	; Loop % Array.MaxIndex()   ; More traditional approach.
+	if(!ErrorLevel) {
+		Send, ^v
+	}
 	Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
 	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
 }

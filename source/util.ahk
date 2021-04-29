@@ -186,14 +186,6 @@ StrPutVar(Str, ByRef Var, Enc = "")
 }
 
 
-; PasteCompatibleWithAutoSelectionCopy() {
-;     if (enable_auto_selection_copy)
-;         Send, #v
-;     else
-;         Send, ^v
-; }
-
-
 ; Which can be used like this:
 ; MsgBox % StringJoin("`n", "one", "two", "three") 
 ; substrings := ["one", "two", "three"]
@@ -209,6 +201,7 @@ clipboard_guard(func_name, args*) {
 	global SHOULD_IGNORE_CLIPBOARD_CHANGE
 	SHOULD_IGNORE_CLIPBOARD_CHANGE := 1
 	ret := run(func_name, args*)
+	Sleep, 111 ;; 拖延一下, 等OnClipboardChange先跑
 	SHOULD_IGNORE_CLIPBOARD_CHANGE := 0
 	return ret
 }
