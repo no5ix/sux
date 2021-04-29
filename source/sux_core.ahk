@@ -284,9 +284,9 @@ class SuxCore
 		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
 	}
 
-	on_clipboard_change(func)
+	register_clip_change_func(func)
 	{
-		this.OnClipboardChangeCmd.Insert(func)
+		this.OnClipboardChangeCmd.Push(func)
 	}
 
 	GetYamlCfg(keyStr, default="")
@@ -786,12 +786,23 @@ border_event_evoke()
 
 
 ; event callback
+; OnClipboardChange("ClipChanged")
+; return
+
+; ClipChanged(Type) {
+; 	RunArr(SuxCore.OnClipboardChangeCmd)	
+;     ; ToolTip Clipboard data type: %Type%
+;     ; Sleep 1000
+;     ; ToolTip  ; Turn off the tip.
+; }
+
 OnClipboardChange:
 ; Sleep, 888  ;; 拖延一下, 方便等clipboard_guard把SHOULD_IGNORE_CLIPBOARD_CHANGE 置为0了之后再跑
-global SHOULD_IGNORE_CLIPBOARD_CHANGE
-; ToolTipWithTimer(SHOULD_IGNORE_CLIPBOARD_CHANGE)
-if (SHOULD_IGNORE_CLIPBOARD_CHANGE == 1)
-	Return
+; global SHOULD_IGNORE_CLIPBOARD_CHANGE
+; ToolTipWithTimer(SHOULD_IGNORE_CLIPBOARD_CHANGE, 2222)
+; if (SHOULD_IGNORE_CLIPBOARD_CHANGE == 1)
+; 	Return
+
 RunArr(SuxCore.OnClipboardChangeCmd)
 Return
 
