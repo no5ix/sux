@@ -284,7 +284,7 @@ class SuxCore
 		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
 	}
 
-	OnClipboardChange(func)
+	on_clipboard_change(func)
 	{
 		this.OnClipboardChangeCmd.Insert(func)
 	}
@@ -783,6 +783,12 @@ border_event_evoke()
 		return true
 }
 
+
+
+; event callback
+OnClipboardChange:
+RunArr(SuxCore.OnClipboardChangeCmd)
+Return
 
 
 Sub_OnExit:

@@ -21,12 +21,6 @@ Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 #Include %A_ScriptDir%\source\util.ahk
 
 
-; event callback
-OnClipboardChange:
-RunArr(SuxCore.OnClipboardChangeCmd)
-Return
-
-
 
 class ClipboardPlus
 {
@@ -35,7 +29,7 @@ class ClipboardPlus
 
 	init()
 	{
-		SuxCore.OnClipboardChange("Sub_xClipboard_OnClipboardChange")
+		SuxCore.on_clipboard_change("Sub_ClipboardPlus_OnClipboardChange")
 		this.ClipsTotalNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsTotalNum", 50)
 	}
 
@@ -76,11 +70,11 @@ class ClipboardPlus
 				; 	final_str := "&" . _cur_shortcut_str . dot_space_str . clip_text
 				; }
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, Clipborad_Plus_Menu, Add, % menu_shortcut_str, Sub_xClipboard_AllClips_Click
-				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " clip_text, Sub_xClipboard_AllClips_Click
+				Menu, Clipborad_Plus_Menu, Add, % menu_shortcut_str, Sub_ClipboardPlus_AllClips_Click
+				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " clip_text, Sub_ClipboardPlus_AllClips_Click
 			}
 			Else {
-				Menu, Clipborad_Plus_Menu_More, Add, % A_Index . dot_space_str . clip_text, Sub_xClipboard_AllClips_MoreClick
+				Menu, Clipborad_Plus_Menu_More, Add, % A_Index . dot_space_str . clip_text, Sub_ClipboardPlus_AllClips_MoreClick
 			}
 		}
 		if (clipboard_history_cnt > shortcut_cnt)
@@ -140,6 +134,9 @@ class ClipboardPlus
 
 
 paste_cur_selected_text(idx) {
+	global SHOULD_IGNORE_CLIPBOARD_CHANGE
+	SHOULD_IGNORE_CLIPBOARD_CHANGE := 1
+
 	cur_selected_str :=ClipboardPlus.ClipboardHistoryArr[idx][1]
 	ClipSaved := ClipboardAll 
 	Clipboard := cur_selected_str   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
@@ -147,22 +144,24 @@ paste_cur_selected_text(idx) {
 	Send, ^v
 	Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
 	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
+	
+	SHOULD_IGNORE_CLIPBOARD_CHANGE := 0
 }
 
 
 ; All ClipboardHistoryArr Menu
-Sub_xClipboard_AllClips_Click:
+Sub_ClipboardPlus_AllClips_Click:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 paste_cur_selected_text(idx)
 Return
 
-Sub_xClipboard_AllClips_MoreClick:
+Sub_ClipboardPlus_AllClips_MoreClick:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
 paste_cur_selected_text(idx)
 Return
 
 ; OnEvent
-Sub_xClipboard_OnClipboardChange:
+Sub_ClipboardPlus_OnClipboardChange:
 ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, Clipboard)
 while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.ClipboardHistoryArr.MaxIndex() > ClipboardPlus.ClipsTotalNum)
 	ClipboardPlus.ClipboardHistoryArr.Remove(1)
