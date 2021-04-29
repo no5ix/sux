@@ -76,10 +76,6 @@ ReplaceCurrentLineText() {
 }
 
 ReplaceSelectedText() {
-	clipboard_guard("ReplaceSelectedText_Impl")
-}
-
-ReplaceSelectedText_Impl() {
 	global STR_REPLACE_CONF_REGISTER_MAP
 	; store the number of replacements that occurred (0 if none).
 	replace_sum := 0
