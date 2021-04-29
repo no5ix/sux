@@ -194,6 +194,26 @@ StrPutVar(Str, ByRef Var, Enc = "")
 ; }
 
 
+; Which can be used like this:
+; MsgBox % StringJoin("`n", "one", "two", "three") 
+; substrings := ["one", "two", "three"]
+; MsgBox % StringJoin("-", substrings*)
+StringJoin(sep, params*) {
+    for index,param in params
+        str .= sep . param
+    return SubStr(str, StrLen(sep)+1)
+}
+
+
+clipboard_guard(func_name, args*) {
+	global SHOULD_IGNORE_CLIPBOARD_CHANGE
+	SHOULD_IGNORE_CLIPBOARD_CHANGE := 1
+	ret := run(func_name, args*)
+	SHOULD_IGNORE_CLIPBOARD_CHANGE := 0
+	return ret
+}
+
+
 GetCurSelectedText() {
 	clipboardOld := ClipboardAll            ; backup clipboard
 	; Send, ^c
@@ -353,17 +373,6 @@ DisableWin10AutoUpdate(){
 }
 
 
-; Which can be used like this:
-; MsgBox % StringJoin("`n", "one", "two", "three") 
-; substrings := ["one", "two", "three"]
-; MsgBox % StringJoin("-", substrings*)
-StringJoin(sep, params*) {
-    for index,param in params
-        str .= sep . param
-    return SubStr(str, StrLen(sep)+1)
-}
-
-
 ActivateWindowsUnderCursor() {
 	; activate the window currently under mouse cursor
 	MouseGetPos,,, curr_hwnd 
@@ -390,7 +399,7 @@ IsMouseActiveWindowAtSameMonitor() {
 
 ; 万能的run 函数
 ; 参数可以是cmd命令，代码中的sub，function，网址d
-run(command, throwErr := 1)
+run(command, args*)
 {
 	global LIMIT_MODE
 	if (LIMIT_MODE)
@@ -416,14 +425,14 @@ run(command, throwErr := 1)
 			{
 				cls := cls[Array[A_Index+1]]
 			}
-			return cls[Array[Array.MaxIndex()]]()
+			return cls[Array[Array.MaxIndex()]](args*)
 		}
 		Else {
-			return %command%()
+			return %command%(args*)
 		}
 	}
 	else if (Instr(command, "jsfunc_")) {
-		JsEval.eval(command . "()")
+		return JsEval.eval(command . "()")
 		; res := JsEval.eval(command . "()")
 		; m(res)
 	}
@@ -472,9 +481,9 @@ run(command, throwErr := 1)
 			; {
 				if(IsFunc("run_user")) {
 					func_name = run_user
-					%func_name%(command)
+					return %func_name%(command)
 				}
-				else if (throwErr == 1)
+				else
 					MsgBox, 0x30, % SuxCore.ProgramName, % "Can't run command """ command """"
 			; }
 		}
