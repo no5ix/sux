@@ -8,14 +8,16 @@
 ; Screen Capture
 class SnipPlus
 {
+	static is_clipboard_changed := 0
 	static temp_snip_img_index := 0
 	static _TEMP_SNIP_IMG_DIR := "app_data\temp_snip_dir\"
 	static _TEMP_SNIP_IMG_PREFIX := "temp_snip_"
-	static _TEMP_CLIPBOARD_CONTENT_FILE := SnipPlus._TEMP_SNIP_IMG_DIR . "temp_clipboard_content.clip"
+	; static _TEMP_CLIPBOARD_CONTENT_FILE := SnipPlus._TEMP_SNIP_IMG_DIR . "temp_clipboard_content.clip"
 
 
 	init()
 	{
+		SuxCore.register_clip_change_func("SnipPlus.set_clip_changed_flag")
 		SuxCore.OnExit("SnipPlus.ClearTempImg")
 		SnipPlus.ClearTempImg()
 	}
@@ -34,33 +36,44 @@ class SnipPlus
 		DllCall(prscrn_param)
 	}
 
+	set_clip_changed_flag()
+	{
+		SnipPlus.is_clipboard_changed := 1
+	}
+
 	AreaScreenShotAndSuspend()
 	{
-		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
+		if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		; 	FileGetSize, _old_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 		; 	; FileDelete, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 		; }
 		; else {
 		; 	_old_temp_clip_file_size := 0
 		; }
-
+		
+		SnipPlus.is_clipboard_changed := 0
 		clipboardOld := ClipboardAll
 		SnipPlus.AreaScreenShot()
-
-		; ; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
-		; ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为一个较小的size, 也就是说没内容写入文件
-		FileAppend, %ClipboardAll%, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
-		FileGetSize, _new_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE, K
-
-		if (_new_temp_clip_file_size < 6)  ;; 经测试, 小于6KB则说明用户没有截图
-		{
-			; m(_new_temp_clip_file_size)
-			; m(_old_temp_clip_file_size)
+		Sleep, 222
+		if (SnipPlus.is_clipboard_changed == 0) {
 			ToolTipWithTimer("Nothing snipped.")
-			Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-			clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-			return
+			Return
 		}
+
+		; ; ; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
+		; ; ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为一个较小的size, 也就是说没内容写入文件
+		; FileAppend, %ClipboardAll%, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
+		; FileGetSize, _new_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE, K
+
+		; if (_new_temp_clip_file_size < 6)  ;; 经测试, 小于6KB则说明用户没有截图
+		; {
+		; 	; m(_new_temp_clip_file_size)
+		; 	; m(_old_temp_clip_file_size)
+		; 	ToolTipWithTimer("Nothing snipped.")
+		; 	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		; 	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+		; 	return
+		; }
 
 		hBM := SnipPlus.CB_hBMP_Get()  
 		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
