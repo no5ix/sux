@@ -215,6 +215,10 @@ clipboard_guard(func_name, args*) {
 
 
 GetCurSelectedText() {
+	clipboard_guard("GetCurSelectedText_Impl")
+}
+
+GetCurSelectedText_Impl() {
 	clipboardOld := ClipboardAll            ; backup clipboard
 	; Send, ^c
 	Clipboard := ""

@@ -787,6 +787,11 @@ border_event_evoke()
 
 ; event callback
 OnClipboardChange:
+Sleep, 888  ;; 拖延一下, 方便等clipboard_guard把SHOULD_IGNORE_CLIPBOARD_CHANGE 置为0了之后再跑
+global SHOULD_IGNORE_CLIPBOARD_CHANGE
+; ToolTipWithTimer(SHOULD_IGNORE_CLIPBOARD_CHANGE)
+if (SHOULD_IGNORE_CLIPBOARD_CHANGE == 1)
+	Return
 RunArr(SuxCore.OnClipboardChangeCmd)
 Return
 

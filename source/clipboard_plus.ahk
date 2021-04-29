@@ -134,9 +134,6 @@ class ClipboardPlus
 
 
 paste_cur_selected_text(idx) {
-	global SHOULD_IGNORE_CLIPBOARD_CHANGE
-	SHOULD_IGNORE_CLIPBOARD_CHANGE := 1
-
 	cur_selected_str :=ClipboardPlus.ClipboardHistoryArr[idx][1]
 	ClipSaved := ClipboardAll 
 	Clipboard := cur_selected_str   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
@@ -144,24 +141,24 @@ paste_cur_selected_text(idx) {
 	Send, ^v
 	Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
 	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
-	
-	SHOULD_IGNORE_CLIPBOARD_CHANGE := 0
 }
 
 
 ; All ClipboardHistoryArr Menu
 Sub_ClipboardPlus_AllClips_Click:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
-paste_cur_selected_text(idx)
+clipboard_guard("paste_cur_selected_text", idx)
 Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
-paste_cur_selected_text(idx)
+clipboard_guard("paste_cur_selected_text", idx)
+; paste_cur_selected_text(idx)
 Return
 
 ; OnEvent
 Sub_ClipboardPlus_OnClipboardChange:
+; ToolTipWithTimer(888888)
 ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, Clipboard)
 while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.ClipboardHistoryArr.MaxIndex() > ClipboardPlus.ClipsTotalNum)
 	ClipboardPlus.ClipboardHistoryArr.Remove(1)
