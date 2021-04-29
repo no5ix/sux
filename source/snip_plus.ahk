@@ -43,7 +43,7 @@ class SnipPlus
 
 	AreaScreenShotAndSuspend()
 	{
-		if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
+		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		; 	FileGetSize, _old_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 		; 	; FileDelete, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 		; }
