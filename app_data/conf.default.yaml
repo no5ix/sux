@@ -99,13 +99,13 @@ hot-edge:
   action:
     TopHalfLeftEdge: 
       ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
-      wheeldown: GoTop
-      wheelup: GoBottom
+      wheeldown: GoBottom
+      wheelup: GoTop
       MButton: MaxWindow
     TopHalfRightEdge: 
       ctrl_8: OpenFileExplorer
-      wheeldown: GoTop
-      wheelup: GoBottom
+      wheeldown: GoBottom
+      wheelup: GoTop
       MButton: MinWindow
     BottomHalfLeftEdge:
       ctrl_8: ReopenLastTab
