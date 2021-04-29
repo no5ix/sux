@@ -19,8 +19,8 @@ search-plus:
   enable: 1
   shortcut-key: 
     # normal-search: doublehit_ctrl
-    normal-search: doublehit_alt
-    search-selected-text: capslock_f
+    normal-search: capslock_f
+    search-selected-text: capslock_alt_f
   buildin:
     _Default:
       key: default
