@@ -46,7 +46,7 @@ search-plus:
     Bilibili:
       key: bb
       url: 'search.bilibili.com/all?keyword=REPLACEME'
-    Jd:
+    JingDong
       key: jd
       url: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
     Zhihu:

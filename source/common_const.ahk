@@ -38,8 +38,6 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Feedback": "反馈"}
 
 
-global SHOULD_IGNORE_CLIPBOARD_CHANGE := 0
-
 global LIMIT_MODE := 0
 
 global fake_lb_down := 0

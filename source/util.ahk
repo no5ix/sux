@@ -197,15 +197,10 @@ StringJoin(sep, params*) {
 }
 
 
-clipboard_guard(func_name, args*) {
-	global SHOULD_IGNORE_CLIPBOARD_CHANGE
-	SHOULD_IGNORE_CLIPBOARD_CHANGE := 1
-	ret := run(func_name, args*)
-	Sleep, 111 ;; 拖延一下, 等OnClipboardChange先跑
-	SHOULD_IGNORE_CLIPBOARD_CHANGE := 0
-	return ret
+SafePaste() {
+	Send, ^v
+	Sleep, 111  ;; 这个sleeep是防止之后clipboard马上就被写入东西
 }
-
 
 GetCurSelectedText() {
 	clipboardOld := ClipboardAll            ; backup clipboard
