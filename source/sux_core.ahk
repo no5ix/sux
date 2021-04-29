@@ -187,7 +187,7 @@ class SuxCore
 	static UserYamlConfObj =
 	static version =
 	; callback
-	static OnClipboardChangeCmd := []
+	static OnClipboardChangeCmd := {}
 	static OnPauseCmd := []
 	static OnSuspendCmd := []
 	static OnExitCmd := []
@@ -284,9 +284,14 @@ class SuxCore
 		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
 	}
 
-	register_clip_change_func(func)
+	register_clip_change_func(func_name)
 	{
-		this.OnClipboardChangeCmd.Push(func)
+		this.OnClipboardChangeCmd[func_name] := func_name
+	}
+
+	unregister_clip_change_func(func_name)
+	{
+		this.OnClipboardChangeCmd.Delete(func_name)
 	}
 
 	GetYamlCfg(keyStr, default="")
@@ -787,10 +792,9 @@ border_event_evoke()
 
 ; event callback
 OnClipboardChange:
-global SHOULD_IGNORE_CLIPBOARD_CHANGE
-if (SHOULD_IGNORE_CLIPBOARD_CHANGE == 1)
-	Return
-RunArr(SuxCore.OnClipboardChangeCmd)
+for key, func_name in SuxCore.OnClipboardChangeCmd {
+	run(func_name)
+}
 Return
 
 

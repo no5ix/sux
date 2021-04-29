@@ -137,29 +137,34 @@ paste_cur_selected_text(idx) {
 	cur_selected_str :=ClipboardPlus.ClipboardHistoryArr[idx][1]
 	ClipSaved := ClipboardAll 
 	Clipboard := ""
-	Clipboard := cur_selected_str   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
-    ClipWait, 0.1
-	; Sleep, 66
-	; Read from the array:
-	; Loop % Array.MaxIndex()   ; More traditional approach.
-	if(!ErrorLevel) {
-		Send, ^v
+	Clipboard := cur_selected_str
+	; m(Clipboard)
+    ClipWait, 0.6
+	if (!ErrorLevel) {
+		SafePaste()
 	}
+	; Sleep, 66
+	; SafePaste()
 	Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
 	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
 }
 
 
-; All ClipboardHistoryArr Menu
 Sub_ClipboardPlus_AllClips_Click:
+SuxCore.unregister_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")  ;; 防止paste_cur_selected_text里污染了剪切板顺序
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
-clipboard_guard("paste_cur_selected_text", idx)
+; clipboard_guard("paste_cur_selected_text", idx)
+paste_cur_selected_text(idx)
+SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
+
 Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:
+SuxCore.unregister_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
-clipboard_guard("paste_cur_selected_text", idx)
-; paste_cur_selected_text(idx)
+; clipboard_guard("paste_cur_selected_text", idx)
+paste_cur_selected_text(idx)
+SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
 Return
 
 ; OnEvent

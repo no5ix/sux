@@ -88,7 +88,7 @@ ReplaceSelectedText() {
 	; Send, ^c
 	Clipboard := ""
     SendInput, ^{insert}
-    ClipWait, 0.1
+    ClipWait, 0.6
 	; Sleep, 66
 	; Read from the array:
 	; Loop % Array.MaxIndex()   ; More traditional approach.
@@ -105,9 +105,9 @@ ReplaceSelectedText() {
 			Clipboard := StrReplace(Clipboard, key, value, cur_replace_cnt)
 			replace_sum += cur_replace_cnt
 		}
-		; Sleep, 66
+		Sleep, 66
 		if replace_sum != 0
-			Send, ^v
+			SafePaste()
 		else
 			Send, {Right}
 	}
