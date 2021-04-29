@@ -13,14 +13,15 @@ theme:
     sux_border_shadow_type: 'modern_shadow_type'
 clipboard-plus: 
   enable: 1
-  shortcut-key: win_alt_v
+  shortcut-key: capslock_v
   ClipsTotalNum: 50
 search-plus:
   enable: 1
   shortcut-key: 
     # normal-search: doublehit_ctrl
-    normal-search: doublehit_alt
-    search-selected-text: capslock_f
+    # normal-search: doublehit_alt
+    normal-search: capslock_w
+    search-selected-text: capslock_shift_w
   buildin:
     _Default:
       key: default
@@ -74,8 +75,8 @@ search-plus:
 replace-text:
   enable: 1
   shortcut-key: 
-    replace-current-line-text: capslock_g
-    replace-selected-text: capslock_shift_g
+    replace-current-line-text: capslock_r
+    replace-selected-text: capslock_shift_r
   buildin:
     'h/': 'http://'
     'hs/': 'https://'
@@ -150,18 +151,21 @@ capslock_plus:
   enable: 1
   buildin:
     capslock: 'send {Esc}'
-    capslock_tab: ScreenShot
-    capslock_shift_tab: ScreenShotAndSuspend
+    capslock_q: ScreenShot
+    capslock_shift_q: ScreenShotAndSuspend
     capslock_`: SwitchCapsState
+    capslock_tab: 'send +{Ins}'
+    capslock_shift_v: 'send +6'
+    #
+    capslock_f: 'send ^f'
+    capslock_shift_f: 'send ^!f'
     capslock_c: 'send ^/'
-    capslock_v: 'send +6'
-    capslock_w: 'send +{Ins}'
     capslock_e: 'send {Enter}'
     capslock_s: 'send +4'
-    capslock_r: 'send ^y'
-    capslock_shift_r: 'send {F2}'
+    capslock_g: 'send ^y'
     capslock_d: 'send {Del}'
     capslock_shift_d: 'send {BS}'
+    #
     capslock_y: 'send +8'
     capslock_shift_y: 'send +5'
     capslock_u: 'send +1'

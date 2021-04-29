@@ -19,8 +19,8 @@ search-plus:
   enable: 1
   shortcut-key: 
     # normal-search: doublehit_ctrl
-    normal-search: capslock_f
-    search-selected-text: capslock_alt_f
+    normal-search: capslock_w
+    search-selected-text: capslock_alt_w
   buildin:
     _Default:
       key: default
@@ -74,8 +74,8 @@ search-plus:
 replace-text:
   enable: 1
   shortcut-key: 
-    replace-current-line-text: capslock_g
-    replace-selected-text: capslock_alt_g
+    replace-current-line-text: capslock_r
+    replace-selected-text: capslock_alt_r
   buildin:
     'h/': 'http://'
     'hs/': 'https://'
@@ -156,18 +156,23 @@ capslock_plus:
   enable: 1
   buildin:
     # capslock: 'send {Esc}'
-    capslock_tab: ScreenShot
-    capslock_alt_tab: ScreenShotAndSuspend
+    capslock_q: ScreenShot
+    capslock_alt_q: ScreenShotAndSuspend
     capslock_`: SwitchCapsState
-    capslock_c: 'send ^/'
-    capslock_v: 'send +6'
-    capslock_w: 'send +{Ins}'
-    capslock_e: 'send {Enter}'
-    capslock_s: 'send +4'
-    capslock_r: 'send ^y'
-    capslock_alt_r: 'send {F2}'
-    capslock_d: 'send {Del}'
-    capslock_alt_d: 'send {BS}'
+    capslock_tab: 'send +{Ins}'
+    capslock_alt_v: 'send +6'
+    #
+    capslock_c: 'send ^c'
+    capslock_e: 'send {Up}'
+    capslock_alt_e: 'send +{Up}'
+    capslock_s: 'send {Left}'
+    capslock_alt_s: 'send +{Left}'
+    capslock_f: 'send {Right}'
+    capslock_alt_f: 'send +{Right}'
+    capslock_d: 'send {Down}'
+    capslock_alt_d: 'send +{Down}'
+    capslock_g: 'send ^y'
+    #
     capslock_y: 'send +8'
     capslock_alt_y: 'send +5'
     capslock_u: 'send +1'
