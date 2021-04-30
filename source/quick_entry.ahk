@@ -40,7 +40,7 @@ class QuickEntry {
 
 		ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
 		sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-		dec_cnt := (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+		dec_cnt := (ws_cnt > sk_l_cnt) ? sk_l_cnt+1 : ws_cnt  ;; 因为有个"More Search", 所以是 sk_l_cnt+1
 		dec_cnt += 1  ; 截图的菜单 和 search 之间有个分割线
 
 		QuickEntry.screenshot_menu_pos_offset := dec_cnt
@@ -223,8 +223,7 @@ class QuickEntry {
 			}
 		}
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
-			Menu, QuickEntry_Menu, Add, % lang("More"), :QuickEntry_Search_Menu_More
-
+			Menu, QuickEntry_Menu, Add, % lang("More Search"), :QuickEntry_Search_Menu_More
 
 		;;;;;; ScreenShot
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
@@ -247,7 +246,7 @@ class QuickEntry {
 			}
 		}
 		if (COMMAND_TITLE_LIST.Count() > shortcut_cnt_right)
-			Menu, QuickEntry_Menu, Add, % lang("More"), :QuickEntry_Command_Menu_More
+			Menu, QuickEntry_Menu, Add, % lang("More Command"), :QuickEntry_Command_Menu_More
 
 		Menu, QuickEntry_Menu, Show
 	} 
