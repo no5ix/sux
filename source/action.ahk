@@ -6,11 +6,6 @@
 
 
 
-HandleSearchSelectedText() {
-	SearchPlus.ShowSelectedTextMenu()
-}
-
-
 StartSuxAhkWithWin() {
 	msg_str := "Would you like to start sux with windows? Yes(Enable) or No(Disable)"
 	MsgBox, 3,, %msg_str%
