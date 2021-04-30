@@ -50,31 +50,30 @@ class SearchPlus {
 		}
 		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
 			; m(_index "//" search_url)
-			SearchPlus.HandleSearchImpl(search_str, search_url)
+
+			if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
+				if !InStr(search_url, "REPLACEME") {
+					Run %search_url%
+					Continue
+				} 
+				; domain_url just like: "https://www.google.com"
+				; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+				RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
+				if not IsStandardRawUrl(domain_url)
+					domain_url := StringJoin("", ["http://", domain_url]*)
+				Run %domain_url%
+				Continue
+			}
+
+
+			safe_query := UriEncode(Trim(search_str))
+			StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+			if not IsStandardRawUrl(search_final_url)
+				search_final_url := StringJoin("", ["http://", search_final_url]*)
+			Run, %search_final_url%
+
 			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 		}
-	}
-
-	HandleSearchImpl(search_str, search_url) {
-		if (search_str == "") {	
-			if !InStr(search_url, "REPLACEME") {
-				Run %search_url%
-				return
-			} 
-			; domain_url just like: "https://www.google.com"
-			; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-			RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-			if not IsStandardRawUrl(domain_url)
-				domain_url := StringJoin("", ["http://", domain_url]*)
-			Run %domain_url%
-			return
-		}
-
-		safe_query := UriEncode(Trim(search_str))
-		StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-		if not IsStandardRawUrl(search_final_url)
-			search_final_url := StringJoin("", ["http://", search_final_url]*)
-		Run, %search_final_url%
 	}
 
 
