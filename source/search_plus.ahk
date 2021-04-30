@@ -235,25 +235,13 @@ class SearchPlus {
 
 	HandleSearchGuiUserInput(gui_user_input)
 	{
-		; global last_search_str
-		; global WEB_SEARCH_TITLE_2_URL_MAP
 		trim_gui_user_input := Trim(gui_user_input)
-		; last_search_str := trim_gui_user_input
-
 		if !trim_gui_user_input
 		{
 			return
 		}
 		else
 		{
-			; word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			; if WEB_SEARCH_TITLE_2_URL_MAP.HasKey(word_array[1]) {
-			; 	SearchPlus.HandleSearch(word_array[2], word_array[1])
-			; }
-			; else {
-			; 	SearchPlus.HandleSearch(gui_user_input)
-			; }
-
 			SearchPlus.HandleSearch(trim_gui_user_input)
 		}
 	}

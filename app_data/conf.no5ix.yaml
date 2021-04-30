@@ -55,9 +55,7 @@ command:
     test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.cpp'
 replace-text:
   enable: 1
-  shortcut-key: 
-    replace-current-line-text: capslock_r
-    replace-selected-text: capslock_shift_r
+  shortcut-key: capslock_r
   buildin:
     'h/': 'http://'
     'hs/': 'https://'
