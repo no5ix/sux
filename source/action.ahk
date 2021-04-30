@@ -1,5 +1,5 @@
 ﻿#Include %A_ScriptDir%\source\common_const.ahk
-#Include %A_ScriptDir%\source\search_plus.ahk
+#Include %A_ScriptDir%\source\quick_entry.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
 #Include %A_ScriptDir%\source\snip_plus.ahk
 

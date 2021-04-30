@@ -43,16 +43,6 @@ class SnipPlus
 		SnipPlus.is_clipboard_changed := 1
 	}
 
-	ShowAreaScreenShotAndSuspendMenu()
-	{
-		dot_space_str := ".`t"
-		; Menu, ScreenShot_Suspend_Menu, Add, % "& (" . lang("space") . ")" . dot_space_str . lang("ScreenShot"), ScreenShot_Suspend_Menu_Click
-		Menu, ScreenShot_Suspend_Menu, Add, % lang("ScreenShot") . "`t& (" . lang("space") . ")", ScreenShot_Suspend_Menu_Click
-		; Menu, ScreenShot_Suspend_Menu, Add, % "&`t (" . lang("tab") . ")" . dot_space_str . lang("SuspendScreenshot"), ScreenShot_Suspend_Menu_Click
-		Menu, ScreenShot_Suspend_Menu, Add, % lang("SuspendScreenshot") . "`t&`t(" . lang("tab") . ")", ScreenShot_Suspend_Menu_Click
-		Menu, ScreenShot_Suspend_Menu, Show
-	}
-
 	AreaScreenShot()
 	{
 		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
