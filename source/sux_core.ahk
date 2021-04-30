@@ -34,7 +34,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 #Include %A_ScriptDir%\source\yaml.ahk
 #Include %A_ScriptDir%\source\action.ahk
 #Include %A_ScriptDir%\source\tray_menu.ahk
-#Include %A_ScriptDir%\source\search_plus.ahk
+#Include %A_ScriptDir%\source\quick_entry.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
 #Include %A_ScriptDir%\source\clipboard_plus.ahk
 #Include %A_ScriptDir%\source\snip_plus.ahk
@@ -223,7 +223,7 @@ class SuxCore
 
 		ClipboardPlus.init()
 		TrayMenu.init()
-		SearchPlus.init()
+		QuickEntry.init()
 		JsEval.init()
 		SnipPlus.init()
 	}
@@ -374,7 +374,7 @@ class SuxCore
 		if(SuxCore.GetYamlCfg("search-plus.enable", 0))
 		{
 			if (sk := SuxCore.GetYamlCfg("search-plus.shortcut-key", ""))
-				register_hotkey(sk, "SearchPlus.ShowSearchPlusMenu")
+				register_hotkey(sk, "QuickEntry.ShowQuickEntryMenu")
 			For title, url in SuxCore.GetYamlCfg("search-plus.buildin", {}) {
 				register_web_search(title, StrSplit(url, comma_delimiters_arr))
 			}

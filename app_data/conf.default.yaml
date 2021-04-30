@@ -120,11 +120,10 @@ capslock_plus:
   enable: 1
   buildin:
     # capslock: 'send {Esc}'
-    capslock_w: ScreenShotAndSuspend
+    capslock_w: 'send +4'
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_alt_v: 'send +6'
-    capslock_g: 'send +4'
     #
     capslock_c: 'send ^c'
     capslock_e: 'send {Up}'

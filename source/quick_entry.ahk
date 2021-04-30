@@ -6,7 +6,7 @@
 ; global gui_state := closed
 
 
-if(A_ScriptName=="search_plus.ahk") {
+if(A_ScriptName=="quick_entry.ahk") {
 	ExitApp
 }
 
@@ -25,7 +25,7 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 
 
-class SearchPlus {
+class QuickEntry {
 
 	static cur_sel_search_title := ""
 
@@ -35,7 +35,7 @@ class SearchPlus {
 	}
 
 	HandleSearch(search_str) {
-		search_title := SearchPlus.cur_sel_search_title
+		search_title := QuickEntry.cur_sel_search_title
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		if (search_str == "")
 			return
@@ -120,9 +120,9 @@ class SearchPlus {
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
 		Gui, Color, %sux_bg_color%, %sux_bg_color%
 		if (cur_theme_info["sux_border_shadow_type"] == "modern_shadow_type") {
-			; SearchPlus.ShadowBorder(hMyGUI)
+			; QuickEntry.ShadowBorder(hMyGUI)
 		; else
-			SearchPlus.FrameShadow(hMyGUI)
+			QuickEntry.FrameShadow(hMyGUI)
 		}
 
 		Gui, Font, s22, Segoe UI
@@ -131,7 +131,7 @@ class SearchPlus {
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
-		Gui, Add, Edit, %gui_control_options% vGuiUserInput, % SearchPlus.cur_sel_search_title
+		Gui, Add, Edit, %gui_control_options% vGuiUserInput, % QuickEntry.cur_sel_search_title
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 
@@ -160,22 +160,22 @@ class SearchPlus {
 			Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 		}
 
-		global auto_destory_search_plus_gui_period
+		global auto_destory_quick_entry_gui_period
 		; gui_des := ObjBindMethod(this, "search_gui_destroy")  ; 不建议用这个, 这个不会顶掉原先search_gui_destroy的timer的
 		; SetTimer, % gui_des, %auto_destory_gui_period%
-		SetTimer, search_gui_destroy, %auto_destory_search_plus_gui_period%
+		SetTimer, search_gui_destroy, %auto_destory_quick_entry_gui_period%
 		return
 	}
 
 	
-	ShowSearchPlusMenu() {
+	ShowQuickEntryMenu() {
 		search_gui_destroy()
 
 		try {
-			Menu, SearchPlus_Command_Menu, DeleteAll
+			Menu, QuickEntry_Command_Menu, DeleteAll
 		}
 		try {
-			Menu, SearchPlus_Menu_More, DeleteAll
+			Menu, QuickEntry_Menu_More, DeleteAll
 		}
 		try {
 			Menu, Command_Menu_More, DeleteAll
@@ -185,9 +185,9 @@ class SearchPlus {
 		if selected_text {
 			sub_selected_text := SubStr(selected_text, 1, 2) . "..."
 			; m(sub_selected_text)
-			Menu, SearchPlus_Command_Menu, Add, % sub_selected_text, Sub_Nothing
-			Menu, SearchPlus_Command_Menu, Disable, % sub_selected_text
-			Menu, SearchPlus_Command_Menu, Add
+			Menu, QuickEntry_Command_Menu, Add, % sub_selected_text, Sub_Nothing
+			Menu, QuickEntry_Command_Menu, Disable, % sub_selected_text
+			Menu, QuickEntry_Command_Menu, Add
 		}
 		
 		global WEB_SEARCH_TITLE_LIST
@@ -201,40 +201,40 @@ class SearchPlus {
 				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
 				; m(_cur_shortcut_str)
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, SearchPlus_Command_Menu, Add, % menu_shortcut_str, SearchPlus_Menu_Click
+				Menu, QuickEntry_Command_Menu, Add, % menu_shortcut_str, QuickEntry_Menu_Click
 			}
 			Else {
-				Menu, SearchPlus_Menu_More, Add, % index . dot_space_str . title, SearchPlus_Menu_MoreClick
+				Menu, QuickEntry_Menu_More, Add, % index . dot_space_str . title, QuickEntry_Menu_MoreClick
 			}
 		}
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
-			Menu, SearchPlus_Command_Menu, Add, % lang("More"), :SearchPlus_Menu_More
+			Menu, QuickEntry_Command_Menu, Add, % lang("More"), :QuickEntry_Menu_More
 
 
 		;;;;;; ScreenShot
-		Menu, SearchPlus_Command_Menu, Add  ;; 加个分割线
-		Menu, SearchPlus_Command_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", ScreenShot_Suspend_Menu_Click
-		Menu, SearchPlus_Command_Menu, Add, % lang("SuspendScreenshot") . "`t&``(" . lang("~") . ")", ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Command_Menu, Add  ;; 加个分割线
+		Menu, QuickEntry_Command_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Command_Menu, Add, % lang("SuspendScreenshot") . "`t&``(" . lang("~") . ")", ScreenShot_Suspend_Menu_Click
 
 
 		;;;;;; command
-		Menu, SearchPlus_Command_Menu, Add  ;; 加个分割线
+		Menu, QuickEntry_Command_Menu, Add  ;; 加个分割线
 		global COMMAND_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR_RIGHT
 		shortcut_cnt_right := SHORTCUT_KEY_INDEX_ARR_RIGHT.Count()
 		for index, title in COMMAND_TITLE_LIST {
 			if (index <= shortcut_cnt_right) {
 				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_RIGHT, index, title)
-				Menu, SearchPlus_Command_Menu, Add, % menu_shortcut_str, Command_Menu_Click
+				Menu, QuickEntry_Command_Menu, Add, % menu_shortcut_str, Command_Menu_Click
 			}
 			Else {
 				Menu, Command_Menu_More, Add, % index . dot_space_str . title, Command_Menu_MoreClick
 			}
 		}
 		if (COMMAND_TITLE_LIST.Count() > shortcut_cnt_right)
-			Menu, SearchPlus_Command_Menu, Add, % lang("More"), :Command_Menu_More
+			Menu, QuickEntry_Command_Menu, Add, % lang("More"), :Command_Menu_More
 
-		Menu, SearchPlus_Command_Menu, Show
+		Menu, QuickEntry_Command_Menu, Show
 	} 
 
 	HandleSearchGuiUserInput(gui_user_input)
@@ -246,7 +246,7 @@ class SearchPlus {
 		}
 		else
 		{
-			SearchPlus.HandleSearch(trim_gui_user_input)
+			QuickEntry.HandleSearch(trim_gui_user_input)
 		}
 	}
 
@@ -305,27 +305,29 @@ class SearchPlus {
 
 
 
+
+
 Sub_Nothing:
 	Return
 
 
-SearchPlus_Menu_Click:
+QuickEntry_Menu_Click:
 	cur_sel_text := GetCurSelectedText()
 	dec_cnt := cur_sel_text ? 2 : 0
-	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
+	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	if cur_sel_text
-		SearchPlus.HandleSearch(cur_sel_text)
+		QuickEntry.HandleSearch(cur_sel_text)
 	else
-		SearchPlus.search_gui_spawn()
+		QuickEntry.search_gui_spawn()
 	Return
 
-SearchPlus_Menu_MoreClick:
+QuickEntry_Menu_MoreClick:
 	cur_sel_text := GetCurSelectedText()
-	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
+	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
 	if cur_sel_text
-		SearchPlus.HandleSearch(cur_sel_text)
+		QuickEntry.HandleSearch(cur_sel_text)
 	else
-		SearchPlus.search_gui_spawn()
+		QuickEntry.search_gui_spawn()
 	Return
 
 
@@ -338,14 +340,14 @@ Command_Menu_Click:
 	dec_cnt += 1  ; search 和 command 之间有个分割线
 	dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-	SearchPlus.HandleCommand(search_title, cur_sel_text)
+	QuickEntry.HandleCommand(search_title, cur_sel_text)
 	Return
 
 
 Command_Menu_MoreClick:
 	cur_sel_text := GetCurSelectedText()
 	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
-	SearchPlus.HandleCommand(search_title, cur_sel_text)
+	QuickEntry.HandleCommand(search_title, cur_sel_text)
 	Return
 
 
@@ -381,7 +383,7 @@ GuiEscape:
 Sub_HandleSearchGuiUserInput:
 	Gui, Submit, NoHide
 	search_gui_destroy()
-	SearchPlus.HandleSearchGuiUserInput(GuiUserInput)
+	QuickEntry.HandleSearchGuiUserInput(GuiUserInput)
 	return
 
 
