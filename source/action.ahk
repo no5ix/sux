@@ -41,13 +41,10 @@ StartSuxAhkWithWin() {
 }
 
 
-ScreenShot() {
-	SnipPlus.AreaScreenShot()
+ScreenShotAndSuspend() {
+	SnipPlus.ShowAreaScreenShotAndSuspendMenu()
 }
 
-ScreenShotAndSuspend() {
-	SnipPlus.AreaScreenShotAndSuspend()
-}
 
 ReplaceText() {
 	if (!GetCurSelectedText()) {
