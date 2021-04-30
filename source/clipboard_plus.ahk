@@ -56,7 +56,7 @@ class ClipboardPlus
 			idx := clipboard_history_cnt - A_Index + 1
 			clip_text := this.ClipboardHistoryArr[idx][2]
 			if (A_Index <= shortcut_cnt) {
-				menu_shortcut_str := get_menu_shortcut_str(A_Index, dot_space_str, clip_text)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, A_Index, dot_space_str, clip_text)
 				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[A_Index]
 				; if (_cur_shortcut_str == " ") {
 				; 	;; 如果快捷键为空格的话, 得特殊处理

@@ -462,10 +462,12 @@ str_array_concate(arr, app, deli="")
 	return % ret
 }
 
-register_command(key_name, action_array)
+register_command(title, action_array)
 {
-	global CMD_REGISTER_MAP
-	CMD_REGISTER_MAP[key_name] := action_array
+	global COMMAND_TITLE_2_ACTION_MAP
+	global COMMAND_TITLE_LIST
+	COMMAND_TITLE_2_ACTION_MAP[title] := action_array
+	COMMAND_TITLE_LIST.Push(title)
 }
 
 register_web_search(title, url_array)
@@ -473,7 +475,7 @@ register_web_search(title, url_array)
 	global WEB_SEARCH_TITLE_2_URL_MAP
 	global WEB_SEARCH_TITLE_LIST
 	WEB_SEARCH_TITLE_2_URL_MAP[title] := url_array
-	WEB_SEARCH_TITLE_LIST.Insert(title)
+	WEB_SEARCH_TITLE_LIST.Push(title)
 }
 
 register_replace_str(key_name, val)

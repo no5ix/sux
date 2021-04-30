@@ -37,6 +37,14 @@ search-plus:
     Douban: 'https://www.douban.com/search?q=REPLACEME'
     Youku: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
   custom:
+command: 
+  enable: 1
+  buildin:
+    cmd: 'cmd.exe'
+    Everything: 'C:\Program Files\Everything\Everything.exe'
+    sux: 'https://github.com/no5ix/sux'
+    git: 'C:\Program Files\Git\bin\bash.exe --login'
+  custom:
 replace-text:
   enable: 1
   shortcut-key: 
@@ -100,14 +108,6 @@ hot-edge:
       # wheeldown: GotoNextTab
       # # wheeldown: GotoPreApp
       # wheelup: GotoPreTab
-command: 
-  enable: 1
-  buildin:
-    cmd: 'cmd.exe'
-    Everything: 'C:\Program Files\Everything\Everything.exe'
-    sux: 'https://github.com/no5ix/sux'
-    git: 'C:\Program Files\Git\bin\bash.exe --login'
-  custom:
 hotkey: 
   enable: 1
   buildin:

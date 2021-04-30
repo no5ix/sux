@@ -271,6 +271,7 @@ MinWindow() {
 }
 
 ReloadSux() {
+	ToolTipWithTimer("reloading sux ...")
 	Reload
 }
 
