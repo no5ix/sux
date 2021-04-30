@@ -19,6 +19,7 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\sux_core.ahk
+#Include %A_ScriptDir%\source\util.ahk
 
 
 
@@ -278,8 +279,10 @@ class QuickEntry {
 				if ErrorLevel
 					MsgBox,,, please install Everything and set its path in conf.user.yaml
 				else if (cur_sel_text) {
-					Send, {Blind}{Text}%cur_sel_text%
+					; Send, {Blind}{Text}%cur_sel_text%
+					PasteContent(cur_sel_text)
 				}
+				; m("xxd")
 				return
 			}
 
@@ -289,13 +292,10 @@ class QuickEntry {
 			{
 				if (use_cur_path) {
 					Send, !d
-					final_cmd_str := StringJoin(" ", COMMAND_TITLE_2_ACTION_MAP[command_title]*) . "`n"
-					; m(final_cmd_str)
-					; SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
-					; SendRaw, cmd
-					; Send, {Enter}
-					Send, {Blind}{Text}%final_cmd_str%
-					; SendRaw, %final_cmd_str%
+					final_cmd_str := StringJoin(" ", COMMAND_TITLE_2_ACTION_MAP[command_title]*)
+					; Send, {Blind}{Text}%final_cmd_str%
+					PasteContent(final_cmd_str)
+					Send, {Enter}
 					return
 				}
 			}
@@ -307,9 +307,10 @@ class QuickEntry {
 				; m(file_name)
 				WinWaitActive, ahk_exe %file_name%,, 2222
 				if !ErrorLevel {
-					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title] . "`n"
-					; SendInput, %cd_user_desktop_cmd_input%
-					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
+					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title]
+					; Send, {Blind}{Text}%cd_user_desktop_cmd_input%
+					PasteContent(cd_user_desktop_cmd_input)
+					Send, {Enter}
 				}
 			}
 		}
