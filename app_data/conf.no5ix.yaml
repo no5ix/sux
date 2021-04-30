@@ -37,6 +37,22 @@ search-plus:
     Douban: 'https://www.douban.com/search?q=REPLACEME'
     Youku: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
   custom:
+command: 
+  enable: 1
+  buildin:
+    cmd: 'cmd.exe'
+    sux: 'https://github.com/no5ix/sux'
+    git: 'C:\Program Files\Git\bin\bash.exe --login'
+    Everything: 'C:\Program Files\Everything\Everything.exe'
+  custom:
+    sw: StartSuxAhkWithWin
+    rd: ReloadSux
+    ahk: 'https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm'
+    blog: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\no5ix.github.io'
+    proj: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\sux'
+    test.py: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.py'
+    test.go: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.go'
+    test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.cpp'
 replace-text:
   enable: 1
   shortcut-key: 
@@ -87,22 +103,6 @@ hot-edge:
       # wheeldown: GotoNextTab
       # # wheeldown: GotoPreApp
       # wheelup: GotoPreTab
-command: 
-  enable: 1
-  buildin:
-    cmd: 'cmd.exe'
-    sux: 'https://github.com/no5ix/sux'
-    git: 'C:\Program Files\Git\bin\bash.exe --login'
-    Everything: 'C:\Program Files\Everything\Everything.exe'
-  custom:
-    sw: StartSuxAhkWithWin
-    rd: ReloadSux
-    ahk: 'https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm'
-    blog: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\no5ix.github.io'
-    proj: 'C:\Program Files\Microsoft VS Code\Code.exe D:\Documents\github\sux'
-    test.py: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.py'
-    test.go: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.go'
-    test.cpp: 'C:\Program Files\Microsoft VS Code\Code.exe C:\Users\Administrator\Desktop\test.cpp'
 hotkey: 
   enable: 1
   buildin:

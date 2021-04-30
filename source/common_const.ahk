@@ -68,7 +68,8 @@ global INI_LANG := "lang"
 HOTKEY_REGISTER_MAP := {}
 
 ; 记录command与对应操作
-CMD_REGISTER_MAP := {}
+COMMAND_TITLE_2_ACTION_MAP := {}
+COMMAND_TITLE_LIST := []
 
 ; 记录web-search与对应操作
 WEB_SEARCH_TITLE_2_URL_MAP := {}

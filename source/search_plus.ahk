@@ -40,10 +40,6 @@ class SearchPlus {
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		if (search_str == "")
 			return
-		if (search_title == "Everything") {
-			SearchPlus.handle_everything(search_str)
-			return
-		}
 
 		; 当只填了 url 而没填 search_title 的时候
 		if (IsRawUrl(search_str)) {
@@ -178,19 +174,22 @@ class SearchPlus {
 		search_gui_destroy()
 
 		try {
-			Menu, SearchSelectedText_Menu, DeleteAll
+			Menu, SearchPlus_Command_Menu, DeleteAll
 		}
 		try {
-			Menu, SearchSelectedText_Menu_More, DeleteAll
+			Menu, SearchPlus_Menu_More, DeleteAll
+		}
+		try {
+			Menu, Command_Menu_More, DeleteAll
 		}
 
 		selected_text := GetCurSelectedText()
 		if selected_text {
 			sub_selected_text := SubStr(selected_text, 1, 2) . "..."
 			; m(sub_selected_text)
-			Menu, SearchSelectedText_Menu, Add, % sub_selected_text, Sub_Nothing
-			Menu, SearchSelectedText_Menu, Disable, % sub_selected_text
-			Menu, SearchSelectedText_Menu, Add
+			Menu, SearchPlus_Command_Menu, Add, % sub_selected_text, Sub_Nothing
+			Menu, SearchPlus_Command_Menu, Disable, % sub_selected_text
+			Menu, SearchPlus_Command_Menu, Add
 		}
 		
 		global WEB_SEARCH_TITLE_LIST
@@ -198,124 +197,52 @@ class SearchPlus {
 		shortcut_cnt_left := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 		dot_space_str := ".`t"
 		for index, title in WEB_SEARCH_TITLE_LIST {
-			; m(title)
-			; Menu, SearchSelectedText_Menu, Add
-			final_menu_str := title
 			if (index <= shortcut_cnt_left) {
-				menu_shortcut_str := get_menu_shortcut_str(index, dot_space_str, final_menu_str)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, dot_space_str, title)
 				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[index]
 				; ;; 如果快捷键为空格的话, 得特殊处理
 				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
 				; m(_cur_shortcut_str)
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, SearchSelectedText_Menu, Add, % menu_shortcut_str, SearchSelectedText_Menu_Click
+				Menu, SearchPlus_Command_Menu, Add, % menu_shortcut_str, SearchPlus_Menu_Click
 			}
 			Else {
-				Menu, SearchSelectedText_Menu_More, Add, % index . dot_space_str . final_menu_str, SearchSelectedText_Menu_MoreClick
+				Menu, SearchPlus_Menu_More, Add, % index . dot_space_str . title, SearchPlus_Menu_MoreClick
 			}
 		}
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
-			Menu, SearchSelectedText_Menu, Add, % lang("More"), :SearchSelectedText_Menu_More
+			Menu, SearchPlus_Command_Menu, Add, % lang("More"), :SearchPlus_Menu_More
 
 		;;;;;; command
-		; shortcut_cnt_right := SHORTCUT_KEY_INDEX_ARR_RIGHT.Count()
-		; Menu, SearchSelectedText_Menu, Add
-			
-
-		Menu, SearchSelectedText_Menu, Show
-	} 
-
-	handle_everything(pending_search_str) {
-		global WEB_SEARCH_TITLE_2_URL_MAP
-		;;; everything search
-		; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-		everything_exe_path := WEB_SEARCH_TITLE_2_URL_MAP["Everything"][1]
-		run, %everything_exe_path%
-		; m(everything_exe_path)
-		; m(pending_search_str)
-		WinWaitActive, ahk_exe Everything.exe, , 2.222
-		if ErrorLevel
-			MsgBox,,, please install Everything and set its path in conf.user.yaml
-		; else if (word_array[2]){
-		else if (pending_search_str){
-			
-			; pending_search_str := word_array[2]
-			; last_search_str := gui_user_input
-			; Sleep, 88
-			; SendRaw, %trim_gui_user_input%
-			; Sleep, 222
-			; SendRaw, %last_search_str%
-			Send, {Blind}{Text}%pending_search_str%
+		Menu, SearchPlus_Command_Menu, Add  ;; 加个分割线
+		global COMMAND_TITLE_LIST
+		global SHORTCUT_KEY_INDEX_ARR_RIGHT
+		shortcut_cnt_right := SHORTCUT_KEY_INDEX_ARR_RIGHT.Count()
+		for index, title in COMMAND_TITLE_LIST {
+			if (index <= shortcut_cnt_right) {
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_RIGHT, index, dot_space_str, title)
+				Menu, SearchPlus_Command_Menu, Add, % menu_shortcut_str, Command_Menu_Click
+			}
+			Else {
+				Menu, Command_Menu_More, Add, % index . dot_space_str . title, Command_Menu_MoreClick
+			}
 		}
-	}
+		if (COMMAND_TITLE_LIST.Count() > shortcut_cnt_right)
+			Menu, SearchPlus_Command_Menu, Add, % lang("More"), :Command_Menu_More
+
+		Menu, SearchPlus_Command_Menu, Show
+	} 
 
 	HandleSearchGuiUserInput(gui_user_input)
 	{
 		; global last_search_str
-		global WEB_SEARCH_TITLE_2_URL_MAP
+		; global WEB_SEARCH_TITLE_2_URL_MAP
 		trim_gui_user_input := Trim(gui_user_input)
 		; last_search_str := trim_gui_user_input
 
 		if !trim_gui_user_input
 		{
 			return
-		}
-		global CMD_REGISTER_MAP
-		if (CMD_REGISTER_MAP.HasKey(trim_gui_user_input))
-		{
-			; word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			; if (word_array[1] == "ev"){
-			; 	; ;;; everything search
-			; 	; ; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-			; 	; everything_exe_path := CMD_REGISTER_MAP["ev"][1]
-			; 	; run, %everything_exe_path%
-			; 	; WinWaitActive, ahk_exe Everything.exe, , 2.222
-			; 	; if ErrorLevel
-			; 	; 	MsgBox,,, please install Everything and set its shortcut in user_conf.ahk
-			; 	; else if (word_array[2]){
-					
-			; 	; 	pending_search_str := word_array[2]
-			; 	; 	; last_search_str := gui_user_input
-			; 	; 	; Sleep, 88
-			; 	; 	; SendRaw, %trim_gui_user_input%
-			; 	; 	; Sleep, 222
-			; 	; 	; SendRaw, %last_search_str%
-			; 	; 	Send, {Blind}{Text}%pending_search_str%
-			; 	; }
-			; 	SearchPlus.handle_everything(word_array[2])
-			; 	return
-			; }
-
-			; if (word_array[1] == "git" || word_array[1] == "cmd"){
-			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop", "git" : "cd ~/Desktop"}
-			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(trim_gui_user_input)
-			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
-			{
-				if (use_cur_path) {
-					Send, !d
-					final_cmd_str := StringJoin(" ", CMD_REGISTER_MAP[trim_gui_user_input]*) . "`n"
-					; m(final_cmd_str)
-					; SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
-					; SendRaw, cmd
-					; Send, {Enter}
-					Send, {Blind}{Text}%final_cmd_str%
-					; SendRaw, %final_cmd_str%
-					return
-				}
-			}
-			run(CMD_REGISTER_MAP[trim_gui_user_input])
-			if (use_cur_path) {
-				file_path_str := CMD_REGISTER_MAP[trim_gui_user_input][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
-				; m(file_path_str)
-				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
-				; m(file_name)
-				WinWaitActive, ahk_exe %file_name%,, 2222
-				if !ErrorLevel {
-					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[trim_gui_user_input] . "`n"
-					; SendInput, %cd_user_desktop_cmd_input%
-					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
-				}
-			}
 		}
 		else
 		{
@@ -331,47 +258,115 @@ class SearchPlus {
 		}
 	}
 
+
+	HandleCommand(command_title, cur_sel_text) 
+	{
+		global COMMAND_TITLE_2_ACTION_MAP
+		if (COMMAND_TITLE_2_ACTION_MAP.HasKey(command_title))
+		{
+			if (command_title == "Everything" && cur_sel_text) {
+				;;; everything search
+				everything_exe_path := COMMAND_TITLE_2_ACTION_MAP["Everything"][1]
+				run, %everything_exe_path%
+				WinWaitActive, ahk_exe Everything.exe, , 2.222
+				if ErrorLevel
+					MsgBox,,, please install Everything and set its path in conf.user.yaml
+				else if (cur_sel_text) {
+					Send, {Blind}{Text}%cur_sel_text%
+				}
+				return
+			}
+
+			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop", "git" : "cd ~/Desktop"}
+			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(command_title)
+			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
+			{
+				if (use_cur_path) {
+					Send, !d
+					final_cmd_str := StringJoin(" ", COMMAND_TITLE_2_ACTION_MAP[command_title]*) . "`n"
+					; m(final_cmd_str)
+					; SendInput, %final_cmd_str%  ; 类似于等同于下面这两句
+					; SendRaw, cmd
+					; Send, {Enter}
+					Send, {Blind}{Text}%final_cmd_str%
+					; SendRaw, %final_cmd_str%
+					return
+				}
+			}
+			run(COMMAND_TITLE_2_ACTION_MAP[command_title])
+			if (use_cur_path) {
+				file_path_str := COMMAND_TITLE_2_ACTION_MAP[command_title][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+				; m(file_path_str)
+				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
+				; m(file_name)
+				WinWaitActive, ahk_exe %file_name%,, 2222
+				if !ErrorLevel {
+					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title] . "`n"
+					; SendInput, %cd_user_desktop_cmd_input%
+					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
+				}
+			}
+		}
+	}
+
 }
+
 
 
 Sub_Nothing:
 Return
 
-SearchSelectedText_Menu_Click:
+
+SearchPlus_Menu_Click:
 cur_sel_text := GetCurSelectedText()
 dec_cnt := cur_sel_text ? 2 : 0
 SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-if cur_sel_text {
+if cur_sel_text
 	SearchPlus.HandleSearch(cur_sel_text)
-}
-else {
+else
 	SearchPlus.search_gui_spawn()
-}
 Return
 
-SearchSelectedText_Menu_MoreClick:
+SearchPlus_Menu_MoreClick:
 cur_sel_text := GetCurSelectedText()
 SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
-if cur_sel_text {
+if cur_sel_text
 	SearchPlus.HandleSearch(cur_sel_text)
-}
-else {
+else
 	SearchPlus.search_gui_spawn()
-}
 Return
 
 
+Command_Menu_Click:
+cur_sel_text := GetCurSelectedText()
+dec_cnt := cur_sel_text ? 2 : 0
+ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
+sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+dec_cnt += 1  ; search 和 command 之间有个分割线
 
-search_gui_destroy() {
-	; Hide GUI
-	Gui, Destroy
-}
+search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
+SearchPlus.HandleCommand(search_title, cur_sel_text)
+Return
+
+
+Command_Menu_MoreClick:
+cur_sel_text := GetCurSelectedText()
+search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
+SearchPlus.HandleCommand(search_title, cur_sel_text)
+Return
+
 
 
 
 ;-------------------------------------------------------------------------------
 ; GUI FUNCTIONS AND SUBROUTINES
 ;-------------------------------------------------------------------------------
+
+search_gui_destroy() {
+	; Hide GUI
+	Gui, Destroy
+}
 
 ; Automatically triggered on Escape key:
 GuiEscape:
