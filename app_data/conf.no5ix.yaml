@@ -117,8 +117,8 @@ capslock_plus:
     capslock: 'send {Esc}'
     capslock_w: SelectCurrentWord
     capslock_shift_w: SelectCurrentLine
-    capslock_f: 'send ^f'
-    capslock_shift_f: 'send ^!f'
+    capslock_f: 'send ^+{Home}'
+    capslock_shift_f: 'send ^+{End}'
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_shift_v: 'send +6'

@@ -362,12 +362,16 @@ QuickEntry_Command_Menu_MoreClick:
 
 
 QuickEntry_ScreenShot_Suspend_Menu_Click:
-	Sleep, 222
+	; Sleep, 222
 	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
-	if (A_ThisMenuItemPos - dec_cnt == 1)
+	if (A_ThisMenuItemPos - dec_cnt == 1) {
+		; ToolTipWithTimer("AreaScreenShot", 2222)
 		SnipPlus.AreaScreenShot()
-	else
+	}
+	else {
+		; ToolTipWithTimer("AreaScreenShotAndSuspend", 2222)
 		SnipPlus.AreaScreenShotAndSuspend()
+	}
 	Return
 
 
