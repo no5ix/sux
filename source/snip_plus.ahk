@@ -216,14 +216,6 @@ SUB_CLICK_SNIP_IMG:
 
 	Return
 
-
-ScreenShot_Suspend_Menu_Click:
-	if (A_ThisMenuItemPos == 1)
-		SnipPlus.AreaScreenShot()
-	else
-		SnipPlus.AreaScreenShotAndSuspend()
-	Return
-
 	
 ; //////////////////////////////////////////////////////////////////////////
 SUB_SNIP_PLUS_FILE_END_LABEL:

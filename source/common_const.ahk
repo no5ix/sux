@@ -53,7 +53,7 @@ global auto_destory_search_plus_gui_period := -22222  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 
-global SHORTCUT_KEY_INDEX_ARR_LEFT := [" ", "`t", "q", "w", "e", "r", "a", "s", "d", "f", "g", "z", "x", "c", "v", "t", "b"]
+global SHORTCUT_KEY_INDEX_ARR_LEFT := [" ", "q", "w", "e", "r", "a", "s", "d", "f", "g", "z", "x", "c", "v", "t", "b"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
 
 global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
