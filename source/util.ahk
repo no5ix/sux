@@ -24,24 +24,35 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 }
 
 
-get_menu_shortcut_str(shortcut_key_index_arr, index, dot_space_str, text_str)
+get_menu_shortcut_str(shortcut_key_index_arr, index, text_str)
 {
 	_cur_shortcut_str := shortcut_key_index_arr[A_Index]
 	if (_cur_shortcut_str == " ") {
 		;; 如果快捷键为空格的话, 得特殊处理
 		; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
-		if (dot_space_str)
-			menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
-		else
+		; if (dot_space_str)
+		; 	; menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
+		; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " & (" . lang("space") . ")"
+		; else
 			menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t& (" . lang("space") . ")"
+	}
+	else if (_cur_shortcut_str == "`t") {
+		;; 如果快捷键为空格的话, 得特殊处理
+		; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
+		; if (dot_space_str)
+		; 	; menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
+		; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " & (" . lang("space") . ")"
+		; else
+			menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t&`t(" . lang("tab") . ")"
 	}
 	; else if (_cur_shortcut_str == "q") {
 	; 	menu_shortcut_str := "&q(" . lang("quit") . ")"
 	; }
 	else {
-		if (dot_space_str)
-			menu_shortcut_str := "&" . _cur_shortcut_str . dot_space_str . StrReplace(text_str, "&", "&&")
-		else
+		; if (dot_space_str)
+		; 	; menu_shortcut_str := "&" . _cur_shortcut_str . dot_space_str . StrReplace(text_str, "&", "&&")
+		; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " &" . _cur_shortcut_str
+		; else
 			menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t&" . _cur_shortcut_str
 	}
 	return menu_shortcut_str

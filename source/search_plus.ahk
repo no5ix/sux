@@ -193,10 +193,9 @@ class SearchPlus {
 		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR_LEFT
 		shortcut_cnt_left := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-		dot_space_str := ""
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			if (index <= shortcut_cnt_left) {
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, dot_space_str, title)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, title)
 				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[index]
 				; ;; 如果快捷键为空格的话, 得特殊处理
 				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
@@ -218,7 +217,7 @@ class SearchPlus {
 		shortcut_cnt_right := SHORTCUT_KEY_INDEX_ARR_RIGHT.Count()
 		for index, title in COMMAND_TITLE_LIST {
 			if (index <= shortcut_cnt_right) {
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_RIGHT, index, dot_space_str, title)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_RIGHT, index, title)
 				Menu, SearchPlus_Command_Menu, Add, % menu_shortcut_str, Command_Menu_Click
 			}
 			Else {

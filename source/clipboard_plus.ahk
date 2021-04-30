@@ -50,13 +50,12 @@ class ClipboardPlus
 		}
 		global SHORTCUT_KEY_INDEX_ARR_LEFT
 		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-		dot_space_str := ".      "
 		Loop, % clipboard_history_cnt
 		{
 			idx := clipboard_history_cnt - A_Index + 1
 			clip_text := this.ClipboardHistoryArr[idx][2]
 			if (A_Index <= shortcut_cnt) {
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, A_Index, dot_space_str, clip_text)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, A_Index, clip_text)
 				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[A_Index]
 				; if (_cur_shortcut_str == " ") {
 				; 	;; 如果快捷键为空格的话, 得特殊处理
@@ -84,24 +83,28 @@ class ClipboardPlus
 
 	_Trim(str_ori, add_time := 1)
 	{
-		str := Trim(str_ori, " `t`r`n")
-		tabfind := InStr(str, "`t")
+		_trimed_str := Trim(str_ori, " `t`r`n")
+		tabfind := InStr(_trimed_str, "`t")
 		if (tabfind > 0)
 		{
-			str := SubStr(str, 1, tabfind -1)
+			_trimed_str := SubStr(_trimed_str, 1, tabfind -1)
 		}
-		if (str == "")
-			str := "<space>"
-		Else if (SubStr(str, 1, 1) != SubStr(str_ori, 1, 1))
-			str := "_" str
-		if StrLen(str) > 50
-			str := SubStr(str, 1, 50)
-		str := str "`t[" StrLen(str_ori) "]"
+		if (_trimed_str == "")
+			_trimed_str := "<space>"
+		Else if (SubStr(_trimed_str, 1, 1) != SubStr(str_ori, 1, 1))
+			_trimed_str := "_" _trimed_str
+		if StrLen(_trimed_str) > 50
+			_trimed_str := SubStr(_trimed_str, 1, 50)
+		; _trimed_str := _trimed_str "`t[" StrLen(str_ori) "]"
+
+		; final_str := "[" StrLen(str_ori) "]"
+		final_str := ""
 		if(add_time)
 		{
-			str := str "[" A_Hour ":" A_Min ":" A_Sec "]"
+			final_str := final_str "[" A_Hour ":" A_Min ":" A_Sec "]"
 		}
-		Return % str
+		final_str := final_str . "  " . _trimed_str
+		Return % final_str
 	}
 
 	_AddArrClip(ByRef Arr, str)
