@@ -373,14 +373,13 @@ class SuxCore
 
 		if(SuxCore.GetYamlCfg("search-plus.enable", 0))
 		{
-			_temp_map := {"normal-search": "SearchPlus.search_gui_spawn", "search-selected-text":"HandleSearchSelectedText"}
-			For key, value in SuxCore.GetYamlCfg("search-plus.shortcut-key", {})
-				register_hotkey(value, _temp_map[key], "")
-			For title, key_url_info in SuxCore.GetYamlCfg("search-plus.buildin", {}) {
-				register_web_search(title, key_url_info["key"], StrSplit(key_url_info["url"], comma_delimiters_arr))
+			if (sk := SuxCore.GetYamlCfg("search-plus.shortcut-key", ""))
+				register_hotkey(sk, "SearchPlus.ShowSearchPlusMenu")
+			For title, url in SuxCore.GetYamlCfg("search-plus.buildin", {}) {
+				register_web_search(title, StrSplit(url, comma_delimiters_arr))
 			}
-			For title, key_url_info in SuxCore.GetYamlCfg("search-plus.custom", {}) {
-				register_web_search(title, key_url_info["key"], StrSplit(key_url_info["url"], comma_delimiters_arr))
+			For title, url in SuxCore.GetYamlCfg("search-plus.custom", {}) {
+				register_web_search(title, StrSplit(url, comma_delimiters_arr))
 			}
 		}
 
@@ -469,13 +468,11 @@ register_command(key_name, action_array)
 	CMD_REGISTER_MAP[key_name] := action_array
 }
 
-register_web_search(title, key_name, action_array)
+register_web_search(title, url_array)
 {
-	global WEB_SEARCH_KEY_2_URL_MAP
-	global WEB_SEARCH_TITLE_2_KEY_MAP
+	global WEB_SEARCH_TITLE_2_URL_MAP
 	global WEB_SEARCH_TITLE_LIST
-	WEB_SEARCH_KEY_2_URL_MAP[key_name] := action_array
-	WEB_SEARCH_TITLE_2_KEY_MAP[title] := key_name
+	WEB_SEARCH_TITLE_2_URL_MAP[title] := url_array
 	WEB_SEARCH_TITLE_LIST.Insert(title)
 }
 

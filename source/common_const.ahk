@@ -70,8 +70,7 @@ HOTKEY_REGISTER_MAP := {}
 CMD_REGISTER_MAP := {}
 
 ; 记录web-search与对应操作
-WEB_SEARCH_KEY_2_URL_MAP := {}
-WEB_SEARCH_TITLE_2_KEY_MAP := {}
+WEB_SEARCH_TITLE_2_URL_MAP := {}
 WEB_SEARCH_TITLE_LIST := []
 
 ; 记录theme与对应操作

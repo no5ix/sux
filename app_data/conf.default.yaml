@@ -17,59 +17,26 @@ clipboard-plus:
   ClipsTotalNum: 50
 search-plus:
   enable: 1
-  shortcut-key: 
-    # normal-search: doublehit_ctrl
-    normal-search: capslock_q
-    search-selected-text: capslock_alt_q
+  # shortcut-key: doublehit_ctrl
+  # shortcut-key: doublehit_alt
+  shortcut-key: capslock_q
   buildin:
-    _Default:
-      key: default
-      url: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-    Google & Baidu:
-      key: bg
-      url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-    Everything:
-      key: ev
-      url: 'C:\Program Files\Everything\Everything.exe'
-    Google:
-      key: gg
-      url: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
-    Baidu:
-      key: bd
-      url: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-    Bing:
-      key: bi
-      url: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
-    Youdao:
-      key: yd
-      url: 'https://www.youdao.com/w/REPLACEME'
-    Bilibili:
-      key: bb
-      url: 'search.bilibili.com/all?keyword=REPLACEME'
-    JingDong:
-      key: jd
-      url: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
-    Zhihu:
-      key: zh
-      url: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
-    Github:
-      key: gh
-      url: 'https://github.com/search?q=REPLACEME'
-    Stackoverflow:
-      key: so
-      url: 'https://stackoverflow.com/search?q=REPLACEME'
-    Youtube:
-      key: yt
-      url: 'https://www.youtube.com/results?search_query=REPLACEME'
-    Pornhub:
-      key: ph
-      url: 'https://www.pornhub.com/video/search?search=REPLACEME'
-    Douban:
-      key: db
-      url: 'https://www.douban.com/search?q=REPLACEME'
-    Youku:
-      key: yk
-      url: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
+    _Default: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+    Google & Baidu: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+    Everything: 'C:\Program Files\Everything\Everything.exe'
+    Google: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
+    Baidu: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
+    Bing: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
+    Youdao: 'https://www.youdao.com/w/REPLACEME'
+    Bilibili: 'search.bilibili.com/all?keyword=REPLACEME'
+    JingDong: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
+    Zhihu: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
+    Github: 'https://github.com/search?q=REPLACEME'
+    Stackoverflow: 'https://stackoverflow.com/search?q=REPLACEME'
+    Youtube: 'https://www.youtube.com/results?search_query=REPLACEME'
+    Pornhub: 'https://www.pornhub.com/video/search?search=REPLACEME'
+    Douban: 'https://www.douban.com/search?q=REPLACEME'
+    Youku: 'https://so.youku.com/search_video/q_REPLACEME?searchfrom=1'
   custom:
 replace-text:
   enable: 1

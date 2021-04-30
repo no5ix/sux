@@ -11,8 +11,8 @@ if(A_ScriptName=="search_plus.ahk") {
 }
 
 
-last_search_str = ""
-trim_gui_user_input = ""
+; last_search_str = ""
+; trim_gui_user_input = ""
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
@@ -28,33 +28,31 @@ global THEME_CONF_REGISTER_MAP
 
 class SearchPlus {
 
+	static cur_sel_search_title := ""
+
 	init() {
 		; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
 		Send, {Esc}
-		; this.search_gui_spawn("Hello, sux.")	
-		; SetTimer, GuiEscape, -1666
 	}
 
-	HandleSearch(search_str, search_key="") {
-		global WEB_SEARCH_KEY_2_URL_MAP
-		if (search_str == "" && search_key == "")
+	HandleSearch(search_str) {
+		search_title := SearchPlus.cur_sel_search_title
+		global WEB_SEARCH_TITLE_2_URL_MAP
+		if (search_str == "")
 			return
-		if (search_key == "ev") {
+		if (search_title == "Everything") {
 			SearchPlus.handle_everything(search_str)
 			return
 		}
 
-		; 当只填了 url 而没填 search_key 的时候
-		if (IsRawUrl(search_str) && search_key == "") {
+		; 当只填了 url 而没填 search_title 的时候
+		if (IsRawUrl(search_str)) {
 			if not IsStandardRawUrl(search_str)
 				search_str := StringJoin("", ["http://", search_str]*)
 			Run %search_str%
 			return
 		}
-		if (search_key == "") {
-			search_key := "default"
-		}
-		for _index, search_url in WEB_SEARCH_KEY_2_URL_MAP[search_key] {
+		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
 			; m(_index "//" search_url)
 			SearchPlus.HandleSearchImpl(search_str, search_url)
 			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
@@ -104,19 +102,19 @@ class SearchPlus {
 	}
 
 
-	search_gui_spawn(curr_select_text="") {
+	search_gui_spawn() {
 		; search_gui_destroy()
-		static hMyGUI =
-		if (WinExist("ahk_id " hMyGUI)) {
-			; ToolTipWithTimer(hmyGUI)
-			WinActivate, ahk_id %hMyGUI%
-			Return
-		}
-		curr_select_text := GetCurSelectedText()
+		; static hMyGUI =
+		; if (WinExist("ahk_id " hMyGUI)) {
+		; 	; ToolTipWithTimer(hmyGUI)
+		; 	WinActivate, ahk_id %hMyGUI%
+		; 	Return
+		; }
+		; curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
-		global last_search_str
-		final_search_str := curr_select_text ? curr_select_text : last_search_str
+		; global last_search_str
+		; final_search_str := curr_select_text ? curr_select_text : last_search_str
 
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI
@@ -138,7 +136,8 @@ class SearchPlus {
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
-		Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
+		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
+		Gui, Add, Edit, %gui_control_options% vGuiUserInput, % SearchPlus.cur_sel_search_title
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 
@@ -175,10 +174,9 @@ class SearchPlus {
 	}
 
 	
-	ShowSelectedTextMenu() {
-		; search_gui_spawn_func := "search_gui_spawn"
-		; %search_gui_spawn_func%(GetCurSelectedText())
-		; SearchPlus.search_gui_spawn(GetCurSelectedText())
+	ShowSearchPlusMenu() {
+		search_gui_destroy()
+
 		try {
 			Menu, SearchSelectedText_Menu, DeleteAll
 		}
@@ -197,15 +195,12 @@ class SearchPlus {
 		
 		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR
-		global WEB_SEARCH_TITLE_2_KEY_MAP
 		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
 		dot_space_str := ".`t"
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			; m(title)
 			; Menu, SearchSelectedText_Menu, Add
-			search_key := WEB_SEARCH_TITLE_2_KEY_MAP[title]
-			; final_menu_str := "[" search_key "] " title
-			final_menu_str := title " [" search_key "]"
+			final_menu_str := title
 			if (index <= shortcut_cnt) {
 				menu_shortcut_str := get_menu_shortcut_str(index, dot_space_str, final_menu_str)
 				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[index]
@@ -225,11 +220,10 @@ class SearchPlus {
 	} 
 
 	handle_everything(pending_search_str) {
-		; global WEB_SEARCH_TITLE_2_KEY_MAP
-		global WEB_SEARCH_KEY_2_URL_MAP
+		global WEB_SEARCH_TITLE_2_URL_MAP
 		;;; everything search
 		; Run_AsUser(CustomCommandLineMap["ev"]*)  ; 这一句没有`run, %everything_exe_path%`快
-		everything_exe_path := WEB_SEARCH_KEY_2_URL_MAP["ev"][1]
+		everything_exe_path := WEB_SEARCH_TITLE_2_URL_MAP["Everything"][1]
 		run, %everything_exe_path%
 		; m(everything_exe_path)
 		; m(pending_search_str)
@@ -251,10 +245,10 @@ class SearchPlus {
 
 	HandleSearchGuiUserInput(gui_user_input)
 	{
-		global last_search_str
-		global WEB_SEARCH_KEY_2_URL_MAP
+		; global last_search_str
+		global WEB_SEARCH_TITLE_2_URL_MAP
 		trim_gui_user_input := Trim(gui_user_input)
-		last_search_str := trim_gui_user_input
+		; last_search_str := trim_gui_user_input
 
 		if !trim_gui_user_input
 		{
@@ -319,13 +313,15 @@ class SearchPlus {
 		}
 		else
 		{
-			word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
-			if WEB_SEARCH_KEY_2_URL_MAP.HasKey(word_array[1]) {
-				SearchPlus.HandleSearch(word_array[2], word_array[1])
-			}
-			else {
-				SearchPlus.HandleSearch(gui_user_input)
-			}
+			; word_array := StrSplit(trim_gui_user_input, A_Space, ,2)
+			; if WEB_SEARCH_TITLE_2_URL_MAP.HasKey(word_array[1]) {
+			; 	SearchPlus.HandleSearch(word_array[2], word_array[1])
+			; }
+			; else {
+			; 	SearchPlus.HandleSearch(gui_user_input)
+			; }
+
+			SearchPlus.HandleSearch(trim_gui_user_input)
 		}
 	}
 
@@ -333,20 +329,29 @@ class SearchPlus {
 
 
 Sub_Nothing:
-return
+Return
 
 SearchSelectedText_Menu_Click:
 cur_sel_text := GetCurSelectedText()
 dec_cnt := cur_sel_text ? 2 : 0
-; m(A_ThisMenuItemPos)
-; m(WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt])
-; m(WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
-SearchPlus.HandleSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]])
+SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
+if cur_sel_text {
+	SearchPlus.HandleSearch(cur_sel_text)
+}
+else {
+	SearchPlus.search_gui_spawn()
+}
 Return
 
 SearchSelectedText_Menu_MoreClick:
 cur_sel_text := GetCurSelectedText()
-SearchPlus.HandleSearch(cur_sel_text, WEB_SEARCH_TITLE_2_KEY_MAP[WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]])
+SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]
+if cur_sel_text {
+	SearchPlus.HandleSearch(cur_sel_text)
+}
+else {
+	SearchPlus.search_gui_spawn()
+}
 Return
 
 
