@@ -265,8 +265,9 @@ class QuickEntry {
 	}
 
 
-	HandleCommand(command_title, cur_sel_text) 
+	HandleCommand(command_title) 
 	{
+		cur_sel_text := GetCurSelectedText()
 		global COMMAND_TITLE_2_ACTION_MAP
 		if (COMMAND_TITLE_2_ACTION_MAP.HasKey(command_title))
 		{
@@ -356,14 +357,13 @@ QuickEntry_Command_Menu_Click:
 	
 	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.command_menu_pos_offset
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-	QuickEntry.HandleCommand(search_title, cur_sel_text)
+	QuickEntry.HandleCommand(search_title)
 	Return
 
 
 QuickEntry_Command_Menu_MoreClick:
-	cur_sel_text := GetCurSelectedText()
 	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
-	QuickEntry.HandleCommand(search_title, cur_sel_text)
+	QuickEntry.HandleCommand(search_title)
 	Return
 
 
