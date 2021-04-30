@@ -28,10 +28,25 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 class QuickEntry {
 
 	static cur_sel_search_title := ""
+	static command_menu_pos_offset := 0
+	static screenshot_menu_pos_offset := 0
 
 	init() {
 		; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
 		Send, {Esc}
+
+		global WEB_SEARCH_TITLE_LIST
+		global SHORTCUT_KEY_INDEX_ARR_LEFT
+
+		ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
+		sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+		dec_cnt := (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+		dec_cnt += 1  ; 截图的菜单 和 search 之间有个分割线
+
+		QuickEntry.screenshot_menu_pos_offset := dec_cnt
+
+		dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
+		QuickEntry.command_menu_pos_offset := dec_cnt
 	}
 
 	HandleSearch(search_str) {
@@ -172,7 +187,7 @@ class QuickEntry {
 		search_gui_destroy()
 
 		try {
-			Menu, QuickEntry_Command_Menu, DeleteAll
+			Menu, QuickEntry_Menu, DeleteAll
 		}
 		try {
 			Menu, QuickEntry_Menu_More, DeleteAll
@@ -185,9 +200,9 @@ class QuickEntry {
 		if selected_text {
 			sub_selected_text := SubStr(selected_text, 1, 2) . "..."
 			; m(sub_selected_text)
-			Menu, QuickEntry_Command_Menu, Add, % sub_selected_text, Sub_Nothing
-			Menu, QuickEntry_Command_Menu, Disable, % sub_selected_text
-			Menu, QuickEntry_Command_Menu, Add
+			Menu, QuickEntry_Menu, Add, % sub_selected_text, Sub_Nothing
+			Menu, QuickEntry_Menu, Disable, % sub_selected_text
+			Menu, QuickEntry_Menu, Add
 		}
 		
 		global WEB_SEARCH_TITLE_LIST
@@ -201,40 +216,40 @@ class QuickEntry {
 				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
 				; m(_cur_shortcut_str)
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, QuickEntry_Command_Menu, Add, % menu_shortcut_str, QuickEntry_Menu_Click
+				Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Search_Menu_Click
 			}
 			Else {
-				Menu, QuickEntry_Menu_More, Add, % index . dot_space_str . title, QuickEntry_Menu_MoreClick
+				Menu, QuickEntry_Search_Menu_More, Add, % title, QuickEntry_Search_Menu_MoreClick
 			}
 		}
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
-			Menu, QuickEntry_Command_Menu, Add, % lang("More"), :QuickEntry_Menu_More
+			Menu, QuickEntry_Menu, Add, % lang("More"), :QuickEntry_Search_Menu_More
 
 
 		;;;;;; ScreenShot
-		Menu, QuickEntry_Command_Menu, Add  ;; 加个分割线
-		Menu, QuickEntry_Command_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", ScreenShot_Suspend_Menu_Click
-		Menu, QuickEntry_Command_Menu, Add, % lang("SuspendScreenshot") . "`t&``(" . lang("~") . ")", ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add  ;; 加个分割线
+		Menu, QuickEntry_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("SuspendScreenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
 
 
 		;;;;;; command
-		Menu, QuickEntry_Command_Menu, Add  ;; 加个分割线
+		Menu, QuickEntry_Menu, Add  ;; 加个分割线
 		global COMMAND_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR_RIGHT
 		shortcut_cnt_right := SHORTCUT_KEY_INDEX_ARR_RIGHT.Count()
 		for index, title in COMMAND_TITLE_LIST {
 			if (index <= shortcut_cnt_right) {
 				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_RIGHT, index, title)
-				Menu, QuickEntry_Command_Menu, Add, % menu_shortcut_str, Command_Menu_Click
+				Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Command_Menu_Click
 			}
 			Else {
-				Menu, Command_Menu_More, Add, % index . dot_space_str . title, Command_Menu_MoreClick
+				Menu, QuickEntry_Command_Menu_More, Add, % title, QuickEntry_Command_Menu_MoreClick
 			}
 		}
 		if (COMMAND_TITLE_LIST.Count() > shortcut_cnt_right)
-			Menu, QuickEntry_Command_Menu, Add, % lang("More"), :Command_Menu_More
+			Menu, QuickEntry_Menu, Add, % lang("More"), :QuickEntry_Command_Menu_More
 
-		Menu, QuickEntry_Command_Menu, Show
+		Menu, QuickEntry_Menu, Show
 	} 
 
 	HandleSearchGuiUserInput(gui_user_input)
@@ -311,7 +326,7 @@ Sub_Nothing:
 	Return
 
 
-QuickEntry_Menu_Click:
+QuickEntry_Search_Menu_Click:
 	cur_sel_text := GetCurSelectedText()
 	dec_cnt := cur_sel_text ? 2 : 0
 	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
@@ -321,7 +336,7 @@ QuickEntry_Menu_Click:
 		QuickEntry.search_gui_spawn()
 	Return
 
-QuickEntry_Menu_MoreClick:
+QuickEntry_Search_Menu_MoreClick:
 	cur_sel_text := GetCurSelectedText()
 	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
 	if cur_sel_text
@@ -331,34 +346,38 @@ QuickEntry_Menu_MoreClick:
 	Return
 
 
-Command_Menu_Click:
-	cur_sel_text := GetCurSelectedText()
-	dec_cnt := cur_sel_text ? 2 : 0
-	ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
-	sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-	dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
-	dec_cnt += 1  ; search 和 command 之间有个分割线
-	dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
+QuickEntry_Command_Menu_Click:
+	; cur_sel_text := GetCurSelectedText()
+	; dec_cnt := cur_sel_text ? 2 : 0
+	; ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
+	; sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+	; dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+	; dec_cnt += 1  ; 截图的菜单 和 command 之间有个分割线
+	; dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
+	
+	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.command_menu_pos_offset
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	QuickEntry.HandleCommand(search_title, cur_sel_text)
 	Return
 
 
-Command_Menu_MoreClick:
+QuickEntry_Command_Menu_MoreClick:
 	cur_sel_text := GetCurSelectedText()
 	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
 	QuickEntry.HandleCommand(search_title, cur_sel_text)
 	Return
 
 
-ScreenShot_Suspend_Menu_Click:
-	Sleep, 111
-	cur_sel_text := GetCurSelectedText()
-	dec_cnt := cur_sel_text ? 2 : 0
-	ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
-	sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-	dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
-	dec_cnt += 1  ; search 和 截图菜单 之间有个分割线
+QuickEntry_ScreenShot_Suspend_Menu_Click:
+	Sleep, 222
+	; cur_sel_text := GetCurSelectedText()
+	; dec_cnt := cur_sel_text ? 2 : 0
+	; ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
+	; sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+	; dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+	; dec_cnt += 1  ; search 和 截图菜单 之间有个分割线
+
+	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
 	if (A_ThisMenuItemPos - dec_cnt == 1)
 		SnipPlus.AreaScreenShot()
 	else
