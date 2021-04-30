@@ -27,7 +27,7 @@ class SnipPlus
 
 	init()
 	{
-		SuxCore.register_clip_change_func("SnipPlus.set_clip_changed_flag")
+		; SuxCore.register_clip_change_func("SnipPlus.set_clip_changed_flag")
 		SuxCore.OnExit("SnipPlus.ClearTempImg")
 		SnipPlus.ClearTempImg()
 	}
@@ -38,10 +38,10 @@ class SnipPlus
 		FileCreateDir, % SnipPlus._TEMP_SNIP_IMG_DIR
 	}
 
-	set_clip_changed_flag()
-	{
-		SnipPlus.is_clipboard_changed := 1
-	}
+	; set_clip_changed_flag()
+	; {
+	; 	SnipPlus.is_clipboard_changed := 1
+	; }
 
 	AreaScreenShot()
 	{
@@ -61,14 +61,15 @@ class SnipPlus
 		; 	_old_temp_clip_file_size := 0
 		; }
 		
-		SnipPlus.is_clipboard_changed := 0
+		; SnipPlus.is_clipboard_changed := 0
 		clipboardOld := ClipboardAll
+		Clipboard := ""
 		SnipPlus.AreaScreenShot()
-		Sleep, 222
-		if (SnipPlus.is_clipboard_changed == 0) {
-			ToolTipWithTimer("Nothing snipped.")
-			Return
-		}
+		; Sleep, 222
+		; if (SnipPlus.is_clipboard_changed == 0) {
+			; ToolTipWithTimer("Nothing snipped.")
+			; Return
+		; }
 
 		; ; ; 如果 FileAppend的Text 为 %ClipboardAll% 或之前接受了 ClipboardAll 赋值的变量, 则用剪贴板的全部内容无条件覆盖 Filename(即不需要 FileDelete).
 		; ; ; 文件扩展名无关紧要. 很奇怪,经测试, 如果没有真的截图则_new_temp_clip_file_size会为一个较小的size, 也就是说没内容写入文件
@@ -100,7 +101,8 @@ class SnipPlus
 			DllCall( "DeleteObject", "Ptr",hBM )
 		}       
 		if (!FileExist(img_path)) {
-			ToolTipWithTimer("Save snipped pic failed.")
+			ToolTipWithTimer("Nothing snipped.")
+			; ToolTipWithTimer("Save snipped pic failed.")
 			Return
 		}
 
