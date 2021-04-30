@@ -23,7 +23,6 @@ search-plus:
   buildin:
     _Default: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     Google & Baidu: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
-    Everything: 'C:\Program Files\Everything\Everything.exe'
     Google: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l='
     Baidu: 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     Bing: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
@@ -94,6 +93,7 @@ command:
     cmd: 'cmd.exe'
     sux: 'https://github.com/no5ix/sux'
     git: 'C:\Program Files\Git\bin\bash.exe --login'
+    Everything: 'C:\Program Files\Everything\Everything.exe'
   custom:
     sw: StartSuxAhkWithWin
     rd: ReloadSux

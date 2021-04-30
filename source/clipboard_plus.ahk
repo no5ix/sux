@@ -48,8 +48,8 @@ class ClipboardPlus
 		{
 			Menu, Clipborad_Plus_Menu_More, DeleteAll
 		}
-		global SHORTCUT_KEY_INDEX_ARR
-		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
+		global SHORTCUT_KEY_INDEX_ARR_LEFT
+		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 		dot_space_str := ".      "
 		Loop, % clipboard_history_cnt
 		{
@@ -57,7 +57,7 @@ class ClipboardPlus
 			clip_text := this.ClipboardHistoryArr[idx][2]
 			if (A_Index <= shortcut_cnt) {
 				menu_shortcut_str := get_menu_shortcut_str(A_Index, dot_space_str, clip_text)
-				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[A_Index]
+				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[A_Index]
 				; if (_cur_shortcut_str == " ") {
 				; 	;; 如果快捷键为空格的话, 得特殊处理
 				; 	; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
@@ -161,7 +161,7 @@ Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:
 SuxCore.unregister_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
-idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR.Count()
+idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 ; clipboard_guard("paste_cur_selected_text", idx)
 paste_cur_selected_text(idx)
 SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
