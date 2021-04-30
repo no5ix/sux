@@ -260,7 +260,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - 支持command菜单 -->
 <!-- - 支持url直接书写 -->
 <!-- - 支持不输入任何东西则为官网 -->
-- 截图贴图menu
+<!-- - 截图贴图menu -->
 <!-- - check update失败, 点击"取消"打开浏览器的时候有乱切换软件的bug -->
 <!-- - 限制menu宽度 -->
 <!-- - 看看caps+的词语替换如何做的 -->
