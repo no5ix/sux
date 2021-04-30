@@ -20,7 +20,6 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\sux_core.ahk
 
-global THEME_CONF_REGISTER_MAP
 
 
 
@@ -40,8 +39,7 @@ class SearchPlus {
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		if (search_str == "")
 			return
-
-		; 当只填了 url 而没填 search_title 的时候
+		; 当填了 url 的时候
 		if (IsRawUrl(search_str)) {
 			if not IsStandardRawUrl(search_str)
 				search_str := StringJoin("", ["http://", search_str]*)
@@ -115,6 +113,7 @@ class SearchPlus {
 		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI
 		Gui, Margin, 0, 0
 
+		global THEME_CONF_REGISTER_MAP
 		cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
 		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
 
@@ -194,7 +193,7 @@ class SearchPlus {
 		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR_LEFT
 		shortcut_cnt_left := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-		dot_space_str := ".`t"
+		dot_space_str := ""
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			if (index <= shortcut_cnt_left) {
 				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, dot_space_str, title)
@@ -301,47 +300,47 @@ class SearchPlus {
 
 
 Sub_Nothing:
-Return
+	Return
 
 
 SearchPlus_Menu_Click:
-cur_sel_text := GetCurSelectedText()
-dec_cnt := cur_sel_text ? 2 : 0
-SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-if cur_sel_text
-	SearchPlus.HandleSearch(cur_sel_text)
-else
-	SearchPlus.search_gui_spawn()
-Return
+	cur_sel_text := GetCurSelectedText()
+	dec_cnt := cur_sel_text ? 2 : 0
+	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
+	if cur_sel_text
+		SearchPlus.HandleSearch(cur_sel_text)
+	else
+		SearchPlus.search_gui_spawn()
+	Return
 
 SearchPlus_Menu_MoreClick:
-cur_sel_text := GetCurSelectedText()
-SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
-if cur_sel_text
-	SearchPlus.HandleSearch(cur_sel_text)
-else
-	SearchPlus.search_gui_spawn()
-Return
+	cur_sel_text := GetCurSelectedText()
+	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
+	if cur_sel_text
+		SearchPlus.HandleSearch(cur_sel_text)
+	else
+		SearchPlus.search_gui_spawn()
+	Return
 
 
 Command_Menu_Click:
-cur_sel_text := GetCurSelectedText()
-dec_cnt := cur_sel_text ? 2 : 0
-ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
-sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
-dec_cnt += 1  ; search 和 command 之间有个分割线
+	cur_sel_text := GetCurSelectedText()
+	dec_cnt := cur_sel_text ? 2 : 0
+	ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
+	sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+	dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+	dec_cnt += 1  ; search 和 command 之间有个分割线
 
-search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-SearchPlus.HandleCommand(search_title, cur_sel_text)
-Return
+	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
+	SearchPlus.HandleCommand(search_title, cur_sel_text)
+	Return
 
 
 Command_Menu_MoreClick:
-cur_sel_text := GetCurSelectedText()
-search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
-SearchPlus.HandleCommand(search_title, cur_sel_text)
-Return
+	cur_sel_text := GetCurSelectedText()
+	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
+	SearchPlus.HandleCommand(search_title, cur_sel_text)
+	Return
 
 
 
@@ -364,7 +363,7 @@ Sub_HandleSearchGuiUserInput:
 	Gui, Submit, NoHide
 	search_gui_destroy()
 	SearchPlus.HandleSearchGuiUserInput(GuiUserInput)
-return
+	return
 
 
 

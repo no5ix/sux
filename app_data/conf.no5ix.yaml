@@ -115,16 +115,15 @@ capslock_plus:
   enable: 1
   buildin:
     capslock: 'send {Esc}'
-    capslock_w: ScreenShot
-    capslock_shift_w: ScreenShotAndSuspend
+    capslock_w: ScreenShotAndSuspend
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_shift_v: 'send +6'
+    capslock_g: 'send +4'
     #
     capslock_c: 'send ^/'
     capslock_e: 'send {Enter}'
-    capslock_s: 'send +4'
-    capslock_g: 'send ^y'
+    capslock_s: 'send ^y'
     capslock_d: 'send {Del}'
     capslock_shift_d: 'send {BS}'
     #

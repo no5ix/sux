@@ -2,6 +2,16 @@
 ; ; Notepad will save UTF-8 files with BOM automatically (even though it does not say so).
 ; ; Some editors however save without BOM, and then special characters look messed up in the AHK GUI.
 
+
+
+if(A_ScriptName=="snip_plus.ahk") {
+	ExitApp
+}
+
+
+; with this label, you can include this file on top of the file
+Goto, SUB_SNIP_PLUS_FILE_END_LABEL
+
 #Include %A_ScriptDir%\source\sux_core.ahk
 
 
@@ -28,17 +38,27 @@ class SnipPlus
 		FileCreateDir, % SnipPlus._TEMP_SNIP_IMG_DIR
 	}
 
+	set_clip_changed_flag()
+	{
+		SnipPlus.is_clipboard_changed := 1
+	}
+
+	ShowAreaScreenShotAndSuspendMenu()
+	{
+		dot_space_str := ".`t"
+		; Menu, ScreenShot_Suspend_Menu, Add, % "& (" . lang("space") . ")" . dot_space_str . lang("ScreenShot"), ScreenShot_Suspend_Menu_Click
+		Menu, ScreenShot_Suspend_Menu, Add, % lang("ScreenShot") . "`t& (" . lang("space") . ")", ScreenShot_Suspend_Menu_Click
+		; Menu, ScreenShot_Suspend_Menu, Add, % "&`t (" . lang("tab") . ")" . dot_space_str . lang("SuspendScreenshot"), ScreenShot_Suspend_Menu_Click
+		Menu, ScreenShot_Suspend_Menu, Add, % lang("SuspendScreenshot") . "`t&`t(" . lang("tab") . ")", ScreenShot_Suspend_Menu_Click
+		Menu, ScreenShot_Suspend_Menu, Show
+	}
+
 	AreaScreenShot()
 	{
 		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
 		; prscrn_param = %A_ScriptDir%\app_data\TXGYMailCamera.dll\CameraWindow
 		; prscrn_param = %A_ScriptDir%\app_data\PrScrn2.dll\PrScrn
 		DllCall(prscrn_param)
-	}
-
-	set_clip_changed_flag()
-	{
-		SnipPlus.is_clipboard_changed := 1
 	}
 
 	AreaScreenShotAndSuspend()
@@ -195,3 +215,16 @@ SUB_CLICK_SNIP_IMG:
 	; WinSet, TransColor, %MouseRGB% 66, ahk_id %MouseWin%
 
 	Return
+
+
+ScreenShot_Suspend_Menu_Click:
+	if (A_ThisMenuItemPos == 1)
+		SnipPlus.AreaScreenShot()
+	else
+		SnipPlus.AreaScreenShotAndSuspend()
+	Return
+
+	
+; //////////////////////////////////////////////////////////////////////////
+SUB_SNIP_PLUS_FILE_END_LABEL:
+	temp_spfel := "blabla"
