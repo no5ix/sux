@@ -120,7 +120,8 @@ capslock_plus:
   enable: 1
   buildin:
     # capslock: 'send {Esc}'
-    capslock_w: 'send +4'
+    capslock_w: SelectCurrentWord
+    capslock_shift_w: SelectCurrentLine
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_alt_v: 'send +6'

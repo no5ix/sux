@@ -260,6 +260,19 @@ ReloadSux() {
 }
 
 
+SelectCurrentWord() {
+	Send, ^{Left}
+	Sleep, 66
+	Send, ^+{Right}
+	; Send, ^c
+}
+
+SelectCurrentLine() {
+	Send, {Home}
+	Sleep, 66
+	Send, +{End}
+}
+
 
 SimulateClickDown() {
 	SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
