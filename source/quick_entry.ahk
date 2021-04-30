@@ -265,9 +265,8 @@ class QuickEntry {
 	}
 
 
-	HandleCommand(command_title) 
+	HandleCommand(command_title, cur_sel_text) 
 	{
-		cur_sel_text := GetCurSelectedText()
 		global COMMAND_TITLE_2_ACTION_MAP
 		if (COMMAND_TITLE_2_ACTION_MAP.HasKey(command_title))
 		{
@@ -347,35 +346,22 @@ QuickEntry_Search_Menu_MoreClick:
 
 
 QuickEntry_Command_Menu_Click:
-	; cur_sel_text := GetCurSelectedText()
-	; dec_cnt := cur_sel_text ? 2 : 0
-	; ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
-	; sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-	; dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
-	; dec_cnt += 1  ; 截图的菜单 和 command 之间有个分割线
-	; dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
-	
-	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.command_menu_pos_offset
+	cur_sel_text := GetCurSelectedText()
+	dec_cnt := (cur_sel_text ? 2 : 0) + QuickEntry.command_menu_pos_offset
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-	QuickEntry.HandleCommand(search_title)
+	QuickEntry.HandleCommand(search_title, cur_sel_text)
 	Return
 
 
 QuickEntry_Command_Menu_MoreClick:
+	cur_sel_text := GetCurSelectedText()
 	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
-	QuickEntry.HandleCommand(search_title)
+	QuickEntry.HandleCommand(search_title, cur_sel_text)
 	Return
 
 
 QuickEntry_ScreenShot_Suspend_Menu_Click:
 	Sleep, 222
-	; cur_sel_text := GetCurSelectedText()
-	; dec_cnt := cur_sel_text ? 2 : 0
-	; ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
-	; sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-	; dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
-	; dec_cnt += 1  ; search 和 截图菜单 之间有个分割线
-
 	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
 	if (A_ThisMenuItemPos - dec_cnt == 1)
 		SnipPlus.AreaScreenShot()
