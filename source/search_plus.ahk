@@ -210,6 +210,13 @@ class SearchPlus {
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
 			Menu, SearchPlus_Command_Menu, Add, % lang("More"), :SearchPlus_Menu_More
 
+
+		;;;;;; ScreenShot
+		Menu, SearchPlus_Command_Menu, Add  ;; 加个分割线
+		Menu, SearchPlus_Command_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", ScreenShot_Suspend_Menu_Click
+		Menu, SearchPlus_Command_Menu, Add, % lang("SuspendScreenshot") . "`t&``(" . lang("~") . ")", ScreenShot_Suspend_Menu_Click
+
+
 		;;;;;; command
 		Menu, SearchPlus_Command_Menu, Add  ;; 加个分割线
 		global COMMAND_TITLE_LIST
@@ -329,7 +336,7 @@ Command_Menu_Click:
 	sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 	dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
 	dec_cnt += 1  ; search 和 command 之间有个分割线
-
+	dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	SearchPlus.HandleCommand(search_title, cur_sel_text)
 	Return
@@ -342,6 +349,19 @@ Command_Menu_MoreClick:
 	Return
 
 
+ScreenShot_Suspend_Menu_Click:
+	Sleep, 111
+	cur_sel_text := GetCurSelectedText()
+	dec_cnt := cur_sel_text ? 2 : 0
+	ws_cnt := WEB_SEARCH_TITLE_LIST.Count()
+	sk_l_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+	dec_cnt += (ws_cnt > sk_l_cnt) ? sk_l_cnt : ws_cnt
+	dec_cnt += 1  ; search 和 截图菜单 之间有个分割线
+	if (A_ThisMenuItemPos - dec_cnt == 1)
+		SnipPlus.AreaScreenShot()
+	else
+		SnipPlus.AreaScreenShotAndSuspend()
+	Return
 
 
 ;-------------------------------------------------------------------------------

@@ -256,6 +256,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add donate gui pic -->
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 - add more action
+- unify all menu
 <!-- - after copy from clip_plus mess up the order -->
 <!-- - 支持command菜单 -->
 <!-- - 支持url直接书写 -->
