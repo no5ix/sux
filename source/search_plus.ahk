@@ -194,16 +194,16 @@ class SearchPlus {
 		}
 		
 		global WEB_SEARCH_TITLE_LIST
-		global SHORTCUT_KEY_INDEX_ARR
-		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
+		global SHORTCUT_KEY_INDEX_ARR_LEFT
+		shortcut_cnt_left := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 		dot_space_str := ".`t"
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			; m(title)
 			; Menu, SearchSelectedText_Menu, Add
 			final_menu_str := title
-			if (index <= shortcut_cnt) {
+			if (index <= shortcut_cnt_left) {
 				menu_shortcut_str := get_menu_shortcut_str(index, dot_space_str, final_menu_str)
-				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[index]
+				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[index]
 				; ;; 如果快捷键为空格的话, 得特殊处理
 				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
 				; m(_cur_shortcut_str)
@@ -214,8 +214,14 @@ class SearchPlus {
 				Menu, SearchSelectedText_Menu_More, Add, % index . dot_space_str . final_menu_str, SearchSelectedText_Menu_MoreClick
 			}
 		}
-		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt)
+		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
 			Menu, SearchSelectedText_Menu, Add, % lang("More"), :SearchSelectedText_Menu_More
+
+		;;;;;; command
+		; shortcut_cnt_right := SHORTCUT_KEY_INDEX_ARR_RIGHT.Count()
+		; Menu, SearchSelectedText_Menu, Add
+			
+
 		Menu, SearchSelectedText_Menu, Show
 	} 
 
@@ -345,7 +351,7 @@ Return
 
 SearchSelectedText_Menu_MoreClick:
 cur_sel_text := GetCurSelectedText()
-SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]
+SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
 if cur_sel_text {
 	SearchPlus.HandleSearch(cur_sel_text)
 }

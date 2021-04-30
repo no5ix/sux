@@ -26,8 +26,8 @@ ToolTipWithTimer(msg, delay_for_remove=600)
 
 get_menu_shortcut_str(index, dot_space_str, text_str)
 {
-	global SHORTCUT_KEY_INDEX_ARR
-	_cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR[A_Index]
+	global SHORTCUT_KEY_INDEX_ARR_LEFT
+	_cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[A_Index]
 	if (_cur_shortcut_str == " ") {
 		;; 如果快捷键为空格的话, 得特殊处理
 		; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
