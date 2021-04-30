@@ -19,7 +19,7 @@ search-plus:
   enable: 1
   # shortcut-key: doublehit_ctrl
   # shortcut-key: doublehit_alt
-  shortcut-key: capslock_f
+  shortcut-key: capslock_q
   buildin:
     _Default: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
     Google & Baidu: 'https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=', 'https://www.baidu.com/#ie=UTF-8&wd=REPLACEME'
@@ -117,6 +117,8 @@ capslock_plus:
     capslock: 'send {Esc}'
     capslock_w: SelectCurrentWord
     capslock_shift_w: SelectCurrentLine
+    capslock_f: 'send ^f'
+    capslock_shift_f: 'send ^!f'
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_shift_v: 'send +6'
