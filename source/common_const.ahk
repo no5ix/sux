@@ -12,6 +12,8 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Unable to connect to the sux official website.": "无法连接到sux官网."
     ,"Maybe need a proxy.": "可能需要使用代理."
     ,"More": "更多"
+    ,"More Search": "更多搜索"
+    ,"More Command": "更多指令"
     ,"Do you want to open it with your browser?": "是否要用浏览器打开sux官网查看?"
     ,"Double hit Alt to open search box, hit Esc to close.": "双击Alt打开搜索框, 按Esc来关闭"
     ,"Light": "明"
