@@ -213,8 +213,22 @@ StringJoin(sep, params*) {
 }
 
 
+PasteContent(pending_paste_content) {
+	ClipSaved := ClipboardAll 
+	Clipboard := ""
+	Clipboard := pending_paste_content
+	; m(Clipboard)
+    ClipWait, 0.1
+	if (!ErrorLevel) {
+		SafePaste()
+	}
+	Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
+	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
+}
+
 SafePaste() {
-	Send, ^v
+	; Send, ^v
+	Send, +{Insert}
 	Sleep, 111  ;; 这个sleeep是防止之后clipboard马上就被写入东西
 }
 
@@ -227,18 +241,19 @@ GetCurSelectedText() {
 	; Sleep, 66
 	; Read from the array:
 	; Loop % Array.MaxIndex()   ; More traditional approach.
+	cur_selected_text := ""
 	if(!ErrorLevel) {
 		; Sleep, 66                             ; copy selected text to clipboard
 		cur_selected_text := Clipboard                ; store selected text
 		StringRight, lastChar, cur_selected_text, 1
-		if(Asc(lastChar)!=10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
+		if(Asc(lastChar)==10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
 		{
-			return cur_selected_text
+			cur_selected_text := ""
 		}
 	}
 	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-	return
+	return cur_selected_text
 }
 
 
