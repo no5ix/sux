@@ -33,8 +33,8 @@ class QuickEntry {
 	static screenshot_menu_pos_offset := 0
 
 	init() {
-		; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
-		Send, {Esc}
+		; ; ; Esc一下, 不然第一次打开search_gui的阴影会有一个从淡到浓的bug
+		; Send, {Esc}
 
 		global WEB_SEARCH_TITLE_LIST
 		global SHORTCUT_KEY_INDEX_ARR_LEFT
