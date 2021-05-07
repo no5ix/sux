@@ -31,7 +31,7 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 
 
 #Include %A_ScriptDir%\source\common_const.ahk
-#Include %A_ScriptDir%\source\yaml.ahk
+#Include %A_ScriptDir%\source\util.ahk
 #Include %A_ScriptDir%\source\action.ahk
 #Include %A_ScriptDir%\source\tray_menu.ahk
 #Include %A_ScriptDir%\source\quick_entry.ahk

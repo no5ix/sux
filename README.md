@@ -271,6 +271,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - 看怎么调用js -->
 <!-- - suspend img -->
 - 弄个有道翻译面板
+- smart selection 双引号, 括号内, 单引号内
 <!-- - fix check update -->
 <!-- - click down 之后记得释放 -->
 <!-- - 浏览器中, click down之后双击就没选中了 -->
