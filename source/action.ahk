@@ -33,9 +33,10 @@ on_youdao_webapp_gui_req_ready() {
 	}
 	TEMP_WEBAPP_GUI_HTML := "app_data/temp_youdao_webapp_gui.html"
 	if (youdao_webapp_gui_http_req.status == 200) {
-		if FileExist(TEMP_WEBAPP_GUI_HTML)
-			FileDelete, % TEMP_WEBAPP_GUI_HTML
+		; if FileExist(TEMP_WEBAPP_GUI_HTML)
+		; 	FileDelete, % TEMP_WEBAPP_GUI_HTML
 
+		yd_html_file := FileOpen(TEMP_WEBAPP_GUI_HTML, "w", "UTF-8")
 		html_head_str = 
 		(
 		<!DOCTYPE html>
@@ -46,15 +47,17 @@ on_youdao_webapp_gui_req_ready() {
 			</head>
 			<body>
 		)
-		FileAppend, % html_head_str, % TEMP_WEBAPP_GUI_HTML
+		; FileAppend, % html_head_str, % TEMP_WEBAPP_GUI_HTML
 
 		left_pos := InStr(youdao_webapp_gui_http_req.responseText, "<div id=""results"">")
 		right_pos := InStr(youdao_webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
-		final_html_body_str := SubStr(youdao_webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1)
-		FileAppend, % final_html_body_str, % TEMP_WEBAPP_GUI_HTML
+		final_html_body_str := html_head_str . SubStr(youdao_webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) . "</body> </html>"
+		; FileAppend, % final_html_body_str, % TEMP_WEBAPP_GUI_HTML
 
-		end_str := "</body> </html>"
-		FileAppend, % end_str, % TEMP_WEBAPP_GUI_HTML
+		; end_str := "</body> </html>"
+		; FileAppend, % end_str, % TEMP_WEBAPP_GUI_HTML
+		yd_html_file.Write(final_html_body_str)
+		yd_html_file.Close()
 		; m(GetFullPathName(TEMP_WEBAPP_GUI_HTML))
 
 		global __youdao_Webapp_wb
