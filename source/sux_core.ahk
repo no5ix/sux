@@ -85,7 +85,7 @@ get_remote_ver_data_ini(url)
 	cur_http_req.onreadystatechange := Func("on_get_remote_ver_data_ini_ready")
 	; 发送请求. Ready() 将在其完成后被调用.
 	cur_http_req.send()
-	SetTimer, handle_req_failed, -6666
+	SetTimer, handle_remote_ver_req_failed, -6666
 }
 
 
@@ -117,13 +117,13 @@ on_get_remote_ver_data_ini_ready() {
 	}
 	else {
 		; m("xxd")
-		handle_req_failed()
+		handle_remote_ver_req_failed()
 	}
 	cur_http_req = 
 	check_update_caller := CHECK_UPDATE_CALLER_AUTO_CHECK
 }
 
-handle_req_failed() {
+handle_remote_ver_req_failed() {
 	global cur_http_req
 	global check_update_caller
 	global CHECK_UPDATE_CALLER_TRAY

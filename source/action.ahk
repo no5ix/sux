@@ -2,9 +2,87 @@
 #Include %A_ScriptDir%\source\quick_entry.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
 #Include %A_ScriptDir%\source\snip_plus.ahk
+#Include %A_ScriptDir%\source\util.ahk
 
 
 
+;;;;;;;;;;;;;;;
+webapp_gui_http_req = 
+YoudaoTranslationWebapp()
+{
+	global webapp_gui_http_req
+	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
+	; 打开启用异步的请求.
+	st := GetCurSelectedText()
+	if !st
+		return
+	url := "https://www.youdao.com/w/" . st
+	webapp_gui_http_req.open("GET", url, true)
+	; 设置回调函数 [需要 v1.1.17+].
+	webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
+	; 发送请求. Ready() 将在其完成后被调用.
+	webapp_gui_http_req.send()
+	; SetTimer, handle_webapp_gui_req_failed, -6666
+}
+
+on_webapp_gui_req_ready() {
+	global webapp_gui_http_req
+	if (webapp_gui_http_req.readyState != 4) {  ; 没有完成.
+		return
+	}
+	TEMP_WEBAPP_GUI_HTML := "app_data/temp_webapp_gui.html"
+	if (webapp_gui_http_req.status == 200) {
+		if FileExist(TEMP_WEBAPP_GUI_HTML)
+			FileDelete, % TEMP_WEBAPP_GUI_HTML
+
+		html_head_str = 
+		(
+		<!DOCTYPE html>
+		<html>
+			<head>
+				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
+				<link rel="stylesheet" href="app_data/min_youdao_trans.css">
+			</head>
+			<body>
+		)
+		FileAppend, % html_head_str, % TEMP_WEBAPP_GUI_HTML
+
+		left_pos := InStr(webapp_gui_http_req.responseText, "<div id=""results"">")
+		right_pos := InStr(webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
+		final_html_body_str := SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1)
+		FileAppend, % final_html_body_str, % TEMP_WEBAPP_GUI_HTML
+
+		end_str := "</body> </html>"
+		FileAppend, % end_str, % TEMP_WEBAPP_GUI_HTML
+
+		Gui __Webapp_:New
+		Gui __Webapp_:Margin, 0, 0
+		Gui __Webapp_:Add, ActiveX, v__Webapp_wb w655 h480, Shell.Explorer
+		; Gui Add, ActiveX, x0 y0 w640 h480 vWB, Shell.Explorer  ; The final parameter is the name of the ActiveX component.
+		__Webapp_wb.silent := true ;Surpress JS Error boxes
+		__Webapp_wb.Navigate("file://" . TEMP_WEBAPP_GUI_HTML)
+
+		;Wait for IE to load the page, before we connect the event handlers
+		while __Webapp_wb.readystate != 4 or __Webapp_wb.busy
+			sleep 10
+		;Use DOM access just like javascript!
+		; MyButton1 := wb.document.getElementById("MyButton1")
+		; MyButton2 := wb.document.getElementById("MyButton2")
+		; MyButton3 := wb.document.getElementById("MyButton3")
+		; ComObjConnect(MyButton1, "MyButton1_") ;connect button events
+		; ComObjConnect(MyButton2, "MyButton2_")
+		; ComObjConnect(MyButton3, "MyButton3_")
+		Gui Show, w640 h480
+	}
+	else {
+		; m("xxd")
+		; handle_webapp_gui_req_failed()
+	}
+	webapp_gui_http_req = 
+}
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 StartSuxAhkWithWin() {
 	msg_str := "Would you like to start sux with windows? Yes(Enable) or No(Disable)"

@@ -734,7 +734,6 @@ class Regedit
 
 
 ; Copyright © 2013 VxE. All rights reserved.
-
 ; Uses a two-pass iterative approach to deserialize a json string
 json_toobj( str ) {
 
@@ -1488,3 +1487,4 @@ Yaml_IsSeqMap(value){
 	return (Asc(Trim(value,"`n" A_Tab A_Space))=91 && Yaml_Seq("","",Trim(value,"`n" A_Tab A_Space)))
 			|| (Asc(Trim(value,"`n" A_Tab A_Space))=123 && Yaml_Map("","",Trim(value,"`n" A_Tab A_Space)))
 }
+
