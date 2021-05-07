@@ -7,31 +7,32 @@
 
 
 ;;;;;;;;;;;;;;;
-webapp_gui_http_req = 
+youdao_webapp_gui_http_req = 
+__youdao_Webapp_wb = 
 YoudaoTranslationWebapp()
 {
-	global webapp_gui_http_req
-	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
+	global youdao_webapp_gui_http_req
+	youdao_webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
 	; 打开启用异步的请求.
 	st := GetCurSelectedText()
 	if !st
 		return
 	url := "https://www.youdao.com/w/" . st
-	webapp_gui_http_req.open("GET", url, true)
+	youdao_webapp_gui_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
-	webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
+	youdao_webapp_gui_http_req.onreadystatechange := Func("on_youdao_webapp_gui_req_ready")
 	; 发送请求. Ready() 将在其完成后被调用.
-	webapp_gui_http_req.send()
-	; SetTimer, handle_webapp_gui_req_failed, -6666
+	youdao_webapp_gui_http_req.send()
+	; SetTimer, handle_youdao_webapp_gui_req_failed, -6666
 }
 
-on_webapp_gui_req_ready() {
-	global webapp_gui_http_req
-	if (webapp_gui_http_req.readyState != 4) {  ; 没有完成.
+on_youdao_webapp_gui_req_ready() {
+	global youdao_webapp_gui_http_req
+	if (youdao_webapp_gui_http_req.readyState != 4) {  ; 没有完成.
 		return
 	}
-	TEMP_WEBAPP_GUI_HTML := "app_data/temp_webapp_gui.html"
-	if (webapp_gui_http_req.status == 200) {
+	TEMP_WEBAPP_GUI_HTML := "app_data/temp_youdao_webapp_gui.html"
+	if (youdao_webapp_gui_http_req.status == 200) {
 		if FileExist(TEMP_WEBAPP_GUI_HTML)
 			FileDelete, % TEMP_WEBAPP_GUI_HTML
 
@@ -41,29 +42,33 @@ on_webapp_gui_req_ready() {
 		<html>
 			<head>
 				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-				<link rel="stylesheet" href="app_data/min_youdao_trans.css">
+				<link rel="stylesheet" href="min_youdao_trans.css">
 			</head>
 			<body>
 		)
 		FileAppend, % html_head_str, % TEMP_WEBAPP_GUI_HTML
 
-		left_pos := InStr(webapp_gui_http_req.responseText, "<div id=""results"">")
-		right_pos := InStr(webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
-		final_html_body_str := SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1)
+		left_pos := InStr(youdao_webapp_gui_http_req.responseText, "<div id=""results"">")
+		right_pos := InStr(youdao_webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
+		final_html_body_str := SubStr(youdao_webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1)
 		FileAppend, % final_html_body_str, % TEMP_WEBAPP_GUI_HTML
 
 		end_str := "</body> </html>"
 		FileAppend, % end_str, % TEMP_WEBAPP_GUI_HTML
+		; m(GetFullPathName(TEMP_WEBAPP_GUI_HTML))
 
-		Gui __Webapp_:New
-		Gui __Webapp_:Margin, 0, 0
-		Gui __Webapp_:Add, ActiveX, v__Webapp_wb w655 h480, Shell.Explorer
-		; Gui Add, ActiveX, x0 y0 w640 h480 vWB, Shell.Explorer  ; The final parameter is the name of the ActiveX component.
-		__Webapp_wb.silent := true ;Surpress JS Error boxes
-		__Webapp_wb.Navigate("file://" . TEMP_WEBAPP_GUI_HTML)
+		global __youdao_Webapp_wb
+		__youdao_Webapp_Width := 688
+		__youdao_Webapp_height := 480
+		__youdao_Webapp_Name := lang("Translation")
+		Gui __youdao_Webapp_:New
+		Gui __youdao_Webapp_:Margin, 0, 0
+		Gui __youdao_Webapp_:Add, ActiveX, v__youdao_Webapp_wb w%__youdao_Webapp_Width% h%__youdao_Webapp_height%, Shell.Explorer
+		__youdao_Webapp_wb.silent := true ;Surpress JS Error boxes
+		__youdao_Webapp_wb.Navigate("file://" . GetFullPathName(TEMP_WEBAPP_GUI_HTML))
 
 		;Wait for IE to load the page, before we connect the event handlers
-		while __Webapp_wb.readystate != 4 or __Webapp_wb.busy
+		while __youdao_Webapp_wb.readystate != 4 or __youdao_Webapp_wb.busy
 			sleep 10
 		;Use DOM access just like javascript!
 		; MyButton1 := wb.document.getElementById("MyButton1")
@@ -72,14 +77,23 @@ on_webapp_gui_req_ready() {
 		; ComObjConnect(MyButton1, "MyButton1_") ;connect button events
 		; ComObjConnect(MyButton2, "MyButton2_")
 		; ComObjConnect(MyButton3, "MyButton3_")
-		Gui Show, w640 h480
+		Gui __youdao_Webapp_:Show, w%__youdao_Webapp_Width% h%__youdao_Webapp_height%, %__Webapp_Name%
+		; Gui __youdao_Webapp_:Default
 	}
 	else {
 		; m("xxd")
-		; handle_webapp_gui_req_failed()
+		; handle_youdao_webapp_gui_req_failed()
 	}
-	webapp_gui_http_req = 
+	youdao_webapp_gui_http_req = 
 }
+
+__youdao_Webapp_GuiEscape:
+__youdao_Webapp_GuiClose:
+	;make sure taskbar is back on exit
+	WinShow, ahk_class Shell_TrayWnd
+	WinShow, Start ahk_class Button
+	Gui __youdao_Webapp_:Destroy
+return
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
