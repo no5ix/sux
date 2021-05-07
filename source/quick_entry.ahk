@@ -199,7 +199,7 @@ class QuickEntry {
 
 		selected_text := GetCurSelectedText()
 		if selected_text {
-			sub_selected_text := SubStr(selected_text, 1, 2) . "..."
+			sub_selected_text := lang("Selected") . ": " . SubStr(selected_text, 1, 2) . "..."
 			; m(sub_selected_text)
 			Menu, QuickEntry_Menu, Add, % sub_selected_text, Sub_Nothing
 			Menu, QuickEntry_Menu, Disable, % sub_selected_text
