@@ -34,7 +34,9 @@ on_webapp_gui_req_ready() {
 	TEMP_TRANS_WEBAPP_GUI_HTML_HTML := "app_data/trans/TEMP_TRANS_WEBAPP_GUI.html"
 	; TRANS_STYLE_CSS := """min_trans_style.css"""
 	if (webapp_gui_http_req.status == 200) {
-		yd_html_file := FileOpen(TEMP_TRANS_WEBAPP_GUI_HTML_HTML, "w", "UTF-8")
+		; yd_html_file := FileOpen(TEMP_TRANS_WEBAPP_GUI_HTML_HTML, "w")
+		if FileExist(TEMP_TRANS_WEBAPP_GUI_HTML_HTML)
+			FileDelete, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML
 		html_head_str = 
 		(
 		<!DOCTYPE html>
@@ -49,8 +51,9 @@ on_webapp_gui_req_ready() {
 		left_pos := InStr(webapp_gui_http_req.responseText, "<div id=""results"">")
 		right_pos := InStr(webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
 		final_html_body_str := html_head_str . SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) . "</body> </html>"
-		yd_html_file.Write(final_html_body_str)
-		yd_html_file.Close()
+		; yd_html_file.Write(final_html_body_str)
+		; yd_html_file.Close()
+		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML
 
 		global __Webapp_wb
 		__Webapp_Width := 688
