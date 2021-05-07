@@ -1,4 +1,4 @@
-![sux](app_data/sux.svg)
+![sux](app_data/img/sux.svg)
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
 
@@ -218,9 +218,9 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 捐赠! 让作者更有动力给sux加新功能! ^_^
 
 - 微信
-  - ![微信](/app_data/donate_wechat.png)
+  - ![微信](/app_data/img/donate_wechat.png)
 - 支付宝
-  - ![支付宝](/app_data/donate_alipay.png)
+  - ![支付宝](/app_data/img/donate_alipay.png)
 
 
 # TODO List

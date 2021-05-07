@@ -169,10 +169,10 @@ class SuxCore
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	static conf_user_yaml_file := "conf.user.yaml"
-	static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf.default.yaml"
+	static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"
 	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
-	static ver_ini_file := SuxCore._APP_DATA_DIR "ver.ini"
-	static remote_ver_ini_file := SuxCore._APP_DATA_DIR "remote_ver.ini"
+	static ver_ini_file := SuxCore._APP_DATA_DIR "ver/ver.ini"
+	static remote_ver_ini_file := SuxCore._APP_DATA_DIR "ver/remote_ver.ini"
 	; update
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/sux"

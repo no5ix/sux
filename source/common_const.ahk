@@ -36,6 +36,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Disable": "禁用"
     ,"Restart sux": "重启sux"
     ,"Exit": "退出"
+    ,"Translation": "翻译"
     ,"Home Page": "主页"
     ,"Selected": "当前选择"
     ,"Feedback": "反馈"}

@@ -111,7 +111,7 @@ class QuickEntry {
 	}
 
 
-	search_gui_spawn() {
+	search_gui_spawn(cur_selected_text="") {
 		; search_gui_destroy()
 		; static hMyGUI =
 		; if (WinExist("ahk_id " hMyGUI)) {
@@ -147,7 +147,9 @@ class QuickEntry {
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
-		Gui, Add, Edit, %gui_control_options% vGuiUserInput, % QuickEntry.cur_sel_search_title
+
+		pre_input_str := cur_selected_text ? cur_selected_text : QuickEntry.cur_sel_search_title
+		Gui, Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 
@@ -330,19 +332,19 @@ QuickEntry_Search_Menu_Click:
 	cur_sel_text := GetCurSelectedText()
 	dec_cnt := cur_sel_text ? 2 : 0
 	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-	if cur_sel_text
-		QuickEntry.HandleSearch(cur_sel_text)
-	else
-		QuickEntry.search_gui_spawn()
+	; if cur_sel_text
+	; 	QuickEntry.HandleSearch(cur_sel_text)
+	; else
+		QuickEntry.search_gui_spawn(cur_sel_text)
 	Return
 
 QuickEntry_Search_Menu_MoreClick:
 	cur_sel_text := GetCurSelectedText()
 	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
-	if cur_sel_text
-		QuickEntry.HandleSearch(cur_sel_text)
-	else
-		QuickEntry.search_gui_spawn()
+	; if cur_sel_text
+	; 	QuickEntry.HandleSearch(cur_sel_text)
+	; else
+		QuickEntry.search_gui_spawn(cur_sel_text)
 	Return
 
 
