@@ -45,6 +45,7 @@ on_webapp_gui_req_ready() {
 			<head>
 				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 				<link rel="stylesheet" href="min_trans_style.css">
+				<script type="text/javascript" src="min_trans.js"></script>
 			</head>
 			<body>
 		)
@@ -56,20 +57,31 @@ on_webapp_gui_req_ready() {
 		; m(left_pos)
 		; m(right_pos)
 		; return
-		final_html_body_str := html_head_str . SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) . "</body> </html>"
+		html_end_str =
+		(
+			</body> </html>
+		)
+		final_html_body_str := html_head_str . SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) . html_end_str
 		; yd_html_file.Write(final_html_body_str)
 		; yd_html_file.Close()
 		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML
 
 		global __Webapp_wb
-		__Webapp_Width := 688
+		__Webapp_Width := 700
 		__Webapp_height := 480
 		__Webapp_Name := lang("Translation")
 		Gui __Webapp_:New
 		Gui __Webapp_:Margin, 0, 0
+		; Gui __Webapp_:-DPIScale
 		Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
 		__Webapp_wb.silent := true ;Surpress JS Error boxes
-		__Webapp_wb.Navigate("file://" . GetFullPathName(TEMP_TRANS_WEBAPP_GUI_HTML_HTML))
+		
+	st := GetCurSelectedText()
+	if !st
+		return
+	url := "https://www.youdao.com/w/" . UriEncode(Trim(st))
+		__Webapp_wb.Navigate(url)
+		; __Webapp_wb.Navigate("file://" . GetFullPathName(TEMP_TRANS_WEBAPP_GUI_HTML_HTML))
 
 		;Wait for IE to load the page, before we connect the event handlers
 		while __Webapp_wb.readystate != 4 or __Webapp_wb.busy
