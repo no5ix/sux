@@ -9,7 +9,7 @@
 ;;;;;;;;;;;;;;;
 webapp_gui_http_req = 
 __Webapp_wb = 
-YoudaoTranslationWebapp()
+TranslateSeletedText()
 {
 	global webapp_gui_http_req
 	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")

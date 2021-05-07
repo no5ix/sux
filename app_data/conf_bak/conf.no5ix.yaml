@@ -110,6 +110,7 @@ hotkey:
     # doublehit_rctrl: SwitchInputMethodAndDeleteLeft
     # rctrl: 'send ^{Space}'
     rshift: SwitchInputMethodAndDeleteLeft
+    capslock_g: TranslateSeletedText
   custom:
 capslock_plus:
   enable: 1
