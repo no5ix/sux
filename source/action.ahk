@@ -17,7 +17,8 @@ TranslateSeletedText()
 	st := GetCurSelectedText()
 	if !st
 		return
-	url := "https://www.youdao.com/w/" . st
+	url := "https://www.youdao.com/w/" . UriEncode(Trim(st))
+	; m(url)
 	webapp_gui_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
 	webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
@@ -50,6 +51,11 @@ on_webapp_gui_req_ready() {
 
 		left_pos := InStr(webapp_gui_http_req.responseText, "<div id=""results"">")
 		right_pos := InStr(webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
+		; m(webapp_gui_http_req.responseText)
+		; FileAppend, % webapp_gui_http_req.responseText, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML
+		; m(left_pos)
+		; m(right_pos)
+		; return
 		final_html_body_str := html_head_str . SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) . "</body> </html>"
 		; yd_html_file.Write(final_html_body_str)
 		; yd_html_file.Close()
