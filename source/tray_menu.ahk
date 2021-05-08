@@ -191,34 +191,34 @@ class TrayMenu
 
 	ShowDonatePic() {
 		Gui, sux_donate: New
-		Gui sux_donate:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
-		Gui, Font, s12
+		Gui sux_donate: +AlwaysOnTop
+		Gui, sux_donate:Font, s12
 		s := "支付宝"
-		Gui, Add, Text,, % s
-		Gui, Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
-		; Gui, Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\donate_alipay.png
+		Gui, sux_donate:Add, Text,, % s
+		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
+		; Gui, sux_donate:Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\donate_alipay.png
 		s := "微信"
-		Gui, Add, Text,, % s
-		Gui, Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
+		Gui, sux_donate:Add, Text,, % s
+		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
 		GuiControl, Focus, Close
 		s := lang("Donate")
-		Gui, Show,, % s
+		Gui, sux_donate:Show, w330, % s
 	}
 
 	AboutSux() {
 		Gui, sux_About: New
 		Gui sux_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
-		Gui, Font, s12
+		Gui, sux_About:Font, s12
 		s := "sux v" SuxCore.version
-		Gui, Add, Text,, % s
+		Gui, sux_About:Add, Text,, % s
 		s := "<a href=""" SuxCore.Project_Home_Page """>" lang("Home Page") "</a>"
-		Gui, Add, Link,, % s
+		Gui, sux_About:Add, Link,, % s
 		s := "<a href=""" SuxCore.Project_Issue_page """>" lang("Feedback") "</a>"
-		Gui, Add, Link,, % s
-		Gui, Add, Text
+		Gui, sux_About:Add, Link,, % s
+		Gui, sux_About:Add, Text
 		GuiControl, Focus, Close
 		s := lang("About") . " sux"
-		Gui, Show,, % s
+		Gui, sux_About:Show,, % s
 	}
 
 	Update_Icon()

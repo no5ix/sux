@@ -67,6 +67,7 @@ on_webapp_gui_req_ready() {
 		__Webapp_height := 480
 		__Webapp_Name := lang("Translation")
 		Gui __Webapp_:New
+		; Gui __Webapp_:+Resize +MinSize%__Webapp_Width% -MaximizeBox -MinimizeBox
 		Gui __Webapp_:Margin, 0, 0
 		; Gui __Webapp_:Color, EEAA99, EEAA99
 		; Gui __Webapp_:-DPIScale
