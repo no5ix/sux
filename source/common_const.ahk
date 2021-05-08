@@ -19,7 +19,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Light": "明"
     ,"Dark": "暗"
     ,"space": "空格"
-    ,"quit": "空格"
+    ,"quit": "退出"
     ,"Disable Win10 Auto Update": "禁止Win10自动更新"
     ,"Auto Disable sux In Full Screen": "全屏下自动禁用sux"
     ,"Hot Corner": "触发角"
