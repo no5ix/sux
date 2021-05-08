@@ -257,6 +257,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 - add more action
 - trans gui change color to gray/ dpi
+- 弄个build看看拿得到ver么
 <!-- - 中文翻译 -->
 <!-- - 弄个clip guard对象, 来处理 Send, {Blind}{Text}慢的问题 -->
 <!-- - 即时光标在单词中间也能复制此单词的快捷键 -->
