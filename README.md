@@ -256,6 +256,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 <!-- - add donate gui pic -->
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 - add more action
+- snip_plus support img
 <!-- - donate width -->
 - trans gui change color to gray/ dpi / voice audio / soundmark encoding
 <!-- - 弄个build看看拿得到ver么 -->
