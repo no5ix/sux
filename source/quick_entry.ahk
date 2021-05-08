@@ -155,28 +155,10 @@ class QuickEntry {
 
 		Gui, Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
 
-		MouseGetPos, Mouse_x
+		xMidScrn := GetMouseMonitorMidX()
+		xMidScrn -= cur_theme_info["sux_width"] / 2 
 		yScrnOffset := A_ScreenHeight / 4
-		SysGet, mon_cnt, MonitorCount
-		if (mon_cnt == 1) {
-			Gui, Show, xCenter  y%yScrnOffset%, myGUI
-		}
-		else {
-			xMidScrn := 0
-			last_mon_width := 0
-			Loop, % mon_cnt
-			{
-				SysGet, Mon, Monitor, % A_Index
-				_mon_width := (MonRight - MonLeft)
-				xMidScrn += _mon_width
-				last_mon_width := _mon_width
-				if (Mouse_x >= MonLeft && Mouse_x < MonRight)
-					break
-			}
-			xMidScrn -= last_mon_width / 2
-			xMidScrn -= cur_theme_info["sux_width"] / 2 
-			Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
-		}
+		Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
 
 		global auto_destory_quick_entry_gui_period
 		; gui_des := ObjBindMethod(this, "search_gui_destroy")  ; 不建议用这个, 这个不会顶掉原先search_gui_destroy的timer的

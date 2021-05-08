@@ -93,7 +93,10 @@ on_webapp_gui_req_ready() {
 		; ComObjConnect(MyButton1, "MyButton1_") ;connect button events
 		; ComObjConnect(MyButton2, "MyButton2_")
 		; ComObjConnect(MyButton3, "MyButton3_")
-		Gui __Webapp_:Show, w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
+		
+		xMidScrn := GetMouseMonitorMidX()
+		xMidScrn -= __Webapp_Width / 2 
+		Gui __Webapp_:Show, x%xMidScrn% w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
 		; Gui __Webapp_:Default
 	}
 	else {
