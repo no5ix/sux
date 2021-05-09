@@ -416,16 +416,102 @@ SelectCurrentLine() {
 	Send, +{End}
 }
 
-GoNextLine() {
+InsertLineBelow() {
 	Send, {End}
 	Sleep, 66
 	Send, {Enter}
+}
+
+InsertLineAbove() {
+	Send, {Up}
+	Sleep, 66
+	InsertLineBelow()
 }
 
 DeleteCurrentLine() {
 	SelectCurrentLine()
 	Sleep, 66
 	Send, {BackSpace}
+}
+
+SmartSelectWithoutSymbol() {
+
+}
+
+SmartSelectWithSymbol() {
+	
+}
+
+DuplicateSelected() {
+	
+}
+
+TransformSelectedText() {
+	st := GetCurSelectedText()
+	if (!st) {
+		; ToolTipWithTimer(lang("Nothing selected") . ".")
+		; Return
+		SelectCurrentWord()
+		st := GetCurSelectedText()
+	}
+	static cur_i := 0
+	if (cur_i >= 3) {
+		cur_i := 0
+	}
+	if (cur_i == 0) {
+		NewStr := StrReplace(st, ["_", "-"], "")
+		if NewStr is upper
+		{
+			StringLower, st, st
+			cur_i := 1
+			return
+		}
+		else if NewStr is lower
+		{
+			StringUpper, st, st
+			cur_i := 1
+			return
+		}
+		else {
+			
+		}
+	}
+
+	; if (cur_i == 0) {
+	; 	; NewStr := StrReplace(st, "_", "")
+	; 	StringUpper, st, st
+	; }
+	; else 
+	if (cur_i == 1) {
+		st_arr := StrSplit(st, "_")
+		final_st =
+		for index, _st in st_arr {
+			StringUpper, _st, _st, T
+			final_st .= _st
+		}
+		st := final_st
+	}
+	; else if (cur_i == 2) {
+	; 	; NewStr := StrReplace(st, "_", "")
+	; 	StringLower, st, st
+	; }
+	; else if (cur_i == 3) {
+	; 	; NewStr := StrReplace(st, "_", "")
+	; 	StringUpper, st, st, T
+	; }
+	else if (cur_i == 2) {
+		st_arr := StrSplit(st, "_")
+		final_st =
+		for index, _st in st_arr {
+			StringUpper, _st, _st, T
+			final_st .= _st
+		}
+		st := final_st
+	}
+	cur_i += 1
+	PasteContent(st)
+	Sleep, 66
+	SelectCurrentWord()
 }
 
 

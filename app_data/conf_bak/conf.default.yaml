@@ -126,7 +126,8 @@ capslock_plus:
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_alt_v: 'send +6'
-    capslock_enter: GoNextLine
+    capslock_enter: InsertLineBelow
+    capslock_alt_enter: InsertLineAbove
     capslock_backspace: DeleteCurrentLine
     #
     capslock_c: 'send ^c'
