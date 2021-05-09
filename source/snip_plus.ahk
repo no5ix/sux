@@ -18,7 +18,7 @@ Goto, SUB_SNIP_PLUS_FILE_END_LABEL
 ; Screen Capture
 class SnipPlus
 {
-	static is_clipboard_changed := 0
+	static old_clipboard_content =
 	static temp_snip_img_index := 0
 	static _TEMP_SNIP_IMG_DIR := "app_data\temp_snip_dir\"
 	static _TEMP_SNIP_IMG_PREFIX := "temp_snip_"
@@ -27,7 +27,6 @@ class SnipPlus
 
 	init()
 	{
-		; SuxCore.register_clip_change_func("SnipPlus.set_clip_changed_flag")
 		SuxCore.OnExit("SnipPlus.ClearTempImg")
 		SnipPlus.ClearTempImg()
 	}
@@ -38,21 +37,61 @@ class SnipPlus
 		FileCreateDir, % SnipPlus._TEMP_SNIP_IMG_DIR
 	}
 
-	; set_clip_changed_flag()
-	; {
-	; 	SnipPlus.is_clipboard_changed := 1
-	; }
+	GetCurSnipImgPath()
+	{
+		Return SnipPlus._TEMP_SNIP_IMG_DIR SnipPlus._TEMP_SNIP_IMG_PREFIX SnipPlus.temp_snip_img_index ".png"
+	}
 
 	AreaScreenShot()
 	{
+		SnipPlus.old_clipboard_content := ClipboardAll
+		Clipboard := ""
+
 		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
 		; prscrn_param = %A_ScriptDir%\app_data\TXGYMailCamera.dll\CameraWindow
 		; prscrn_param = %A_ScriptDir%\app_data\PrScrn2.dll\PrScrn
 		DllCall(prscrn_param)
+
+		hBM := SnipPlus.CB_hBMP_Get()  
+		SnipPlus.temp_snip_img_index += 1
+		img_path := SnipPlus.GetCurSnipImgPath()
+		
+		If (hBM) {
+			SnipPlus.GDIP("Startup")
+			SnipPlus.SavePicture(hBM, img_path) 
+			SnipPlus.GDIP("Shutdown")
+			DllCall( "DeleteObject", "Ptr",hBM )
+		}       
+		if (FileExist(img_path)) {
+			; ToolTipWithTimer(lang("Nothing snipped") . ".")
+			; ToolTipWithTimer("Save snipped pic failed.")
+			; Return
+		; }
+		; else {
+			try {
+				Menu, SnipPlus_Menu, DeleteAll
+			}
+			Menu, SnipPlus_Menu, Add, % lang("Suspend"), Sub_SnipPlus_Menu_clik
+			Menu, SnipPlus_Menu, Show
+		}
+		else
+		{
+			; ToolTipWithTimer(lang("Nothing snipped") . ".")
+		}
+		
+		; Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		; clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+
+		; Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		; SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
+
 	}
 
 	AreaScreenShotAndSuspend()
 	{
+		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
+
 		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		; 	FileGetSize, _old_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 		; 	; FileDelete, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
@@ -62,9 +101,9 @@ class SnipPlus
 		; }
 		
 		; SnipPlus.is_clipboard_changed := 0
-		clipboardOld := ClipboardAll
-		Clipboard := ""
-		SnipPlus.AreaScreenShot()
+		; clipboardOld := ClipboardAll
+		; Clipboard := ""
+		; SnipPlus.AreaScreenShot()
 		; Sleep, 222
 		; if (SnipPlus.is_clipboard_changed == 0) {
 			; ToolTipWithTimer("Nothing snipped.")
@@ -86,26 +125,6 @@ class SnipPlus
 		; 	return
 		; }
 
-		hBM := SnipPlus.CB_hBMP_Get()  
-		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
-		Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-		clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-
-		SnipPlus.temp_snip_img_index += 1
-		img_path := SnipPlus._TEMP_SNIP_IMG_DIR SnipPlus._TEMP_SNIP_IMG_PREFIX SnipPlus.temp_snip_img_index ".png"
-		
-		If (hBM) {
-			SnipPlus.GDIP("Startup")
-			SnipPlus.SavePicture(hBM, img_path) 
-			SnipPlus.GDIP("Shutdown")
-			DllCall( "DeleteObject", "Ptr",hBM )
-		}       
-		if (!FileExist(img_path)) {
-			ToolTipWithTimer("Nothing snipped.")
-			; ToolTipWithTimer("Save snipped pic failed.")
-			Return
-		}
-
 		cur_gui_name := "sux_snipshot_" . SnipPlus.temp_snip_img_index
 		Gui, %cur_gui_name%: New
 		; Gui %cur_gui_name%:+Resize +AlwaysOnTop -MaximizeBox -MinimizeBox +ToolWindow
@@ -122,7 +141,8 @@ class SnipPlus
 		; Gui +LastFound  ; 
 		; WinSet, Transparent, 50
 
-		Gui, Add, Picture, gSUB_CLICK_SNIP_IMG, % img_path
+		img_path := SnipPlus.GetCurSnipImgPath()
+		Gui, %cur_gui_name%:Add, Picture, gSUB_CLICK_SNIP_IMG, % img_path
 		
 		; Menu, FileMenu, Add, &Open`tCtrl+O, Sub_xMenu_Open  ; 关于 Ctrl+O 请参阅后面的备注.
 		; Menu, FileMenu, Add, E&xit, Sub_xMenu_Open
@@ -135,8 +155,10 @@ class SnipPlus
 		MouseGetPos, Mouse_x, Mouse_y
 		final_x := Mouse_x - 88
 		final_y := Mouse_y - 8
-		Gui, Show, x%final_x% y%final_y%, % SnipPlus.temp_snip_img_index
+		Gui, %cur_gui_name%:Show, x%final_x% y%final_y%, % SnipPlus.temp_snip_img_index
 		; Gui, Show
+
+		
 	}
 
 
@@ -177,6 +199,10 @@ class SnipPlus
 }
 
 
+
+Sub_SnipPlus_Menu_clik:
+	SnipPlus.AreaScreenShotAndSuspend()
+Return
 
 SUB_CLICK_SNIP_IMG:
 	Gui +LastFound  ; 

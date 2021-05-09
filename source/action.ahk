@@ -43,12 +43,14 @@ TranslateSeletedText()
 
 
 
+	st := GetCurSelectedText()
+	if (!st) {
+		ToolTipWithTimer(lang("Nothing selected") . ".")
+		return
+	}
 	global webapp_gui_http_req
 	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
 	; 打开启用异步的请求.
-	st := GetCurSelectedText()
-	if !st
-		return
 	url := "https://www.youdao.com/w/" . UriEncode(Trim(st))
 	; m(url)
 	webapp_gui_http_req.open("GET", url, true)

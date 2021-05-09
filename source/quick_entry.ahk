@@ -125,23 +125,24 @@ class QuickEntry {
 		; global last_search_str
 		; final_search_str := curr_select_text ? curr_select_text : last_search_str
 
+		Gui, SearchGui_: New
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
-		Gui, -SysMenu +ToolWindow -caption +hWndhMyGUI
-		Gui, Margin, 0, 0
+		Gui, SearchGui_: -SysMenu +ToolWindow -caption +hWndhMyGUI
+		Gui, SearchGui_: Margin, 0, 0
 
 		global THEME_CONF_REGISTER_MAP
 		cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
 		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
 
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
-		Gui, Color, %sux_bg_color%, %sux_bg_color%
+		Gui, SearchGui_: Color, %sux_bg_color%, %sux_bg_color%
 		if (cur_theme_info["sux_border_shadow_type"] == "modern_shadow_type") {
 			; QuickEntry.ShadowBorder(hMyGUI)
 		; else
 			QuickEntry.FrameShadow(hMyGUI)
 		}
 
-		Gui, Font, s22, Segoe UI
+		Gui, SearchGui_: Font, s22, Segoe UI
 		; Gui, Font, s10, Segoe UI
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
@@ -149,16 +150,16 @@ class QuickEntry {
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
 
 		pre_input_str := cur_selected_text ? cur_selected_text : QuickEntry.cur_sel_search_title
-		Gui, Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
+		Gui, SearchGui_: Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 
-		Gui, Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
+		Gui, SearchGui_: Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
 
 		xMidScrn := GetMouseMonitorMidX()
 		xMidScrn -= cur_theme_info["sux_width"] / 2 
 		yScrnOffset := A_ScreenHeight / 4
-		Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
+		Gui, SearchGui_: Show, x%xMidScrn% y%yScrnOffset%, myGUI
 
 		global auto_destory_quick_entry_gui_period
 		; gui_des := ObjBindMethod(this, "search_gui_destroy")  ; 不建议用这个, 这个不会顶掉原先search_gui_destroy的timer的
@@ -365,11 +366,11 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 search_gui_destroy() {
 	; Hide GUI
-	Gui, Destroy
+	Gui, SearchGui_:Destroy
 }
 
 ; Automatically triggered on Escape key:
-GuiEscape:
+SearchGui_GuiEscape:
 	search_gui_destroy()
 	return
 

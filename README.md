@@ -249,10 +249,16 @@ hot-corner:
 <!-- - 暗模式的其他gui的阴影不正常 -->
 <!-- - add donate gui pic -->
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
+- 删除记录, 把多条复制记录一次性粘贴到目标窗口
+<!-- - donate width -->
+- Capslock + Backspace（删除光标所在行所有文字）
+- Capslock + Enter（无论光标是否在行末都能新起一个换行而不截断原句子）
+- 截图后弹出贴图菜单
+- bug:截图后保存则再也无法贴图
+- trans gui change color to gray/ dpi / voice audio / soundmark encoding
 - add more action
 - snip_plus support img
-<!-- - donate width -->
-- trans gui change color to gray/ dpi / voice audio / soundmark encoding
+<!-- - 翻译如果没选, 则弹出提示没选 -->
 <!-- - 弄个build看看拿得到ver么 -->
 <!-- - 中文翻译 -->
 <!-- - 弄个clip guard对象, 来处理 Send, {Blind}{Text}慢的问题 -->
