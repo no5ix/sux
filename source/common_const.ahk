@@ -41,6 +41,17 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Selected": "当前选择"
     ,"ScreenShot": "截图"
     ,"SuspendScreenshot": "贴图"
+    ,"_Default": "默认"
+    ,"Google & Baidu": "谷歌 & 百度" 
+    ,"Google": "谷歌"
+    ,"Baidu": "百度"
+    ,"Bing": "必应"
+    ,"Youdao": "有道"
+    ,"Bilibili": "哔哩哔哩"
+    ,"Jingdong": "京东"
+    ,"Zhihu": "知乎"
+    ,"Douban": "豆瓣"
+    ,"Youku": "优酷"
     ,"Feedback": "反馈"}
 
 

@@ -11,6 +11,38 @@ webapp_gui_http_req =
 __Webapp_wb = 
 TranslateSeletedText()
 {
+	; 	global __Webapp_wb
+	; 	__Webapp_Width := 888
+	; 	__Webapp_height := 480
+	; 	__Webapp_Name := lang("Translation")
+	; 	Gui __Webapp_:New
+	; 	Gui __Webapp_:Margin, 0, 0
+	; 	; Gui __Webapp_:+DPIScale
+	; 	Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
+	; 	__Webapp_wb.silent := true ;Surpress JS Error boxes
+		
+	; st := GetCurSelectedText()
+	; if !st
+	; 	return
+	; url := "https://www.youdao.com/w/" . UriEncode(Trim(st))
+	; 	__Webapp_wb.Navigate(url)
+	; 	; __Webapp_wb.Navigate("file://" . GetFullPathName(TEMP_TRANS_WEBAPP_GUI_HTML_HTML))
+
+	; 	;Wait for IE to load the page, before we connect the event handlers
+	; 	while __Webapp_wb.readystate != 4 or __Webapp_wb.busy
+	; 		sleep 10
+	; 	;Use DOM access just like javascript!
+	; 	; MyButton1 := wb.document.getElementById("MyButton1")
+	; 	; MyButton2 := wb.document.getElementById("MyButton2")
+	; 	; MyButton3 := wb.document.getElementById("MyButton3")
+	; 	; ComObjConnect(MyButton1, "MyButton1_") ;connect button events
+	; 	; ComObjConnect(MyButton2, "MyButton2_")
+	; 	; ComObjConnect(MyButton3, "MyButton3_")
+	; 	Gui __Webapp_:Show, w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
+	; return
+
+
+
 	global webapp_gui_http_req
 	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
 	; 打开启用异步的请求.
@@ -70,7 +102,7 @@ on_webapp_gui_req_ready() {
 		; Gui __Webapp_:+Resize +MinSize%__Webapp_Width% -MaximizeBox -MinimizeBox
 		Gui __Webapp_:Margin, 0, 0
 		; Gui __Webapp_:Color, EEAA99, EEAA99
-		; Gui __Webapp_:-DPIScale
+		Gui __Webapp_:-DPIScale
 		Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
 		__Webapp_wb.silent := true ;Surpress JS Error boxes
 		

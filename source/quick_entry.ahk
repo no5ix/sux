@@ -195,7 +195,7 @@ class QuickEntry {
 		shortcut_cnt_left := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			if (index <= shortcut_cnt_left) {
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, title)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, lang(title))
 				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[index]
 				; ;; 如果快捷键为空格的话, 得特殊处理
 				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
