@@ -105,7 +105,7 @@ hot-corner:
 
 # capslock增强器-类似vim的全局自定义快捷键capslock_plus
 
-这个工具其实很重磅的功能是capslock_plus
+这个工具其实很重磅的功能是capslock_plus, 实现文本输入增强, 你可以通过 Capslock 键配合以下辅助按键实现大部分文本操作需求，不再需要在鼠标和键盘间来回切换。
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173732.png)
 
@@ -260,7 +260,7 @@ hot-corner:
 <!-- - bug:截图后保存则再也无法贴图 -->
 - trans gui change color to gray/ dpi / voice audio / soundmark encoding
 - add more action
-- snip_plus support img
+- clip_plus support img
 <!-- - 翻译如果没选, 则弹出提示没选 -->
 <!-- - 弄个build看看拿得到ver么 -->
 <!-- - 中文翻译 -->

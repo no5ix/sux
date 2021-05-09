@@ -72,12 +72,22 @@ class ClipboardPlus
 				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " clip_text, Sub_ClipboardPlus_AllClips_Click
 			}
 			Else {
-				Menu, Clipborad_Plus_Menu_More, Add, % A_Index . dot_space_str . clip_text, Sub_ClipboardPlus_AllClips_MoreClick
+				Menu, Clipborad_Plus_Menu_More, Add, % clip_text, Sub_ClipboardPlus_AllClips_MoreClick
 			}
 		}
 		if (clipboard_history_cnt > shortcut_cnt)
 			Menu, Clipborad_Plus_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
+
+		Menu, Clipborad_Plus_Menu, Add
+		Menu, Clipborad_Plus_Menu, Add, % lang("Paste All") . "`t&`t(" . lang("tab") . ")", Sub_Menu_ClipboardPlus_PasteAll
+		Menu, Clipborad_Plus_Menu, Add, % lang("Delete All"), Sub_Menu_ClipboardPlus_DeleteAll
+
 		Menu, Clipborad_Plus_Menu, Show
+	}
+
+	DeleteAllClips()
+	{
+		this.ClipboardHistoryArr := []
 	}
 
 	_Trim(str_ori, add_time := 1)
@@ -135,12 +145,24 @@ class ClipboardPlus
 }
 
 
+Sub_Menu_ClipboardPlus_PasteAll:
+ClipboardPasteAll =
+Loop, % ClipboardPlus.ClipboardHistoryArr.MaxIndex()
+{
+	ClipboardPasteAll := ClipboardPasteAll "`r`n" ClipboardPlus.ClipboardHistoryArr[A_Index][1]
+}
+PasteContent(ClipboardPasteAll)
+Return
+
+Sub_Menu_ClipboardPlus_DeleteAll:
+ClipboardPlus.DeleteAllClips()
+Return
+
 Sub_ClipboardPlus_AllClips_Click:
 SuxCore.unregister_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")  ;; 防止paste_cur_selected_text里污染了剪切板顺序
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
 SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
-
 Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:

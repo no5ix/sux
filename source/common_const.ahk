@@ -45,6 +45,8 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"ScreenShot && Suspend": "截图 && 贴图"
     ,"ScreenShot": "截图"
     ,"SuspendScreenshot": "贴图"
+    ,"Paste All": "粘贴所有"
+    ,"Delete All": "删除所有"
     ,"_Default": "默认"
     ,"Google & Baidu": "谷歌 & 百度" 
     ,"Google": "谷歌"
