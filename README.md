@@ -122,6 +122,8 @@ hot-corner:
 - `+o`就是往右跳一个单词
 - `caps+alt+i`就是往左选中一个单词
 - `caps+alt+o`就是往右选中一个单词
+- `caps+backspace` : 删除光标所在行所有文字
+- `capslock+enter` : 无论光标是否在行末都能新起一个换行而不截断原句子
 - 加`alt`就是选中, 不加就是移动
 
 
@@ -250,11 +252,12 @@ hot-corner:
 <!-- - add donate gui pic -->
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 - 删除记录, 把多条复制记录一次性粘贴到目标窗口
-<!-- - donate width -->
+- smart selection 双引号, 括号内, 单引号内
+<!-- - donate width
 - Capslock + Backspace（删除光标所在行所有文字）
-- Capslock + Enter（无论光标是否在行末都能新起一个换行而不截断原句子）
-- 截图后弹出贴图菜单
-- bug:截图后保存则再也无法贴图
+- Capslock + Enter（无论光标是否在行末都能新起一个换行而不截断原句子） -->
+<!-- - 截图后弹出贴图菜单 -->
+<!-- - bug:截图后保存则再也无法贴图 -->
 - trans gui change color to gray/ dpi / voice audio / soundmark encoding
 - add more action
 - snip_plus support img
@@ -276,7 +279,6 @@ hot-corner:
 <!-- - 看怎么调用js -->
 <!-- - suspend img -->
 <!-- - 弄个有道翻译面板 -->
-- smart selection 双引号, 括号内, 单引号内
 <!-- - fix check update -->
 <!-- - click down 之后记得释放 -->
 <!-- - 浏览器中, click down之后双击就没选中了 -->

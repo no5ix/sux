@@ -122,10 +122,12 @@ capslock_plus:
   buildin:
     # capslock: 'send {Esc}'
     capslock_w: SelectCurrentWord
-    capslock_shift_w: SelectCurrentLine
+    capslock_alt_w: SelectCurrentLine
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_alt_v: 'send +6'
+    capslock_enter: GoNextLine
+    capslock_backspace: DeleteCurrentLine
     #
     capslock_c: 'send ^c'
     capslock_e: 'send {Up}'

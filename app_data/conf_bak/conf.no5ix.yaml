@@ -28,7 +28,7 @@ search-plus:
     Bing: 'https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1'
     Youdao: 'https://www.youdao.com/w/REPLACEME'
     Bilibili: 'search.bilibili.com/all?keyword=REPLACEME'
-    Jingdong: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8'
+    Jingdong: 'https://search.jd.com/Search?keyword=REPLACEME&enc=utf-8', 'search.bilibili.com/all?keyword=REPLACEME'
     Zhihu: 'https://www.zhihu.com/search?type=content&q=REPLACEME'
     Github: 'https://github.com/search?q=REPLACEME'
     Stackoverflow: 'https://stackoverflow.com/search?q=REPLACEME'
@@ -118,12 +118,14 @@ capslock_plus:
     capslock: 'send {Esc}'
     capslock_w: SelectCurrentWord
     capslock_shift_w: SelectCurrentLine
-    capslock_f: 'send ^+{Home}'
-    capslock_shift_f: 'send ^+{End}'
     capslock_`: SwitchCapsState
     capslock_tab: 'send +{Ins}'
     capslock_shift_v: 'send +6'
+    capslock_enter: GoNextLine
+    capslock_backspace: DeleteCurrentLine
     #
+    capslock_f: 'send ^+{Home}'
+    capslock_shift_f: 'send ^+{End}'
     capslock_c: 'send ^/'
     capslock_e: 'send {Enter}'
     capslock_s: 'send ^y'

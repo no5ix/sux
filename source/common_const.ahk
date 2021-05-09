@@ -42,7 +42,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Nothing selected": "没有选中任何东西"
     ,"Nothing snipped": "没有截任何图"
     ,"Suspend": "悬浮"
-    ,"ScreenShot & Suspend": "截图 & 贴图"
+    ,"ScreenShot && Suspend": "截图 && 贴图"
     ,"ScreenShot": "截图"
     ,"SuspendScreenshot": "贴图"
     ,"_Default": "默认"

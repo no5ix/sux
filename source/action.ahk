@@ -41,8 +41,6 @@ TranslateSeletedText()
 	; 	Gui __Webapp_:Show, w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
 	; return
 
-
-
 	st := GetCurSelectedText()
 	if (!st) {
 		ToolTipWithTimer(lang("Nothing selected") . ".")
@@ -416,6 +414,18 @@ SelectCurrentLine() {
 	Send, {Home}
 	Sleep, 66
 	Send, +{End}
+}
+
+GoNextLine() {
+	Send, {End}
+	Sleep, 66
+	Send, {Enter}
+}
+
+DeleteCurrentLine() {
+	SelectCurrentLine()
+	Sleep, 66
+	Send, {BackSpace}
 }
 
 

@@ -46,7 +46,7 @@ class QuickEntry {
 
 		QuickEntry.screenshot_menu_pos_offset := dec_cnt
 
-		dec_cnt += 3  ; 中间还有两个截图的菜单和一个分割线
+		dec_cnt += 2  ; 中间还有1个截图的菜单和一个分割线
 		QuickEntry.command_menu_pos_offset := dec_cnt
 	}
 
@@ -213,8 +213,9 @@ class QuickEntry {
 
 		;;;;;; ScreenShot
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
-		Menu, QuickEntry_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
-		Menu, QuickEntry_Menu, Add, % lang("SuspendScreenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("ScreenShot && Suspend") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
+		; Menu, QuickEntry_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
+		; Menu, QuickEntry_Menu, Add, % lang("SuspendScreenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
 
 
 		;;;;;; command
