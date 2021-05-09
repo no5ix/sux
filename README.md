@@ -1,37 +1,164 @@
-![sux](app_data/img/sux.svg)
+
+<!-- [<i class="fa fa-fw fa-github fa-2x"></i>nox](https://github.com/no5ix/sux) 
+
+An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
+
+Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
+
+<video width="100%" controls="controls">
+<source src="/img/sux/sux_intro.mp4" type="video/mp4" />
+</video> -->
+
+
+![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
+
+一个工具同时拥有
+- 一键翻译: `caps+g`
+- 历史剪切板: `caps+v`
+- 截图
+- 贴图
+- 类似listary/alfred/wox的快捷搜索: `caps+q`
+- 类似macos的触发角
+- 屏幕边缘触发器
+- 类似vim的全局自定义快捷键
+- 文字替换器: `caps+r`
+- 自定义主题
+- 可自定义的yaml配置
+- blabla...
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
 
 Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
 
-[![](https://github.com/no5ix/no5ix.github.io/blob/source/source/app_data/sux/web_search.gif)](https://hulinhong.com/2020/01/09/sux_readme/)
-click img to see full video
+<!-- [![](https://github.com/no5ix/no5ix.github.io/blob/source/source//sux/sux/web_search.gif)](https://hulinhong.com/2020/01/09/sux_readme/)
+点击图片来看完整视频.click img to see full video. -->
 
 
-# IMPORTANT
+**. . .**<!-- more -->
+
+
+# 重要
   
-- Please run as administrator.
+- 请以管理员身份运行sux
+- Please run sux as administrator.
+
+Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github.com/no5ix/sux/releases) and unzip it then run sux.exe as admin !
 
 
-# Features
+# 快捷搜索search-plus
 
-* **personalized configuration** : u can modify `conf.user.yaml` to override all default configuration
-* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `hot-corner`-`hot-edge`
-* **hot corners** : just like mac hot cornes, see `hot-corner`-`hot-corner`
-* **web search** : just like Wox/Listary/Alfred, try double click `Alt` and input sth, see `conf.user.yaml`-`search-plus`
-* **enhanced capslock** : just like Capslock+, see `conf.user.yaml`-`capslock_plus`
-* **work with Everything** : try double tap `Alt`, then input `ev `
-* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.yaml`-`theme`
-* **screen capture** : try `Capslock + Tab`
-* **disable win10 auto update**: see `conf.user.yaml`-`additional-features`-`disable_win10_auto_update`
-* **start sux with windows**
-* **custom command line**:  see `conf.user.yaml`-`command`
-* **custom hotkey**:  see `conf.user.yaml`-`hotkey`
-* **clipboard-plus**:  clipboard history, try `win+alt+v`, see `conf.user.yaml`-`clipboard-plus`
-<!-- * **auto selection copy** : just like linux terminal -->
-<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
-<!-- * **game mode** : double Alt then input `game` -->
-<!-- * **auto update when launch sux** : see `default_conf.ahk` : `auto_update_when_launch_sux` -->
+大多数时候其实都是 `caps+q`然后空格搜东西, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173722.png)
+
+
+# 类似macos的触发角hot-corner
+
+需要按照下图去sux托盘菜单里开启触发角功能
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509191356.png)
+
+当开启之后, 鼠标移动到屏幕左上/左下/右上右下都会触发不同的动作:
+- 左上: 跳到浏览器前一个标签页
+- 右上: 跳到浏览器后一个标签页
+- 左下: 模拟按下`win`键
+- 右下: 模拟按下`alt+tab`
+
+这些是默认动作, 你都可以改动自定义配置`conf.user.yaml`来更改
+```yaml
+hot-corner: 
+  action: 
+    LeftTopCorner: 
+      hover: JumpToPrevTab
+      # MButton: 'send {volume_mute}'
+    RightTopCorner: 
+      hover: JumpToNextTab
+    LeftBottomCorner: 
+      hover: 'send {LWin}'
+    RightBottomCorner: 
+      hover: GotoPreApp
+```
+
+
+# 历史剪切板clipboard-plus
+
+这个历史粘贴板目前是不支持图片和其他的二进制文件
+
+
+# 截图和贴图
+
+`capslock+q` 弹出菜单之后, 然后再按`tab`是截图, `s`是贴图
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173705.png)
+
+
+# 屏幕边缘触发器hot-edge
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173727.png)
+
+- 你把鼠标放到左边缘的上半部分, 然后滚轮, 你会发现可以调节音量
+- 放到显示器上边缘, 滚轮你会发现可以
+    - 回到页面顶部
+    - 去页面底部
+- 放到屏幕下边缘, 滚轮则可以切换桌面
+- 放到屏幕左边缘, 然后按鼠标中键则可以把当前窗口移到屏幕左边
+- 放到屏幕右边缘, 然后按鼠标中键则可以把当前窗口移到屏幕右边
+
+
+# capslock增强器-类似vim的全局自定义快捷键capslock_plus
+
+这个工具其实很重磅的功能是capslock_plus
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173732.png)
+
+可以类似vim一样的, 各种光标移动都十分方便, 比如
+- `caps+e`是上
+- `caps+hjkl` 也可以来上下左右的
+- `+d`是下
+- `+s`是左, 比如`caps+alt+s`就是往左选中哈
+- `+f`是右
+- `+w`是选择当前单词
+- `+逗号`是光标移动到最左边
+- `+句号`是光标移动到最右边
+- `caps+i`就是往左跳一个单词
+- `+o`就是往右跳一个单词
+- `caps+alt+i`就是往左选中一个单词
+- `caps+alt+o`就是往右选中一个单词
+- 加`alt`就是选中, 不加就是移动
+
+
+# 文字替换器replace-text
+
+`caps+r`是替换, 比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173736.png)
+
+
+# 自定义配置
+
+可以在托盘菜单里找到"编辑配置文件"的菜单的, 改了配置记得重启sux哈
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173641.png)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173654.png)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173500.png)
+
+- see [Chinese detail](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
+- see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
+- `win: "#" `
+- `ctrl: "^" `
+- `shift: "+" `
+- `alt: "!"`
+- `hover: "hover" `
+- `capslock: "CapsLock"`
+- `lwin: "<#" `
+- `rwin: ">#"`
+- `lctrl: "<^" `
+- `rctrl: ">^"`
+- `lshift: "<+" `
+- `rshift: ">+"`
+- `lalt: "<!" `
+- `ralt: ">!"`
+- `lbutton:  "LButton" `
+- `rbutton:  "RButton" `
+- `mbutton: "MButton"`
 
 
 # CMDs
@@ -39,156 +166,27 @@ click img to see full video
 * `sux` : sux official site
 * `cmd` : open a command prompt window on the current explorer path 
 * `git` : open a git bash window on the current explorer path 
-* `ev` : run Everything
-<!-- * `limit` : turn on/off limit mode -->
 
 
-# remarks
+# Features
 
-- see [Chinese detail](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
-- see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
-- win: "#" 
-- ctrl: "^" 
-- shift: "+" 
-- alt: "!"
-- hover: "hover" 
-- capslock: "CapsLock"
-- lwin: "<#" 
-- rwin: ">#"
-- lctrl: "<^" 
-- rctrl: ">^"
-- lshift: "<+" 
-- rshift: ">+"
-- lalt: "<!" 
-- ralt: ">!"
-- lbutton:  "LButton" 
-- rbutton:  "RButton" 
-- mbutton: "MButton"
-
-
-# hot-corner
-
-* LeftTopCorner: 
-	- hover: JumpToPrevTab
-* RightTopCorner: 
-	- hover: JumpToNextTab
-* LeftBottomCorner: 
-	- hover: 'send {LWin}'
-* RightBottomCorner: 
-	- hover: 'send !{Tab}'
-
-
-# hot-edge:
-
-- TopHalfLeftEdge: 
-	- ctrl_8: 'C:\Program Files (x86)\Netease\CloudMusic\cloudmusic.exe'
-- TopHalfRightEdge: 
-	- ctrl_8: 'explorer.exe'
-- BottomHalfLeftEdge:
-	- ctrl_8: 'send ^+t'
-- BottomHalfRightEdge: 
-	- ctrl_8: 'send {F5}'
-- LeftHalfBottomEdge: 
-	- ctrl_8: 'send #{Tab}'
-- LeftHalfTopEdge: 
-	- ctrl_8: 'send #{Left}'
-	- wheeldown: 'Send {volume_down}'
-	- wheelup: 'Send {volume_up}'
-- RightHalfTopEdge: 
-	- ctrl_8: 'send #{Right}'
-- RightHalfBottomEdge: 
-	- ctrl_8: 'send #a'
-
-
-# CapsLock+
-
-* `CapsLock` :
-    *  `Esc`
-* `CapsLock` & `H` :
-	* `Left`
-	* with shift : `Shift`+`Left`
-* `CapsLock` & `J` :
-	* `Down`
-	* with shift : `Shift`+`Down`
-* `CapsLock` & `K` :
-	* `Up`
-	* with shift : `Shift`+`Up`
-* `CapsLock` & `L` :
-	* `Right`
-	* with shift : `Shift`+`Right`
-* `CapsLock` & `Tab` :
-    * screen capture
-	* with shift : `CapsLock`
-* `CapsLock` & `V` :
-    * `^`
-* `CapsLock` & `F` :
-	* copy current and pop out sux search window
-	<!-- * with shift : `Ctrl`+`Shift`+`F` -->
-* `CapsLock` & `W` :
-	* `Shift`+`Ins`
-* `CapsLock` & `E` :
-	* Enter
-	<!-- * with shift : `Ctrl`+`/` -->
-<!-- * `CapsLock` & `X` :
-    *  `Ctrl`+` -->
-* `CapsLock` & `C` :
-	* `Ctrl`+`/`
-	<!-- * with shift : `$` -->
-* `CapsLock` & `S` :
-	<!-- * `Ctrl`+`S` -->
-	<!-- * with shift : `Ctrl`+`Shift`+`S` -->
-	* `$`
-* `CapsLock` & `R` :
-	* `Ctrl`+`Y`
-	<!-- * with shift : `Ctrl`+`Y` -->
-<!-- * `CapsLock` & `Tab` :
-	* `Shift`+`Ins`
-	* with shift : `Ins` -->
-* `CapsLock` & `d` :
-	* `Del`
-	* with shift : `BS`
-* `CapsLock` & `Y` :
-	* `*`
-	* with shift : `%`
-* `CapsLock` & `U` :
-	* `!`
-	* with shift : `@`
-* `CapsLock` & `,` :
-	* `Home`
-	* with shift : `Shift`+`Home`
-* `CapsLock` & `.` :
-	* `End`
-	* with shift : `Shift`+`End`
-* `CapsLock` & `P` :
-	* `&`
-	* with shift : `#`
-* `CapsLock` & `I` :
-	* `Ctrl`+`Left`
-	* with shift : `Ctrl`+`Shift`+`Left`
-* `CapsLock` & `O` :
-	* `Ctrl`+`Right`
-	* with shift : `Ctrl`+`Shift`+`Right`
-* `CapsLock` & `;` :
-	* `_`
-	* with shift : `-`
-* `CapsLock` & `'` :
-	* `=`
-	* with shift : `+`
-* `CapsLock` & `/` :
-	* `\`
-	* with shift : `|`
-* `CapsLock` & `9` :
-	* `[`
-	* with shift : ``
-* `CapsLock` & `0` :
-	* `]`
-	* with shift : `}`
-* `CapsLock` & `N` :
-	* `Ctrl`+`Backspace`
-	* with shift : `Ctrl`+`Shift`+`Backspace`
-* `CapsLock` & `M` :
-	* `Ctrl`+`Del`
-	* with shift : `Shift`+`End`+`Del`
+* **personalized configuration** : u can modify `conf.user.yaml` to override all default configuration
+* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `hot-corner`-`hot-edge`
+* **hot corners** : just like mac hot cornes, see `hot-corner`-`hot-corner`
+* **web search** : just like Wox/Listary/Alfred, see `conf.user.yaml`-`search-plus`
+* **enhanced capslock** : just like Capslock+, see `conf.user.yaml`-`capslock_plus`
+* **work with Everything**
+* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.yaml`-`theme`
+* **screen capture**
+* **disable win10 auto update**
+* **start sux with windows**
+* **custom command line**:  see `conf.user.yaml`-`command`
+* **custom hotkey**:  see `conf.user.yaml`-`hotkey`
+* **clipboard-plus**:  clipboard history, try `capslock+v`, see `conf.user.yaml`-`clipboard-plus`
+<!-- * **auto selection copy** : just like linux terminal -->
+<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
+<!-- * **game mode** : double Alt then input `game` -->
+<!-- * **auto update when launch sux** : see `default_conf.ahk` : `auto_update_when_launch_sux` -->
 
 
 # 设置Everything始终以运行次数排序
@@ -208,19 +206,15 @@ click img to see full video
 3. 运行Everything
 
 
-# How to use
-
-Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github.com/no5ix/sux/releases) and unzip it then run sux.exe as admin !
-
 
 # 捐赠
 
 捐赠! 让作者更有动力给sux加新功能! ^_^
 
 - 微信
-  - ![微信](/app_data/img/donate_wechat.png)
+  - ![微信](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_wechat.png)
 - 支付宝
-  - ![支付宝](/app_data/img/donate_alipay.png)
+  - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
 
 
 # TODO List
