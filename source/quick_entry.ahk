@@ -50,7 +50,7 @@ class QuickEntry {
 
 		QuickEntry.screenshot_menu_pos_offset := dec_cnt
 
-		dec_cnt += 4  ; 中间还有1个截图的菜单和1个变换文本和1个翻译的菜单和1个分割线
+		dec_cnt += 5  ; 中间还有1个截图的菜单和1个变换文本和1个替换文本的菜单和1个翻译的菜单和1个分割线
 		QuickEntry.command_menu_pos_offset := dec_cnt
 	}
 
@@ -105,6 +105,7 @@ class QuickEntry {
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
 		Menu, QuickEntry_Menu, Add, % lang("ScreenShot && Suspend") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Translation") . "`t&f", QuickEntry_Translation_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
 
 		;; transform text
 		transform_text_arr := ["ABCD", "abcd", "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd"]
@@ -113,7 +114,7 @@ class QuickEntry {
 				Menu, QuickEntry_TransformText_Detail_Menu, Add
 			else {
 				; menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_TAB, index, lang(pattern))
-				Menu, QuickEntry_TransformText_Detail_Menu, Add, % index . ". " . pattern, QuickEntry_TransformText_Detail_Menu_click
+				Menu, QuickEntry_TransformText_Detail_Menu, Add, % index . ".`t" . pattern, QuickEntry_TransformText_Detail_Menu_click
 			}
 		}
 		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&g", :QuickEntry_TransformText_Detail_Menu
@@ -238,6 +239,12 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 	Return
 
 
+
+QuickEntry_Translation_Menu_Click:
+	TranslateSeletedText(current_selected_text)
+	Return
+
+
 QuickEntry_TransformText_Detail_Menu_click:
 	st := current_selected_text
 	if (!st) {
@@ -318,16 +325,56 @@ QuickEntry_TransformText_Detail_Menu_click:
 	}
 
 	PasteContent(st)
-	Sleep, 66
-	SelectCurrentWord()
 	Return
 
 
-QuickEntry_Translation_Menu_Click:
-	TranslateSeletedText(current_selected_text)
+
+QuickEntry_ReplaceText_Menu_Click:
+	if (!current_selected_text) {
+		send, {Home}
+		Sleep, 66
+		send, +{End}
+	}
+	
+	global STR_REPLACE_CONF_REGISTER_MAP
+	; store the number of replacements that occurred (0 if none).
+	replace_sum := 0
+
+	ClipSaved := ClipboardAll   ; Save the entire clipboard to a variable of your choice.
+	; ... here make temporary use of the clipboard, such as for pasting Unicode text via Transform Unicode ...
+	; Sleep, 66
+	; Send, ^a
+	; Sleep, 66
+	; Send, ^c
+	Clipboard := ""
+    SendInput, ^{insert}
+    ClipWait, 0.6
+	; Sleep, 66
+	; Read from the array:
+	; Loop % Array.MaxIndex()   ; More traditional approach.
+	if(!ErrorLevel) {
+		for key, value in STR_REPLACE_CONF_REGISTER_MAP ; Enumeration is the recommended approach in most cases.
+		{
+			cur_replace_cnt := 0
+			; Using "Loop", indices must be consecutive numbers from 1 to the number
+			; of elements in the array (or they must be calculated within the loop).
+			; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
+			; Using "for", both the index (or "key") and its associated value
+			; are provided, and the index can be *any* value of your choosing.
+			; m(key "//" value)
+			Clipboard := StrReplace(Clipboard, key, value, cur_replace_cnt)
+			replace_sum += cur_replace_cnt
+		}
+		Sleep, 66
+		if replace_sum != 0
+			SafePaste()
+		else
+			Send, {Right}
+	}
+	; Sleep, 66
+	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+	ClipSaved := ""   ; Free the memory in case the clipboard was very large.
 	Return
-
-
 
 
 

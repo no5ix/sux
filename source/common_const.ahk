@@ -49,6 +49,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Delete All": "删除所有"
     ,"Can not separate words": "无法分割单词"
     ,"Transform Text": "变换文本"
+    ,"Replace Text": "替换文本"
     ,"_Default": "默认"
     ,"Google & Baidu": "谷歌 & 百度" 
     ,"Google": "谷歌"
@@ -79,7 +80,7 @@ global auto_destory_quick_entry_gui_period := -22222  ; millisecond
 global tick_disable_win10_auto_interval := 66666
 
 global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_TAB := [" ", "`t", "q", "w", "e", "r", "a", "d", "f", "t" "g", "x", "z", "c", "v", "b"]
-global SHORTCUT_KEY_INDEX_ARR_LEFT := [" ", "q", "w", "e", "r", "a", "d", "g", "z", "x", "c", "v", "b"]
+global SHORTCUT_KEY_INDEX_ARR_LEFT := [" ", "q", "w", "e", "a", "s", "d", "z", "x", "c", "v", "b", "t"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
 
 global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
