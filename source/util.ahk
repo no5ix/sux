@@ -7,83 +7,83 @@
 
 m(str := "")
 {
-	if(IsObject(str)) {
-		str := "[Object]`n" Yaml_dump(str)
-	}
-	MsgBox, , , % str
+    if(IsObject(str)) {
+        str := "[Object]`n" Yaml_dump(str)
+    }
+    MsgBox, , , % str
 }
 
 
 ToolTipWithTimer(msg, delay_for_remove=600)
 {
-	ToolTip, %msg%
-	SetTimer, RemoveToolTip, -%delay_for_remove%
-	return
+    ToolTip, %msg%
+    SetTimer, RemoveToolTip, -%delay_for_remove%
+    return
 
-	RemoveToolTip:
-		ToolTip
-		return
+    RemoveToolTip:
+        ToolTip
+        return
 }
 
 
 get_menu_shortcut_str(shortcut_key_index_arr, index, text_str)
 {
-	_cur_shortcut_str := shortcut_key_index_arr[A_Index]
-	if (_cur_shortcut_str == " ") {
-		;; 如果快捷键为空格的话, 得特殊处理
-		; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
-		; if (dot_space_str)
-		; 	; menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
-		; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " & (" . lang("space") . ")"
-		; else
-			menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t& (" . lang("space") . ")"
-	}
-	else if (_cur_shortcut_str == "`t") {
-		;; 如果快捷键为空格的话, 得特殊处理
-		; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
-		; if (dot_space_str)
-		; 	; menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
-		; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " & (" . lang("space") . ")"
-		; else
-			menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t&`t(" . lang("tab") . ")"
-	}
-	; else if (_cur_shortcut_str == "q") {
-	; 	menu_shortcut_str := "&q(" . lang("quit") . ")"
-	; }
-	else {
-		; if (dot_space_str)
-		; 	; menu_shortcut_str := "&" . _cur_shortcut_str . dot_space_str . StrReplace(text_str, "&", "&&")
-		; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " &" . _cur_shortcut_str
-		; else
-			menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t&" . _cur_shortcut_str
-	}
-	return menu_shortcut_str
+    _cur_shortcut_str := shortcut_key_index_arr[A_Index]
+    if (_cur_shortcut_str == " ") {
+        ;; 如果快捷键为空格的话, 得特殊处理
+        ; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
+        ; if (dot_space_str)
+        ; 	; menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
+        ; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " & (" . lang("space") . ")"
+        ; else
+            menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t& (" . lang("space") . ")"
+    }
+    else if (_cur_shortcut_str == "`t") {
+        ;; 如果快捷键为空格的话, 得特殊处理
+        ; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
+        ; if (dot_space_str)
+        ; 	; menu_shortcut_str := "& (" . lang("space") . ")" . dot_space_str . StrReplace(text_str, "&", "&&")
+        ; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " & (" . lang("space") . ")"
+        ; else
+            menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t&`t(" . lang("tab") . ")"
+    }
+    ; else if (_cur_shortcut_str == "q") {
+    ; 	menu_shortcut_str := "&q(" . lang("quit") . ")"
+    ; }
+    else {
+        ; if (dot_space_str)
+        ; 	; menu_shortcut_str := "&" . _cur_shortcut_str . dot_space_str . StrReplace(text_str, "&", "&&")
+        ; 	menu_shortcut_str := StrReplace(text_str, "&", "&&") . " &" . _cur_shortcut_str
+        ; else
+            menu_shortcut_str := StrReplace(text_str, "&", "&&") . "`t&" . _cur_shortcut_str
+    }
+    return menu_shortcut_str
 }
 
 
 ClickUpIfLbDown()
 {
-	global fake_lb_down
-	if fake_lb_down
-	{
-		Hotkey, RButton, Off  ;; 防止wgesture这类右键手势软件失效
-		fake_lb_down = 0
-		Click Up
-		; ToolTipWithTimer("simulate click UP.", 1111)
-	}
+    global fake_lb_down
+    if fake_lb_down
+    {
+        Hotkey, RButton, Off  ;; 防止wgesture这类右键手势软件失效
+        fake_lb_down = 0
+        Click Up
+        ; ToolTipWithTimer("simulate click UP.", 1111)
+    }
 }
 
 
 get_version_sum(version_str) {
-	ver_arr := StrSplit(version_str, ".")
-	ver_arr_len := ver_arr.Length()
-	x_num = 1
-	ver_sum = 0
-	loop % ver_arr_len {
-		ver_sum += ver_arr[ver_arr_len-A_Index+1] * x_num
-		x_num *= 10
-	}
-	return ver_sum
+    ver_arr := StrSplit(version_str, ".")
+    ver_arr_len := ver_arr.Length()
+    x_num = 1
+    ver_sum = 0
+    loop % ver_arr_len {
+        ver_sum += ver_arr[ver_arr_len-A_Index+1] * x_num
+        x_num *= 10
+    }
+    return ver_sum
 }
 
 
@@ -132,75 +132,75 @@ DownloadFileWithProgressBar(UrlToFile, SaveFileAs, Overwrite := True, UseProgres
 }
 
 OpenFolderAndSelectFile(file_path_str) {
-	Run %COMSPEC% /c explorer.exe /select`, "%file_path_str%",, Hide
+    Run %COMSPEC% /c explorer.exe /select`, "%file_path_str%",, Hide
 }
 
 OpenFolder(folder_path_str) {
-	Run %COMSPEC% /c explorer.exe "%folder_path_str%",, Hide
+    Run %COMSPEC% /c explorer.exe "%folder_path_str%",, Hide
 }
 
 EditFile(filename, admin := 0)
 {
-	if not FileExist(filename)
-	{
-		m("Can't find " filename "")
-		Return
-	}
-	cmd := "notepad " . filename
-	if ((not A_IsAdmin) && admin)
-	{
-		Run *RunAs %cmd%
-	}
-	Else
-	{
-		Run % cmd
-	}
+    if not FileExist(filename)
+    {
+        m("Can't find " filename "")
+        Return
+    }
+    cmd := "notepad " . filename
+    if ((not A_IsAdmin) && admin)
+    {
+        Run *RunAs %cmd%
+    }
+    Else
+    {
+        Run % cmd
+    }
 }
 
 ; modified from jackieku's code (http://www.autohotkey.com/forum/post-310959.html#310959)
 UriEncode(Uri, Enc = "UTF-8")
 {
-	StrPutVar(Uri, Var, Enc)
-	f := A_FormatInteger
-	SetFormat, IntegerFast, H
-	Loop
-	{
-		Code := NumGet(Var, A_Index - 1, "UChar")
-		If (!Code)
-			Break
-		If (Code >= 0x30 && Code <= 0x39 ; 0-9
-			|| Code >= 0x41 && Code <= 0x5A ; A-Z
-			|| Code >= 0x61 && Code <= 0x7A) ; a-z
-			Res .= Chr(Code)
-		Else
-			Res .= "%" . SubStr(Code + 0x100, -1)
-	}
-	SetFormat, IntegerFast, %f%
-	Return, Res
+    StrPutVar(Uri, Var, Enc)
+    f := A_FormatInteger
+    SetFormat, IntegerFast, H
+    Loop
+    {
+        Code := NumGet(Var, A_Index - 1, "UChar")
+        If (!Code)
+            Break
+        If (Code >= 0x30 && Code <= 0x39 ; 0-9
+            || Code >= 0x41 && Code <= 0x5A ; A-Z
+            || Code >= 0x61 && Code <= 0x7A) ; a-z
+            Res .= Chr(Code)
+        Else
+            Res .= "%" . SubStr(Code + 0x100, -1)
+    }
+    SetFormat, IntegerFast, %f%
+    Return, Res
 }
 
 UriDecode(Uri, Enc = "UTF-8")
 {
-	Pos := 1
-	Loop
-	{
-		Pos := RegExMatch(Uri, "i)(?:%[\da-f]{2})+", Code, Pos++)
-		If (Pos = 0)
-			Break
-		VarSetCapacity(Var, StrLen(Code) // 3, 0)
-		StringTrimLeft, Code, Code, 1
-		Loop, Parse, Code, `%
-			NumPut("0x" . A_LoopField, Var, A_Index - 1, "UChar")
-		StringReplace, Uri, Uri, `%%Code%, % StrGet(&Var, Enc), All
-	}
-	Return, Uri
+    Pos := 1
+    Loop
+    {
+        Pos := RegExMatch(Uri, "i)(?:%[\da-f]{2})+", Code, Pos++)
+        If (Pos = 0)
+            Break
+        VarSetCapacity(Var, StrLen(Code) // 3, 0)
+        StringTrimLeft, Code, Code, 1
+        Loop, Parse, Code, `%
+            NumPut("0x" . A_LoopField, Var, A_Index - 1, "UChar")
+        StringReplace, Uri, Uri, `%%Code%, % StrGet(&Var, Enc), All
+    }
+    Return, Uri
 }
 
 StrPutVar(Str, ByRef Var, Enc = "")
 {
-	Len := StrPut(Str, Enc) * (Enc = "UTF-16" || Enc = "CP1200" ? 2 : 1)
-	VarSetCapacity(Var, Len, 0)
-	Return, StrPut(Str, &Var, Enc)
+    Len := StrPut(Str, Enc) * (Enc = "UTF-16" || Enc = "CP1200" ? 2 : 1)
+    VarSetCapacity(Var, Len, 0)
+    Return, StrPut(Str, &Var, Enc)
 }
 
 
@@ -216,46 +216,46 @@ StringJoin(sep, params*) {
 
 
 PasteContent(pending_paste_content) {
-	ClipSaved := ClipboardAll 
-	Clipboard := ""
-	Clipboard := pending_paste_content
-	; m(Clipboard)
+    ClipSaved := ClipboardAll 
+    Clipboard := ""
+    Clipboard := pending_paste_content
+    ; m(Clipboard)
     ClipWait, 0.1
-	if (!ErrorLevel) {
-		SafePaste()
-	}
-	Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
-	ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
+    if (!ErrorLevel) {
+        SafePaste()
+    }
+    Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
+    ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
 }
 
 SafePaste() {
-	; Send, ^v
-	Send, +{Insert}
-	Sleep, 111  ;; 这个sleeep是防止之后clipboard马上就被写入东西
+    ; Send, ^v
+    Send, +{Insert}
+    Sleep, 111  ;; 这个sleeep是防止之后clipboard马上就被写入东西
 }
 
 GetCurSelectedText() {
-	clipboardOld := ClipboardAll            ; backup clipboard
-	; Send, ^c
-	Clipboard := ""
+    clipboardOld := ClipboardAll            ; backup clipboard
+    ; Send, ^c
+    Clipboard := ""
     SendInput, ^{insert}
     ClipWait, 0.1
-	; Sleep, 66
-	; Read from the array:
-	; Loop % Array.MaxIndex()   ; More traditional approach.
-	cur_selected_text := ""
-	if(!ErrorLevel) {
-		; Sleep, 66                             ; copy selected text to clipboard
-		cur_selected_text := Clipboard                ; store selected text
-		StringRight, lastChar, cur_selected_text, 1
-		if(Asc(lastChar)==10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
-		{
-			cur_selected_text := ""
-		}
-	}
-	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
-	return cur_selected_text
+    ; Sleep, 66
+    ; Read from the array:
+    ; Loop % Array.MaxIndex()   ; More traditional approach.
+    cur_selected_text := ""
+    if(!ErrorLevel) {
+        ; Sleep, 66                             ; copy selected text to clipboard
+        cur_selected_text := Clipboard                ; store selected text
+        StringRight, lastChar, cur_selected_text, 1
+        if(Asc(lastChar)==10) ;如果最后一个字符是换行符，就认为是在IDE那复制了整行，不要这个结果
+        {
+            cur_selected_text := ""
+        }
+    }
+    Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+    clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+    return cur_selected_text
 }
 
 
@@ -317,15 +317,15 @@ IsFullscreen(sWinTitle = "A", bRefreshRes = False) {
     iMidX := iWinX + Ceil(iWinW / 2)
     iMidY := iWinY + Ceil(iWinH / 2)
     
-	;Loop through every monitor and calculate the distance to each monitor
-	iBestD := 0xFFFFFFFF
+    ;Loop through every monitor and calculate the distance to each monitor
+    iBestD := 0xFFFFFFFF
     Loop % Mon0 {
-		D := Sqrt((iMidX - Mon%A_Index%MidX)**2 + (iMidY - Mon%A_Index%MidY)**2)
-		If (D < iBestD) {
-			iBestD := D
-			iMonitor := A_Index
-		}
-	}
+        D := Sqrt((iMidX - Mon%A_Index%MidX)**2 + (iMidY - Mon%A_Index%MidY)**2)
+        If (D < iBestD) {
+            iBestD := D
+            iMonitor := A_Index
+        }
+    }
     
     ;Check if the client area covers the whole screen
     bCovers := (iCltX <= Mon%iMonitor%Left) And (iCltY <= Mon%iMonitor%Top) And (iCltW >= Mon%iMonitor%Right - Mon%iMonitor%Left) And (iCltH >= Mon%iMonitor%Bottom - Mon%iMonitor%Top)
@@ -342,104 +342,104 @@ IsFullscreen(sWinTitle = "A", bRefreshRes = False) {
 
 
 MaximizeWindow(timeout=2222, exe_name="") {
-	if !exe_name
-	{
-		Sleep, timeout
-		WinGet,S,MinMax,A
-		if S=0
-			WinMaximize, A
-	}
-	else
-	{
-		WinWaitActive, ahk_exe %exe_name%, , %timeout%
-		if ErrorLevel
-			ToolTipWithTimer("WinWaitActive " . %exe_name% . " timed out.")
-		else
-			WinMaximize
-	}
+    if !exe_name
+    {
+        Sleep, timeout
+        WinGet,S,MinMax,A
+        if S=0
+            WinMaximize, A
+    }
+    else
+    {
+        WinWaitActive, ahk_exe %exe_name%, , %timeout%
+        if ErrorLevel
+            ToolTipWithTimer("WinWaitActive " . %exe_name% . " timed out.")
+        else
+            WinMaximize
+    }
 }
 
 
 IsStandardRawUrl(user_input){
-	http_str := "http://"
-	https_str := "https://"
-	return InStr(user_input, http_str) or InStr(user_input, https_str)
+    http_str := "http://"
+    https_str := "https://"
+    return InStr(user_input, http_str) or InStr(user_input, https_str)
 }
 
 
 IsRawUrl(user_input){
-	if Instr(user_input, " ")
-		return 0
-	raw_url_str_arr := ["192.168", "http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
-	Loop % raw_url_str_arr.Length()
-		if InStr(user_input, raw_url_str_arr[A_Index]) {
-			return 1
-		}
-	return 0
+    if Instr(user_input, " ")
+        return 0
+    raw_url_str_arr := ["192.168", "http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
+    Loop % raw_url_str_arr.Length()
+        if InStr(user_input, raw_url_str_arr[A_Index]) {
+            return 1
+        }
+    return 0
 }
 
 EnableWin10AutoUpdate(){
-	run, cmd /c sc config wuauserv start= auto,,hide
-	run, cmd /c net start wuauserv,,hide
+    run, cmd /c sc config wuauserv start= auto,,hide
+    run, cmd /c net start wuauserv,,hide
 }
 
 DisableWin10AutoUpdate(){
-	; run, cmd /c sc delete wuauserv,,hide
-	run, cmd /c sc config wuauserv start= disabled,,hide
-	run, cmd /c net stop wuauserv,,hide
-	run, cmd /c sc config bits start= disabled,,hide
-	run, cmd /c net stop bits,,hide
-	run, cmd /c sc config dosvc start= disabled,,hide
-	run, cmd /c net stop dosvc,,hide
+    ; run, cmd /c sc delete wuauserv,,hide
+    run, cmd /c sc config wuauserv start= disabled,,hide
+    run, cmd /c net stop wuauserv,,hide
+    run, cmd /c sc config bits start= disabled,,hide
+    run, cmd /c net stop bits,,hide
+    run, cmd /c sc config dosvc start= disabled,,hide
+    run, cmd /c net stop dosvc,,hide
 }
 
 
 ActivateWindowsUnderCursor() {
-	; activate the window currently under mouse cursor
-	MouseGetPos,,, curr_hwnd 
-	WinActivate, ahk_id %curr_hwnd%	
+    ; activate the window currently under mouse cursor
+    MouseGetPos,,, curr_hwnd 
+    WinActivate, ahk_id %curr_hwnd%	
 }
 
 IsMouseActiveWindowAtSameMonitor() {
-	MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
-	WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
-	; MsgBox, The Mouse_ is at %Mouse_x%`,%Mouse_y%
-	; MsgBox, The active window is at %cur_active_window_X%`,%cur_active_window_Y%
-	real_cur_active_window_X := cur_active_window_X + 8  ; 经测试, 实际上全屏后也总是会加8
-	SysGet, mon_cnt, MonitorCount
-	Loop, % mon_cnt
-	{
-		SysGet, Mon, Monitor, % A_Index
-		if (Mouse_x >= MonLeft && Mouse_x < MonRight && real_cur_active_window_X >= MonLeft && real_cur_active_window_X < MonRight)
-			return 1
-	}
-	return 0
+    MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
+    WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
+    ; MsgBox, The Mouse_ is at %Mouse_x%`,%Mouse_y%
+    ; MsgBox, The active window is at %cur_active_window_X%`,%cur_active_window_Y%
+    real_cur_active_window_X := cur_active_window_X + 8  ; 经测试, 实际上全屏后也总是会加8
+    SysGet, mon_cnt, MonitorCount
+    Loop, % mon_cnt
+    {
+        SysGet, Mon, Monitor, % A_Index
+        if (Mouse_x >= MonLeft && Mouse_x < MonRight && real_cur_active_window_X >= MonLeft && real_cur_active_window_X < MonRight)
+            return 1
+    }
+    return 0
 }
 
 GetMouseMonitorMidX() {
-		MouseGetPos, Mouse_x
-		; yScrnOffset := A_ScreenHeight / 4
-		SysGet, mon_cnt, MonitorCount
-		; if (mon_cnt == 1) {
-		; 	Gui, Show, xCenter  y%yScrnOffset%, myGUI
+        MouseGetPos, Mouse_x
+        ; yScrnOffset := A_ScreenHeight / 4
+        SysGet, mon_cnt, MonitorCount
+        ; if (mon_cnt == 1) {
+        ; 	Gui, Show, xCenter  y%yScrnOffset%, myGUI
     ;   return 
-		; }
-		; else {
-			xMidScrn := 0
-			last_mon_width := 0
-			Loop, % mon_cnt
-			{
-				SysGet, Mon, Monitor, % A_Index
-				_mon_width := (MonRight - MonLeft)
-				xMidScrn += _mon_width
-				last_mon_width := _mon_width
-				if (Mouse_x >= MonLeft && Mouse_x < MonRight)
-					break
-			}
-			xMidScrn -= last_mon_width / 2
-			; xMidScrn -= cur_theme_info["sux_width"] / 2 
-			; Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
-		; }
+        ; }
+        ; else {
+            xMidScrn := 0
+            last_mon_width := 0
+            Loop, % mon_cnt
+            {
+                SysGet, Mon, Monitor, % A_Index
+                _mon_width := (MonRight - MonLeft)
+                xMidScrn += _mon_width
+                last_mon_width := _mon_width
+                if (Mouse_x >= MonLeft && Mouse_x < MonRight)
+                    break
+            }
+            xMidScrn -= last_mon_width / 2
+            ; xMidScrn -= cur_theme_info["sux_width"] / 2 
+            ; Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
+        ; }
       return xMidScrn
 }
 
@@ -449,102 +449,102 @@ GetMouseMonitorMidX() {
 ; 参数可以是cmd命令，代码中的sub，function，网址d
 run(command, args*)
 {
-	global LIMIT_MODE
-	if (LIMIT_MODE)
-		Return
-	if !command
-		return
-	; ToolTipWithTimer(command, 1111)
-	ClickUpIfLbDown()
+    global LIMIT_MODE
+    if (LIMIT_MODE)
+        Return
+    if !command
+        return
+    ; ToolTipWithTimer(command, 1111)
+    ClickUpIfLbDown()
 
-	if (command.Length() == 1) {
-		command := command[1]
-	}
-	
-	if(IsLabel(command)) {
-		Gosub, %command%
-	}
-	else if (IsFunc(command)) {
-		Array := StrSplit(command, ".")
-		If (Array.MaxIndex() >= 2) {
-			cls := Array[1]
-			cls := %cls%
-			Loop, % Array.MaxIndex() - 2
-			{
-				cls := cls[Array[A_Index+1]]
-			}
-			return cls[Array[Array.MaxIndex()]](args*)
-		}
-		Else {
-			return %command%(args*)
-		}
-	}
-	else if (Instr(command, "jsfunc_")) {
-		return JsEval.eval(command . "()")
-		; res := JsEval.eval(command . "()")
-		; m(res)
-	}
-	Else {
-		if(RegExMatch(command, "^https?://")) {
-			brw := SuxCore.Browser
-			if(brw=""||brw="default")
-				run, %command%
-			Else if(brw == "microsoft-edge:")
-				run, %brw%%command%
-			Else
-				run, %brw% %command%
-			Return
-		}
-		else if(RegExMatch(command, "i)send (.*)", sd)) {
-			send, % sd1
-			return
-		}
-		else if(RegExMatch(command, "i)m:(.*)", msg)) {
-			m(msg1)
-			return
-		}
-		else if(RegExMatch(command, "i)edit:\s*(.*)", f)) {
-			SuxCore.Edit(f1)
-			return
-		}
-		Try
-		{
-			if (command.Length() > 1) {
-				Run_AsUser(command*)
-			}
-			else {
-				run %command%
-			}
-			; m(command)
-			; run %command%
-			Return
-		}
-		Catch {
-			; Try
-			; {
-			; 	m(command)
-			; 	Run_AsUser(command*)
-			; }
-			; Catch
-			; {
-				if(IsFunc("run_user")) {
-					func_name = run_user
-					return %func_name%(command)
-				}
-				else
-					MsgBox, 0x30, % SuxCore.ProgramName, % "Can't run command """ command """"
-			; }
-		}
-	}
+    if (command.Length() == 1) {
+        command := command[1]
+    }
+    
+    if(IsLabel(command)) {
+        Gosub, %command%
+    }
+    else if (IsFunc(command)) {
+        Array := StrSplit(command, ".")
+        If (Array.MaxIndex() >= 2) {
+            cls := Array[1]
+            cls := %cls%
+            Loop, % Array.MaxIndex() - 2
+            {
+                cls := cls[Array[A_Index+1]]
+            }
+            return cls[Array[Array.MaxIndex()]](args*)
+        }
+        Else {
+            return %command%(args*)
+        }
+    }
+    else if (Instr(command, "jsfunc_")) {
+        return JsEval.eval(command . "()")
+        ; res := JsEval.eval(command . "()")
+        ; m(res)
+    }
+    Else {
+        if(RegExMatch(command, "^https?://")) {
+            brw := SuxCore.Browser
+            if(brw=""||brw="default")
+                run, %command%
+            Else if(brw == "microsoft-edge:")
+                run, %brw%%command%
+            Else
+                run, %brw% %command%
+            Return
+        }
+        else if(RegExMatch(command, "i)send (.*)", sd)) {
+            send, % sd1
+            return
+        }
+        else if(RegExMatch(command, "i)m:(.*)", msg)) {
+            m(msg1)
+            return
+        }
+        else if(RegExMatch(command, "i)edit:\s*(.*)", f)) {
+            SuxCore.Edit(f1)
+            return
+        }
+        Try
+        {
+            if (command.Length() > 1) {
+                Run_AsUser(command*)
+            }
+            else {
+                run %command%
+            }
+            ; m(command)
+            ; run %command%
+            Return
+        }
+        Catch {
+            ; Try
+            ; {
+            ; 	m(command)
+            ; 	Run_AsUser(command*)
+            ; }
+            ; Catch
+            ; {
+                if(IsFunc("run_user")) {
+                    func_name = run_user
+                    return %func_name%(command)
+                }
+                else
+                    MsgBox, 0x30, % SuxCore.ProgramName, % "Can't run command """ command """"
+            ; }
+        }
+    }
 }
 
 
 RunArr(arr)
 {
-	Loop, % arr.MaxIndex()
-	{
-		run(arr[A_Index])
-	}
+    Loop, % arr.MaxIndex()
+    {
+        run(arr[A_Index])
+    }
 }
 
 
@@ -576,114 +576,114 @@ RunWaitMany(commands) {
 
 ; ; run single command and retrieve their output
 RunWaitOne(command, hide_window) {
-	; Get a temporary file path
-	tempFile := A_Temp "\" DllCall("GetCurrentProcessId") "_sux_temp.txt"                           ; "
-	; Run the console program hidden, redirecting its output to
-	; the temp. file (with a program other than powershell.exe or cmd.exe,
-	; prepend %ComSpec% /c; use 2> to redirect error output), and wait for it to exit.
-	if hide_window
-		RunWait, cmd.exe /c %command% > %tempFile%,, hide
-	else
-		RunWait, cmd.exe /c %command% > %tempFile%
-	; Read the temp file into a variable and then delete it.
-	FileRead, content, %tempFile%
-	FileDelete, %tempFile%
-	return content
+    ; Get a temporary file path
+    tempFile := A_Temp "\" DllCall("GetCurrentProcessId") "_sux_temp.txt"                           ; "
+    ; Run the console program hidden, redirecting its output to
+    ; the temp. file (with a program other than powershell.exe or cmd.exe,
+    ; prepend %ComSpec% /c; use 2> to redirect error output), and wait for it to exit.
+    if hide_window
+        RunWait, cmd.exe /c %command% > %tempFile%,, hide
+    else
+        RunWait, cmd.exe /c %command% > %tempFile%
+    ; Read the temp file into a variable and then delete it.
+    FileRead, content, %tempFile%
+    FileDelete, %tempFile%
+    return content
 }
 
 
 RunAsAdmin() {
-	full_command_line := DllCall("GetCommandLine", "str")
-	if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
-	{
-		try
-		{
-			if A_IsCompiled
-				Run *RunAs "%A_ScriptFullPath%" /restart
-			else
-				Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
-		}
-		ExitApp
-	}
+    full_command_line := DllCall("GetCommandLine", "str")
+    if not (A_IsAdmin or RegExMatch(full_command_line, " /restart(?!\S)"))
+    {
+        try
+        {
+            if A_IsCompiled
+                Run *RunAs "%A_ScriptFullPath%" /restart
+            else
+                Run *RunAs "%A_AhkPath%" /restart "%A_ScriptFullPath%"
+        }
+        ExitApp
+    }
 }
 
 
 get_border_code(X := "", Y := "", cornerPix = "")
 {
-	if (X = "") or (Y = "")
-	{
-		MouseGetPos, X, Y
-	}
-	if(cornerPix = "")
-	{
-		cornerPix := CornerEdgeOffset
-	}
-	; Multi Monitor Support
-	SysGet, mon_cnt, MonitorCount
-	; m(mon_cnt)
-	last_mon_width := 0
-	Loop, % mon_cnt
-	{
-		SysGet, Mon, Monitor, % A_Index
-	; m(MonLeft)
-	; m(MonLeft)
-	; m(MonTop)
-	; m(MonBottom)
-	; ToolTipWithTimer(MonTop)
-		cur_mon_width := MonRight - MonLeft
-		cur_mon_height := MonBottom - MonTop
-		; m(A_Index)
-		; m(cur_mon_width)
-		; m(cur_mon_height)
-		if(X>=MonLeft && Y>= MonTop && X<MonRight && Y<MonBottom)
-		{
-			str =
-			if ( X < MonLeft + cornerPix ){
-				if (Y < cur_mon_height / 2)
-					str .= "LeftHalfTopEdge"
-				else
-					str .= "LeftHalfBottomEdge"
-			}
-			else if ( X >= MonRight - cornerPix) {
-				; str .= "RightEdge"
-				if (Y < cur_mon_height / 2)
-					str .= "RightHalfTopEdge"
-				else
-					str .= "RightHalfBottomEdge"
-			}
-			if ( Y < MonTop + cornerPix ) {
-				if (str == "") {
-					if (X < last_mon_width + (cur_mon_width / 2))
-						str .= "TopHalfLeftEdge"
-					else
-						str .= "TopHalfRightEdge"
-				}
-					; str .= "TopEdge"
-				else {
-					str := StrSplit(str, "Half")[1]
-					str .= "TopCorner"
-				}
-				; str .= (str == "") ? "TopEdge" : "TopCorner"
-			}
-			else if ( Y >= MonBottom - cornerPix) {
-				if (str == "") {
-					if (X < last_mon_width + (cur_mon_width / 2))
-						str .= "BottomHalfLeftEdge"
-					else
-						str .= "BottomHalfRightEdge"
-				}
-					; str .= "BottomEdge"
-				else {
-					str := StrSplit(str, "Half")[1]
-					str .= "BottomCorner"
-				}
-				; str .= (str == "") ? "BottomEdge" : "BottomCorner"
-			}
-			return % str
-		}
-		last_mon_width := cur_mon_width
-	}
-	return ""
+    if (X = "") or (Y = "")
+    {
+        MouseGetPos, X, Y
+    }
+    if(cornerPix = "")
+    {
+        cornerPix := CornerEdgeOffset
+    }
+    ; Multi Monitor Support
+    SysGet, mon_cnt, MonitorCount
+    ; m(mon_cnt)
+    last_mon_width := 0
+    Loop, % mon_cnt
+    {
+        SysGet, Mon, Monitor, % A_Index
+    ; m(MonLeft)
+    ; m(MonLeft)
+    ; m(MonTop)
+    ; m(MonBottom)
+    ; ToolTipWithTimer(MonTop)
+        cur_mon_width := MonRight - MonLeft
+        cur_mon_height := MonBottom - MonTop
+        ; m(A_Index)
+        ; m(cur_mon_width)
+        ; m(cur_mon_height)
+        if(X>=MonLeft && Y>= MonTop && X<MonRight && Y<MonBottom)
+        {
+            str =
+            if ( X < MonLeft + cornerPix ){
+                if (Y < cur_mon_height / 2)
+                    str .= "LeftHalfTopEdge"
+                else
+                    str .= "LeftHalfBottomEdge"
+            }
+            else if ( X >= MonRight - cornerPix) {
+                ; str .= "RightEdge"
+                if (Y < cur_mon_height / 2)
+                    str .= "RightHalfTopEdge"
+                else
+                    str .= "RightHalfBottomEdge"
+            }
+            if ( Y < MonTop + cornerPix ) {
+                if (str == "") {
+                    if (X < last_mon_width + (cur_mon_width / 2))
+                        str .= "TopHalfLeftEdge"
+                    else
+                        str .= "TopHalfRightEdge"
+                }
+                    ; str .= "TopEdge"
+                else {
+                    str := StrSplit(str, "Half")[1]
+                    str .= "TopCorner"
+                }
+                ; str .= (str == "") ? "TopEdge" : "TopCorner"
+            }
+            else if ( Y >= MonBottom - cornerPix) {
+                if (str == "") {
+                    if (X < last_mon_width + (cur_mon_width / 2))
+                        str .= "BottomHalfLeftEdge"
+                    else
+                        str .= "BottomHalfRightEdge"
+                }
+                    ; str .= "BottomEdge"
+                else {
+                    str := StrSplit(str, "Half")[1]
+                    str .= "BottomCorner"
+                }
+                ; str .= (str == "") ? "BottomEdge" : "BottomCorner"
+            }
+            return % str
+        }
+        last_mon_width := cur_mon_width
+    }
+    return ""
 }
 
 
@@ -714,51 +714,51 @@ get_border_code(X := "", Y := "", cornerPix = "")
 
 class EnhancedArray
 {
-	; EnhancedArray.merge
-	merge(arr1, arr2)
-	{
-		Loop, % arr2.MaxIndex()
-		{
-			arr1.Insert(arr2[A_Index])
-		}
-		return % arr1
-	}
-	; EnhancedArray.remove
-	remove(arr, value)
-	{
-		Loop, % arr.MaxIndex()
-		{
-			if(arr[A_Index]=value) {
-				arr.RemoveAt(A_Index)
-				return % EnhancedArray.remove(arr, value)
-			}
-		}
-		return % arr
-	}
+    ; EnhancedArray.merge
+    merge(arr1, arr2)
+    {
+        Loop, % arr2.MaxIndex()
+        {
+            arr1.Insert(arr2[A_Index])
+        }
+        return % arr1
+    }
+    ; EnhancedArray.remove
+    remove(arr, value)
+    {
+        Loop, % arr.MaxIndex()
+        {
+            if(arr[A_Index]=value) {
+                arr.RemoveAt(A_Index)
+                return % EnhancedArray.remove(arr, value)
+            }
+        }
+        return % arr
+    }
 }
 
 
 class Regedit
 {
-	static Subkey_Autorun := "Software\Microsoft\Windows\CurrentVersion\Run"
-	; Regedit.Autorun
-	Autorun(switch, name, path="")
-	{
-		if(switch)
-		{
-			RegWrite, REG_SZ, HKCU, % Regedit.Subkey_Autorun, % name, % path
-		}
-		Else
-		{
-			RegDelete, HKCU, % Regedit.Subkey_Autorun, % name
-		}
-	}
-	; Regedit.IsAutorun
-	IsAutorun(name, path)
-	{
-		RegRead, output, HKCU, % Regedit.Subkey_Autorun, % name
-		return % output==path
-	}
+    static Subkey_Autorun := "Software\Microsoft\Windows\CurrentVersion\Run"
+    ; Regedit.Autorun
+    Autorun(switch, name, path="")
+    {
+        if(switch)
+        {
+            RegWrite, REG_SZ, HKCU, % Regedit.Subkey_Autorun, % name, % path
+        }
+        Else
+        {
+            RegDelete, HKCU, % Regedit.Subkey_Autorun, % name
+        }
+    }
+    ; Regedit.IsAutorun
+    IsAutorun(name, path)
+    {
+        RegRead, output, HKCU, % Regedit.Subkey_Autorun, % name
+        return % output==path
+    }
 }
 
 
@@ -859,113 +859,116 @@ class ScriptingDictionary  ;; case sensitive dict (maintain key order, no key au
 
 ; Copyright © 2013 VxE. All rights reserved.
 ; Uses a two-pass iterative approach to deserialize a json string
-json_toobj( str ) {
+json2obj( str ) {
 
-	quot := """" ; firmcoded specifically for readability. Hardcode for (minor) performance gain
-	ws := "`t`n`r " Chr(160) ; whitespace plus NBSP. This gets trimmed from the markup
-	obj := {} ; dummy object
-	objs := [] ; stack
-	keys := [] ; stack
-	isarrays := [] ; stack
-	literals := [] ; queue
-	y := nest := 0
+    quot := """" ; firmcoded specifically for readability. Hardcode for (minor) performance gain
+    ws := "`t`n`r " Chr(160) ; whitespace plus NBSP. This gets trimmed from the markup
+    ; obj := {} ; dummy object
+    obj := new ScriptingDictionary ; dummy object
+    objs := [] ; stack
+    keys := [] ; stack
+    isarrays := [] ; stack
+    literals := [] ; queue
+    y := nest := 0
 
 ; First pass swaps out literal strings so we can parse the markup easily
-	StringGetPos, z, str, %quot% ; initial seek
-	while !ErrorLevel
-	{
-		; Look for the non-literal quote that ends this string. Encode literal backslashes as '\u005C' because the
-		; '\u..' entities are decoded last and that prevents literal backslashes from borking normal characters
-		StringGetPos, x, str, %quot%,, % z + 1
-		while !ErrorLevel
-		{
-			StringMid, key, str, z + 2, x - z - 1
-			StringReplace, key, key, \\, \u005C, A
-			If SubStr( key, 0 ) != "\"
-				Break
-			StringGetPos, x, str, %quot%,, % x + 1
-		}
-	;	StringReplace, str, str, %quot%%t%%quot%, %quot% ; this might corrupt the string
-		str := ( z ? SubStr( str, 1, z ) : "" ) quot SubStr( str, x + 2 ) ; this won't
+    StringGetPos, z, str, %quot% ; initial seek
+    while !ErrorLevel
+    {
+        ; Look for the non-literal quote that ends this string. Encode literal backslashes as '\u005C' because the
+        ; '\u..' entities are decoded last and that prevents literal backslashes from borking normal characters
+        StringGetPos, x, str, %quot%,, % z + 1
+        while !ErrorLevel
+        {
+            StringMid, key, str, z + 2, x - z - 1
+            StringReplace, key, key, \\, \u005C, A
+            If SubStr( key, 0 ) != "\"
+                Break
+            StringGetPos, x, str, %quot%,, % x + 1
+        }
+    ;	StringReplace, str, str, %quot%%t%%quot%, %quot% ; this might corrupt the string
+        str := ( z ? SubStr( str, 1, z ) : "" ) quot SubStr( str, x + 2 ) ; this won't
 
-	; Decode entities
-		StringReplace, key, key, \%quot%, %quot%, A
-		StringReplace, key, key, \b, % Chr(08), A
-		StringReplace, key, key, \t, % A_Tab, A
-		StringReplace, key, key, \n, `n, A
-		StringReplace, key, key, \f, % Chr(12), A
-		StringReplace, key, key, \r, `r, A
-		StringReplace, key, key, \/, /, A
-		while y := InStr( key, "\u", 0, y + 1 )
-			if ( A_IsUnicode || Abs( "0x" SubStr( key, y + 2, 4 ) ) < 0x100 )
-				key := ( y = 1 ? "" : SubStr( key, 1, y - 1 ) ) Chr( "0x" SubStr( key, y + 2, 4 ) ) SubStr( key, y + 6 )
+    ; Decode entities
+        StringReplace, key, key, \%quot%, %quot%, A
+        StringReplace, key, key, \b, % Chr(08), A
+        StringReplace, key, key, \t, % A_Tab, A
+        StringReplace, key, key, \n, `n, A
+        StringReplace, key, key, \f, % Chr(12), A
+        StringReplace, key, key, \r, `r, A
+        StringReplace, key, key, \/, /, A
+        while y := InStr( key, "\u", 0, y + 1 )
+            if ( A_IsUnicode || Abs( "0x" SubStr( key, y + 2, 4 ) ) < 0x100 )
+                key := ( y = 1 ? "" : SubStr( key, 1, y - 1 ) ) Chr( "0x" SubStr( key, y + 2, 4 ) ) SubStr( key, y + 6 )
 
-		literals.insert(key)
+        literals.insert(key)
 
-		StringGetPos, z, str, %quot%,, % z + 1 ; seek
-	}
+        StringGetPos, z, str, %quot%,, % z + 1 ; seek
+    }
 
 ; Second pass parses the markup and builds the object iteratively, swapping placeholders as they are encountered
-	key := isarray := 1
+    key := isarray := 1
 
-	; The outer loop splits the blob into paths at markers where nest level decreases
-	Loop Parse, str, % "]}"
-	{
-		StringReplace, str, A_LoopField, [, [], A ; mark any array open-brackets
+    ; The outer loop splits the blob into paths at markers where nest level decreases
+    Loop Parse, str, % "]}"
+    {
+        StringReplace, str, A_LoopField, [, [], A ; mark any array open-brackets
 
-		; This inner loop splits the path into segments at markers that signal nest level increases
-		Loop Parse, str, % "[{"
-		{
-			; The first segment might contain members that belong to the previous object
-			; Otherwise, push the previous object and key to their stacks and start a new object
-			if ( A_Index != 1 )
-			{
-				objs.insert( obj )
-				isarrays.insert( isarray )
-				keys.insert( key )
-				obj := {}
-				isarray := key := Asc( A_LoopField ) = 93
-			}
+        ; This inner loop splits the path into segments at markers that signal nest level increases
+        Loop Parse, str, % "[{"
+        {
+            ; The first segment might contain members that belong to the previous object
+            ; Otherwise, push the previous object and key to their stacks and start a new object
+            if ( A_Index != 1 )
+            {
+                objs.insert( obj )
+                isarrays.insert( isarray )
+                keys.insert( key )
+                ; obj := {}
+                obj := new ScriptingDictionary ; dummy object
+                isarray := key := Asc( A_LoopField ) = 93
+            }
 
-			; arrrrays are made by pirates and they have index keys
-			if ( isarray )
-			{
-				Loop Parse, A_LoopField, `,, % ws "]"
-					if ( A_LoopField != "" )
-						obj[key++] := A_LoopField = quot ? literals.remove(1) : A_LoopField
-			}
-			; otherwise, parse the segment as key/value pairs
-			else
-			{
-				Loop Parse, A_LoopField, `,
-					Loop Parse, A_LoopField, :, % ws
-						if ( A_Index = 1 )
-							key := A_LoopField = quot ? literals.remove(1) : A_LoopField
-						else if ( A_Index = 2 && A_LoopField != "" )
-							obj[key] := A_LoopField = quot ? literals.remove(1) : A_LoopField
-			}
-			nest += A_Index > 1
-		} ; Loop Parse, str, % "[{"
+            ; arrrrays are made by pirates and they have index keys
+            if ( isarray )
+            {
+                Loop Parse, A_LoopField, `,, % ws "]"
+                    if ( A_LoopField != "" )
+                        obj[key++] := A_LoopField = quot ? literals.remove(1) : A_LoopField
+            }
+            ; otherwise, parse the segment as key/value pairs
+            else
+            {
+                Loop Parse, A_LoopField, `,
+                    Loop Parse, A_LoopField, :, % ws
+                        if ( A_Index = 1 )
+                            key := A_LoopField = quot ? literals.remove(1) : A_LoopField
+                        else if ( A_Index = 2 && A_LoopField != "" )
+                            obj[key] := A_LoopField = quot ? literals.remove(1) : A_LoopField
+            }
+            nest += A_Index > 1
+        } ; Loop Parse, str, % "[{"
 
-		If !--nest
-			Break
+        If !--nest
+            Break
 
-		; Insert the newly closed object into the one on top of the stack, then pop the stack
-		pbj := obj
-		obj := objs.remove()
-		obj[key := keys.remove()] := pbj
-		If ( isarray := isarrays.remove() )
-			key++
+        ; Insert the newly closed object into the one on top of the stack, then pop the stack
+        pbj := obj
+        obj := objs.remove()
+        obj[key := keys.remove()] := pbj
+        If ( isarray := isarrays.remove() )
+            key++
 
-	} ; Loop Parse, str, % "]}"
+    } ; Loop Parse, str, % "]}"
 
-	Return obj
-} ; json_toobj( str )
+    Return obj
+} ; json2obj( str )
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; Version 1.0.0.17 http://www.autohotkey.com/forum/viewtopic.php?t=70559
+;; Version 1.0.0.17 https://github.com/HotKeyIt/Yaml
 Yaml(YamlText,IsFile=1,YamlObj=0){
   static
   static base:={Dump:"Yaml_Dump",Save:"Yaml_Save",Add:"Yaml_Add",Merge:"Yaml_Merge",__Delete:"__Delete",_Insert:"_Insert",_Remove:"_Remove",_GetCapacity:"_GetCapacity",_SetCapacity:"_SetCapacity",_GetAddress:"_GetAddress",_MaxIndex:"_MaxIndex",_MinIndex:"_MinIndex",_NewEnum:"_NewEnum",_HasKey:"_HasKey",_Clone:"_Clone",Insert:"Insert",Remove:"Remove",GetCapacity:"GetCapacity",SetCapacity:"SetCapacity",GetAddress:"GetAddress",MaxIndex:"MaxIndex",MinIndex:"MinIndex",NewEnum:"NewEnum",HasKey:"HasKey",Clone:"Clone",base:{__Call:"Yaml_Call"}}
@@ -978,23 +981,23 @@ Yaml(YamlText,IsFile=1,YamlObj=0){
   Loop,Parse,YamlText,`n,`r
   {
     If (!_CNT && (A_LoopField=""||RegExMatch(A_LoopField,"^\s+$"))){ ;&&__KEY=""&&__SEQ="")){
-			If ((OBJ:=LVL%__LVL%[""].MaxIndex())&&IsObject(LVL%__LVL%["",OBJ])&&__SEQ){
-				If (__KEY!="")
-					Yaml_Continue(LastContObj:=LVL%__LVL%["",Obj],LastContKEY:=__key,"",__SCA)
-				else Yaml_Continue(LastContObj:=LVL%__LVL%[""],LastContKEY:=Obj,"",__SCA,__SEQ)
-			} else If (__SEQ && OBJ){
-				Yaml_Continue(LastContObj:=LVL%__LVL%[""],LastContKEY:=OBJ,"",__SCA,__SEQ)
-			} else If (OBJ){
-				Yaml_Continue(LastContObj:=LVL%__LVL%[""],LastContKEY:=OBJ,"",__SCA,1)
-			} else if (__KEY!="")
-				Yaml_Continue(LastContObj:=LVL%__LVL%,LastContKEY:=__KEY,"",__SCA)
-			else LinesAdded--
-			LinesAdded++
+            If ((OBJ:=LVL%__LVL%[""].MaxIndex())&&IsObject(LVL%__LVL%["",OBJ])&&__SEQ){
+                If (__KEY!="")
+                    Yaml_Continue(LastContObj:=LVL%__LVL%["",Obj],LastContKEY:=__key,"",__SCA)
+                else Yaml_Continue(LastContObj:=LVL%__LVL%[""],LastContKEY:=Obj,"",__SCA,__SEQ)
+            } else If (__SEQ && OBJ){
+                Yaml_Continue(LastContObj:=LVL%__LVL%[""],LastContKEY:=OBJ,"",__SCA,__SEQ)
+            } else If (OBJ){
+                Yaml_Continue(LastContObj:=LVL%__LVL%[""],LastContKEY:=OBJ,"",__SCA,1)
+            } else if (__KEY!="")
+                Yaml_Continue(LastContObj:=LVL%__LVL%,LastContKEY:=__KEY,"",__SCA)
+            else LinesAdded--
+            LinesAdded++
       Continue
     } else If (!_CNT && LastContObj
     && ( RegExMatch(A_LoopField,"^(---)?\s*?(-\s)?("".+""\s*:\s|'.+'\s*:\s|[^:""'\{\[]+\s*:\s)")
     || RegExMatch(A_LoopField,"^(---)|\s*(-\s)") )){
-			If !__SCA
+            If !__SCA
         LastContObj[LastContKEY]:=SubStr(LastContObj[LastContKEY],1,-1*LinesAdded)
       LastContObj:=0,LastContKEY:=0,LinesAdded:=0
     }
@@ -1011,9 +1014,9 @@ Yaml(YamlText,IsFile=1,YamlObj=0){
       If Yaml_IsSeqMap(RegExReplace(IncompleteSeqMap LoopField,"^(\s+)?(-\s)?("".+""\s*:\s|'.+'\s*:\s|[^:""'\{\[]+\s*:\s)?"))
         LoopField:=IncompleteSeqMap LoopField,_CNT:=0,IncompleteSeqMap:=""
       else {
-				IncompleteSeqMap.=LoopField
-				continue
-			}
+                IncompleteSeqMap.=LoopField
+                continue
+            }
     }
     If (LoopField="---"){
       Loop % (maxLVL)
@@ -1045,11 +1048,11 @@ Yaml(YamlText,IsFile=1,YamlObj=0){
     If (SubStr(LoopField,0)=":")
       LoopField.=A_Space ; add space to force RegEx to match even if the value and space after collon is missing e.g. Object:`n  objects item
     RegExMatch(LoopField,"S)^(?<LVL>\s+)?(?<SEQ>-\s)?(?<KEY>"".+""\s*:\s|'.+'\s*:\s|[^:""'\{\[]+\s*:\s)?\s*(?<SCA>[\|\>][+-]?)?\s*(?<TYP>!!\w+\s)?\s*(?<VAL>"".+""|'.+'|.+)?\s*$",_)
-		If _KEY ;cut off (:)
+        If _KEY ;cut off (:)
      StringTrimRight,_KEY,_KEY,2
     _KEY:=Yaml_UnQuoteIfNeed(_KEY)
     If IsVal:=Yaml_IsQuoted(_VAL)
-			_VAL:=Yaml_UnQuoteIfNeed(_VAL)
+            _VAL:=Yaml_UnQuoteIfNeed(_VAL)
     ;determine current level
     _LVL:=Yaml_S2I(_LVL)
     If _LVL-__LVL>1||(_LVL>__LVL&&_LVLChanged) ;&&!(__SEQ&&__KEY!=""&&_KEY!="")) ; (__SEQ?2:1)
@@ -1097,7 +1100,7 @@ Yaml(YamlText,IsFile=1,YamlObj=0){
     If (__CNT)||(_LVL>__LVL&&(__KEY!=""&&_KEY="")&&(__VAL!=""||__SCA))||(__SEQ&&__SCA)
       _KEY:="",_VAL:=""
     If (__CNT||(_LVL>__LVL&&(__KEY!=""||(__SEQ&&(__LFL||__SCA)&&!Yaml_IsSeqMap(__LFL)))&&!(_SEQ||_KEY!=""))){
-			If ((OBJ:=LVL%__LVL%[""].MaxIndex())&&IsObject(LVL%__LVL%["",OBJ])&&__SEQ){
+            If ((OBJ:=LVL%__LVL%[""].MaxIndex())&&IsObject(LVL%__LVL%["",OBJ])&&__SEQ){
         If __KEY!=
           Yaml_Continue(LVL%__LVL%["",Obj],__key,_LFL,__SCA),__CNT:=Yaml_SeqMap(LVL%__LVL%["",OBJ],__KEY,LVL%__LVL%["",OBJ,__KEY])?"":__CNT
         else Yaml_Continue(LVL%__LVL%[""],Obj,_LFL,__SCA,__SEQ),__CNT:=Yaml_SeqMap(LVL%__LVL%[""],OBJ,LVL%__LVL%["",OBJ],__SEQ)?"":__CNT
@@ -1115,7 +1118,7 @@ Yaml(YamlText,IsFile=1,YamlObj=0){
     }
     ;Create sequence or map
     If (__SEQ&&(_LVL>__LVL)&&_KEY!=""&&__KEY!=""){
-			OBJ:=LVL%__LVL%[""].MaxIndex()
+            OBJ:=LVL%__LVL%[""].MaxIndex()
       If _SEQ {
           If !Yaml_SeqMap(LVL%_LVL%["",OBJ,__KEY,""],_KEY,_VAL){
             If !IsObject(LVL%__LVL%["",OBJ,__KEY,""])
@@ -1124,7 +1127,7 @@ Yaml(YamlText,IsFile=1,YamlObj=0){
           }
       } else If !Yaml_SeqMap(LVL%_LVL%["",OBJ],_KEY,_VAL){
         LVL%__LVL%["",OBJ,_KEY]:=_VAL!=""?_VAL:(LVL%_NXT%:={base:base})
-			}
+            }
       If _VAL!=
         continue
     } else If (_SEQ){
@@ -1385,7 +1388,7 @@ Yaml_EscIfNeed(s){
   else return s
 }
 Yaml_IsQuoted(ByRef s){
-	return InStr(".''."""".","." SubStr(Trim(s),1,1) SubStr(Trim(s),0) ".")?1:0
+    return InStr(".''."""".","." SubStr(Trim(s),1,1) SubStr(Trim(s),0) ".")?1:0
 }
 Yaml_UnQuoteIfNeed(s){
   s:=Trim(s)
@@ -1605,11 +1608,11 @@ Yaml_Map(obj,key,value,isVal=0){
 }
 Yaml_Incomplete(value){
   return (Asc(Trim(value,"`n" A_Tab A_Space))=91 && !Yaml_Seq("","",Trim(value,"`n" A_Tab A_Space)))
-			|| (Asc(Trim(value,"`n" A_Tab A_Space))=123 && !Yaml_Map("","",Trim(value,"`n" A_Tab A_Space)))
+            || (Asc(Trim(value,"`n" A_Tab A_Space))=123 && !Yaml_Map("","",Trim(value,"`n" A_Tab A_Space)))
 }
 Yaml_IsSeqMap(value){
-	return (Asc(Trim(value,"`n" A_Tab A_Space))=91 && Yaml_Seq("","",Trim(value,"`n" A_Tab A_Space)))
-			|| (Asc(Trim(value,"`n" A_Tab A_Space))=123 && Yaml_Map("","",Trim(value,"`n" A_Tab A_Space)))
+    return (Asc(Trim(value,"`n" A_Tab A_Space))=91 && Yaml_Seq("","",Trim(value,"`n" A_Tab A_Space)))
+            || (Asc(Trim(value,"`n" A_Tab A_Space))=123 && Yaml_Map("","",Trim(value,"`n" A_Tab A_Space)))
 }
 
 

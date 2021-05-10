@@ -267,6 +267,7 @@ hot-corner:
 - bug: 历史剪切板有些历史的开头莫名多出一个下划线
 - bug: 历史剪切板粘贴之后, 顺序乱了
 - 菜单顺序应该和yaml一致
+- 重新整理conf
 <!-- - donate width
 - Capslock + Backspace（删除光标所在行所有文字）
 - Capslock + Enter（无论光标是否在行末都能新起一个换行而不截断原句子） -->

@@ -389,8 +389,8 @@ class SuxCore
 			; For key, value in SuxCore.GetYamlCfg("replace-text.shortcut-key", {}) {
 				; register_hotkey(value, _temp_map[key], "")
 			; }
-			if (sk := SuxCore.GetYamlCfg("replace-text.shortcut-key", ""))
-				register_hotkey(sk, "ReplaceText")
+			; if (sk := SuxCore.GetYamlCfg("replace-text.shortcut-key", ""))
+			; 	register_hotkey(sk, "ReplaceText")
 			For key, value in SuxCore.GetYamlCfg("replace-text.buildin", {})
 				register_replace_str(key, value)
 			For key, value in SuxCore.GetYamlCfg("replace-text.custom", {})
@@ -404,13 +404,13 @@ class SuxCore
 			register_theme_conf(theme_type, cur_theme_info)
 		}
 
-		if(SuxCore.GetYamlCfg("clipboard-plus.enable", 0))
-		{
-			; For key, value in SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", {})
-			; 	register_hotkey(key, value, "")
-			shortcut_key := SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", "win_alt_v")
-			register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
-		}
+		; if(SuxCore.GetYamlCfg("clipboard-plus.enable", 0))
+		; {
+		; 	; For key, value in SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", {})
+		; 	; 	register_hotkey(key, value, "")
+		; 	shortcut_key := SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", "win_alt_v")
+		; 	register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
+		; }
 
 		global MULTI_HIT_MAP
 		global HOTKEY_REGISTER_MAP
