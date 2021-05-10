@@ -2,6 +2,7 @@
 build/
 temp_snip_dir/
 
+conf.user.json
 remote_ver.ini
 data.ini
 sux.exe
