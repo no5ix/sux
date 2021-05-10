@@ -181,7 +181,7 @@ SwitchInputMethodAndDeleteLeft() {
 
 
 MaxMinWindow() {
-	ActivateWindowsUnderCursor()
+	; ActivateWindowsUnderCursor()
 	; ; OutputVar is made blank if no matching window exists; otherwise, it is set to one of the following numbers:
 	; ; -1: The window is minimized (WinRestore can unminimize it).
 	; ; 1: The window is maximized (WinRestore can unmaximize it).
@@ -196,13 +196,13 @@ MaxMinWindow() {
 }
 
 MaxWindow() {
-	ActivateWindowsUnderCursor()
+	; ActivateWindowsUnderCursor()
 	; WinGet,S,MinMax,A
 	WinMaximize, A
 }
 
 MinWindow() {
-	ActivateWindowsUnderCursor()
+	; ActivateWindowsUnderCursor()
 	; WinGet,S,MinMax,A
 	WinMinimize, A
 }

@@ -340,15 +340,16 @@ class SuxCore
 				SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 			}
 
-			For key, value in SuxCore.GetSuxCfg("hotkey.buildin", {})
+			For key, value in SuxCore.GetSuxCfg("hotkey.buildin", {}) {
 				register_hotkey(key, value, "")
+			}
 			For key, value in SuxCore.GetSuxCfg("hotkey.custom", {})
 				register_hotkey(key, value, "")
 		}
 		else {
 			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
-
+		
 		if(SuxCore.GetSuxCfg("hot-corner", {}))
 		{
 			For border_key, border_action in SuxCore.GetSuxCfg("hot-corner.action", {}) {
@@ -419,10 +420,8 @@ class SuxCore
 		global MULTI_HIT_DECORATOR
 		global TRIPLE_HIT_KEY_PREFIX
 		for ltrimed_key_name, original_key_2_action_map in MULTI_HIT_MAP {
-			m(ltrimed_key_name)
 			if (original_key_2_action_map.Count() == 1 && !original_key_2_action_map.HasKey(TRIPLE_HIT_KEY_PREFIX . ltrimed_key_name)) {
 				for key, action in original_key_2_action_map {
-					; m(key)
 					register_hotkey(key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_1)
 				}
 			}
@@ -496,8 +495,11 @@ register_theme_conf(key_name, val)
 
 
 
-register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
+register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_mode=0)
 {
+	if (!action)
+		Return
+
 	global HOTKEY_REGISTER_MAP
 	global MULTI_HIT_DECORATOR
 	global DOUBLE_HIT_KEY_PREFIX
@@ -507,15 +509,17 @@ register_hotkey(key_name, action, prefix="", handle_single_double_hit_mode=0)
 	global HANDLE_SINGLE_DOUBLE_HIT_MODE_1
 	global HANDLE_SINGLE_DOUBLE_HIT_MODE_2
 
-	StringLower, key_name, key_name
+	StringLower, key_name, original_key_name
 	multi_hit_ltrimed_key := StrReplace(key_name, DOUBLE_HIT_KEY_PREFIX)
 	multi_hit_ltrimed_key := StrReplace(multi_hit_ltrimed_key, TRIPLE_HIT_KEY_PREFIX)
 	; m(multi_hit_ltrimed_key)
 	key_split_arr := StrSplit(multi_hit_ltrimed_key, "_")
-	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": ""}
+	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": "", "mbutton": "", "lbutton": "", "rbutton": ""}
 	
 	if (key_split_arr.Length() == 1 && handle_single_double_hit_mode == 0 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
 	; if (handle_single_double_hit_mode == 0 && (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX))) {
+		; m(original_key_name)
+		; m(key_name)
 		if !MULTI_HIT_MAP.HasKey(multi_hit_ltrimed_key)
 			MULTI_HIT_MAP[multi_hit_ltrimed_key] := {}
 		MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := action
