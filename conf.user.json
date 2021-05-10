@@ -1,5 +1,6 @@
 ﻿{
   "File-Description": "你可以在custom块里覆盖所有的buildin(内置)配置或者直接修改buildin配置, 改了之后重启sux生效.You can override all the buildin conf at custom block or buildin conf itself, take effect after sux restart. ",
+  "quick_entry_": 2,
   "check-update-interval-hour": 2,
   "theme": {
     "dark": {
@@ -21,7 +22,6 @@
   },
   "search-plus": {
     "enable": 1,
-    "shortcut-key": "capslock_q",
     "buildin": {
       "_Default": [
         "https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=",
@@ -153,15 +153,10 @@
   "hotkey": {
     "enable": 1,
     "buildin": {
+      "capslock_q": "QuickEntry.ShowQuickEntryMenu",
       "ctrl_8": "SimulateClickDown",
       "ctrl_shift_alt_m": "MaxMinWindow",
       "rshift": "SwitchInputMethodAndDeleteLeft",
-    },
-    "custom": {}
-  },
-  "capslock_plus": {
-    "enable": 1,
-    "buildin": {
       "capslock": "send {Esc}",
       "capslock_w": "SelectCurrentWord",
       "capslock_shift_w": "SelectCurrentLine",

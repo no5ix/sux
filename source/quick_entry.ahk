@@ -157,7 +157,7 @@ class QuickEntry {
 		{
 			if (command_title == "Everything" && cur_sel_text) {
 				;;; everything search
-				everything_exe_path := COMMAND_TITLE_2_ACTION_MAP["Everything"][1]
+				everything_exe_path := COMMAND_TITLE_2_ACTION_MAP["Everything"]
 				run, %everything_exe_path%
 				WinWaitActive, ahk_exe Everything.exe, , 2.222
 				if ErrorLevel
@@ -185,7 +185,7 @@ class QuickEntry {
 			}
 			run(COMMAND_TITLE_2_ACTION_MAP[command_title])
 			if (use_cur_path) {
-				file_path_str := COMMAND_TITLE_2_ACTION_MAP[command_title][1]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+				file_path_str := COMMAND_TITLE_2_ACTION_MAP[command_title]  ; just like: "C:\Program Files\Git\bin\bash.exe"
 				; m(file_path_str)
 				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
 				; m(file_name)

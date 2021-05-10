@@ -168,9 +168,10 @@ class SuxCore
 	static _APP_DATA_DIR := "app_data/"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
-	static conf_user_yaml_file := "conf.user.yaml"
+	; static conf_user_yaml_file := "conf.user.yaml"
 	static conf_user_json_file := "conf.user.json"
-	static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"
+	; static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"
+	static conf_default_json_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.json"
 	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
 	static ver_ini_file := SuxCore._APP_DATA_DIR "ver/ver.ini"
 	static remote_ver_ini_file := SuxCore._APP_DATA_DIR "ver/remote_ver.ini"
@@ -214,7 +215,7 @@ class SuxCore
 		if !FileExist(SuxCore._APP_DATA_DIR)  
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
-		this.HandleConfYaml()
+		this.HandleConfParse()
 
 		; register onexit sub
 		OnExit, Sub_OnExit
@@ -296,7 +297,7 @@ class SuxCore
 		this.OnClipboardChangeCmd.Delete(func_name)
 	}
 
-	GetYamlCfg(keyStr, default="")
+	GetSuxCfg(keyStr, default="")
 	{
 		keyArray := StrSplit(keyStr, ".")
 		; obj := SuxCore.UserYamlConfObj
@@ -314,10 +315,13 @@ class SuxCore
 		return obj[cur_key]
 	}
 
-	HandleConfYaml()
+	HandleConfParse()
 	{
-		if(!FileExist(this.conf_user_yaml_file)) {
-			FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
+		; if(!FileExist(this.conf_user_yaml_file)) {
+		; 	FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
+		; }
+		if(!FileExist(this.conf_user_json_file)) {
+			FileCopy, % this.conf_default_json_file, % this.conf_user_json_file, 0
 		}
 		; SuxCore.UserYamlConfObj := Yaml(SuxCore.conf_user_yaml_file)
 		
@@ -325,97 +329,86 @@ class SuxCore
 		SuxCore.UserJsonConfObj := json2obj(conf_json_str)
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		
-		check_update_interval_hour := SuxCore.GetYamlCfg("check-update-interval-hour", 2)
+		check_update_interval_hour := SuxCore.GetSuxCfg("check-update-interval-hour", 2)
 		check_update_millisec := check_update_interval_hour * 3600 * 1000
 		; check_update_millisec := 6666
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
-		if(SuxCore.GetYamlCfg("hotkey.enable", 0))
+		if(SuxCore.GetSuxCfg("hotkey.enable", 0))
 		{
-			For key, value in SuxCore.GetYamlCfg("hotkey.buildin", {})
-			{
-				register_hotkey(key, value, "")
-			}
-			For key, value in SuxCore.GetYamlCfg("hotkey.custom", {})
-				register_hotkey(key, value, "")
-		}
-		if(SuxCore.GetYamlCfg("capslock_plus.enable", 0))
-		{
-			if (SuxCore.GetYamlCfg("capslock_plus.buildin.capslock", 0) == 0) {
+			if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) == 0) {
 				SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 			}
 
-			For key, value in SuxCore.GetYamlCfg("capslock_plus.buildin", {})
+			For key, value in SuxCore.GetSuxCfg("hotkey.buildin", {})
 				register_hotkey(key, value, "")
-			For key, value in SuxCore.GetYamlCfg("capslock_plus.custom", {})
+			For key, value in SuxCore.GetSuxCfg("hotkey.custom", {})
 				register_hotkey(key, value, "")
 		}
 		else {
 			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 
-		if(SuxCore.GetYamlCfg("hot-corner", {}))
+		if(SuxCore.GetSuxCfg("hot-corner", {}))
 		{
-			For border_key, border_action in SuxCore.GetYamlCfg("hot-corner.action", {}) {
+			For border_key, border_action in SuxCore.GetSuxCfg("hot-corner.action", {}) {
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 			}
 		}
 
-		if(SuxCore.GetYamlCfg("hot-edge.enable", 0))
+		if(SuxCore.GetSuxCfg("hot-edge.enable", 0))
 		{
-			For border_key, border_action in SuxCore.GetYamlCfg("hot-edge.action", {})
+			For border_key, border_action in SuxCore.GetSuxCfg("hot-edge.action", {})
 				for key, value in border_action
 					register_hotkey(key, value, border_key)
 		}
 
-		comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
-		if(SuxCore.GetYamlCfg("command.enable", 0))
+		; comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
+		if(SuxCore.GetSuxCfg("command.enable", 0))
 		{
-			For key, value in SuxCore.GetYamlCfg("command.buildin", {})
-				register_command(key, StrSplit(value, comma_delimiters_arr))
-			For key, value in SuxCore.GetYamlCfg("command.custom", {})
-				register_command(key, StrSplit(value, comma_delimiters_arr))
+			For key, value in SuxCore.GetSuxCfg("command.buildin", {})
+				register_command(key, value)
+			For key, value in SuxCore.GetSuxCfg("command.custom", {})
+				register_command(key, value)
 		}
 
-		if(SuxCore.GetYamlCfg("search-plus.enable", 0))
+		if(SuxCore.GetSuxCfg("search-plus.enable", 0))
 		{
-			if (sk := SuxCore.GetYamlCfg("search-plus.shortcut-key", ""))
-				register_hotkey(sk, "QuickEntry.ShowQuickEntryMenu")
-			For title, url in SuxCore.GetYamlCfg("search-plus.buildin", {}) {
-				register_web_search(title, StrSplit(url, comma_delimiters_arr))
+			For title, url_arr in SuxCore.GetSuxCfg("search-plus.buildin", {}) {
+				register_web_search(title, url_arr)
 			}
-			For title, url in SuxCore.GetYamlCfg("search-plus.custom", {}) {
-				register_web_search(title, StrSplit(url, comma_delimiters_arr))
+			For title, url_arr in SuxCore.GetSuxCfg("search-plus.custom", {}) {
+				register_web_search(title, url_arr)
 			}
 		}
 
-		if(SuxCore.GetYamlCfg("replace-text.enable", 0))
+		if(SuxCore.GetSuxCfg("replace-text.enable", 0))
 		{
 			; _temp_map := {"replace-current-line-text": "ReplaceCurrentLineText", "replace-selected-text":"ReplaceSelectedText"}
-			; For key, value in SuxCore.GetYamlCfg("replace-text.shortcut-key", {}) {
+			; For key, value in SuxCore.GetSuxCfg("replace-text.shortcut-key", {}) {
 				; register_hotkey(value, _temp_map[key], "")
 			; }
-			; if (sk := SuxCore.GetYamlCfg("replace-text.shortcut-key", ""))
+			; if (sk := SuxCore.GetSuxCfg("replace-text.shortcut-key", ""))
 			; 	register_hotkey(sk, "ReplaceText")
-			For key, value in SuxCore.GetYamlCfg("replace-text.buildin", {})
+			For key, value in SuxCore.GetSuxCfg("replace-text.buildin", {})
 				register_replace_str(key, value)
-			For key, value in SuxCore.GetYamlCfg("replace-text.custom", {})
+			For key, value in SuxCore.GetSuxCfg("replace-text.custom", {})
 				register_replace_str(key, value)
 		}
 
-		For theme_type, theme_info in SuxCore.GetYamlCfg("theme", {}) {
+		For theme_type, theme_info in SuxCore.GetSuxCfg("theme", {}) {
 			cur_theme_info := {}
 			For theme_key, theme_val in theme_info
 				cur_theme_info[theme_key] := theme_val
 			register_theme_conf(theme_type, cur_theme_info)
 		}
 
-		; if(SuxCore.GetYamlCfg("clipboard-plus.enable", 0))
+		; if(SuxCore.GetSuxCfg("clipboard-plus.enable", 0))
 		; {
-		; 	; For key, value in SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", {})
+		; 	; For key, value in SuxCore.GetSuxCfg("clipboard-plus.shortcut-key", {})
 		; 	; 	register_hotkey(key, value, "")
-		; 	shortcut_key := SuxCore.GetYamlCfg("clipboard-plus.shortcut-key", "win_alt_v")
+		; 	shortcut_key := SuxCore.GetSuxCfg("clipboard-plus.shortcut-key", "win_alt_v")
 		; 	register_hotkey(shortcut_key, "ClipboardPlus.ShowAllClips")
 		; }
 
@@ -472,11 +465,11 @@ str_array_concate(arr, app, deli="")
 	return % ret
 }
 
-register_command(title, action_array)
+register_command(title, action)
 {
 	global COMMAND_TITLE_2_ACTION_MAP
 	global COMMAND_TITLE_LIST
-	COMMAND_TITLE_2_ACTION_MAP[title] := action_array
+	COMMAND_TITLE_2_ACTION_MAP[title] := action
 	COMMAND_TITLE_LIST.Push(title)
 }
 

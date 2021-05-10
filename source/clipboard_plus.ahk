@@ -29,7 +29,7 @@ class ClipboardPlus
 	init()
 	{
 		SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
-		this.ClipsTotalNum := SuxCore.GetYamlCfg("clipboard-plus.ClipsTotalNum", 50)
+		this.ClipsTotalNum := SuxCore.GetSuxCfg("clipboard-plus.ClipsTotalNum", 50)
 	}
 
 	ShowAllClips()
