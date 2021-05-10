@@ -215,7 +215,40 @@ StringJoin(sep, params*) {
 }
 
 
+class ClipboardChangeCmdMgr
+{
+  static OnClipboardChangeCmd := {}
+  static TempOnClipboardChangeCmd := {}
+
+  register_clip_change_func(func_name)
+  {
+      this.OnClipboardChangeCmd[func_name] := func_name
+  }
+
+  enable_all_clip_change_func()
+  {
+      this.OnClipboardChangeCmd := this.TempOnClipboardChangeCmd
+      this.TempOnClipboardChangeCmd := {}
+  }
+
+  disable_all_clip_change_func()
+  {
+      ; for k, v in this.OnClipboardChangeCmd
+      ;     this.TempOnClipboardChangeCmd[k] := v
+      this.TempOnClipboardChangeCmd := this.OnClipboardChangeCmd
+      this.OnClipboardChangeCmd := {}
+  }
+
+  unregister_clip_change_func(func_name)
+  {
+      OnClipboardChangeCmd.Delete(func_name)
+  }
+}
+
+
 PasteContent(pending_paste_content) {
+    ClipboardChangeCmdMgr.disable_all_clip_change_func()
+
     ClipSaved := ClipboardAll 
     Clipboard := ""
     Clipboard := pending_paste_content
@@ -226,6 +259,7 @@ PasteContent(pending_paste_content) {
     }
     Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
     ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
+    ClipboardChangeCmdMgr.enable_all_clip_change_func()
 }
 
 SafePaste() {
@@ -235,6 +269,8 @@ SafePaste() {
 }
 
 GetCurSelectedText() {
+    ClipboardChangeCmdMgr.disable_all_clip_change_func()
+
     clipboardOld := ClipboardAll            ; backup clipboard
     ; Send, ^c
     Clipboard := ""
@@ -255,6 +291,7 @@ GetCurSelectedText() {
     }
     Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
     clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+    ClipboardChangeCmdMgr.enable_all_clip_change_func()
     return cur_selected_text
 }
 

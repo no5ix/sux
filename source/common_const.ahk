@@ -96,6 +96,8 @@ global INI_THEME := "theme"
 global INI_LANG := "lang"
 
 
+OnClipboardChangeCmd := {}
+
 ; 记录快捷键与对应操作
 HOTKEY_REGISTER_MAP := {}
 

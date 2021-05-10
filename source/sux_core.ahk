@@ -190,7 +190,6 @@ class SuxCore
 	static UserJsonConfObj =
 	static version =
 	; callback
-	static OnClipboardChangeCmd := {}
 	static OnPauseCmd := []
 	static OnSuspendCmd := []
 	static OnExitCmd := []
@@ -285,16 +284,6 @@ class SuxCore
 	SetIniConfig(key, value, section="sux")
 	{
 		IniWrite, % value, % SuxCore.data_ini_file, % section, % key
-	}
-
-	register_clip_change_func(func_name)
-	{
-		this.OnClipboardChangeCmd[func_name] := func_name
-	}
-
-	unregister_clip_change_func(func_name)
-	{
-		this.OnClipboardChangeCmd.Delete(func_name)
 	}
 
 	GetSuxCfg(keyStr, default="")
@@ -799,7 +788,7 @@ border_event_evoke()
 
 ; event callback
 OnClipboardChange:
-for key, func_name in SuxCore.OnClipboardChangeCmd {
+for key, func_name in ClipboardChangeCmdMgr.OnClipboardChangeCmd {
 	run(func_name)
 }
 Return

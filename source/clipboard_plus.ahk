@@ -28,7 +28,7 @@ class ClipboardPlus
 
 	init()
 	{
-		SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
+		ClipboardChangeCmdMgr.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
 		this.ClipsTotalNum := SuxCore.GetSuxCfg("clipboard-plus.ClipsTotalNum", 50)
 	}
 
@@ -95,8 +95,8 @@ class ClipboardPlus
 		}
 		if (_trimed_str == "")
 			_trimed_str := "<space>"
-		Else if (SubStr(_trimed_str, 1, 1) != SubStr(str_ori, 1, 1))
-			_trimed_str := "_" _trimed_str
+		; Else if (SubStr(_trimed_str, 1, 1) != SubStr(str_ori, 1, 1))
+		; 	_trimed_str := "_" _trimed_str
 		if StrLen(_trimed_str) > 50
 			_trimed_str := SubStr(_trimed_str, 1, 50)
 		; _trimed_str := _trimed_str "`t[" StrLen(str_ori) "]"
@@ -158,22 +158,16 @@ ClipboardPlus.DeleteAllClips()
 Return
 
 Sub_ClipboardPlus_AllClips_Click:
-SuxCore.unregister_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")  ;; 防止paste_cur_selected_text里污染了剪切板顺序
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
-SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
 Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:
-SuxCore.unregister_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
-SuxCore.register_clip_change_func("Sub_ClipboardPlus_OnClipboardChange")
 Return
 
-; OnEvent
 Sub_ClipboardPlus_OnClipboardChange:
-; ToolTipWithTimer(888888)
 ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, Clipboard)
 while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.ClipboardHistoryArr.MaxIndex() > ClipboardPlus.ClipsTotalNum)
 	ClipboardPlus.ClipboardHistoryArr.Remove(1)

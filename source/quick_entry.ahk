@@ -341,30 +341,18 @@ QuickEntry_TransformText_Detail_Menu_click:
 	Return
 
 
-
 QuickEntry_ReplaceText_Menu_Click:
+	st := current_selected_text
 	if (!current_selected_text) {
 		send, {Home}
 		Sleep, 66
 		send, +{End}
+		st := GetCurSelectedText()
 	}
 	
 	global STR_REPLACE_CONF_REGISTER_MAP
 	; store the number of replacements that occurred (0 if none).
 	replace_sum := 0
-
-	ClipSaved := ClipboardAll   ; Save the entire clipboard to a variable of your choice.
-	; ... here make temporary use of the clipboard, such as for pasting Unicode text via Transform Unicode ...
-	; Sleep, 66
-	; Send, ^a
-	; Sleep, 66
-	; Send, ^c
-	Clipboard := ""
-    SendInput, ^{insert}
-    ClipWait, 0.6
-	; Sleep, 66
-	; Read from the array:
-	; Loop % Array.MaxIndex()   ; More traditional approach.
 	if(!ErrorLevel) {
 		for key, value in STR_REPLACE_CONF_REGISTER_MAP ; Enumeration is the recommended approach in most cases.
 		{
@@ -375,18 +363,15 @@ QuickEntry_ReplaceText_Menu_Click:
 			; Using "for", both the index (or "key") and its associated value
 			; are provided, and the index can be *any* value of your choosing.
 			; m(key "//" value)
-			Clipboard := StrReplace(Clipboard, key, value, cur_replace_cnt)
+			st := StrReplace(st, key, value, cur_replace_cnt)
 			replace_sum += cur_replace_cnt
 		}
 		Sleep, 66
 		if replace_sum != 0
-			SafePaste()
+			PasteContent(st)
 		else
 			Send, {Right}
 	}
-	; Sleep, 66
-	Clipboard := ClipSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-	ClipSaved := ""   ; Free the memory in case the clipboard was very large.
 	Return
 
 
