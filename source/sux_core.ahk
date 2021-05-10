@@ -210,6 +210,9 @@ class SuxCore
 		CoordMode, Mouse, Screen
 		CoordMode, ToolTip, Screen
 		CoordMode, Menu, Screen
+		
+		; SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
+		; SetMouseDelay, 0
 
 		if !FileExist(SuxCore._APP_DATA_DIR)  
         	FileCreateDir, % SuxCore._APP_DATA_DIR
