@@ -13,6 +13,8 @@ if(A_ScriptName=="quick_entry.ahk") {
 
 ; last_search_str = ""
 ; trim_gui_user_input = ""
+current_selected_text = ""
+
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
@@ -20,6 +22,8 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\sux_core.ahk
 #Include %A_ScriptDir%\source\util.ahk
+#Include %A_ScriptDir%\source\snip_plus.ahk
+#Include %A_ScriptDir%\source\translation.ahk
 
 
 
@@ -46,7 +50,7 @@ class QuickEntry {
 
 		QuickEntry.screenshot_menu_pos_offset := dec_cnt
 
-		dec_cnt += 2  ; 中间还有1个截图的菜单和一个分割线
+		dec_cnt += 4  ; 中间还有1个截图的菜单和1个变换文本和1个翻译的菜单和1个分割线
 		QuickEntry.command_menu_pos_offset := dec_cnt
 	}
 
@@ -111,7 +115,7 @@ class QuickEntry {
 	}
 
 
-	search_gui_spawn(cur_selected_text="") {
+	search_gui_spawn() {
 		; search_gui_destroy()
 		; static hMyGUI =
 		; if (WinExist("ahk_id " hMyGUI)) {
@@ -148,8 +152,8 @@ class QuickEntry {
 		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
-
-		pre_input_str := cur_selected_text ? cur_selected_text : QuickEntry.cur_sel_search_title
+		global current_selected_text
+		pre_input_str := current_selected_text ? current_selected_text : QuickEntry.cur_sel_search_title
 		Gui, SearchGui_: Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
@@ -176,15 +180,19 @@ class QuickEntry {
 			Menu, QuickEntry_Menu, DeleteAll
 		}
 		try {
-			Menu, QuickEntry_Menu_More, DeleteAll
+			Menu, QuickEntry_Search_Menu_More, DeleteAll
 		}
 		try {
-			Menu, Command_Menu_More, DeleteAll
+			Menu, QuickEntry_Command_Menu_More, DeleteAll
+		}
+		try {
+			Menu, QuickEntry_TransformText_Detail_Menu, DeleteAll
 		}
 
-		selected_text := GetCurSelectedText()
-		if selected_text {
-			sub_selected_text := lang("Selected") . ": " . SubStr(selected_text, 1, 2) . "..."
+		global current_selected_text
+		current_selected_text := GetCurSelectedText()
+		if current_selected_text {
+			sub_selected_text := lang("Selected") . ": " . SubStr(current_selected_text, 1, 2) . "..."
 			; m(sub_selected_text)
 			Menu, QuickEntry_Menu, Add, % sub_selected_text, Sub_Nothing
 			Menu, QuickEntry_Menu, Disable, % sub_selected_text
@@ -205,7 +213,7 @@ class QuickEntry {
 				Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Search_Menu_Click
 			}
 			Else {
-				Menu, QuickEntry_Search_Menu_More, Add, % title, QuickEntry_Search_Menu_MoreClick
+				Menu, QuickEntry_Search_Menu_More, Add, % lang(title), QuickEntry_Search_Menu_MoreClick
 			}
 		}
 		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
@@ -214,9 +222,19 @@ class QuickEntry {
 		;;;;;; ScreenShot
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
 		Menu, QuickEntry_Menu, Add, % lang("ScreenShot && Suspend") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
-		; Menu, QuickEntry_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
-		; Menu, QuickEntry_Menu, Add, % lang("SuspendScreenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("Translation") . "`t&f", QuickEntry_Translation_Menu_Click
 
+		;; transform text
+		transform_text_arr := ["ABCD", "abcd", "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd"]
+		for index, pattern in transform_text_arr {
+			if (pattern == "|")
+				Menu, QuickEntry_TransformText_Detail_Menu, Add
+			else {
+				; menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_TAB, index, lang(pattern))
+				Menu, QuickEntry_TransformText_Detail_Menu, Add, % index . ". " . pattern, QuickEntry_TransformText_Detail_Menu_click
+			}
+		}
+		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&g", :QuickEntry_TransformText_Detail_Menu
 
 		;;;;;; command
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
@@ -313,43 +331,39 @@ Sub_Nothing:
 
 
 QuickEntry_Search_Menu_Click:
-	cur_sel_text := GetCurSelectedText()
-	dec_cnt := cur_sel_text ? 2 : 0
+	dec_cnt := current_selected_text ? 2 : 0
 	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-	; if cur_sel_text
-	; 	QuickEntry.HandleSearch(cur_sel_text)
+	; if current_selected_text
+	; 	QuickEntry.HandleSearch(current_selected_text)
 	; else
-		QuickEntry.search_gui_spawn(cur_sel_text)
+		QuickEntry.search_gui_spawn()
 	Return
 
 QuickEntry_Search_Menu_MoreClick:
-	cur_sel_text := GetCurSelectedText()
 	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
-	; if cur_sel_text
-	; 	QuickEntry.HandleSearch(cur_sel_text)
+	; if current_selected_text
+	; 	QuickEntry.HandleSearch(current_selected_text)
 	; else
-		QuickEntry.search_gui_spawn(cur_sel_text)
+		QuickEntry.search_gui_spawn()
 	Return
 
 
 QuickEntry_Command_Menu_Click:
-	cur_sel_text := GetCurSelectedText()
-	dec_cnt := (cur_sel_text ? 2 : 0) + QuickEntry.command_menu_pos_offset
+	dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.command_menu_pos_offset
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
-	QuickEntry.HandleCommand(search_title, cur_sel_text)
+	QuickEntry.HandleCommand(search_title, current_selected_text)
 	Return
 
 
 QuickEntry_Command_Menu_MoreClick:
-	cur_sel_text := GetCurSelectedText()
 	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_RIGHT.Count() + A_ThisMenuItemPos]
-	QuickEntry.HandleCommand(search_title, cur_sel_text)
+	QuickEntry.HandleCommand(search_title, current_selected_text)
 	Return
 
 
 QuickEntry_ScreenShot_Suspend_Menu_Click:
 	; Sleep, 222
-	dec_cnt := (GetCurSelectedText() ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
+	dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
 	if (A_ThisMenuItemPos - dec_cnt == 1) {
 		; ToolTipWithTimer("AreaScreenShot", 2222)
 		SnipPlus.AreaScreenShot()
@@ -358,6 +372,96 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 		; ToolTipWithTimer("AreaScreenShotAndSuspend", 2222)
 		SnipPlus.AreaScreenShotAndSuspend()
 	}
+	Return
+
+
+QuickEntry_TransformText_Detail_Menu_click:
+	st := current_selected_text
+	if (!st) {
+		SelectCurrentWord()
+		st := GetCurSelectedText()
+		if (!st) {
+			ToolTipWithTimer(lang("Nothing selected") . ".")
+			Return
+		}
+	}
+	
+	delimiters_arr := ["_", "-"]
+	if (A_ThisMenuItemPos == 1) {
+		for _i, deli in delimiters_arr
+			st := StrReplace(st, deli, "")
+		StringUpper, st, st
+	}
+	else if (A_ThisMenuItemPos == 2) {
+		for _i, deli in delimiters_arr
+			st := StrReplace(st, deli, "")
+		StringLower, st, st
+	}
+	else if (A_ThisMenuItemPos >= 4 || A_ThisMenuItemPos <=15) {
+		if (Instr(st, "-") || Instr(st, "_")) {
+			st_arr := StrSplit(st, delimiters_arr)
+		}
+		else {
+			for _i, deli in delimiters_arr
+				temp_st := StrReplace(st, deli, "")
+			if temp_st is upper
+			{
+				ToolTipWithTimer(lang("Can not separate words") . ".")	
+				return
+			}
+			else if temp_st is lower
+			{
+				ToolTipWithTimer(lang("Can not separate words") . ".")	
+				return
+			}
+			else {
+				st_arr := []
+				last_start_i := 1
+				Loop, parse, st
+				{
+					if A_LoopField is upper
+					{
+						st_arr.Push(SubStr(st, last_start_i, A_Index-last_start_i))
+						last_start_i := A_Index
+					}
+				}
+				st_arr.Push(SubStr(st, last_start_i, StrLen(st)-last_start_i))
+			}
+		}
+
+		st := ""
+		deli_map := {1: "", 2: "", 4: "", 5: "", 7: "_", 8: "_", 9: "_", 10: "_", 12: "-", 13: "-", 14: "-", 15: "-"}
+
+		first_letter_lower_case_map := {5: "", 10: "", 15: ""}
+		title_case_map := {4: "", 5: "", 9: "", 10: "",  14: "", 15: ""}
+		lower_case_map := {2: "", 8: "", 13: ""}
+		upper_case_map := {1: "", 7: "", 12: ""}
+
+		cur_delimiter := deli_map[A_ThisMenuItemPos]
+		for index, _single_w in st_arr {
+			if (st != "")
+				st .= cur_delimiter
+			if (index == 1 && first_letter_lower_case_map.HasKey(A_ThisMenuItemPos))
+				StringLower, _single_w, _single_w
+			else if (title_case_map.HasKey(A_ThisMenuItemPos))
+				StringUpper, _single_w, _single_w, T
+			else if (lower_case_map.HasKey(A_ThisMenuItemPos))
+				StringLower, _single_w, _single_w
+			else if (upper_case_map.HasKey(A_ThisMenuItemPos))
+				StringUpper, _single_w, _single_w
+
+			st .= _single_w
+		}
+	}
+
+	PasteContent(st)
+	Sleep, 66
+	SelectCurrentWord()
+	Return
+
+
+QuickEntry_Translation_Menu_Click:
+	TranslateSeletedText(current_selected_text)
 	Return
 
 
