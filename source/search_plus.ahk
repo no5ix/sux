@@ -7,11 +7,34 @@ if(A_ScriptName=="search_plus.ahk") {
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_SEARCH_PLUS_FILE_END_LABEL
+#Include %A_ScriptDir%\source\common_const.ahk
+#Include %A_ScriptDir%\source\sux_core.ahk
+#Include %A_ScriptDir%\source\util.ahk
+
 
 
 class SearchPlus {
 
 	static cur_sel_search_title := ""
+
+	AddSearchPlusSubMenu() {
+		global WEB_SEARCH_TITLE_LIST
+		global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR
+		shortcut_cnt_left := SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR.Count()
+		for index, title in WEB_SEARCH_TITLE_LIST {
+			if (index <= shortcut_cnt_left) {
+				menu_shortcut_str := get_menu_shortcut_str(SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR, index, lang(title))
+				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
+				Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Search_Menu_Click
+			}
+			Else {
+				Menu, QuickEntry_Search_Menu_More, Add, % lang(title), QuickEntry_Search_Menu_MoreClick
+			}
+		}
+		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
+			Menu, QuickEntry_Menu, Add, % lang("More Search"), :QuickEntry_Search_Menu_More
+
+	}
 
 	HandleSearch(search_str) {
 		search_title := SearchPlus.cur_sel_search_title

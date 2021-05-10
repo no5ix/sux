@@ -50,6 +50,10 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Can not separate words": "无法分割单词"
     ,"Transform Text": "变换文本"
     ,"Replace Text": "替换文本"
+    ,"Clipboard Plus": "历史剪切板"
+    ,"Lowercase": "大写"
+    ,"Uppercase": "小写"
+    ,"Command": "指令"
     ,"_Default": "默认"
     ,"Google & Baidu": "谷歌 & 百度" 
     ,"Google": "谷歌"
@@ -79,7 +83,9 @@ global auto_destory_quick_entry_gui_period := -22222  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 
-global SHORTCUT_KEY_INDEX_ARR_LEFT := [" ", "q", "w", "e", "a", "s", "d", "z", "x", "c", "b", "t"]
+global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "e", "a", "s", "d", "z", "x", "b", "t", "h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
+global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
+global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
 
 global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"

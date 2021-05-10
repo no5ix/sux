@@ -35,15 +35,15 @@ class ClipboardPlus
 	ShowAllClips()
 	{
 		clipboard_history_cnt := this.ClipboardHistoryArr.MaxIndex()
+		Try
+		{
+			Menu, Clipborad_Plus_Menu, DeleteAll
+		}
+		Try
+		{
+			Menu, Clipborad_Plus_Menu_More, DeleteAll
+		}
 		if (clipboard_history_cnt >= 1) {
-			Try
-			{
-				Menu, Clipborad_Plus_Menu, DeleteAll
-			}
-			Try
-			{
-				Menu, Clipborad_Plus_Menu_More, DeleteAll
-			}
 			global SHORTCUT_KEY_INDEX_ARR_LEFT
 			shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
 			Loop, % clipboard_history_cnt
@@ -71,8 +71,8 @@ class ClipboardPlus
 		else {
 			; ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
 			empty_menu_str := lang("clipboard currently has no centent, please copy something...")
-			Menu, Clipborad_Plus_Menu, Add, % empty_menu_str, Sub_Nothing
-			Menu, QuickEntry_Menu, Disable, % empty_menu_str
+			Menu, Clipborad_Plus_Menu, Add, % empty_menu_str, Clipborad_Plus_Sub_Nothing
+			Menu, Clipborad_Plus_Menu, Disable, % empty_menu_str
 			Menu, QuickEntry_Menu, Add, % lang("Clipboard Plus") . "`t&v", :Clipborad_Plus_Menu
 		}
 
@@ -138,6 +138,10 @@ class ClipboardPlus
 		}
 	}
 }
+
+
+Clipborad_Plus_Sub_Nothing:
+Return
 
 
 Sub_Menu_ClipboardPlus_PasteAll:
