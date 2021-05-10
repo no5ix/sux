@@ -17,7 +17,7 @@ current_selected_text = ""
 
 
 ; with this label, you can include this file on top of the file
-Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
+Goto, SUB_QUICK_ENTRY_FILE_END_LABEL
 
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\sux_core.ahk
@@ -50,7 +50,12 @@ class QuickEntry {
 
 		QuickEntry.screenshot_menu_pos_offset := dec_cnt
 
-		dec_cnt += 5  ; 中间还有1个截图的菜单和1个变换文本和1个替换文本的菜单和1个翻译的菜单和1个分割线
+		dec_cnt += 1  ; 中间还有1个截图/贴图的菜单
+		dec_cnt += 1  ; 1个翻译的菜单
+		dec_cnt += 1  ; 1个替换文本的菜单
+		dec_cnt += 1  ; 1个变换文本
+		dec_cnt += 1  ; 1个历史剪切板的菜单
+		dec_cnt += 1  ; 1个分割线
 		QuickEntry.command_menu_pos_offset := dec_cnt
 	}
 
@@ -87,10 +92,6 @@ class QuickEntry {
 		for index, title in WEB_SEARCH_TITLE_LIST {
 			if (index <= shortcut_cnt_left) {
 				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, index, lang(title))
-				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[index]
-				; ;; 如果快捷键为空格的话, 得特殊处理
-				; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
-				; m(_cur_shortcut_str)
 				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
 				Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Search_Menu_Click
 			}
@@ -113,11 +114,13 @@ class QuickEntry {
 			if (pattern == "|")
 				Menu, QuickEntry_TransformText_Detail_Menu, Add
 			else {
-				; menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_TAB, index, lang(pattern))
-				Menu, QuickEntry_TransformText_Detail_Menu, Add, % index . ".`t" . pattern, QuickEntry_TransformText_Detail_Menu_click
+				Menu, QuickEntry_TransformText_Detail_Menu, Add, % "&" . index . ".`t" . pattern, QuickEntry_TransformText_Detail_Menu_click
 			}
 		}
 		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&g", :QuickEntry_TransformText_Detail_Menu
+
+		;;; clipboard_plus
+		ClipboardPlus.ShowAllClips()
 
 		;;;;;; command
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
@@ -195,11 +198,6 @@ class QuickEntry {
 
 
 
-
-Sub_Nothing:
-	Return
-
-
 QuickEntry_Search_Menu_Click:
 	dec_cnt := current_selected_text ? 2 : 0
 	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
@@ -242,6 +240,11 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 QuickEntry_Translation_Menu_Click:
 	TranslateSeletedText(current_selected_text)
+	Return
+
+
+QuickEntry_ClipboardPlus_Menu_Click:
+	ClipboardPlus.ShowAllClips(current_selected_text)
 	Return
 
 
@@ -379,5 +382,5 @@ QuickEntry_ReplaceText_Menu_Click:
 
 
 ; //////////////////////////////////////////////////////////////////////////
-SUB_CMD_WEB_SEARCH_FILE_END_LABEL:
+SUB_QUICK_ENTRY_FILE_END_LABEL:
 	temp_cws := "blabla"

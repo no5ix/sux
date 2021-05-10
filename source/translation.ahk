@@ -1,7 +1,7 @@
 
 
 
-if(A_ScriptName=="clipboard_plus.ahk") {
+if(A_ScriptName=="translation.ahk") {
 	ExitApp
 }
 

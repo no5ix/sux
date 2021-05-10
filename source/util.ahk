@@ -1,6 +1,16 @@
 ﻿
+; if(A_ScriptName=="util.ahk") {
+; 	ExitApp
+; }
+
+
+
+; ; with this label, you can include this file on top of the file
+; Goto, SUB_UTIL_FILE_END_LABEL
+
 #Include %A_ScriptDir%\source\common_const.ahk
 #Include %A_ScriptDir%\source\js_eval.ahk
+
 
 
 m(str := "")
@@ -1524,3 +1534,15 @@ GetFullPathName(path) {
     DllCall("GetFullPathName", "str", path, "uint", cc, "str", buf, "ptr", 0, "uint")
     return buf
 }
+
+
+
+; Sub_Nothing:
+; 	Return
+
+
+  
+
+; ; //////////////////////////////////////////////////////////////////////////
+; SUB_UTIL_FILE_END_LABEL:
+; 	temp_ufel := "blabla"

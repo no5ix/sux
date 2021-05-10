@@ -1,4 +1,14 @@
 
+if(A_ScriptName=="search_plus.ahk") {
+	ExitApp
+}
+
+
+
+; with this label, you can include this file on top of the file
+Goto, SUB_SEARCH_PLUS_FILE_END_LABEL
+
+
 class SearchPlus {
 
 	static cur_sel_search_title := ""
@@ -151,3 +161,9 @@ Sub_HandleSearchGuiUserInput:
 	search_gui_destroy()
 	SearchPlus.HandleSearchGuiUserInput(GuiUserInput)
 	return
+
+
+    
+; //////////////////////////////////////////////////////////////////////////
+SUB_SEARCH_PLUS_FILE_END_LABEL:
+	temp_sp := "blabla"

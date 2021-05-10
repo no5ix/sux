@@ -13,15 +13,15 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 ![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
 
 一个工具同时拥有
-- 一键翻译: `caps+g`
-- 历史剪切板: `caps+v`
+- 翻译
+- 历史剪切板
 - 截图
 - 贴图
-- 类似listary/alfred/wox的快捷搜索: `caps+q`
+- 类似listary/alfred/wox的快捷搜索: `caps+空格`
 - 类似macos的触发角
 - 屏幕边缘触发器
 - 类似vim的全局自定义快捷键
-- 文字替换器: `caps+r`
+- 文字替换器
 - 自定义主题
 - 可自定义的yaml配置
 - blabla...
@@ -47,12 +47,10 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 快捷搜索search-plus
 
-
-
-大多数时候其实都是 `caps+q`然后空格搜东西, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
+大多数时候其实都是 `caps+空格` 然后空格搜东西, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173722.png)
 
-为什么`caps+q`出来的不是搜索框?
+为什么`caps+空格` 出来的不是搜索框?
 
 原来就是那样的, 后来我给一些低端用户(运营岗这种用户)用, 发现他们记不住key.
 比如百度是`bd`, 谷歌是`gg`这种对吧?
@@ -95,7 +93,7 @@ hot-corner:
 
 # 截图和贴图
 
-`capslock+q` 弹出菜单之后, 然后再按`tab`是截图, `s`是贴图
+`caps+空格` 弹出菜单之后, 然后再按`tab`是截图
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173705.png)
 
@@ -139,7 +137,7 @@ hot-corner:
 
 # 文字替换器replace-text
 
-`caps+r`是替换, 比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
+比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173736.png)
 

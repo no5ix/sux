@@ -35,54 +35,49 @@ class ClipboardPlus
 	ShowAllClips()
 	{
 		clipboard_history_cnt := this.ClipboardHistoryArr.MaxIndex()
-		if (clipboard_history_cnt < 1) {
-			ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
-			Return
-		}
-		Try
-		{
-			Menu, Clipborad_Plus_Menu, DeleteAll
-		}
-		Try
-		{
-			Menu, Clipborad_Plus_Menu_More, DeleteAll
-		}
-		global SHORTCUT_KEY_INDEX_ARR_LEFT
-		shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
-		Loop, % clipboard_history_cnt
-		{
-			idx := clipboard_history_cnt - A_Index + 1
-			clip_text := this.ClipboardHistoryArr[idx][2]
-			if (A_Index <= shortcut_cnt) {
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, A_Index, clip_text)
-				; _cur_shortcut_str := SHORTCUT_KEY_INDEX_ARR_LEFT[A_Index]
-				; if (_cur_shortcut_str == " ") {
-				; 	;; 如果快捷键为空格的话, 得特殊处理
-				; 	; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
-				; 	final_str := "&" . _cur_shortcut_str . "(" . lang("space") . ")" . dot_space_str . clip_text
-				; }
-				; else if (_cur_shortcut_str == "q") {
-				; 	final_str := "&" . _cur_shortcut_str . "(" . lang("exit") . ")"
-				; }
-				; else {
-				; 	final_str := "&" . _cur_shortcut_str . dot_space_str . clip_text
-				; }
-				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, Clipborad_Plus_Menu, Add, % menu_shortcut_str, Sub_ClipboardPlus_AllClips_Click
-				; Menu, Clipborad_Plus_Menu, Add, % (A_Index<10?"&":"") A_Index ". " clip_text, Sub_ClipboardPlus_AllClips_Click
+		if (clipboard_history_cnt >= 1) {
+			Try
+			{
+				Menu, Clipborad_Plus_Menu, DeleteAll
 			}
-			Else {
-				Menu, Clipborad_Plus_Menu_More, Add, % clip_text, Sub_ClipboardPlus_AllClips_MoreClick
+			Try
+			{
+				Menu, Clipborad_Plus_Menu_More, DeleteAll
 			}
+			global SHORTCUT_KEY_INDEX_ARR_LEFT
+			shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+			Loop, % clipboard_history_cnt
+			{
+				idx := clipboard_history_cnt - A_Index + 1
+				clip_text := this.ClipboardHistoryArr[idx][2]
+				if (A_Index <= shortcut_cnt) {
+					menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, A_Index, clip_text)
+					;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
+					Menu, Clipborad_Plus_Menu, Add, % menu_shortcut_str, Sub_ClipboardPlus_AllClips_Click
+					; Menu, Clipborad_Plus_Menu, Add, % clip_text, Sub_ClipboardPlus_AllClips_Click
+				}
+				Else {
+					Menu, Clipborad_Plus_Menu_More, Add, % clip_text, Sub_ClipboardPlus_AllClips_MoreClick
+				}
+			}
+			if (clipboard_history_cnt > shortcut_cnt)
+				Menu, Clipborad_Plus_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
+
+			Menu, Clipborad_Plus_Menu, Add
+			Menu, Clipborad_Plus_Menu, Add, % lang("Paste All") . "`t&`t(" . lang("tab") . ")", Sub_Menu_ClipboardPlus_PasteAll
+			Menu, Clipborad_Plus_Menu, Add, % lang("Delete All") . "`t& (" . lang("space") . ")", Sub_Menu_ClipboardPlus_DeleteAll
+			Menu, QuickEntry_Menu, Add, % lang("Clipboard Plus") . "`t&v", :Clipborad_Plus_Menu
 		}
-		if (clipboard_history_cnt > shortcut_cnt)
-			Menu, Clipborad_Plus_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
+		else {
+			; ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
+			empty_menu_str := lang("clipboard currently has no centent, please copy something...")
+			Menu, Clipborad_Plus_Menu, Add, % empty_menu_str, Sub_Nothing
+			Menu, QuickEntry_Menu, Disable, % empty_menu_str
+			Menu, QuickEntry_Menu, Add, % lang("Clipboard Plus") . "`t&v", :Clipborad_Plus_Menu
+		}
 
-		Menu, Clipborad_Plus_Menu, Add
-		Menu, Clipborad_Plus_Menu, Add, % lang("Paste All") . "`t&`t(" . lang("tab") . ")", Sub_Menu_ClipboardPlus_PasteAll
-		Menu, Clipborad_Plus_Menu, Add, % lang("Delete All"), Sub_Menu_ClipboardPlus_DeleteAll
 
-		Menu, Clipborad_Plus_Menu, Show
+		; Menu, Clipborad_Plus_Menu, Show
 	}
 
 	DeleteAllClips()
