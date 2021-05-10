@@ -171,7 +171,7 @@ class TrayMenu
 			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
 			,[]
 			,[lang("Open sux Folder"), "TrayMenu.OpenSuxFolder"]
-			,[lang("Edit Config File"), "TrayMenu.Edit_conf_yaml"]
+			,[lang("Edit Config File"), "TrayMenu.Edit_conf"]
 			,[]
 			,[lang("Disable"), "TrayMenu.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
 			,[lang("Restart sux"), "ReloadSux"]
@@ -260,14 +260,14 @@ class TrayMenu
 		ExitApp
 	}
 
-	Edit_conf_yaml()
+	Edit_conf()
 	{
-		OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
+		OpenFolderAndSelectFile(SuxCore.conf_user_json_file)
 	}
 
 	OpenSuxFolder()
 	{
-		; OpenFolderAndSelectFile(SuxCore.conf_user_yaml_file)
+		; OpenFolderAndSelectFile(SuxCore.conf_user_json_file)
 		OpenFolder(A_WorkingDir)
 	}
 

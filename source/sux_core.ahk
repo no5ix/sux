@@ -419,6 +419,7 @@ class SuxCore
 		global MULTI_HIT_DECORATOR
 		global TRIPLE_HIT_KEY_PREFIX
 		for ltrimed_key_name, original_key_2_action_map in MULTI_HIT_MAP {
+			m(ltrimed_key_name)
 			if (original_key_2_action_map.Count() == 1 && !original_key_2_action_map.HasKey(TRIPLE_HIT_KEY_PREFIX . ltrimed_key_name)) {
 				for key, action in original_key_2_action_map {
 					; m(key)
