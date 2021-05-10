@@ -24,6 +24,7 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 #Include %A_ScriptDir%\source\util.ahk
 #Include %A_ScriptDir%\source\snip_plus.ahk
 #Include %A_ScriptDir%\source\translation.ahk
+#Include %A_ScriptDir%\source\search_plus.ahk
 
 
 
@@ -32,7 +33,6 @@ Goto, SUB_CMD_WEB_SEARCH_FILE_END_LABEL
 
 class QuickEntry {
 
-	static cur_sel_search_title := ""
 	static command_menu_pos_offset := 0
 	static screenshot_menu_pos_offset := 0
 
@@ -52,124 +52,6 @@ class QuickEntry {
 
 		dec_cnt += 4  ; 中间还有1个截图的菜单和1个变换文本和1个翻译的菜单和1个分割线
 		QuickEntry.command_menu_pos_offset := dec_cnt
-	}
-
-	HandleSearch(search_str) {
-		search_title := QuickEntry.cur_sel_search_title
-		global WEB_SEARCH_TITLE_2_URL_MAP
-		if (search_str == "")
-			return
-		; 当填了 url 的时候
-		if (IsRawUrl(search_str)) {
-			if not IsStandardRawUrl(search_str)
-				search_str := StringJoin("", ["http://", search_str]*)
-			Run %search_str%
-			return
-		}
-		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
-			; m(_index "//" search_url)
-
-			if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
-				if !InStr(search_url, "REPLACEME") {
-					Run %search_url%
-					Continue
-				} 
-				; domain_url just like: "https://www.google.com"
-				; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-				RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-				if not IsStandardRawUrl(domain_url)
-					domain_url := StringJoin("", ["http://", domain_url]*)
-				Run %domain_url%
-				Continue
-			}
-
-
-			safe_query := UriEncode(Trim(search_str))
-			StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-			if not IsStandardRawUrl(search_final_url)
-				search_final_url := StringJoin("", ["http://", search_final_url]*)
-			Run, %search_final_url%
-
-			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
-		}
-	}
-
-
-	ShadowBorder(handle) {
-		DllCall("user32.dll\SetClassLongPtr", "ptr", handle, "int", -26, "ptr", DllCall("user32.dll\GetClassLongPtr", "ptr", handle, "int", -26, "uptr") | 0x20000)
-	}
-
-	FrameShadow(handle) {
-		DllCall("dwmapi\DwmIsCompositionEnabled","IntP",_ISENABLED) ; Get if DWM Manager is Enabled
-		if !_ISENABLED ; if DWM is not enabled, Make Basic Shadow
-			DllCall("SetClassLong","UInt",handle,"Int",-26,"Int",DllCall("GetClassLong","UInt",handle,"Int",-26)|0x20000)
-		else {
-			VarSetCapacity(_MARGINS,16)
-			NumPut(1,&_MARGINS,0,"UInt")
-			NumPut(1,&_MARGINS,4,"UInt")
-			NumPut(1,&_MARGINS,8,"UInt")
-			NumPut(1,&_MARGINS,12,"UInt")
-			DllCall("dwmapi\DwmSetWindowAttribute", "Ptr", handle, "UInt", 2, "Int*", 2, "UInt", 4)
-			DllCall("dwmapi\DwmExtendFrameIntoClientArea", "Ptr", handle, "Ptr", &_MARGINS)
-		}
-	}
-
-
-	search_gui_spawn() {
-		; search_gui_destroy()
-		; static hMyGUI =
-		; if (WinExist("ahk_id " hMyGUI)) {
-		; 	; ToolTipWithTimer(hmyGUI)
-		; 	WinActivate, ahk_id %hMyGUI%
-		; 	Return
-		; }
-		; curr_select_text := GetCurSelectedText()
-		; if (StrLen(curr_select_text) >= 60 || str)
-		; 	curr_select_text := ""
-		; global last_search_str
-		; final_search_str := curr_select_text ? curr_select_text : last_search_str
-
-		Gui, SearchGui_: New
-		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
-		Gui, SearchGui_: -SysMenu +ToolWindow -caption +hWndhMyGUI
-		Gui, SearchGui_: Margin, 0, 0
-
-		global THEME_CONF_REGISTER_MAP
-		cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
-		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
-
-		sux_bg_color := cur_theme_info["sux_bg_color"] 
-		Gui, SearchGui_: Color, %sux_bg_color%, %sux_bg_color%
-		if (cur_theme_info["sux_border_shadow_type"] == "modern_shadow_type") {
-			; QuickEntry.ShadowBorder(hMyGUI)
-		; else
-			QuickEntry.FrameShadow(hMyGUI)
-		}
-
-		Gui, SearchGui_: Font, s22, Segoe UI
-		; Gui, Font, s10, Segoe UI
-		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
-		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
-		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
-		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
-		global current_selected_text
-		pre_input_str := current_selected_text ? current_selected_text : QuickEntry.cur_sel_search_title
-		Gui, SearchGui_: Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
-		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
-		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
-
-		Gui, SearchGui_: Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
-
-		xMidScrn := GetMouseMonitorMidX()
-		xMidScrn -= cur_theme_info["sux_width"] / 2 
-		yScrnOffset := A_ScreenHeight / 4
-		Gui, SearchGui_: Show, x%xMidScrn% y%yScrnOffset%, myGUI
-
-		global auto_destory_quick_entry_gui_period
-		; gui_des := ObjBindMethod(this, "search_gui_destroy")  ; 不建议用这个, 这个不会顶掉原先search_gui_destroy的timer的
-		; SetTimer, % gui_des, %auto_destory_gui_period%
-		SetTimer, search_gui_destroy, %auto_destory_quick_entry_gui_period%
-		return
 	}
 
 	
@@ -256,19 +138,6 @@ class QuickEntry {
 		Menu, QuickEntry_Menu, Show
 	} 
 
-	HandleSearchGuiUserInput(gui_user_input)
-	{
-		trim_gui_user_input := Trim(gui_user_input)
-		if !trim_gui_user_input
-		{
-			return
-		}
-		else
-		{
-			QuickEntry.HandleSearch(trim_gui_user_input)
-		}
-	}
-
 
 	HandleCommand(command_title, cur_sel_text) 
 	{
@@ -332,19 +201,19 @@ Sub_Nothing:
 
 QuickEntry_Search_Menu_Click:
 	dec_cnt := current_selected_text ? 2 : 0
-	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
+	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	; if current_selected_text
-	; 	QuickEntry.HandleSearch(current_selected_text)
+	; 	SearchPlus.HandleSearch(current_selected_text)
 	; else
-		QuickEntry.search_gui_spawn()
+		SearchPlus.search_gui_spawn(current_selected_text)
 	Return
 
 QuickEntry_Search_Menu_MoreClick:
-	QuickEntry.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
+	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT.Count() + A_ThisMenuItemPos]
 	; if current_selected_text
-	; 	QuickEntry.HandleSearch(current_selected_text)
+	; 	SearchPlus.HandleSearch(current_selected_text)
 	; else
-		QuickEntry.search_gui_spawn()
+		SearchPlus.search_gui_spawn(current_selected_text)
 	Return
 
 
@@ -362,15 +231,9 @@ QuickEntry_Command_Menu_MoreClick:
 
 
 QuickEntry_ScreenShot_Suspend_Menu_Click:
-	; Sleep, 222
 	dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
 	if (A_ThisMenuItemPos - dec_cnt == 1) {
-		; ToolTipWithTimer("AreaScreenShot", 2222)
 		SnipPlus.AreaScreenShot()
-	}
-	else {
-		; ToolTipWithTimer("AreaScreenShotAndSuspend", 2222)
-		SnipPlus.AreaScreenShotAndSuspend()
 	}
 	Return
 
@@ -465,25 +328,6 @@ QuickEntry_Translation_Menu_Click:
 	Return
 
 
-;-------------------------------------------------------------------------------
-; GUI FUNCTIONS AND SUBROUTINES
-;-------------------------------------------------------------------------------
-
-search_gui_destroy() {
-	; Hide GUI
-	Gui, SearchGui_:Destroy
-}
-
-; Automatically triggered on Escape key:
-SearchGui_GuiEscape:
-	search_gui_destroy()
-	return
-
-Sub_HandleSearchGuiUserInput:
-	Gui, Submit, NoHide
-	search_gui_destroy()
-	QuickEntry.HandleSearchGuiUserInput(GuiUserInput)
-	return
 
 
 

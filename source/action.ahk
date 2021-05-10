@@ -46,11 +46,6 @@ StartSuxAhkWithWin() {
 }
 
 
-ScreenShotAndSuspend() {
-	SnipPlus.ShowAreaScreenShotAndSuspendMenu()
-}
-
-
 ReplaceText() {
 	
 	if (!GetCurSelectedText()) {
