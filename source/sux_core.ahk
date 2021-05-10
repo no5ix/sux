@@ -169,6 +169,7 @@ class SuxCore
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	static conf_user_yaml_file := "conf.user.yaml"
+	static conf_user_json_file := "conf.user.json"
 	static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"
 	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
 	static ver_ini_file := SuxCore._APP_DATA_DIR "ver/ver.ini"
@@ -185,6 +186,7 @@ class SuxCore
 	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
 	;
 	static UserYamlConfObj =
+	static UserJsonConfObj =
 	static version =
 	; callback
 	static OnClipboardChangeCmd := {}
@@ -297,7 +299,8 @@ class SuxCore
 	GetYamlCfg(keyStr, default="")
 	{
 		keyArray := StrSplit(keyStr, ".")
-		obj := SuxCore.UserYamlConfObj
+		; obj := SuxCore.UserYamlConfObj
+		obj := SuxCore.UserJsonConfObj
 		Loop, % keyArray.MaxIndex()-1
 		{
 			cur_key := keyArray[A_Index]
@@ -316,8 +319,10 @@ class SuxCore
 		if(!FileExist(this.conf_user_yaml_file)) {
 			FileCopy, % this.conf_default_yaml_file, % this.conf_user_yaml_file, 0
 		}
-		SuxCore.UserYamlConfObj := Yaml(SuxCore.conf_user_yaml_file)
-
+		; SuxCore.UserYamlConfObj := Yaml(SuxCore.conf_user_yaml_file)
+		
+		FileRead, conf_json_str, % SuxCore.conf_user_json_file
+		SuxCore.UserJsonConfObj := json2obj(conf_json_str)
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		
 		check_update_interval_hour := SuxCore.GetYamlCfg("check-update-interval-hour", 2)
@@ -328,7 +333,9 @@ class SuxCore
 		if(SuxCore.GetYamlCfg("hotkey.enable", 0))
 		{
 			For key, value in SuxCore.GetYamlCfg("hotkey.buildin", {})
+			{
 				register_hotkey(key, value, "")
+			}
 			For key, value in SuxCore.GetYamlCfg("hotkey.custom", {})
 				register_hotkey(key, value, "")
 		}
