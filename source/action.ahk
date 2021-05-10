@@ -447,71 +447,19 @@ DuplicateSelected() {
 }
 
 TransformSelectedText() {
-	st := GetCurSelectedText()
-	if (!st) {
-		; ToolTipWithTimer(lang("Nothing selected") . ".")
-		; Return
-		SelectCurrentWord()
-		st := GetCurSelectedText()
+	try {
+		Menu, TransformSelectedText_Menu, DeleteAll
 	}
-	static cur_i := 0
-	if (cur_i >= 3) {
-		cur_i := 0
-	}
-	if (cur_i == 0) {
-		NewStr := StrReplace(st, ["_", "-"], "")
-		if NewStr is upper
-		{
-			StringLower, st, st
-			cur_i := 1
-			return
-		}
-		else if NewStr is lower
-		{
-			StringUpper, st, st
-			cur_i := 1
-			return
-		}
+	temp_arr := ["ABCD", "abcd", "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd"]
+	for index, pattern in temp_arr {
+		if (pattern == "|")
+			Menu, TransformSelectedText_Menu, Add
 		else {
-			
+			menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_TAB, index, lang(pattern))
+			Menu, TransformSelectedText_Menu, Add, % menu_shortcut_str, TransformSelectedText_Menu_Click
 		}
-	}
-
-	; if (cur_i == 0) {
-	; 	; NewStr := StrReplace(st, "_", "")
-	; 	StringUpper, st, st
-	; }
-	; else 
-	if (cur_i == 1) {
-		st_arr := StrSplit(st, "_")
-		final_st =
-		for index, _st in st_arr {
-			StringUpper, _st, _st, T
-			final_st .= _st
-		}
-		st := final_st
-	}
-	; else if (cur_i == 2) {
-	; 	; NewStr := StrReplace(st, "_", "")
-	; 	StringLower, st, st
-	; }
-	; else if (cur_i == 3) {
-	; 	; NewStr := StrReplace(st, "_", "")
-	; 	StringUpper, st, st, T
-	; }
-	else if (cur_i == 2) {
-		st_arr := StrSplit(st, "_")
-		final_st =
-		for index, _st in st_arr {
-			StringUpper, _st, _st, T
-			final_st .= _st
-		}
-		st := final_st
-	}
-	cur_i += 1
-	PasteContent(st)
-	Sleep, 66
-	SelectCurrentWord()
+	}		
+	Menu, TransformSelectedText_Menu, Show
 }
 
 
@@ -520,12 +468,93 @@ SimulateClickDown() {
 	SetMouseDelay, 0
 	fake_lb_down = 1
 	Click Down
-	Hotkey, RButton, SUB_TILDE_RBUTTON
+	Hotkey, RButton, SUB_TEMP_RBUTTON
 	Hotkey, RButton, On
 }
 
 
-SUB_TILDE_RBUTTON:
+SUB_TEMP_RBUTTON:
 	ClickUpIfLbDown()
 	MouseClick, Right
+	Return
+
+
+TransformSelectedText_Menu_Click:
+	st := GetCurSelectedText()
+	if (!st) {
+		SelectCurrentWord()
+		st := GetCurSelectedText()
+	}
+	
+	delimiters_arr := ["_", "-"]
+	if (A_ThisMenuItemPos == 1) {
+		for _i, deli in delimiters_arr
+			st := StrReplace(st, deli, "")
+		StringUpper, st, st
+	}
+	else if (A_ThisMenuItemPos == 2) {
+		for _i, deli in delimiters_arr
+			st := StrReplace(st, deli, "")
+		StringLower, st, st
+	}
+	else if (A_ThisMenuItemPos >= 4 || A_ThisMenuItemPos <=15) {
+		if (Instr(st, "-") || Instr(st, "_")) {
+			st_arr := StrSplit(st, delimiters_arr)
+		}
+		else {
+			for _i, deli in delimiters_arr
+				temp_st := StrReplace(st, deli, "")
+			if temp_st is upper
+			{
+				ToolTipWithTimer(lang("Can not separate words") . ".")	
+				return
+			}
+			else if temp_st is lower
+			{
+				ToolTipWithTimer(lang("Can not separate words") . ".")	
+				return
+			}
+			else {
+				st_arr := []
+				last_start_i := 1
+				Loop, parse, st
+				{
+					if A_LoopField is upper
+					{
+						st_arr.Push(SubStr(st, last_start_i, A_Index-last_start_i))
+						last_start_i := A_Index
+					}
+				}
+				st_arr.Push(SubStr(st, last_start_i, StrLen(st)-last_start_i))
+			}
+		}
+
+		st := ""
+		deli_map := {1: "", 2: "", 4: "", 5: "", 7: "_", 8: "_", 9: "_", 10: "_", 12: "-", 13: "-", 14: "-", 15: "-"}
+
+		first_letter_lower_case_map := {5: "", 10: "", 15: ""}
+		title_case_map := {4: "", 5: "", 9: "", 10: "",  14: "", 15: ""}
+		lower_case_map := {2: "", 8: "", 13: ""}
+		upper_case_map := {1: "", 7: "", 12: ""}
+
+		cur_delimiter := deli_map[A_ThisMenuItemPos]
+		for index, _single_w in st_arr {
+			if (st != "")
+				st .= cur_delimiter
+			if (index == 1 && first_letter_lower_case_map.HasKey(A_ThisMenuItemPos))
+				StringLower, _single_w, _single_w
+			else if (title_case_map.HasKey(A_ThisMenuItemPos))
+				StringUpper, _single_w, _single_w, T
+			else if (lower_case_map.HasKey(A_ThisMenuItemPos))
+				StringLower, _single_w, _single_w
+			else if (upper_case_map.HasKey(A_ThisMenuItemPos))
+				StringUpper, _single_w, _single_w
+
+			st .= _single_w
+		}
+	}
+
+	PasteContent(st)
+	Sleep, 66
+	SelectCurrentWord()
 	Return

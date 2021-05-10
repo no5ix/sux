@@ -47,8 +47,18 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 快捷搜索search-plus
 
+
+
 大多数时候其实都是 `caps+q`然后空格搜东西, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173722.png)
+
+为什么`caps+q`出来的不是搜索框?
+
+原来就是那样的, 后来我给一些低端用户(运营岗这种用户)用, 发现他们记不住key.
+比如百度是`bd`, 谷歌是`gg`这种对吧?
+后来我就做了个这种快捷菜单, 也挺方便的吧?是支持`double alt/ctrl`啥的
+但是`alt`会丢失焦点, 所以最建议的是`double ctrl/shift`.
+所有的菜单都是可以选中某段文字然后直接查询的
 
 
 # 类似macos的触发角hot-corner
@@ -254,6 +264,7 @@ hot-corner:
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
 - 看还有哪些编辑器里常用的操作如转为大写这类的可以做, 做成菜单
+- bug: 历史剪切板有些历史的开头莫名多出一个下划线
 <!-- - donate width
 - Capslock + Backspace（删除光标所在行所有文字）
 - Capslock + Enter（无论光标是否在行末都能新起一个换行而不截断原句子） -->
