@@ -117,7 +117,7 @@ on_get_remote_ver_data_ini_ready() {
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
-			MsgBox, 4,, % lang("There is a new version sux, would you like to check it out?")
+			MsgBox, 0x44, % SuxCore.ProgramName, % lang("There is a new version sux, would you like to check it out?")
 			IfMsgBox Yes
 			{
 				run, % SuxCore.remote_download_html
@@ -125,7 +125,7 @@ on_get_remote_ver_data_ini_ready() {
 		}
 		else {
 			if (check_update_caller == CHECK_UPDATE_CALLER_TRAY)  ;; check_update_from_tray
-				MsgBox,,, % lang("This is the lastest version.") ,6
+				MsgBox,0x40,% SuxCore.ProgramName, % lang("This is the lastest version.") ,6
 		}
 	}
 	else {
@@ -163,7 +163,7 @@ handle_remote_ver_req_failed() {
 			msg := msg lang("Maybe need a proxy.") "`n"
 		; }
 		msg := msg lang("Do you want to open it with your browser?")
-		MsgBox,4,, % msg ,8
+		MsgBox,0x14,% SuxCore.ProgramName, % msg ,8
 		IfMsgBox Yes
 		{
 			run, % SuxCore.remote_download_html

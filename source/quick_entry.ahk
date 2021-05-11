@@ -164,7 +164,7 @@ class QuickEntry {
 				run, %everything_exe_path%
 				WinWaitActive, ahk_exe Everything.exe, , 2.222
 				if ErrorLevel
-					MsgBox,,, please install Everything and set its path in conf.user.yaml
+					MsgBox,0x10,% SuxCore.ProgramName, % lang("please install Everything and set its path in conf.user.json") . " ."
 				else if (cur_sel_text) {
 					; Send, {Blind}{Text}%cur_sel_text%
 					PasteContent(cur_sel_text)

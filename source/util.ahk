@@ -7,9 +7,9 @@
 
 m(str := "")
 {
-    if(IsObject(str)) {
-        str := "[Object]`n" Yaml_dump(str)
-    }
+    ; if(IsObject(str)) {
+    ;     str := "[Object]`n" Yaml_dump(str)
+    ; }
     MsgBox, , , % str
 }
 
@@ -529,17 +529,18 @@ run(command, args*)
         ; m(res)
     }
     Else {
-        if(RegExMatch(command, "^https?://")) {
-            brw := SuxCore.Browser
-            if(brw=""||brw="default")
-                run, %command%
-            Else if(brw == "microsoft-edge:")
-                run, %brw%%command%
-            Else
-                run, %brw% %command%
-            Return
-        }
-        else if(RegExMatch(command, "i)send (.*)", sd)) {
+        ; if(RegExMatch(command, "^https?://")) {
+        ;     brw := SuxCore.Browser
+        ;     if(brw=""||brw="default")
+        ;         run, %command%
+        ;     Else if(brw == "microsoft-edge:")
+        ;         run, %brw%%command%
+        ;     Else
+        ;         run, %brw% %command%
+        ;     Return
+        ; }
+        ; else 
+        if(RegExMatch(command, "i)send (.*)", sd)) {
             send, % sd1
             return
         }
@@ -547,10 +548,10 @@ run(command, args*)
             m(msg1)
             return
         }
-        else if(RegExMatch(command, "i)edit:\s*(.*)", f)) {
-            SuxCore.Edit(f1)
-            return
-        }
+        ; else if(RegExMatch(command, "i)edit:\s*(.*)", f)) {
+        ;     SuxCore.Edit(f1)
+        ;     return
+        ; }
         Try
         {
             if (command.Length() > 1) {
@@ -576,7 +577,7 @@ run(command, args*)
                     return %func_name%(command)
                 }
                 else
-                    MsgBox, 0x30, % SuxCore.ProgramName, % "Can't run command """ command """"
+                    MsgBox, 0x30,, % "Can't run command """ command """"
             ; }
         }
     }

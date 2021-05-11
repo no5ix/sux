@@ -69,6 +69,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Zhihu": "知乎"
     ,"Douban": "豆瓣"
     ,"Youku": "优酷"
+    ,"please install Everything and set its path in conf.user.json": "请安装Everything并且在conf.user.json里配置它的路径"
     ,"Feedback": "反馈"}
 
 
