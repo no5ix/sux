@@ -244,74 +244,65 @@ DeleteCurrentLine() {
 	Send, {BackSpace}
 }
 
-SmartSelectWithoutSymbol() {
+; SmartSelectWithSymbol() {
+; 	symbol_map := {"'": "'", """": """", "(": ")", "[": "]", "{": "}", "<": ">"}
+; 	max_step := 888
+; 	cur_step := 0
+; 	left_symbol := ""
+; 	break_loop := 0
 
-}
+; 	walk_more_flag := 0
 
-SmartSelectWithSymbol() {
-	symbol_map := {"'": "'", """": """", "(": ")", "[": "]", "{": "}", "<": ">"}
-	max_step := 888
-	cur_step := 0
-	left_symbol := ""
-	break_loop := 0
+; 	Loop
+; 	{
+; 		cur_step += 1
+; 		if (cur_step > max_step) {
+; 			return
+; 		}
+; 		Send, +^{Left}
+; 		; Sleep, 66
+; 		st := GetCurSelectedText()
 
-	walk_more_flag := 0
+; 		for k, v in symbol_map {
+; 			if (Instr(st, k)) {
+; 				left_symbol := k
+; 				Send, {Left}
 
-	Loop
-	{
-		cur_step += 1
-		if (cur_step > max_step) {
-			return
-		}
-		Send, +^{Left}
-		; Sleep, 66
-		st := GetCurSelectedText()
+; 				Send, +{Right}
+; 				cur_step -= 1
+; 				if (GetCurSelectedText() != k) {
+; 					walk_more_flag := 1
+; 					Send, ^{Right}
+; 				}
+; 				while (cur_step > 0) {
+; 					Send, +^{Right}
+; 					cur_step -= 1
+; 				}
+; 				break_loop := 1
+; 				break
+; 			}
+; 		}
+; 		if (break_loop)
+; 			break
+; 	}
 
-		for k, v in symbol_map {
-			if (Instr(st, k)) {
-				left_symbol := k
-				Send, {Left}
-
-				Send, +{Right}
-				cur_step -= 1
-				if (GetCurSelectedText() != k) {
-					walk_more_flag := 1
-					Send, ^{Right}
-				}
-				while (cur_step > 0) {
-					Send, +^{Right}
-					cur_step -= 1
-				}
-				break_loop := 1
-				break
-			}
-		}
-		if (break_loop)
-			break
-	}
-
-	right_symbol := symbol_map[left_symbol]
-	Loop
-	{
-		cur_step += 1
-		if (cur_step > max_step) {
-			return
-		}
-		Send, +^{Right}
-		; Sleep, 66
-		st := GetCurSelectedText()
-		if (Instr(st, right_symbol,,2)) {
-			if (walk_more_flag)
-				Send, +^{Left}
-			break
-		}
-	}
-
-}
-
-DuplicateSelected() {
-	
-}
+; 	right_symbol := symbol_map[left_symbol]
+; 	Loop
+; 	{
+; 		cur_step += 1
+; 		if (cur_step > max_step) {
+; 			return
+; 		}
+; 		Send, +^{Right}
+; 		; Sleep, 66
+; 		st := GetCurSelectedText()
+; 		if (Instr(st, right_symbol,,2)) {
+; 			if (walk_more_flag)
+; 				Send, +^{Left}
+; 			break
+; 		}
+; 	}
+; }
 
 IndentCurrentLine() {
 	Send, {Home}

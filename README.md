@@ -272,12 +272,9 @@ sux的这个功能就彻底解决了这个问题, 不在烦恼.
     - InsertLineBelow
     - InsertLineAbove
     - DeleteCurrentLine
-    - SmartSelectWithoutSymbol
-    - SmartSelectWithSymbol
-    - DuplicateSelected
     - IndentCurrentLine
     - SimulateClickDown
-- 热键类型: 需要加个"send"来标记要发送的热键操作, 比如要发送`shift+下` 就是`send +{Down}`, 下方是对照表
+- 需要发送的热键操作类型: 需要加个"send"来标记要发送的热键操作, 比如要发送`shift+下` 就是`send +{Down}`, 下方是对照表
     - 查看 [中文详细文档](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
     - see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
     - `win: "#" `
@@ -293,12 +290,15 @@ sux的这个功能就彻底解决了这个问题, 不在烦恼.
     - `rshift: ">+"`
     - `lalt: "<!" `
     - `ralt: ">!"`
-    - `lbutton:  "左键单击" `
-    - `rbutton:  "右键单击" `
-    - `mbutton: "中键单击"`
-    - `wheelup: "滚轮上滑"`
-    - `wheeldown: "滚轮下滑"`
-    - `hover: "悬停" `
+- 快捷键定义对照表:
+    - `lbutton:  左键单击 `
+    - `rbutton:  右键单击 `
+    - `mbutton: 中键单击`
+    - `wheelup: 滚轮上滑`
+    - `wheeldown: 滚轮下滑`
+    - `hover: 悬停 `
+    - `doublehit_: 双击 `, 比如`doublehit_alt`表示双击
+    - `triplehit_: 三击 `
 
 
 # CMDs
