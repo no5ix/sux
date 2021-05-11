@@ -175,7 +175,7 @@ class TrayMenu
 		}
 		else {
 			check_update_menu_name := lang("Check Update")
-			check_update_menu_func := "SuxCore.check_update_from_tray"
+			check_update_menu_func := "check_update_from_tray"
 		}
 		lang := SuxCore.GetIniConfig(INI_LANG, SuxCore.Default_lang)
 		cur_theme := SuxCore.GetIniConfig(INI_THEME, SuxCore.Default_theme)

@@ -58,10 +58,23 @@ lang(key)
 }
 
 
+check_update_from_launch()
+{
+	global CHECK_UPDATE_CALLER_LAUNCH
+	CheckUpdate(CHECK_UPDATE_CALLER_LAUNCH)
+
+}
+
 check_update_from_auto_check()
 {
 	global CHECK_UPDATE_CALLER_AUTO_CHECK
 	CheckUpdate(CHECK_UPDATE_CALLER_AUTO_CHECK)
+}
+
+check_update_from_tray()
+{
+	global CHECK_UPDATE_CALLER_TRAY
+	CheckUpdate(CHECK_UPDATE_CALLER_TRAY)
 }
 
 CheckUpdate(from_launch=0)
@@ -221,14 +234,12 @@ class SuxCore
 		if !FileExist(SuxCore._APP_DATA_DIR)  
         	FileCreateDir, % SuxCore._APP_DATA_DIR
 
+		SuxCore.version := SuxCore.get_local_ver()
+
 		this.HandleConfParse()
 
 		; register onexit sub
 		OnExit, Sub_OnExit
-
-		SuxCore.version := SuxCore.get_local_ver()
-		global CHECK_UPDATE_CALLER_LAUNCH
-		CheckUpdate(CHECK_UPDATE_CALLER_LAUNCH)
 
 		ClipboardPlus.init()
 		TrayMenu.init()
@@ -241,12 +252,6 @@ class SuxCore
 	OnExit(func)
 	{
 		this.OnExitCmd.Insert(func)
-	}
-
-	check_update_from_tray()
-	{
-		global CHECK_UPDATE_CALLER_TRAY
-		CheckUpdate(CHECK_UPDATE_CALLER_TRAY)
 	}
 
 	get_remote_file(path)
@@ -325,11 +330,15 @@ class SuxCore
 		SuxCore.UserJsonConfObj := json2obj(conf_json_str)
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 		
-		check_update_interval_hour := SuxCore.GetSuxCfg("check-update-interval-hour", 2)
-		check_update_millisec := check_update_interval_hour * 3600 * 1000
-		; check_update_millisec := 6666
-		SetTimer, check_update_from_auto_check, % check_update_millisec
+		; check_update_interval_hour := SuxCore.GetSuxCfg("check-update-interval-hour", 2)
+		; check_update_millisec := check_update_interval_hour * 3600 * 1000
+		; SetTimer, check_update_from_auto_check, % check_update_millisec
 
+		if(SuxCore.GetSuxCfg("check-update-on-startup", 1)) {
+			check_update_millisec := -6666
+			SetTimer, check_update_from_launch, % check_update_millisec
+		}
+		
 		if(SuxCore.GetSuxCfg("hotkey.enable", 0))
 		{
 			if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) == 0) {
