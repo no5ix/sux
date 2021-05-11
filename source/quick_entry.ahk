@@ -50,12 +50,13 @@ class QuickEntry {
 
 		QuickEntry.screenshot_menu_pos_offset := dec_cnt
 
-		dec_cnt += 1  ; 中间还有1个截图/贴图的菜单
+		dec_cnt += 1  ; 中间还有1个截图的菜单
+		dec_cnt += 1  ; 中间还有1个贴图的菜单
+		dec_cnt += 1  ; 1个分割线
 		dec_cnt += 1  ; 1个翻译的菜单
 		dec_cnt += 1  ; 1个替换文本的菜单
 		dec_cnt += 1  ; 1个变换文本
 		dec_cnt += 1  ; 1个历史剪切板的菜单
-		dec_cnt += 1  ; 1个分割线
 		QuickEntry.command_menu_pos_offset := dec_cnt
 	}
 
@@ -109,7 +110,9 @@ class QuickEntry {
 
 		;;;;;; ScreenShot
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
-		Menu, QuickEntry_Menu, Add, % lang("ScreenShot && Suspend") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("SuspendScreenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add  ;; 加个分割线
 		Menu, QuickEntry_Menu, Add, % lang("Translation") . "`t&f", QuickEntry_Translation_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
 
@@ -243,6 +246,9 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 	dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
 	if (A_ThisMenuItemPos - dec_cnt == 1) {
 		SnipPlus.AreaScreenShot()
+	}
+	else {
+		SnipPlus.AreaScreenShotAndSuspend()
 	}
 	Return
 

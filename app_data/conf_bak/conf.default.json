@@ -159,7 +159,7 @@
   "hotkey": {
     "enable": 1,
     "buildin": {
-      "alt_space": "QuickEntry.ShowQuickEntryMenu",
+      "shift_space": "QuickEntry.ShowQuickEntryMenu",
       "ctrl_8": "SimulateClickDown",
       "ctrl_shift_alt_m": "MaxMinWindow",
       "capslock_w": "SelectCurrentWord",

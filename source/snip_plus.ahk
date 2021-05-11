@@ -44,13 +44,18 @@ class SnipPlus
 
 	AreaScreenShot()
 	{
-		SnipPlus.old_clipboard_content := ClipboardAll
-		Clipboard := ""
-
 		prscrn_param = %A_ScriptDir%\app_data\prscrn.dll\PrScrn
 		; prscrn_param = %A_ScriptDir%\app_data\TXGYMailCamera.dll\CameraWindow
 		; prscrn_param = %A_ScriptDir%\app_data\PrScrn2.dll\PrScrn
 		DllCall(prscrn_param)
+	}
+
+	AreaScreenShotAndSuspend(with_menu=0)
+	{
+		SnipPlus.old_clipboard_content := ClipboardAll
+		Clipboard := ""
+
+		SnipPlus.AreaScreenShot()
 
 		hBM := SnipPlus.CB_hBMP_Get()  
 		SnipPlus.temp_snip_img_index += 1
@@ -63,16 +68,16 @@ class SnipPlus
 			DllCall( "DeleteObject", "Ptr",hBM )
 		}       
 		if (FileExist(img_path)) {
-			; ToolTipWithTimer(lang("Nothing snipped") . ".")
-			; ToolTipWithTimer("Save snipped pic failed.")
-			; Return
-		; }
-		; else {
-			try {
-				Menu, SnipPlus_Menu, DeleteAll
+			if (with_menu) {
+				try {
+					Menu, SnipPlus_Menu, DeleteAll
+				}
+				Menu, SnipPlus_Menu, Add, % lang("Suspend"), Sub_SnipPlus_Menu_clik
+				Menu, SnipPlus_Menu, Show
 			}
-			Menu, SnipPlus_Menu, Add, % lang("Suspend"), Sub_SnipPlus_Menu_clik
-			Menu, SnipPlus_Menu, Show
+			else {
+				SnipPlus.SuspendLastScreenShot()
+			}
 		}
 		else
 		{
@@ -87,7 +92,7 @@ class SnipPlus
 
 	}
 
-	AreaScreenShotAndSuspend()
+	SuspendLastScreenShot()
 	{
 		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
@@ -201,7 +206,7 @@ class SnipPlus
 
 
 Sub_SnipPlus_Menu_clik:
-	SnipPlus.AreaScreenShotAndSuspend()
+	SnipPlus.SuspendLastScreenShot()
 Return
 
 SUB_CLICK_SNIP_IMG:
