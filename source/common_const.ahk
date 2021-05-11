@@ -44,7 +44,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Suspend": "悬浮"
     ,"ScreenShot && Suspend": "截图 && 贴图"
     ,"ScreenShot": "截图"
-    ,"SuspendScreenshot": "贴图"
+    ,"Suspend Screenshot": "贴图"
     ,"Paste All": "粘贴所有"
     ,"Delete All": "删除所有"
     ,"Can not separate words": "无法分割单词"
