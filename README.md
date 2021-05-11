@@ -63,10 +63,15 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 后来我就做了个这种快捷菜单, 用过几次熟悉快捷键之后也十分迅捷方便, 省去了每次都要输入什么`gg`/`bd`的烦恼
 
 
+# 托盘菜单
+
+直接鼠标点击sux托盘图标可以快速禁用sux
+
+
 # 禁用win10系统的自动更新
 
-win10的自动更新经常会搞得电脑蓝屏或者各种崩溃或者长时间占用电脑, 十分恼人. win10的自动更新用win10本身自带的机制是无法禁止的, 即使关闭了win10的 `Windows Update`服务, 他隔一段时间后也会自动开启.
-sux的这个功能就彻底解决了这个问题, 不在烦恼.
+win10的自动更新经常会搞得电脑蓝屏或者各种崩溃或者长时间占用电脑, 十分恼人. win10的自动更新用win10本身自带的机制是无法禁止的, 即使关闭了win10的 `Windows Update`服务, 他隔一段时间后也会自动开启.  
+sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 
 # 窗口移动器-永远保持新窗口在鼠标所在的显示器打开
@@ -301,11 +306,12 @@ sux的这个功能就彻底解决了这个问题, 不在烦恼.
     - `triplehit_: 三击 `
 
 
-# CMDs
+# CMDs指令
 
+* `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
+* `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
+* `Everything` : 打开Everything, 如果已经选中了文字, 则直接用everything搜索此文字
 * `sux` : sux official site
-* `cmd` : open a command prompt window on the current explorer path 
-* `git` : open a git bash window on the current explorer path 
 
 
 # Features

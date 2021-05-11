@@ -179,7 +179,7 @@ class QuickEntry {
 			{
 				if (use_cur_path) {
 					Send, !d
-					final_cmd_str := StringJoin(" ", COMMAND_TITLE_2_ACTION_MAP[command_title]*)
+					final_cmd_str := StringJoin(" ", COMMAND_TITLE_2_ACTION_MAP[command_title])
 					; Send, {Blind}{Text}%final_cmd_str%
 					PasteContent(final_cmd_str)
 					Send, {Enter}
