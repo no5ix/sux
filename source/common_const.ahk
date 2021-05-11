@@ -16,6 +16,8 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"More Command": "更多指令"
     ,"Do you want to open it with your browser?": "是否要用浏览器打开sux官网查看?"
     ,"Double hit Alt to open search box, hit Esc to close.": "双击Alt打开搜索框, 按Esc来关闭"
+    ,"sux limit mode auto disable not in full screen mode": "sux限制模式在非全屏时自动关闭"
+    ,"sux limit mode auto enable in full screen mode": "sux限制模式在全屏时自动开启"
     ,"Light": "明"
     ,"Dark": "暗"
     ,"space": "空格"

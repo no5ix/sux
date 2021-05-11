@@ -161,6 +161,46 @@ handle_remote_ver_req_failed() {
 
 
 
+ShellMessage( wParam,lParam ) {
+  	If ( wParam = 1 ) ;  HSHELL_WINDOWCREATED := 1
+	{
+		;; 让打开的窗口永远和鼠标在同一个屏幕
+		Sleep, 66
+
+		WinGetTitle, cur_title, ahk_id %lParam%
+	   	WinGet, maximized, MinMax, %cur_title%
+		if (maximized == -1)
+			Return
+
+		WinGetPos, cur_window_x, cur_window_y, cur_window_width, cur_window_height, %cur_title%
+		
+		if (IsMouseActiveWindowAtSameMonitor(cur_window_x)) {
+			Return
+		}
+		MouseGetPos, mouse_X, mouse_Y   ; get mouse location 
+
+		; WinMinimize, %cur_title%
+
+		; -1: 窗口处于最小化状态(使用 WinRestore 可以让它还原).
+		; 1: 窗口处于最大化状态(使用 WinRestore 可以让它还原).
+		; 0: 窗口既不处于最小化状态也不处于最大化状态.
+		if (maximized = 1)  ; 窗口处于最大化状态(使用 WinRestore 可以让它还原).
+		{ 
+			
+			WinRestore, %cur_title%
+			WinMove, %cur_title%, , %mouse_X%, %mouse_Y% 
+			WinMaximize, %cur_title%
+		}
+		else if (maximized = 0)  ; 窗口既不处于最小化状态也不处于最大化状态.
+		{
+			mid_x := GetMouseMonitorMidX()
+			mid_x -= cur_window_width / 2
+			yScrnOffset := 222
+			WinMove, %cur_title%, , %mid_x%, %yScrnOffset% 
+		}
+	}
+}
+
 
 class SuxCore
 {
@@ -206,13 +246,22 @@ class SuxCore
 	init()
 	{
 		SetBatchLines, -1   ; maximize script speed!
-		SetWinDelay, -1
+		SetWinDelay, 8
 		CoordMode, Mouse, Screen
 		CoordMode, ToolTip, Screen
 		CoordMode, Menu, Screen
 		
 		; SetDefaultMouseSpeed, 0 ; Move the mouse instantly.
 		; SetMouseDelay, 0
+
+		Process, Priority,, High
+		Gui +LastFound	
+		hWnd := WinExist()
+		DllCall( "RegisterShellHookWindow", UInt,hWnd )
+		MsgNum := DllCall( "RegisterWindowMessage", Str,"SHELLHOOK" )
+		OnMessage( MsgNum, "ShellMessage" )
+
+		;;;;;;;;;;;;;;;;;;;;
 
 		if !FileExist(SuxCore._APP_DATA_DIR)  
         	FileCreateDir, % SuxCore._APP_DATA_DIR

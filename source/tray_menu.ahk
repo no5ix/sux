@@ -453,13 +453,13 @@ HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
 			Return
 		}
 		if (LIMIT_MODE == 0) {
-			ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode."))
+			ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode") . ".", 1111)
 			LIMIT_MODE := 1
 		}
 	}
 	else {
 		if (LIMIT_MODE == 1) {
-			ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode."))
+			ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode") . ".", 1111)
 			LIMIT_MODE := 0
 		}
 	}
