@@ -17,13 +17,15 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 - 历史剪切板
 - 截图
 - 贴图
-- 类似listary/alfred/wox的快捷搜索: `caps+空格`
+- 类似listary/alfred/wox的快捷搜索: `shift+空格`
 - 类似macos的触发角
 - 屏幕边缘触发器
-- 类似vim的全局自定义快捷键
-- 文字替换器
+- 全局自定义快捷键实现各种操作
+- 文本替换器
+- 文本变换器
 - 自定义主题
-- 可自定义的yaml配置
+- 快捷指令
+- 可自定义的json配置
 - blabla...
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
@@ -47,16 +49,24 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 快捷搜索search-plus
 
-大多数时候其实都是 `caps+空格` 然后空格搜东西, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
+大多数时候其实都是 `shift+空格` 然后空格搜东西, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173722.png)
 
-为什么`caps+空格` 出来的不是搜索框?
+也可以先选中某段文字然后`shift+空格`然后直接查询的.
 
-原来就是那样的, 后来我给一些低端用户(运营岗这种用户)用, 发现他们记不住key.
+所有的默认快捷键都是可以改的, 在conf.user.json里找到`QuickEntry.ShowQuickEntryMenu`改, 改成`capslock_q`或者`alt_space`或者`doublehit_ctrl`或者`triplehit_shift`或者其他的任何你喜欢的快捷键都行, 不过不建议`doublehit_alt`, 因为`alt`会丢失焦点.
+
+为什么`shift+空格` 出来的不是搜索框?
+
+原来是那样的, 后来我给一些用户(比如运营岗用户)用, 发现他们记不住key.
 比如百度是`bd`, 谷歌是`gg`这种对吧?
-后来我就做了个这种快捷菜单, 也挺方便的吧?是支持`double alt/ctrl`啥的
-但是`alt`会丢失焦点, 所以最建议的是`double ctrl/shift`.
-所有的菜单都是可以选中某段文字然后直接查询的
+后来我就做了个这种快捷菜单, 用过几次熟悉快捷键之后也十分迅捷方便, 省去了每次都要输入什么`gg`/`bd`的烦恼
+
+
+# 禁用win10系统的自动更新
+
+win10的自动更新经常会搞得电脑蓝屏或者各种崩溃或者长时间占用电脑, 十分恼人. win10的自动更新用win10本身自带的机制是无法禁止的, 即使关闭了win10的 `Windows Update`服务, 他隔一段时间后也会自动开启.
+sux的这个功能就彻底解决了这个问题, 不在烦恼.
 
 
 # 窗口移动器-永远保持新窗口在鼠标所在的显示器打开
@@ -75,30 +85,36 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 - 左下: 模拟按下`win`键
 - 右下: 模拟按下`alt+tab`
 
-这些是默认动作, 你都可以改动自定义配置`conf.user.yaml`来更改
-```yaml
-hot-corner: 
-  action: 
-    LeftTopCorner: 
-      hover: JumpToPrevTab
-      # MButton: 'send {volume_mute}'
-    RightTopCorner: 
-      hover: JumpToNextTab
-    LeftBottomCorner: 
-      hover: 'send {LWin}'
-    RightBottomCorner: 
-      hover: GotoPreApp
+这些是默认动作, 你都可以改动自定义配置`conf.user.json`来更改
+``` json
+  "hot-corner": {
+    "action": {
+      "LeftTopCorner": {
+        "hover": "JumpToPrevTab"
+      },
+      "RightTopCorner": {
+        "hover": "JumpToNextTab"
+      },
+      "LeftBottomCorner": {
+        "hover": "send {LWin}"
+      },
+      "RightBottomCorner": {
+        "hover": "GotoPreApp"
+      }
+    }
+  },
 ```
 
 
 # 历史剪切板clipboard-plus
 
-这个历史粘贴板目前是不支持图片和其他的二进制文件
+这个历史粘贴板目前是不支持图片和其他的二进制文件, 支持一键粘贴所有历史剪切板记录和清空所有, 有时候需要去各种地方去一次性复制很多东西,  
+然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
 
 
 # 截图和贴图
 
-`caps+空格` 弹出菜单之后, 然后再按`tab`是截图
+`shift+空格` 弹出菜单之后, 然后再按`tab`是截图, 按`s`是贴图
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173705.png)
 
@@ -116,35 +132,101 @@ hot-corner:
 - 放到屏幕右边缘, 然后按鼠标中键则可以把当前窗口移到屏幕右边
 
 
-# capslock增强器-类似vim的全局自定义快捷键capslock_plus
+# 快捷键完全自定义
 
-这个工具其实很重磅的功能是capslock_plus, 实现文本输入增强, 你可以通过 Capslock 键配合以下辅助按键实现大部分文本操作需求，不再需要在鼠标和键盘间来回切换。
+这个工具其实很重磅的功能是 `hotkey`
+- 实现文本输入增强, 你可以通过 Capslock 键配合以下辅助按键实现大部分文本操作需求，不再需要在鼠标和键盘间来回切换
+- 也可以自定义各种快捷键来触发各种动作, 比如为笔记本的触摸板的`三指点击`设定为快捷键`ctrl_8`, 然后就可以模拟鼠标按下不放的操作了, 达到类似mac的`三指拖动`的效果
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173732.png)
 
 可以类似vim一样的, 各种光标移动都十分方便, 比如
 - `caps+e`是上
-- `caps+hjkl` 也可以来上下左右的
-- `+d`是下
-- `+s`是左, 比如`caps+alt+s`就是往左选中哈
-- `+f`是右
-- `+w`是选择当前单词
-- `+逗号`是光标移动到最左边
-- `+句号`是光标移动到最右边
+- `caps+h/j/k/l` 也可以来上下左右的
+- `caps+d`是下
+- `caps+s`是左, 比如`caps+alt+s`就是往左选中哈
+- `caps+f`是右
+- `caps+w`是选择当前单词
+- `caps+c`是模拟`ctrl+c`
+- `caps+r`是模拟`ctrl+y`
+- `caps+v`是模拟`shift+insert`(终端爱好者的福音)
+- `caps+逗号`是光标移动到最左边
+- `caps+句号`是光标移动到最右边
 - `caps+i`就是往左跳一个单词
-- `+o`就是往右跳一个单词
+- `caps+o`就是往右跳一个单词
+- `caps+tab`就是整行缩进, 不管光标在当前行的任何地方
 - `caps+alt+i`就是往左选中一个单词
 - `caps+alt+o`就是往右选中一个单词
 - `caps+backspace` : 删除光标所在行所有文字
 - `capslock+enter` : 无论光标是否在行末都能新起一个换行而不截断原句子
+- `capslock+alt+enter` : 无论光标是否在行末都能在上面新起一行而不截断原句子
 - 加`alt`就是选中, 不加就是移动
+- ...
+
+默认配置概览: 
+
+``` json
+  "hotkey": {
+    "enable": 1,
+    "buildin": {
+      "shift_space": "QuickEntry.ShowQuickEntryMenu",
+      "ctrl_8": "SimulateClickDown",
+      "ctrl_shift_alt_m": "MaxMinWindow",
+      "capslock_w": "SelectCurrentWord",
+      "capslock_alt_w": "SelectCurrentLine",
+      "capslock_`": "SwitchCapsState",
+      "capslock_tab": "IndentCurrentLine",
+      "capslock_v": "send +{Ins}",
+      "capslock_alt_v": "send +6",
+      "capslock_r": "send ^y",
+      "capslock_enter": "InsertLineBelow",
+      "capslock_alt_enter": "InsertLineAbove",
+      "capslock_backspace": "DeleteCurrentLine",
+      "capslock_c": "send ^c",
+      "capslock_e": "send {Up}",
+      "capslock_alt_e": "send +{Up}",
+      "capslock_s": "send {Left}",
+      "capslock_alt_s": "send +{Left}",
+      "capslock_f": "send {Right}",
+      "capslock_alt_f": "send +{Right}",
+      "capslock_d": "send {Down}",
+      "capslock_alt_d": "send +{Down}",
+      "capslock_y": "send +8",
+      "capslock_alt_y": "send +5",
+      "capslock_u": "send +1",
+      "capslock_alt_u": "send +2",
+      "capslock_h": "send {Left}",
+      "capslock_alt_h": "send +{Left}",
+      "capslock_j": "send {Down}",
+      "capslock_alt_j": "send +{Down}",
+      "capslock_k": "send {Up}",
+      "capslock_alt_k": "send +{Up}",
+      "capslock_l": "send {Right}",
+      "capslock_alt_l": "send +{Right}"
+    },
+    "custom": {}
+  }
+```
 
 
 # 文字替换器replace-text
 
 比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
+默认配置如下: 
 
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173736.png)
+``` json
+  "replace-text": {
+    "enable": 1,
+    "buildin": {
+      "h/": "http://",
+      "hs/": "https://",
+      "qc@": "@qq.com",
+      "gc@": "@gmail.com",
+      "16@": "@163.com"
+    },
+    "custom": {}
+  },
+```  
 
 
 # 自定义配置
@@ -155,25 +237,68 @@ hot-corner:
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173654.png)
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173500.png)
 
-- see [Chinese detail](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
-- see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
-- `win: "#" `
-- `ctrl: "^" `
-- `shift: "+" `
-- `alt: "!"`
-- `hover: "hover" `
-- `capslock: "CapsLock"`
-- `lwin: "<#" `
-- `rwin: ">#"`
-- `lctrl: "<^" `
-- `rctrl: ">^"`
-- `lshift: "<+" `
-- `rshift: ">+"`
-- `lalt: "<!" `
-- `ralt: ">!"`
-- `lbutton:  "LButton" `
-- `rbutton:  "RButton" `
-- `mbutton: "MButton"`
+配置编写规则: 
+- action类型: 直接从下方的所有action里选即可
+    - StartSuxAhkWithWin
+    - MoveWindowToLeftSide
+    - MoveWindowToRightSide
+    - OpenFileExplorer
+    - OpenActionCenter
+    - CloseCurrentWindow
+    - GoTop
+    - GoBottom
+    - GoBack
+    - GoForward
+    - LockPc
+    - OpenTaskView
+    - VolumeMute
+    - VolumeUp
+    - VolumeDown
+    - GotoNextDesktop
+    - GotoPreDesktop
+    - RefreshTab
+    - ReopenLastTab
+    - GotoPreApp
+    - JumpToPrevTab
+    - JumpToNextTab
+    - SwitchCapsState
+    - SwitchInputMethodAndDeleteLeft
+    - MaxMinWindow
+    - MaxWindow
+    - MinWindow
+    - ReloadSux
+    - SelectCurrentWord
+    - SelectCurrentLine
+    - InsertLineBelow
+    - InsertLineAbove
+    - DeleteCurrentLine
+    - SmartSelectWithoutSymbol
+    - SmartSelectWithSymbol
+    - DuplicateSelected
+    - IndentCurrentLine
+    - SimulateClickDown
+- 热键类型: 需要加个"send"来标记要发送的热键操作, 比如要发送`shift+下` 就是`send +{Down}`, 下方是对照表
+    - 查看 [中文详细文档](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
+    - see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
+    - `win: "#" `
+    - `ctrl: "^" `
+    - `shift: "+" `
+    - `alt: "!"`
+    - `capslock: "CapsLock"`
+    - `lwin: "<#" `
+    - `rwin: ">#"`
+    - `lctrl: "<^" `
+    - `rctrl: ">^"`
+    - `lshift: "<+" `
+    - `rshift: ">+"`
+    - `lalt: "<!" `
+    - `ralt: ">!"`
+    - `lbutton:  "左键单击" `
+    - `rbutton:  "右键单击" `
+    - `mbutton: "中键单击"`
+    - `wheelup: "滚轮上滑"`
+    - `wheeldown: "滚轮下滑"`
+    - `hover: "悬停" `
 
 
 # CMDs
@@ -185,19 +310,19 @@ hot-corner:
 
 # Features
 
-* **personalized configuration** : u can modify `conf.user.yaml` to override all default configuration
+* **personalized configuration** : u can modify `conf.user.json` to override all default configuration
 * **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `hot-corner`-`hot-edge`
 * **hot corners** : just like mac hot cornes, see `hot-corner`-`hot-corner`
-* **web search** : just like Wox/Listary/Alfred, see `conf.user.yaml`-`search-plus`
-* **enhanced capslock** : just like Capslock+, see `conf.user.yaml`-`capslock_plus`
+* **web search** : just like Wox/Listary/Alfred, see `conf.user.json`-`search-plus`
+* **enhanced capslock** : just like Capslock+, see `conf.user.json`-`capslock_plus`
 * **work with Everything**
-* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.yaml`-`theme`
+* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.json`-`theme`
 * **screen capture**
 * **disable win10 auto update**
 * **start sux with windows**
-* **custom command line**:  see `conf.user.yaml`-`command`
-* **custom hotkey**:  see `conf.user.yaml`-`hotkey`
-* **clipboard-plus**:  clipboard history, try `capslock+v`, see `conf.user.yaml`-`clipboard-plus`
+* **custom command line**:  see `conf.user.json`-`command`
+* **custom hotkey**:  see `conf.user.json`-`hotkey`
+* **clipboard-plus**:  clipboard history, try `capslock+v`, see `conf.user.json`-`clipboard-plus`
 <!-- * **auto selection copy** : just like linux terminal -->
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
@@ -312,7 +437,7 @@ hot-corner:
 <!-- - hot corner/edge/capslock switcher to tray menu -->
 - update chinese readme, add some gif/mp4
 - auto update
-<!-- - fix bug: cant open conf.user.yaml with notepad -->
+<!-- - fix bug: cant open conf.user.json with notepad -->
 <!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
 <!-- - modify default conf: disable win auto update -->
