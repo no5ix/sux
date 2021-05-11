@@ -301,7 +301,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `mbutton: 中键单击`
     - `wheelup: 滚轮上滑`
     - `wheeldown: 滚轮下滑`
-    - `hover: 悬停 `
+    - `hover: 悬停 `, 只能用在触发角的配置里
     - `doublehit_: 双击 `, 比如`doublehit_alt`表示双击
     - `triplehit_: 三击 `
 
