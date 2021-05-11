@@ -1,4 +1,4 @@
-
+﻿
 if(A_ScriptName=="search_plus.ahk") {
 	ExitApp
 }
@@ -50,7 +50,6 @@ class SearchPlus {
 		}
 		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
 			; m(_index "//" search_url)
-
 			if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
 				if !InStr(search_url, "REPLACEME") {
 					Run %search_url%
@@ -64,7 +63,6 @@ class SearchPlus {
 				Run %domain_url%
 				Continue
 			}
-
 
 			safe_query := UriEncode(Trim(search_str))
 			StringReplace, search_final_url, search_url, REPLACEME, %safe_query%

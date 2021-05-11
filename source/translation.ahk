@@ -1,6 +1,4 @@
-
-
-
+﻿
 if(A_ScriptName=="translation.ahk") {
 	ExitApp
 }
