@@ -58,7 +58,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Lowercase": "小写"
     ,"Uppercase": "大写"
     ,"Command": "指令"
-    ,"_Default": "默认"
+    ,"Default": "默认"
     ,"Google & Baidu": "谷歌 & 百度" 
     ,"Google": "谷歌"
     ,"Baidu": "百度"

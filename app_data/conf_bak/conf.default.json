@@ -22,7 +22,7 @@
   "search-plus": {
     "enable": 1,
     "buildin": {
-      "_Default": [
+      "Default": [
         "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"
       ],
       "Google & Baidu": [
