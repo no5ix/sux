@@ -24,6 +24,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"quit": "退出"
     ,"Disable Win10 Auto Update": "禁止Win10自动更新"
     ,"Auto Disable sux In Full Screen": "全屏下自动禁用sux"
+    ,"Window Mover": "窗口移动器"
     ,"Hot Corner": "触发角"
     ,"Feature Switch": "功能开关"
     ,"Theme": "主题"
@@ -90,6 +91,7 @@ global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "
 global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
 
+global INI_WINDOW_MOVER_SWITCH := "window-mover-switch"
 global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
 global INI_LIMIT_MODE_IN_FULL_SCREEN := "limit-mode-in-full-screen"
 global INI_HOT_CORNER := "hot-corner"

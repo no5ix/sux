@@ -27,10 +27,12 @@ class TrayMenu
 		this.SetHotCorner("config")
 		this.SetLimitModeInFullScreen("config")
 		this.SetDisableWin10AutoUpdate("config")
+		this.SetWindowMover("config")
 	}
 
 	SetDisableWin10AutoUpdate(act="toggle")
 	{
+		global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH
 		cfg := SuxCore.GetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
@@ -46,8 +48,30 @@ class TrayMenu
 		}
 	}
 
+	SetWindowMover(act="toggle")
+	{
+		global INI_WINDOW_MOVER_SWITCH
+		cfg := SuxCore.GetIniConfig(INI_WINDOW_MOVER_SWITCH, SuxCore.Default_window_mover_switch)
+		switch := (act="config")? cfg : act
+		switch := (act="toggle")? !cfg : switch
+		SuxCore.SetIniConfig(INI_WINDOW_MOVER_SWITCH, switch)
+		; TrayMenu.update_tray_menu()
+		Process, Priority,, High
+		Gui +LastFound	
+		hWnd := WinExist()
+		DllCall( "RegisterShellHookWindow", UInt,hWnd )
+		MsgNum := DllCall( "RegisterWindowMessage", Str,"SHELLHOOK" )
+		if (switch) {
+			OnMessage( MsgNum, "ShellMessage" )
+		}
+		else {
+			OnMessage( MsgNum, "" )
+		}
+	}
+
 	SetLimitModeInFullScreen(act="toggle")
 	{
+		global INI_LIMIT_MODE_IN_FULL_SCREEN
 		cfg := SuxCore.GetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
@@ -64,6 +88,7 @@ class TrayMenu
 	
 	SetAutorun(act="toggle")
 	{
+		global INI_AUTORUN
 		cfg := SuxCore.GetIniConfig(INI_AUTORUN, SuxCore.Default_autorun_switch)
 		autorun := (act="config")? cfg : act
 		autorun := (act="toggle")? !cfg : autorun
@@ -82,6 +107,8 @@ class TrayMenu
 
 	SetHotCorner(act="toggle")
 	{
+		
+		global INI_HOT_CORNER
 		cfg := SuxCore.GetIniConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
 		hot_corner_switch := (act="config")? cfg : act
 		hot_corner_switch := (act="toggle")? !cfg : hot_corner_switch
@@ -109,6 +136,7 @@ class TrayMenu
 		else {
 			cur_theme := act
 		}
+		global INI_THEME
 		SuxCore.SetIniConfig(INI_THEME, cur_theme)
 		; TrayMenu.update_tray_menu()
 	}
@@ -123,6 +151,7 @@ class TrayMenu
 		else {
 			lang := act
 		}
+		global INI_LANG
 		SuxCore.SetIniConfig(INI_LANG, lang)
 		; TrayMenu.update_tray_menu()
 	}
@@ -130,6 +159,13 @@ class TrayMenu
 	; Tray Menu
 	update_tray_menu()
 	{
+		global INI_WINDOW_MOVER_SWITCH
+		global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH
+		global INI_LIMIT_MODE_IN_FULL_SCREEN
+		global INI_HOT_CORNER
+		global INI_AUTORUN
+		global INI_THEME
+		global INI_LANG
 		version_str := lang("About") " sux v" SuxCore.version
 		autorun := SuxCore.GetIniConfig(INI_AUTORUN, 0)
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
@@ -146,6 +182,7 @@ class TrayMenu
 		hot_corner_switch := SuxCore.GetIniConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
 		limit_mode_in_full_screen_switch := SuxCore.GetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
 		disable_win10_auto_update_switch := SuxCore.GetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
+		window_mover_switch := SuxCore.GetIniConfig(INI_WINDOW_MOVER_SWITCH, SuxCore.Default_window_mover_switch)
 
 		Menu, Tray, Tip, % SuxCore.ProgramName
 		xMenu.New("TrayLanguage"
@@ -157,6 +194,7 @@ class TrayMenu
 		xMenu.New("SensitiveFeatureSwitch"
 			,[[lang("Hot Corner"), "TrayMenu.SetHotCorner", {check: hot_corner_switch==1}]
 			, [lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {check: limit_mode_in_full_screen_switch==1}]
+			, [lang("Window Mover"), "TrayMenu.SetWindowMover", {check: window_mover_switch==1}]
 			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {check: disable_win10_auto_update_switch==1}]])
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
@@ -408,6 +446,47 @@ class xMenu
 }
 
 
+ShellMessage( wParam,lParam ) {
+  	If ( wParam = 1 ) ;  HSHELL_WINDOWCREATED := 1
+	{
+		;; 让打开的窗口永远和鼠标在同一个屏幕
+		Sleep, 66
+
+		WinGetTitle, cur_title, ahk_id %lParam%
+	   	WinGet, maximized, MinMax, %cur_title%
+		if (maximized == -1)
+			Return
+
+		WinGetPos, cur_window_x, cur_window_y, cur_window_width, cur_window_height, %cur_title%
+		
+		if (IsMouseActiveWindowAtSameMonitor(cur_window_x)) {
+			Return
+		}
+		MouseGetPos, mouse_X, mouse_Y   ; get mouse location 
+
+		; WinMinimize, %cur_title%
+
+		; -1: 窗口处于最小化状态(使用 WinRestore 可以让它还原).
+		; 1: 窗口处于最大化状态(使用 WinRestore 可以让它还原).
+		; 0: 窗口既不处于最小化状态也不处于最大化状态.
+		if (maximized = 1)  ; 窗口处于最大化状态(使用 WinRestore 可以让它还原).
+		{ 
+			
+			WinRestore, %cur_title%
+			WinMove, %cur_title%, , %mouse_X%, %mouse_Y% 
+			WinMaximize, %cur_title%
+		}
+		else if (maximized = 0)  ; 窗口既不处于最小化状态也不处于最大化状态.
+		{
+			mid_x := GetMouseMonitorMidX()
+			mid_x -= cur_window_width / 2
+			yScrnOffset := 222
+			WinMove, %cur_title%, , %mid_x%, %yScrnOffset% 
+		}
+	}
+}
+
+
 Sub_xMenu_Open:
 	; ActiveHwnd := WinExist("A")
 	Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
@@ -453,13 +532,13 @@ HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
 			Return
 		}
 		if (LIMIT_MODE == 0) {
-			ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode") . ".", 1111)
+			; ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode") . ".", 1111)
 			LIMIT_MODE := 1
 		}
 	}
 	else {
 		if (LIMIT_MODE == 1) {
-			ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode") . ".", 1111)
+			; ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode") . ".", 1111)
 			LIMIT_MODE := 0
 		}
 	}
