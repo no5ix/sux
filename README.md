@@ -398,6 +398,10 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
 - msgbox 标题改成sux
+- add newbie tutorial
+<!-- - hot corner/edge/capslock switcher to tray menu -->
+- update chinese readme, add some gif/mp4
+- add more action
 <!-- - 出现在和鼠标同一个屏幕做成选项 -->
 <!-- - 报一个bug，caps+q，q，用百度查询时，弹窗出现在另一个屏幕，因为我有2个显示器，建议设置一下默认的弹窗。
 - 上述bug包括everything -->
@@ -416,7 +420,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - 截图后弹出贴图菜单 -->
 <!-- - bug:截图后保存则再也无法贴图 -->
 - trans gui change color to gray/ dpi / voice audio / soundmark encoding
-- add more action
 - clip_plus support img
 <!-- - 翻译如果没选, 则弹出提示没选 -->
 <!-- - 弄个build看看拿得到ver么 -->
@@ -440,9 +443,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - click down 之后记得释放 -->
 <!-- - 浏览器中, click down之后双击就没选中了 -->
 <!-- - rshift双击和单击可以分开conf -->
-- add newbie tutorial
-<!-- - hot corner/edge/capslock switcher to tray menu -->
-- update chinese readme, add some gif/mp4
 - auto update
 <!-- - fix bug: cant open conf.user.json with notepad -->
 <!-- - refactor tray menu code -->
