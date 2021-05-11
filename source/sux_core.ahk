@@ -210,7 +210,7 @@ class SuxCore
 	; static var
 	static ProgramName := "sux"
 	static Default_lang := "cn"
-	static Default_theme := "light"
+	static Default_theme := "auto"
 	static Default_autorun_switch := 0
 	static Default_hot_corner_switch := 0
 	static Default_limit_mode_in_full_screen_switch := 1

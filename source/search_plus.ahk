@@ -115,7 +115,8 @@ class SearchPlus {
 		Gui, SearchGui_: Margin, 0, 0
 
 		global THEME_CONF_REGISTER_MAP
-		cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
+		; cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
+		cur_theme_type := SuxCore.cur_theme
 		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
 
 		sux_bg_color := cur_theme_info["sux_bg_color"] 

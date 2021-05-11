@@ -130,7 +130,7 @@ class TrayMenu
 			; m(A_ThisMenuItem)
 			; m(A_ThisMenu)
 			; m(A_ThisMenuItemPos)
-			cur_theme_list := ["light", "dark"]
+			cur_theme_list := ["auto", "light", "dark"]
 			cur_theme := cur_theme_list[A_ThisMenuItemPos]
 		}
 		else {
@@ -189,7 +189,8 @@ class TrayMenu
 			,[["中文", "TrayMenu.SetLang", {check: lang=="cn"}]
 			, ["English", "TrayMenu.SetLang", {check: lang=="en"}]])
 		xMenu.New("SearchGuiTheme"
-			,[[lang("Light"), "TrayMenu.SetTheme", {check: cur_theme=="light"}]
+			,[[lang("Auto"), "TrayMenu.SetTheme", {check: cur_theme=="auto"}]
+			, [lang("Light"), "TrayMenu.SetTheme", {check: cur_theme=="light"}]
 			, [lang("Dark"), "TrayMenu.SetTheme", {check: cur_theme=="dark"}]])
 		xMenu.New("SensitiveFeatureSwitch"
 			,[[lang("Hot Corner"), "TrayMenu.SetHotCorner", {check: hot_corner_switch==1}]

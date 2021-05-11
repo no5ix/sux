@@ -19,6 +19,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"sux limit mode auto disable not in full screen mode": "sux限制模式在非全屏时自动关闭"
     ,"sux limit mode auto enable in full screen mode": "sux限制模式在全屏时自动开启"
     ,"click img to make it transparent": "点击图片使其透明"
+    ,"Auto": "自动"
     ,"Light": "明"
     ,"Dark": "暗"
     ,"space": "空格"
