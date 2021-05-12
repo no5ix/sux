@@ -25,6 +25,10 @@ HANDLE_SINGLE_DOUBLE_HIT_MODE_2 := 2
 
 MULTI_HIT_CNT := 0
 
+THEME_TYPE_AUTO := "auto"
+THEME_TYPE_LIGHT := "light"
+THEME_TYPE_DARK := "dark"
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Goto, SUB_SUX_CORE_FILE_END_LABEL
@@ -217,6 +221,9 @@ class SuxCore
 	static Default_disable_win10_auto_update_switch := 0
 	static Default_window_mover_switch := 0
 	static Browser := "default"
+	; 
+	static current_real_theme =
+
 
 	init()
 	{
@@ -246,6 +253,17 @@ class SuxCore
 		QuickEntry.init()
 		JsEval.init()
 		SnipPlus.init()
+	}
+
+	SetCurrentRealTheme(theme_type)
+	{
+		global THEME_TYPE_AUTO
+		if (theme_type == THEME_TYPE_AUTO) {
+			
+		}
+		else {
+			this.current_real_theme := theme_type
+		}
 	}
 
 	; callback register

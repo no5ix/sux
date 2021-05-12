@@ -24,6 +24,7 @@ class TrayMenu
 	init() {
 		this.update_tray_menu()
 		; this.SetAutorun("config")
+		this.SetTheme("config")
 		this.SetHotCorner("config")
 		this.SetLimitModeInFullScreen("config")
 		this.SetDisableWin10AutoUpdate("config")
@@ -125,6 +126,7 @@ class TrayMenu
 
 	SetTheme(act="itemname")
 	{
+		global INI_THEME
 		if(act="itemname")
 		{
 			; m(A_ThisMenuItem)
@@ -133,11 +135,14 @@ class TrayMenu
 			cur_theme_list := ["auto", "light", "dark"]
 			cur_theme := cur_theme_list[A_ThisMenuItemPos]
 		}
+		else if (act == "config"){
+			cur_theme := SuxCore.GetIniConfig(INI_THEME, SuxCore.Default_theme)
+		}
 		else {
 			cur_theme := act
 		}
-		global INI_THEME
 		SuxCore.SetIniConfig(INI_THEME, cur_theme)
+		SuxCore.SetCurrentRealTheme(cur_theme)
 		; TrayMenu.update_tray_menu()
 	}
 
