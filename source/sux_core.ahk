@@ -177,6 +177,11 @@ handle_remote_ver_req_failed() {
 }
 
 
+SwitchAutoTheme()
+{
+	global THEME_TYPE_AUTO
+	SuxCore.SetCurrentRealTheme(THEME_TYPE_AUTO)
+}
 
 
 
@@ -258,8 +263,35 @@ class SuxCore
 	SetCurrentRealTheme(theme_type)
 	{
 		global THEME_TYPE_AUTO
+		global THEME_TYPE_LIGHT
+		global THEME_TYPE_DARK
 		if (theme_type == THEME_TYPE_AUTO) {
-			
+			cur_hour := A_Hour
+			if (cur_hour >= 7 && cur_hour < 18) {
+				; Sub(A_Now
+				next_switch_time := A_YYYY . A_MM . A_DD . "180000"
+				SuxCore.current_real_theme := THEME_TYPE_LIGHT
+				; m(next_switch_time)
+			}
+			else if (cur_hour < 7) {
+				next_switch_time := A_YYYY . A_MM . A_DD . "070000"
+				SuxCore.current_real_theme := THEME_TYPE_DARK
+				; m(next_switch_time)
+			}
+			else {
+				tomorrow_str := "" ; 赋值为空, 这样下面将会使用当前时间戳代替.
+				tomorrow_str += 1, days
+				; var1 += 8, hours
+				next_switch_time := SubStr(tomorrow_str, 1, 8) . "070000"
+				SuxCore.current_real_theme := THEME_TYPE_DARK
+				; m(next_switch_time)
+			}
+			; EnvSub, next_switch_time, % A_Now , Hours 
+			; EnvSub, next_switch_time, % A_Now , Minutes
+			EnvSub, next_switch_time, % A_Now , Seconds
+			next_switch_time_ms := next_switch_time * 1000 * (-1)
+			SetTimer, SwitchAutoTheme, % next_switch_time_ms
+			; m(next_switch_time)
 		}
 		else {
 			this.current_real_theme := theme_type
