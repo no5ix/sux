@@ -133,7 +133,7 @@ class SnipPlus
 		cur_gui_name := "sux_snipshot_" . SnipPlus.temp_snip_img_index
 		Gui, %cur_gui_name%: New
 		; Gui %cur_gui_name%:+Resize +AlwaysOnTop -MaximizeBox -MinimizeBox +ToolWindow
-		Gui %cur_gui_name%: +AlwaysOnTop
+		Gui %cur_gui_name%: +AlwaysOnTop +Resize -MaximizeBox
 		Gui, Margin, 0, 0
 
 		; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
@@ -160,7 +160,7 @@ class SnipPlus
 		MouseGetPos, Mouse_x, Mouse_y
 		final_x := Mouse_x - 88
 		final_y := Mouse_y - 8
-		Gui, %cur_gui_name%:Show, x%final_x% y%final_y%, % SnipPlus.temp_snip_img_index . ". " . lang("click img to make it transparent")
+		Gui, %cur_gui_name%:Show, x%final_x% y%final_y%, % "img-" . SnipPlus.temp_snip_img_index . "  ( Tips: " . lang("click img to make it transparent") . " )"
 		; Gui, Show
 
 		
