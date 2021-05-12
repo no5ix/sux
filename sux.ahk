@@ -24,5 +24,6 @@ SetCapsLockState, AlwaysOff  ; 因为ahk语言的自身局限性, 必须得在�
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
 RunAsAdmin()
 SuxCore.init()

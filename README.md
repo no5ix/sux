@@ -42,7 +42,10 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
 # 重要
 
 - 请以管理员身份运行sux
-- 如果杀毒软件报杀则将sux列入白名单, 如果是windows安全中心杀了的话则在它的`病毒和威胁保护`-`保护历史记录`-找到删除sux的历史记录-`还原`
+- 防止杀毒软件误杀处理
+    - 打开win10托盘的`Windows安全中心`-`病毒和威胁防护`-`病毒和威胁防护设置的管理设置`-`排除项的添加或删除排除项`-`添加排除项`-`文件夹`, 然后选中sux所在文件夹即可
+    - 如果被其他杀毒软件报杀则将sux列入白名单
+    - 如果是windows安全中心杀了的话则在它的`病毒和威胁保护`-`保护历史记录`-找到删除sux的历史记录-`还原`
 - Please run sux as administrator.
 
 Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github.com/no5ix/sux/releases) and unzip it then run sux.exe as admin !
@@ -398,7 +401,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
-- msgbox 标题改成sux
+<!-- - msgbox 标题改成sux -->
 - add newbie tutorial
 <!-- - hot corner/edge/capslock switcher to tray menu -->
 - update chinese readme, add some gif/mp4

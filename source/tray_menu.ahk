@@ -28,7 +28,7 @@ class TrayMenu
 		this.SetHotCorner("config")
 		this.SetLimitModeInFullScreen("config")
 		this.SetDisableWin10AutoUpdate("config")
-		this.SetWindowMover("config")
+		this.SetWindowMover("config", 1)
 	}
 
 	SetDisableWin10AutoUpdate(act="toggle")
@@ -49,7 +49,7 @@ class TrayMenu
 		}
 	}
 
-	SetWindowMover(act="toggle")
+	SetWindowMover(act="toggle", from_launch=0)
 	{
 		global INI_WINDOW_MOVER_SWITCH
 		cfg := SuxCore.GetIniConfig(INI_WINDOW_MOVER_SWITCH, SuxCore.Default_window_mover_switch)
@@ -64,6 +64,8 @@ class TrayMenu
 		MsgNum := DllCall( "RegisterWindowMessage", Str,"SHELLHOOK" )
 		if (switch) {
 			OnMessage( MsgNum, "ShellMessage" )
+			if (from_launch == 0)
+				SuxCore.SuxMsgBox("Tips: " . lang("Window Mover will automatically move the new window to the monitor where the mouse is") . ".", "info")
 		}
 		else {
 			OnMessage( MsgNum, "" )
@@ -499,7 +501,7 @@ Sub_xMenu_Open:
 	Run(xMenu.MenuList[A_ThisMenu "_" A_ThisMenuItem])
 
 	;; 下面这两行不能调换顺序, 否则会有乱切换软件的bug
-	Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
+	; Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
 	TrayMenu.update_tray_menu()
 
 	; WinActivate

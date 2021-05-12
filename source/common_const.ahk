@@ -26,6 +26,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"quit": "退出"
     ,"Disable Win10 Auto Update": "禁止Win10自动更新"
     ,"Auto Disable sux In Full Screen": "全屏下自动禁用sux"
+    ,"Window Mover will automatically move the new window to the monitor where the mouse is": "窗口移动器将会自动移动新窗口到鼠标所在的显示器"
     ,"Window Mover": "窗口移动器"
     ,"Hot Corner": "触发角"
     ,"Feature Switch": "功能开关"

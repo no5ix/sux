@@ -242,9 +242,10 @@ class SuxCore
 		; SetMouseDelay, 0
 
 		;;;;;;;;;;;;;;;;;;;;
-
-		if !FileExist(SuxCore._APP_DATA_DIR)  
-        	FileCreateDir, % SuxCore._APP_DATA_DIR
+		is_first_time := 0
+		if(!FileExist(SuxCore.data_ini_file)) {
+			is_first_time := 1
+		}
 
 		SuxCore.version := SuxCore.get_local_ver()
 
@@ -258,6 +259,52 @@ class SuxCore
 		QuickEntry.init()
 		JsEval.init()
 		SnipPlus.init()
+
+		if (is_first_time)
+			SuxCore.ShowUserGuide()
+	}
+
+	SuxMsgBox(msg, msg_type="", timeout=6)
+	{
+		msg_type_map := {"info": 0x40, "error": 0x10, "warning": 0x30, "question": 0x20}
+		if (msg_type == "")
+			MsgBox,, % SuxCore.ProgramName, % msg, % timeout
+		else
+			MsgBox, % msg_type_map[msg_type], % SuxCore.ProgramName, % msg, % timeout
+	}
+
+	ShowUserGuide()
+	{		
+		msg_hello = 
+		(
+欢迎使用 sux ,
+sux 是一款效率提升工具同时拥有以下功能 :
+
+- 翻译
+- 历史剪切板
+- 截图
+- 贴图
+- 类似 Listary / Alfred / Wox 的快捷搜索
+- 类似 MacOS 的触发角
+- 屏幕边缘触发器
+- 全局自定义快捷键实现各种操作
+- 文本替换器
+- 文本变换器
+- 自定义主题
+- 快捷指令
+- 可自定义的 json 配置
+- ...
+		)
+
+		guide_msg_arr := [msg_hello
+			,"尝试一下: 将鼠标移到屏幕左边缘上半部分并滚动滚轮,  `n效果：快速调节音量"
+			,"尝试一下：按下 shift + 空格 , 然后按下任何菜单选项的快捷键, 比如按下 e 键,  `n效果：打开快捷菜单, 然后使用百度搜索"
+			,"最后，右击托盘的 sux 图标，你可以`n `n- 检查更新 `n- 捐赠 `n- 更换主题 `n- 更换语言 `n- 让 sux 开机启动 `n- 打开配置文件 `n- 打开各种功能开关, 如 触发角 / 窗口移动器 等 `n- ... `n`n祝使用愉快~"]
+			
+		for i, guide_msg in guide_msg_arr {
+			; Msgbox,,% SuxCore.ProgramName, % guide_msg
+			SuxCore.SuxMsgBox(guide_msg)
+		}
 	}
 
 	SetCurrentRealTheme(theme_type)
