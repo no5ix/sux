@@ -130,7 +130,7 @@ class SearchPlus {
 		Gui, SearchGui_: Font, s22, Segoe UI
 		; Gui, Font, s10, Segoe UI
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
-		gui_control_options := "-WantReturn xm+6 ym+6 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
+		gui_control_options := "-WantReturn xm+6 ym+8 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
 		pre_input_str := cur_sel_text ? cur_sel_text : SearchPlus.cur_sel_search_title
