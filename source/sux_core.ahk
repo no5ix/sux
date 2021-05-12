@@ -342,6 +342,7 @@ sux 是一款效率提升工具同时拥有以下功能 :
 		}
 		else {
 			this.current_real_theme := theme_type
+			SetTimer, SwitchAutoTheme, Delete
 		}
 	}
 
