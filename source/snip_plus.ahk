@@ -76,7 +76,7 @@ class SnipPlus
 				Menu, SnipPlus_Menu, Show
 			}
 			else {
-				SnipPlus.SuspendLastScreenShot()
+				SnipPlus.SuspendLastScreenshot()
 			}
 		}
 		else
@@ -92,7 +92,7 @@ class SnipPlus
 
 	}
 
-	SuspendLastScreenShot()
+	SuspendLastScreenshot()
 	{
 		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
@@ -108,7 +108,7 @@ class SnipPlus
 		; SnipPlus.is_clipboard_changed := 0
 		; clipboardOld := ClipboardAll
 		; Clipboard := ""
-		; SnipPlus.AreaScreenShot()
+		; SnipPlus.AreaScreenshot()
 		; Sleep, 222
 		; if (SnipPlus.is_clipboard_changed == 0) {
 			; ToolTipWithTimer("Nothing snipped.")
@@ -206,7 +206,7 @@ class SnipPlus
 
 
 Sub_SnipPlus_Menu_clik:
-	SnipPlus.SuspendLastScreenShot()
+	SnipPlus.SuspendLastScreenshot()
 Return
 
 SUB_CLICK_SNIP_IMG:

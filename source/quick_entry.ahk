@@ -108,12 +108,12 @@ class QuickEntry {
 
 		SearchPlus.AddSearchPlusSubMenu()
 
-		;;;;;; ScreenShot
+		;;;;;; Screen Shot
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
-		Menu, QuickEntry_Menu, Add, % lang("ScreenShot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("Screen Shot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Suspend Screenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
-		Menu, QuickEntry_Menu, Add, % lang("Translation") . "`t&f", QuickEntry_Translation_Menu_Click
+		Menu, QuickEntry_Menu, Add, % lang("Translate Text") . "`t&f", QuickEntry_Translation_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
 
 		;; transform text

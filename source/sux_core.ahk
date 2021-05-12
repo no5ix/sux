@@ -395,8 +395,6 @@ class SuxCore
 			; For key, value in SuxCore.GetSuxCfg("replace-text.shortcut-key", {}) {
 				; register_hotkey(value, _temp_map[key], "")
 			; }
-			; if (sk := SuxCore.GetSuxCfg("replace-text.shortcut-key", ""))
-			; 	register_hotkey(sk, "ReplaceText")
 			For key, value in SuxCore.GetSuxCfg("replace-text.buildin", {})
 				register_replace_str(key, value)
 			For key, value in SuxCore.GetSuxCfg("replace-text.custom", {})

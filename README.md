@@ -40,8 +40,9 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools/OneQuick, thank u.
 
 
 # 重要
-  
+
 - 请以管理员身份运行sux
+- 如果杀毒软件报杀则将sux列入白名单, 如果是windows安全中心杀了的话则在它的`病毒和威胁保护`-`保护历史记录`-找到删除sux的历史记录-`还原`
 - Please run sux as administrator.
 
 Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github.com/no5ix/sux/releases) and unzip it then run sux.exe as admin !
