@@ -46,7 +46,7 @@ TranslateSeletedText(cur_sel_text)
 
 	st := cur_sel_text
 	if (!st) {
-		ToolTipWithTimer(lang("Nothing selected") . ".")
+		ToolTipWithTimer(lang("Please Select text and try again") . ".")
 		return
 	}
 	global webapp_gui_http_req

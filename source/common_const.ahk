@@ -5,6 +5,8 @@
 
 
 LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
+    ,"Tips: ": "小技巧: "
+    ,"after selecting text, this menu can automatically process it": "选择文本后，此菜单可以自动处理它"
     ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
     ,"There is a new version sux, would you like to check it out?": "sux有新版本, 你要看看有啥新功能吗?"
     ," Click me to chekc it out!": " 点击我查看!"
@@ -45,7 +47,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Translate Text": "翻译"
     ,"Home Page": "主页"
     ,"Selected": "当前选择"
-    ,"Nothing selected": "没有选中任何东西"
+    ,"Please Select text and try again": "请选中文本后重试"
     ,"Nothing snipped": "没有截任何图"
     ,"Suspend": "悬浮"
     ,"Screen Shot && Suspend": "截图 && 贴图"
@@ -91,6 +93,7 @@ global auto_destory_quick_entry_gui_period := -22222  ; millisecond
 global tick_disable_win10_auto_interval := 66666
 
 global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "e", "a", "d", "z", "x", "b", "t", "h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
+global CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR := ["t", " ", "`t", "q", "w", "e", "r", "a", "s", "f", "z", "x", "c", "b", "g"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]

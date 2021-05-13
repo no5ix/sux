@@ -65,7 +65,7 @@ class TrayMenu
 		if (switch) {
 			OnMessage( MsgNum, "ShellMessage" )
 			if (from_launch == 0)
-				SuxCore.SuxMsgBox("Tips: " . lang("Window Mover is useful for multi monitor users, `n it will automatically move the new window to the monitor where the mouse is") . ".", "info", 8)
+				SuxCore.SuxMsgBox(lang("Tips: ") . lang("Window Mover is useful for multi monitor users, `n it will automatically move the new window to the monitor where the mouse is") . ".", "info", 8)
 		}
 		else {
 			OnMessage( MsgNum, "" )

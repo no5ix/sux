@@ -14,7 +14,7 @@ m(str := "")
 }
 
 
-ToolTipWithTimer(msg, delay_for_remove=600)
+ToolTipWithTimer(msg, delay_for_remove=1111)
 {
     ToolTip, %msg%
     SetTimer, RemoveToolTip, -%delay_for_remove%

@@ -83,11 +83,14 @@ class QuickEntry {
 		global current_selected_text
 		current_selected_text := GetCurSelectedText()
 		if current_selected_text {
-			sub_selected_text := lang("Selected") . ": " . SubStr(current_selected_text, 1, 2) . "..."
-			; m(sub_selected_text)
-			Menu, QuickEntry_Menu, Add, % sub_selected_text, QuickEntry_Sub_Nothing
-			Menu, QuickEntry_Menu, Disable, % sub_selected_text
+			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 2) . "..."
+			; m(tips_msg)
+			Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
+			Menu, QuickEntry_Menu, Disable, % tips_msg
 			Menu, QuickEntry_Menu, Add
+		}
+		else {
+			; tips_msg := lang("Tips: ") . lang("after selecting text, this menu can automatically process it") . "."
 		}
 		
 		; global WEB_SEARCH_TITLE_LIST
@@ -263,12 +266,12 @@ QuickEntry_Translation_Menu_Click:
 QuickEntry_TransformText_Detail_Menu_click:
 	st := current_selected_text
 	if (!st) {
-		SelectCurrentWord()
-		st := GetCurSelectedText()
-		if (!st) {
-			ToolTipWithTimer(lang("Nothing selected") . ".")
-			Return
-		}
+		; SelectCurrentWord()
+		; st := GetCurSelectedText()
+		; if (!st) {
+			ToolTipWithTimer(lang("Please Select text and try again") . ".")
+		; 	Return
+		; }
 	}
 	
 	delimiters_arr := ["_", "-"]

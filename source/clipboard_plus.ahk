@@ -44,14 +44,14 @@ class ClipboardPlus
 			Menu, Clipborad_Plus_Menu_More, DeleteAll
 		}
 		if (clipboard_history_cnt >= 1) {
-			global SHORTCUT_KEY_INDEX_ARR_LEFT
-			shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+			global CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR
+			shortcut_cnt := CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR.Count()
 			Loop, % clipboard_history_cnt
 			{
 				idx := clipboard_history_cnt - A_Index + 1
 				clip_text := this.ClipboardHistoryArr[idx][2]
 				if (A_Index <= shortcut_cnt) {
-					menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT, A_Index, clip_text)
+					menu_shortcut_str := get_menu_shortcut_str(CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR, A_Index, clip_text)
 					;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
 					Menu, Clipborad_Plus_Menu, Add, % menu_shortcut_str, Sub_ClipboardPlus_AllClips_Click
 					; Menu, Clipborad_Plus_Menu, Add, % clip_text, Sub_ClipboardPlus_AllClips_Click
@@ -64,8 +64,9 @@ class ClipboardPlus
 				Menu, Clipborad_Plus_Menu, Add, % lang("More"), :Clipborad_Plus_Menu_More
 
 			Menu, Clipborad_Plus_Menu, Add
-			Menu, Clipborad_Plus_Menu, Add, % lang("Paste All") . "`t&`t(" . lang("tab") . ")", Sub_Menu_ClipboardPlus_PasteAll
-			Menu, Clipborad_Plus_Menu, Add, % lang("Delete All") . "`t& (" . lang("space") . ")", Sub_Menu_ClipboardPlus_DeleteAll
+			Menu, Clipborad_Plus_Menu, Add, % lang("Paste All") . "`t&v", Sub_Menu_ClipboardPlus_PasteAll
+			Menu, Clipborad_Plus_Menu, Add, % lang("Delete All") . "`t&d", Sub_Menu_ClipboardPlus_DeleteAll
+			
 			Menu, QuickEntry_Menu, Add, % lang("Clipboard Plus") . "`t&v", :Clipborad_Plus_Menu
 		}
 		else {
@@ -163,7 +164,7 @@ PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
 Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:
-idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - SHORTCUT_KEY_INDEX_ARR_LEFT.Count()
+idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR.Count()
 PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
 Return
 

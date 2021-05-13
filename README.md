@@ -401,8 +401,9 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
+- select sth tips on menu top
 <!-- - msgbox 标题改成sux -->
-- add newbie tutorial
+<!-- - add newbie tutorial -->
 <!-- - hot corner/edge/capslock switcher to tray menu -->
 - update chinese readme, add some gif/mp4
 - add more action
