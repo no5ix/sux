@@ -285,7 +285,7 @@ QuickEntry_TransformText_Detail_Menu_click:
 		; 	st := StrReplace(st, deli, "")
 		StringLower, st, st
 	}
-	else if (A_ThisMenuItemPos >= 4 || A_ThisMenuItemPos <=15) {
+	else if (A_ThisMenuItemPos >= 4) {
 		if (Instr(st, "-") || Instr(st, "_")) {
 			st_arr := StrSplit(st, delimiters_arr)
 		}
