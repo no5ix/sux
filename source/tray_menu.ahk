@@ -65,7 +65,7 @@ class TrayMenu
 		if (switch) {
 			OnMessage( MsgNum, "ShellMessage" )
 			if (from_launch == 0)
-				SuxCore.SuxMsgBox(lang("Tips: ") . lang("Window Mover is useful for multi monitor users, `n it will automatically move the new window to the monitor where the mouse is") . ".", "info", 8)
+				SuxCore.SuxMsgBox(lang("Window Mover is useful for multi monitor users, `n it will automatically move the new window to the monitor where the mouse is") . ".", "info", 8)
 		}
 		else {
 			OnMessage( MsgNum, "" )
@@ -193,17 +193,19 @@ class TrayMenu
 
 		Menu, Tray, Tip, % SuxCore.ProgramName
 		xMenu.New("TrayLanguage"
-			,[["中文", "TrayMenu.SetLang", {check: lang=="cn"}]
-			, ["English", "TrayMenu.SetLang", {check: lang=="en"}]])
+			,[["中文", "TrayMenu.SetLang", {"check": lang=="cn"}]
+			, ["English", "TrayMenu.SetLang", {"check": lang=="en"}]])
 		xMenu.New("SearchGuiTheme"
-			,[[lang("Auto"), "TrayMenu.SetTheme", {check: cur_theme=="auto"}]
-			, [lang("Light"), "TrayMenu.SetTheme", {check: cur_theme=="light"}]
-			, [lang("Dark"), "TrayMenu.SetTheme", {check: cur_theme=="dark"}]])
-		xMenu.New("SensitiveFeatureSwitch"
-			,[[lang("Hot Corner"), "TrayMenu.SetHotCorner", {check: hot_corner_switch==1}]
-			, [lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {check: limit_mode_in_full_screen_switch==1}]
-			, [lang("Window Mover"), "TrayMenu.SetWindowMover", {check: window_mover_switch==1}]
-			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {check: disable_win10_auto_update_switch==1}]])
+			,[[lang("Auto"), "TrayMenu.SetTheme", {"check": cur_theme=="auto"}]
+			, [lang("Light"), "TrayMenu.SetTheme", {"check": cur_theme=="light"}]
+			, [lang("Dark"), "TrayMenu.SetTheme", {"check": cur_theme=="dark"}]])
+
+	    SysGet, mon_cnt, MonitorCount
+		xMenu.New("SensitiveFeatureSwitch", [[lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {"check": limit_mode_in_full_screen_switch==1}]
+			, [lang("Hot Corner"), "TrayMenu.SetHotCorner", {"check": hot_corner_switch==1}]
+			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {"check": disable_win10_auto_update_switch==1}]
+			, [lang("Window Mover"), "TrayMenu.SetWindowMover", {mon_cnt>1 ? "check": "disable": window_mover_switch==1}]])
+
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
 			,[[version_str, "TrayMenu.AboutSux"]
@@ -211,7 +213,7 @@ class TrayMenu
 			,[lang("Donate"), "TrayMenu.ShowDonatePic"]
 			,[check_update_menu_name, check_update_menu_func]
 			,[]
-			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {check: autorun}]
+			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {"check": autorun}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			,[lang("Theme"),, {"sub": "SearchGuiTheme"}]
 			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
@@ -219,7 +221,7 @@ class TrayMenu
 			,[lang("Open sux Folder"), "TrayMenu.OpenSuxFolder"]
 			,[lang("Edit Config File"), "TrayMenu.Edit_conf"]
 			,[]
-			,[lang("Disable"), "TrayMenu.SetDisable", {check: A_IsPaused&&A_IsSuspended}]
+			,[lang("Disable"), "TrayMenu.SetDisable", {"check": A_IsPaused&&A_IsSuspended}]
 			,[lang("Restart sux"), "ReloadSux"]
 			,[lang("Exit"), "TrayMenu.ExitSux"] ])
 		this.SetMenu(TrayMenuList)
