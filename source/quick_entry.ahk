@@ -140,13 +140,14 @@ class QuickEntry {
 			Menu, QuickEntry_Command_Menu, Add, % lang("More Command"), :QuickEntry_Command_Menu_More
 		
 		;; transform text
-		transform_text_arr := [lang("Uppercase"), lang("Lowercase"), "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd"]
+		global TRANSFORM_TEXT_SHORTCUT_KEY_INDEX_ARR
+		transform_text_arr := [lang("Uppercase"), lang("Lowercase"), "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd", "|", "AB CB", "ab cd", "Ab Cd"]
 		for index, pattern in transform_text_arr {
 			if (pattern == "|")
 				Menu, QuickEntry_TransformText_Detail_Menu, Add
 			else {
 				; Menu, QuickEntry_TransformText_Detail_Menu, Add, % "&" . index . ".`t" . pattern, QuickEntry_TransformText_Detail_Menu_click
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB, index, pattern)
+				menu_shortcut_str := get_menu_shortcut_str(TRANSFORM_TEXT_SHORTCUT_KEY_INDEX_ARR, index, pattern)
 				Menu, QuickEntry_TransformText_Detail_Menu, Add, % menu_shortcut_str, QuickEntry_TransformText_Detail_Menu_click
 			}
 		}
@@ -264,7 +265,7 @@ QuickEntry_Translation_Menu_Click:
 
 
 QuickEntry_TransformText_Detail_Menu_click:
-	st := current_selected_text
+	st := Trim(current_selected_text)
 	if (!st) {
 		; SelectCurrentWord()
 		; st := GetCurSelectedText()
@@ -273,8 +274,8 @@ QuickEntry_TransformText_Detail_Menu_click:
 		; 	Return
 		; }
 	}
-	
-	delimiters_arr := ["_", "-"]
+
+	delimiters_arr := ["_", "-", " "]
 	if (A_ThisMenuItemPos == 1) {
 		; for _i, deli in delimiters_arr
 		; 	st := StrReplace(st, deli, "")
@@ -286,44 +287,54 @@ QuickEntry_TransformText_Detail_Menu_click:
 		StringLower, st, st
 	}
 	else if (A_ThisMenuItemPos >= 4) {
-		if (Instr(st, "-") || Instr(st, "_")) {
-			st_arr := StrSplit(st, delimiters_arr)
+		if st is upper
+		{
+			ToolTipWithTimer(lang("Can not separate words") . ".")	
+			return
 		}
-		else {
-			for _i, deli in delimiters_arr
-				temp_st := StrReplace(st, deli, "")
-			if temp_st is upper
+		else if st is lower
+		{
+			ToolTipWithTimer(lang("Can not separate words") . ".")	
+			return
+		}
+
+		temp_st_arr := StrSplit(st, delimiters_arr)
+		st_arr := []
+		for _i, single_w in temp_st_arr {
+			if single_w is upper
 			{
-				ToolTipWithTimer(lang("Can not separate words") . ".")	
-				return
-			}
-			else if temp_st is lower
+				st_arr.Push(single_w)
+				Continue
+			} 
+			if single_w is lower
 			{
-				ToolTipWithTimer(lang("Can not separate words") . ".")	
-				return
+				st_arr.Push(single_w)
+				Continue
 			}
-			else {
-				st_arr := []
-				last_start_i := 1
-				Loop, parse, st
+			last_start_i := 1
+			Loop, parse, single_w
+			{
+				if (A_Index == 1)
+					Continue
+				if A_LoopField is upper
 				{
-					if A_LoopField is upper
-					{
-						st_arr.Push(SubStr(st, last_start_i, A_Index-last_start_i))
-						last_start_i := A_Index
-					}
+					st_arr.Push(SubStr(single_w, last_start_i, A_Index-last_start_i))
+					last_start_i := A_Index
 				}
-				st_arr.Push(SubStr(st, last_start_i, StrLen(st)-last_start_i))
 			}
+			st_arr.Push(SubStr(single_w, last_start_i, StrLen(single_w)-last_start_i+1))
 		}
+		; for _i, s in st_arr {
+		; 	m(s)
+		; }
 
 		st := ""
-		deli_map := {1: "", 2: "", 4: "", 5: "", 7: "_", 8: "_", 9: "_", 10: "_", 12: "-", 13: "-", 14: "-", 15: "-"}
+		deli_map := {1: "", 2: "", 4: "", 5: "", 7: "_", 8: "_", 9: "_", 10: "_", 12: "-", 13: "-", 14: "-", 15: "-", 17: " ", 18: " ", 19: " "}
 
 		first_letter_lower_case_map := {5: "", 10: "", 15: ""}
-		title_case_map := {4: "", 5: "", 9: "", 10: "",  14: "", 15: ""}
-		lower_case_map := {2: "", 8: "", 13: ""}
-		upper_case_map := {1: "", 7: "", 12: ""}
+		title_case_map := {4: "", 5: "", 9: "", 10: "",  14: "", 15: "", 19: ""}
+		lower_case_map := {2: "", 8: "", 13: "", 18: ""}
+		upper_case_map := {1: "", 7: "", 12: "", 17: ""}
 
 		cur_delimiter := deli_map[A_ThisMenuItemPos]
 		for index, _single_w in st_arr {
