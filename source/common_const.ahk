@@ -38,6 +38,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Check Update": "检查更新"
     ,"A New Version v": "有新版本 v"
     ,"Start With Windows": "开机启动"
+    ,"Check Updates On Startup": "启动时检查更新"
     ,"Language": "语言"
     ,"Open sux Folder": "打开sux文件夹"
     ,"Edit Config File": "编辑配置文件"
@@ -99,6 +100,7 @@ global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "
 global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
 
+global INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH := "check-updates-on-startup-switch"
 global INI_WINDOW_MOVER_SWITCH := "window-mover-switch"
 global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH := "disable-win10-auto-update-switch"
 global INI_LIMIT_MODE_IN_FULL_SCREEN := "limit-mode-in-full-screen"

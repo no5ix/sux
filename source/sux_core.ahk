@@ -225,6 +225,7 @@ class SuxCore
 	static Default_limit_mode_in_full_screen_switch := 1
 	static Default_disable_win10_auto_update_switch := 0
 	static Default_window_mover_switch := 0
+	static Default_check_updates_on_startup_switch := 0
 	static Browser := "default"
 	; 
 	static current_real_theme =
@@ -432,10 +433,6 @@ sux 是一款效率提升工具同时拥有以下功能 :
 		; check_update_millisec := check_update_interval_hour * 3600 * 1000
 		; SetTimer, check_update_from_auto_check, % check_update_millisec
 
-		if(SuxCore.GetSuxCfg("check-update-on-startup", 1)) {
-			check_update_millisec := -6666
-			SetTimer, check_update_from_launch, % check_update_millisec
-		}
 		
 		if(SuxCore.GetSuxCfg("hotkey.enable", 0))
 		{

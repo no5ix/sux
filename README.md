@@ -401,8 +401,9 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
+- 有空格的时候变换文本有bug, 还有比如 INI_SetCheckUpdatesOnStartup 变成AA_BB, 也有问题
 <!-- - select sth tips on menu top -->
-- add google translate to search plus
+<!-- - add google translate to search plus -->
 <!-- - msgbox 标题改成sux -->
 <!-- - add newbie tutorial -->
 <!-- - hot corner/edge/capslock switcher to tray menu -->

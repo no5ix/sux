@@ -1,6 +1,5 @@
 ﻿{
   "File-Description": "你可以在custom块里覆盖所有的buildin(内置)配置或者直接修改buildin配置, 改了之后重启sux生效.You can override all the buildin conf at custom block or buildin conf itself, take effect after sux restart. ",
-  "check-update-on-startup": 1,
   "theme": {
     "dark": {
       "sux_width": 620,

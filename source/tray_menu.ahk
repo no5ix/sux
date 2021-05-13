@@ -21,7 +21,8 @@ class TrayMenu
 	static donate_img_wechat := TrayMenu.ASSET_DIR "donate_wechat.png"
 
 
-	init() {
+	init()
+	{
 		this.update_tray_menu()
 		; this.SetAutorun("config")
 		this.SetTheme("config")
@@ -29,6 +30,20 @@ class TrayMenu
 		this.SetLimitModeInFullScreen("config")
 		this.SetDisableWin10AutoUpdate("config")
 		this.SetWindowMover("config", 1)
+		this.SetCheckUpdatesOnStartup("config", 1)
+	}
+
+	SetCheckUpdatesOnStartup(act="toggle", from_launch=0)
+	{
+		global INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH
+		cfg := SuxCore.GetIniConfig(INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH, SuxCore.Default_check_updates_on_startup_switch)
+		switch := (act="config")? cfg : act
+		switch := (act="toggle")? !cfg : switch
+		SuxCore.SetIniConfig(INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH, switch)
+		if (switch && from_launch) {
+			check_update_millisec := -6666
+			SetTimer, check_update_from_launch, % check_update_millisec
+		}
 	}
 
 	SetDisableWin10AutoUpdate(act="toggle")
@@ -38,7 +53,6 @@ class TrayMenu
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
 		SuxCore.SetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, switch)
-		; TrayMenu.update_tray_menu()
 		if (switch) {
 			DisableWin10AutoUpdate()
 			SetTimer, DisableWin10AutoUpdate, %tick_disable_win10_auto_interval%
@@ -51,12 +65,14 @@ class TrayMenu
 
 	SetWindowMover(act="toggle", from_launch=0)
 	{
+	    SysGet, mon_cnt, MonitorCount
+		if (mon_cnt < 2)
+			Return
 		global INI_WINDOW_MOVER_SWITCH
 		cfg := SuxCore.GetIniConfig(INI_WINDOW_MOVER_SWITCH, SuxCore.Default_window_mover_switch)
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
 		SuxCore.SetIniConfig(INI_WINDOW_MOVER_SWITCH, switch)
-		; TrayMenu.update_tray_menu()
 		Process, Priority,, High
 		Gui +LastFound	
 		hWnd := WinExist()
@@ -79,7 +95,6 @@ class TrayMenu
 		switch := (act="config")? cfg : act
 		switch := (act="toggle")? !cfg : switch
 		SuxCore.SetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, switch)
-		; TrayMenu.update_tray_menu()
 		if (switch) {
 			global tick_detect_interval
 			SetTimer, HANDLE_LIMIT_MODE_IN_FULL_SCREEN, %tick_detect_interval%
@@ -96,16 +111,7 @@ class TrayMenu
 		autorun := (act="config")? cfg : act
 		autorun := (act="toggle")? !cfg : autorun
 		SuxCore.SetIniConfig(INI_AUTORUN, autorun)
-		; TrayMenu.update_tray_menu()
 		Regedit.Autorun(autorun, SuxCore.ProgramName, SuxCore.Launcher_Name)
-		; if(autorun)
-		; {
-		; 	Menu, Tray, Check, % lang("Start With Windows")
-		; }
-		; Else
-		; {
-		; 	Menu, Tray, UnCheck, % lang("Start With Windows")
-		; }
 	}
 
 	SetHotCorner(act="toggle")
@@ -116,7 +122,6 @@ class TrayMenu
 		hot_corner_switch := (act="config")? cfg : act
 		hot_corner_switch := (act="toggle")? !cfg : hot_corner_switch
 		SuxCore.SetIniConfig(INI_HOT_CORNER, hot_corner_switch)
-		; TrayMenu.update_tray_menu()
 		if (hot_corner_switch) {
 			global tick_detect_interval
 			SetTimer, TICK_HOT_CORNERS, %tick_detect_interval%
@@ -145,7 +150,6 @@ class TrayMenu
 		}
 		SuxCore.SetIniConfig(INI_THEME, cur_theme)
 		SuxCore.SetCurrentRealTheme(cur_theme)
-		; TrayMenu.update_tray_menu()
 	}
 
 	SetLang(act="itemname")
@@ -160,12 +164,12 @@ class TrayMenu
 		}
 		global INI_LANG
 		SuxCore.SetIniConfig(INI_LANG, lang)
-		; TrayMenu.update_tray_menu()
 	}
 
 	; Tray Menu
 	update_tray_menu()
 	{
+		global INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH
 		global INI_WINDOW_MOVER_SWITCH
 		global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH
 		global INI_LIMIT_MODE_IN_FULL_SCREEN
@@ -175,6 +179,7 @@ class TrayMenu
 		global INI_LANG
 		version_str := lang("About") " sux v" SuxCore.version
 		autorun := SuxCore.GetIniConfig(INI_AUTORUN, 0)
+		check_updates_on_startup_switch := SuxCore.GetIniConfig(INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH, 0)
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version v") remote_ver_str . " !" lang(" Click me to chekc it out!")
@@ -214,6 +219,7 @@ class TrayMenu
 			,[check_update_menu_name, check_update_menu_func]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {"check": autorun}]
+			,[lang("Check Updates On Startup"), "TrayMenu.SetCheckUpdatesOnStartup", {"check": check_updates_on_startup_switch}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			,[lang("Theme"),, {"sub": "SearchGuiTheme"}]
 			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
