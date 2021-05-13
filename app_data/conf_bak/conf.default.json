@@ -140,6 +140,8 @@
       },
       "LeftHalfBottomEdge": {
         "ctrl_8": "OpenTaskView",
+        "wheeldown": "VolumeDown",
+        "wheelup": "VolumeUp",
         "MButton": "MoveWindowToLeftSide"
       },
       "LeftHalfTopEdge": {
@@ -150,11 +152,15 @@
       },
       "RightHalfTopEdge": {
         "ctrl_8": "MoveWindowToRightSide",
-        "MButton": "MoveWindowToRightSide"
+        "MButton": "MoveWindowToRightSide",
+        "wheeldown": "send {PgDn}",
+        "wheelup": "send {PgUp}"
       },
       "RightHalfBottomEdge": {
         "ctrl_8": "OpenActionCenter",
-        "MButton": "MoveWindowToRightSide"
+        "MButton": "MoveWindowToRightSide",
+        "wheeldown": "send {PgDn}",
+        "wheelup": "send {PgUp}"
       }
     }
   },
