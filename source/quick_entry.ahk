@@ -116,19 +116,6 @@ class QuickEntry {
 		Menu, QuickEntry_Menu, Add, % lang("Translate Text") . "`t&f", QuickEntry_Translation_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
 
-		;; transform text
-		transform_text_arr := [lang("Uppercase"), lang("Lowercase"), "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd"]
-		for index, pattern in transform_text_arr {
-			if (pattern == "|")
-				Menu, QuickEntry_TransformText_Detail_Menu, Add
-			else {
-				; Menu, QuickEntry_TransformText_Detail_Menu, Add, % "&" . index . ".`t" . pattern, QuickEntry_TransformText_Detail_Menu_click
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB, index, pattern)
-				Menu, QuickEntry_TransformText_Detail_Menu, Add, % menu_shortcut_str, QuickEntry_TransformText_Detail_Menu_click
-			}
-		}
-		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&g", :QuickEntry_TransformText_Detail_Menu
-
 		;;; clipboard_plus
 		ClipboardPlus.ShowAllClips()
 
@@ -149,6 +136,20 @@ class QuickEntry {
 		if (COMMAND_TITLE_LIST.Count() > cur_shortcut_cnt)
 			Menu, QuickEntry_Command_Menu, Add, % lang("More Command"), :QuickEntry_Command_Menu_More
 		
+		;; transform text
+		transform_text_arr := [lang("Uppercase"), lang("Lowercase"), "|", "AbCd", "abCd", "|", "AB_CB", "ab_cd", "Ab_Cd", "ab_Cd", "|", "AB-CD", "ab-cd", "Ab-Cd", "ab-Cd"]
+		for index, pattern in transform_text_arr {
+			if (pattern == "|")
+				Menu, QuickEntry_TransformText_Detail_Menu, Add
+			else {
+				; Menu, QuickEntry_TransformText_Detail_Menu, Add, % "&" . index . ".`t" . pattern, QuickEntry_TransformText_Detail_Menu_click
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB, index, pattern)
+				Menu, QuickEntry_TransformText_Detail_Menu, Add, % menu_shortcut_str, QuickEntry_TransformText_Detail_Menu_click
+			}
+		}
+		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&g", :QuickEntry_TransformText_Detail_Menu
+		
+		;;;
 		Menu, QuickEntry_Menu, Show
 	} 
 
@@ -256,11 +257,6 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 QuickEntry_Translation_Menu_Click:
 	TranslateSeletedText(current_selected_text)
-	Return
-
-
-QuickEntry_ClipboardPlus_Menu_Click:
-	ClipboardPlus.ShowAllClips(current_selected_text)
 	Return
 
 
