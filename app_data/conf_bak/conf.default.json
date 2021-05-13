@@ -38,6 +38,9 @@
       "Bing": [
         "https://www.bing.com/search?q=REPLACEME&qs=n&FORM=BESBTB&sp=-1&pq=REPLACEME&sc=8-8&sk=&cvid=278DBE315C2D48E0AFC1B7B88E5878F3&ensearch=1"
       ],
+      "Google Translate": [
+        "https://translate.google.cn/?hl=zh-CN&tab=TT&sl=auto&tl=en&text=REPLACEME&op=translate"
+      ],
       "Youdao": [
         "https://www.youdao.com/w/REPLACEME"
       ],

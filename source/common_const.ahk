@@ -67,6 +67,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Google": "谷歌"
     ,"Baidu": "百度"
     ,"Bing": "必应"
+    ,"Google Translate": "谷歌翻译"
     ,"Youdao": "有道"
     ,"Bilibili": "哔哩哔哩"
     ,"Jingdong": "京东"
