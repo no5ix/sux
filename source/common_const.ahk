@@ -8,7 +8,7 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Tips: ": "小技巧: "
     ,"after selecting text, this menu can automatically process it": "选择文本后，此菜单可以自动处理它"
     ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
-    ,"There is a new version sux, would you like to check it out?": "sux有新版本, 你要看看有啥新功能吗?"
+    ,"There is a new version sux, would you like to open sux official website to download the new sux?": "sux有新版本, 您要打开sux官网去下载新sux吗?"
     ," Click me to chekc it out!": " 点击我查看!"
     ,"This is the lastest version.": "这已经是最新版本."
     ,"Unable to connect to the sux official website.": "无法连接到sux官网."

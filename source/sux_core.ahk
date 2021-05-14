@@ -121,7 +121,7 @@ on_get_remote_ver_data_ini_ready() {
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
-			MsgBox, 0x44, % SuxCore.ProgramName, % lang("There is a new version sux, would you like to check it out?")
+			MsgBox, 0x44, % SuxCore.ProgramName, % lang("There is a new version sux, would you like to open sux official website to download the new sux?")
 			IfMsgBox Yes
 			{
 				run, % SuxCore.remote_download_html
