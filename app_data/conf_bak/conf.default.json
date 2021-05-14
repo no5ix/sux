@@ -122,8 +122,8 @@
       },
       "TopHalfRightEdge": {
         "ctrl_8": "OpenFileExplorer",
-        "wheeldown": "GoBottom",
-        "wheelup": "GoTop",
+        "wheeldown": "send {PgDn}",
+        "wheelup": "send {PgUp}",
         "MButton": "MinWindow"
       },
       "BottomHalfLeftEdge": {
