@@ -206,12 +206,10 @@ class TrayMenu
 			, [lang("Dark"), "TrayMenu.SetTheme", {"check": cur_theme=="dark"}]])
 
 	    SysGet, mon_cnt, MonitorCount
-		window_mover_menu_state := mon_cnt==1 ? "disable": "check"
-		m(window_mover_menu_state)
 		xMenu.New("SensitiveFeatureSwitch", [[lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {"check": limit_mode_in_full_screen_switch==1}]
 			, [lang("Hot Corner"), "TrayMenu.SetHotCorner", {"check": hot_corner_switch==1}]
 			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {"check": disable_win10_auto_update_switch==1}]
-			, [lang("Window Mover"), "TrayMenu.SetWindowMover", {"disable": window_mover_switch==1}]])
+			, [lang("Window Mover"), "TrayMenu.SetWindowMover", {mon_cnt==1 ? "disable": "check": window_mover_switch==1}]])
 
 		TrayMenuList := []
 		TrayMenuList := EnhancedArray.merge(TrayMenuList
@@ -419,7 +417,6 @@ class xMenu
 					Continue
 				StringLower, Key, Key
 				if(Key == "check") {
-					m(cfg_entry[1] " //c " cfg_entry[2])
 					Menu, % cfg_entry[1], Check, % cfg_entry[2]
 				}
 				if(Key == "uncheck")
@@ -429,7 +426,6 @@ class xMenu
 				if(Key == "enable")
 					Menu, % cfg_entry[1], Enable, % cfg_entry[2]
 				if(Key == "disable") {
-					m(cfg_entry[1] " // " cfg_entry[2])
 					Menu, % cfg_entry[1], Disable, % cfg_entry[2]
 				}
 				if(Key == "toggleenable")
