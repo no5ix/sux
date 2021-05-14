@@ -635,7 +635,8 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 	if (action != "_" && !IsRawUrl(action) && !IsFunc(action) && !IsLabel(action) && !Instr(action, "jsfunc_") && !Instr(action, ".exe")) {
 		action_key_arr := StrSplit(action, "_")
 		if (action_key_arr.Length() == 1) {
-			action := "{" . action . "}"
+			StringLower, action, action
+			action := action == "win" ? "{LWin}": "{" . action . "}"
 		}
 		else {
 			action := ""
