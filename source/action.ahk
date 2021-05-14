@@ -7,7 +7,9 @@
 
 
 
-
+ShowSuxMenu() {
+	QuickEntry.ShowQuickEntryMenu()
+}
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -230,12 +232,22 @@ InsertLineBelow() {
 	Send, {End}
 	Sleep, 66
 	Send, {Enter}
+	Sleep, 66
+	Loop 8
+	{
+		Send, {WheelLeft}
+	}
 }
 
 InsertLineAbove() {
 	Send, {Up}
 	Sleep, 66
 	InsertLineBelow()
+	Sleep, 66
+	Loop 8
+	{
+		Send, {WheelLeft}
+	}
 }
 
 DeleteCurrentLine() {

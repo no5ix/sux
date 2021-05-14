@@ -286,7 +286,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - DeleteCurrentLine
     - IndentCurrentLine
     - SimulateClickDown
-- 需要发送的热键操作类型: 需要加个"send"来标记要发送的热键操作, 比如要发送`shift+下` 就是`send +{Down}`, 下方是对照表
+- 需要发送的键盘操作类型: 需要加个"send"来标记要发送的热键操作, 比如要发送`shift+下` 就是`send +{Down}`, 下方是对照表
     - 查看 [中文详细文档](https://wyagd001.github.io/zh-cn/docs/Hotkeys.htm)
     - see [English detail](https://www.autohotkey.com/docs/Hotkeys.htm)
     - `win: "#" `
@@ -405,6 +405,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
 - 单显示器 window mover 的menu没有disable
+- 把conf里的`!`和`+`等的做一个转为`{alt}`的解析器, 方便新手配置
 <!-- - 有空格的时候变换文本有bug, 还有比如 INI_SetCheckUpdatesOnStartup 变成AA_BB, 也有问题 -->
 <!-- - select sth tips on menu top -->
 <!-- - add google translate to search plus -->

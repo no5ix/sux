@@ -614,6 +614,14 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 	key_split_arr := StrSplit(multi_hit_ltrimed_key, "_")
 	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": "", "mbutton": "", "lbutton": "", "rbutton": ""}
 	
+	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
+			,hover: "hover", capslock: "CapsLock"
+			,lwin: "<#", rwin: ">#"
+			,lctrl: "<^", rctrl: ">^"
+			,lshift: "<+", rshift: ">+"
+			,lalt: "<!", ralt: ">!"
+			,lbutton:  "LButton", rbutton:  "RButton", mbutton: "MButton"}
+
 	if (key_split_arr.Length() == 1 && handle_single_double_hit_mode == 0 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
 	; if (handle_single_double_hit_mode == 0 && (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX))) {
 		; m(original_key_name)
@@ -623,13 +631,24 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := action
 		return
 	}
-	map1 := {win: "#", ctrl: "^", shift: "+", alt: "!"
-			,hover: "hover", capslock: "CapsLock"
-			,lwin: "<#", rwin: ">#"
-			,lctrl: "<^", rctrl: ">^"
-			,lshift: "<+", rshift: ">+"
-			,lalt: "<!", ralt: ">!"
-			,lbutton:  "LButton", rbutton:  "RButton", mbutton: "MButton"}
+
+	if (!IsRawUrl(action) && !IsFunc(action) && !IsLabel(action) && !Instr(action, "jsfunc_") && !Instr(action, ".exe")) {
+		action_key_arr := StrSplit(action, "_")
+		action := ""
+		for _i, action_key in action_key_arr {
+			StringLower, action_key, action_key
+			if (map1.HasKey(action_key)) {
+				action .= map1[action_key]
+			}
+			else {
+				action .= "{" . action_key . "}"
+			}
+			; if (action_key == "pgdn")
+			; 	m(action)
+			; if (action_key == "esc")
+			; 	m(action)
+		}
+	}
 
 	; if Instr(key_name, "hover")
 	; if Instr(key_name, DOUBLE_HIT_KEY_PREFIX)
@@ -676,7 +695,6 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			trans_key := str_array_concate(trans_key, [maped_symbol])
 		}
 	}
-
 	prefix_arr := StrSplit(prefix, "/")
 	prefix_trans_keys := str_array_concate(prefix_arr, trans_key, "|")
 	Loop, % prefix_trans_keys.MaxIndex()
@@ -735,10 +753,6 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			}
 		}
 		else {
-			; if (key_name == "rshift") {
-			; 	m(arr[1])
-			; 	m(arr[2])
-			; }
 			HOTKEY_REGISTER_MAP[original_key] := action
 			if (arr[2] == "hover") {
 				Continue
@@ -864,6 +878,7 @@ SUB_NORMAL_HIT:
 	
 	cur_hotkey := StrReplace(A_ThisHotkey, CAPS_REPLACER, pending_replace_str)
 	action := HOTKEY_REGISTER_MAP[border_code "|" cur_hotkey]
+	; m(action)
 	if(action="") {
 		; 鼠标移到边缘但触发普通热键时
 		action := HOTKEY_REGISTER_MAP["|" cur_hotkey]

@@ -488,6 +488,10 @@ GetMouseMonitorMidX() {
 }
 
 
+IsArray(a) {
+    return a.SetCapacity(0)=(a.MaxIndex()-a.MinIndex()+1)
+}
+
 
 ; 万能的run 函数
 ; 参数可以是cmd命令，代码中的sub，function，网址d
@@ -496,14 +500,20 @@ run(command, args*)
     global LIMIT_MODE
     if (LIMIT_MODE)
         Return
+    ; m(command.Length()) 
+    ; if (IsArray(command)) {
+    ;     RunArr(command)
+    ;     Return
+    ; }
+
     if !command
         return
     ; ToolTipWithTimer(command, 1111)
     ClickUpIfLbDown()
 
-    if (command.Length() == 1) {
-        command := command[1]
-    }
+    ; if (command.Length() == 1) {
+    ;     command := command[1]
+    ; }
     
     if(IsLabel(command)) {
         Gosub, %command%
@@ -528,7 +538,7 @@ run(command, args*)
         ; res := JsEval.eval(command . "()")
         ; m(res)
     }
-    Else {
+    Else if (IsRawUrl(command) || Instr(command, ".exe")) {
         ; if(RegExMatch(command, "^https?://")) {
         ;     brw := SuxCore.Browser
         ;     if(brw=""||brw="default")
@@ -540,14 +550,14 @@ run(command, args*)
         ;     Return
         ; }
         ; else 
-        if(RegExMatch(command, "i)send (.*)", sd)) {
-            send, % sd1
-            return
-        }
-        else if(RegExMatch(command, "i)m:(.*)", msg)) {
-            m(msg1)
-            return
-        }
+        ; if(RegExMatch(command, "i)send (.*)", sd)) {
+            ; send, % sd1
+            ; return
+        ; }
+        ; else if(RegExMatch(command, "i)m:(.*)", msg)) {
+        ;     m(msg1)
+        ;     return
+        ; }
         ; else if(RegExMatch(command, "i)edit:\s*(.*)", f)) {
         ;     SuxCore.Edit(f1)
         ;     return
@@ -580,6 +590,9 @@ run(command, args*)
                     MsgBox, 0x30,, % "Can't run command """ command """"
             ; }
         }
+    }
+    else {
+        send, % command
     }
 }
 
