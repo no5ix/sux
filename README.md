@@ -415,6 +415,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
 - 单显示器 window mover 的menu没有disable
+- conf 排列组合, 如 `["https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm", "Win"]` 或者 `["ctrl_9", "sleep", "ctrl_8"]` , 或者自动加上sleep
 <!-- - 把conf里的`!`和`+`等的做一个转为`{alt}`的解析器, 方便新手配置 -->
 <!-- - bug: 下划线出不来 -->
 <!-- - 有空格的时候变换文本有bug, 还有比如 INI_SetCheckUpdatesOnStartup 变成AA_BB, 也有问题 -->

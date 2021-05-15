@@ -499,10 +499,17 @@ run(command, args*)
 
     if !command
         return
-        
+
+    ; is_arr := 0  
+    ; for _i, _cmd in command {
+    ;     ; m(_i " // " cmd)
+    ;     run(_cmd)
+    ;     is_arr := 1
+    ; }
+    ; if (is_arr)
+    ;     Return
+
     ClickUpIfLbDown()
-    
-    
     
     if(IsLabel(command)) {
         Gosub, %command%
