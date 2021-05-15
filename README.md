@@ -182,18 +182,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     "enable": 1,
     "buildin": {
       "shift_space": "ShowSuxMenu",
-      "ctrl_8": "SimulateClickDown",
-      "ctrl_shift_alt_m": "MaxMinWindow",
-      "capslock_w": "SelectCurrentWord",
-      "capslock_alt_w": "SelectCurrentLine",
-      "capslock_`": "SwitchCapsState",
-      "capslock_tab": "IndentCurrentLine",
-      "capslock_v": "shift_ins",
-      "capslock_alt_v": "shift_6",
-      "capslock_r": "ctrl_y",
-      "capslock_enter": "InsertLineBelow",
-      "capslock_alt_enter": "InsertLineAbove",
-      "capslock_backspace": "DeleteCurrentLine",
       "capslock_c": "ctrl_c",
       "capslock_e": "up",
       "capslock_alt_e": "shift_up",
@@ -203,6 +191,18 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
       "capslock_alt_f": "shift_right",
       "capslock_d": "down",
       "capslock_alt_d": "shift_down",
+      "ctrl_8": "SimulateClickDown",
+      "ctrl_shift_alt_m": "MaxMinWindow",
+      "capslock_w": ["ctrl_left", "ctrl_shift_right"],
+      "capslock_shift_w": ["home", "shift_end"],
+      "capslock_`": "SwitchCapsState",
+      "capslock_tab": ["home", "tab"],
+      "capslock_v": "shift_ins",
+      "capslock_shift_v": "shift_6",
+      "capslock_r": "ctrl_y",
+      "capslock_enter": "InsertLineBelow",
+      "capslock_shift_enter": "InsertLineAbove",
+      "capslock_backspace": ["home", "shift_end", "backspace"],
       "capslock_y": "shift_8",
       "capslock_alt_y": "shift_5",
       "capslock_u": "shift_1",
@@ -311,7 +311,9 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - DeleteCurrentLine
     - IndentCurrentLine
     - SimulateClickDown
-- 需要发送的键盘操作类型: 比如要发送`shift+下` 就是`shift_down`
+- 发送的单个键盘操作: 比如要发送`shift+下` 就是`shift_down`
+- 发送一段键盘操作序列, 比如要实现`caps
++w`选中当前单词, 首先得移动到词的左边, 然后往右选中单词, 则配置为: `"capslock_w": ["ctrl_left", "ctrl_shift_right"]`
 - 一些特殊的热键定义对照表:
     - `lbutton:  左键单击 `
     - `rbutton:  右键单击 `
@@ -321,7 +323,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `hover: 悬停 `, 只能用在触发角的配置里
     - `doublehit_: 双击 `, 比如`doublehit_alt`表示双击`alt`
     - `triplehit_: 三击 `
-
 
 # CMDs指令
 
