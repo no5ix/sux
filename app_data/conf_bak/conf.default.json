@@ -104,7 +104,7 @@
         "hover": "JumpToNextTab"
       },
       "LeftBottomCorner": {
-        "hover": "win"
+        "hover": "Win"
       },
       "RightBottomCorner": {
         "hover": "GotoPreApp"
