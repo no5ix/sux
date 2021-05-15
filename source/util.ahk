@@ -500,6 +500,10 @@ run(command, args*)
     if !command
         return
 
+  	if (IsObject(command)) {  ;; 如果action是个列表的话
+        RunArr(command, args*)
+        Return
+    }
     ; is_arr := 0  
     ; for _i, _cmd in command {
     ;     ; m(_i " // " cmd)
@@ -593,12 +597,16 @@ run(command, args*)
 }
 
 
-RunArr(arr)
+RunArr(arr, args*)
 {
-    Loop, % arr.MaxIndex()
-    {
-        run(arr[A_Index])
+    for _i, _v in arr {
+        run(_v, args*)
+        Sleep, 66
     }
+    ; Loop, % arr.MaxIndex()
+    ; {
+    ;     run(arr[A_Index], args*)
+    ; }
 }
 
 

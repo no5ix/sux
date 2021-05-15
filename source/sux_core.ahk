@@ -30,6 +30,14 @@ THEME_TYPE_LIGHT := "light"
 THEME_TYPE_DARK := "dark"
 
 
+hotkey_chart_map := {"win": "#", "ctrl": "^", "shift": "+", "alt": "!"
+	,"hover": "hover", "capslock": "CapsLock"
+	,"lwin": "<#", "rwin": ">#"
+	,"lctrl": "<^", "rctrl": ">^"
+	,"lshift": "<+", "rshift": ">+"
+	,"lalt": "<!", "ralt": ">!"
+	,"lbutton": "LButton", "rbutton": "RButton", "mbutton": "MButton"}
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Goto, SUB_SUX_CORE_FILE_END_LABEL
 
@@ -543,31 +551,11 @@ sux 是一款效率提升工具同时拥有以下功能 :
 
 
 
-; 把两个字符串数组交叉连接起来
-str_array_concate(arr, app, deli="")
-{
-	ret := []
-	if(arr.MaxIndex()=="") {
-		arr := [arr]
-	}
-	if(app.MaxIndex()=="") {
-		app := [arr]
-	}
-	Loop, % arr.MaxIndex() {
-		idx1 := A_Index
-		Loop, % app.MaxIndex() {
-			idx2 := A_Index
-			ret.insert(arr[idx1] deli app[idx2])
-		}
-	}
-	return % ret
-}
-
 register_command(title, action)
 {
 	global COMMAND_TITLE_2_ACTION_MAP
 	global COMMAND_TITLE_LIST
-	COMMAND_TITLE_2_ACTION_MAP[title] := action
+	COMMAND_TITLE_2_ACTION_MAP[title] := parse_conf_action_str(action)
 	COMMAND_TITLE_LIST.Push(title)
 }
 
@@ -592,6 +580,63 @@ register_theme_conf(key_name, val)
 }
 
 
+parse_conf_action_str(action) {
+	if (IsObject(action)) {  ;; 如果action是个列表的话
+		final_action := []
+		for _i, _a in action {
+			final_action.Push(parse_conf_action_str_impl(_a))
+		}
+	}
+	else {
+		final_action := parse_conf_action_str_impl(action)
+	}
+	return final_action
+}
+
+parse_conf_action_str_impl(action)
+{
+	global hotkey_chart_map
+	if (action != "_" && !IsRawUrl(action) && !IsFunc(action) && !IsLabel(action) && !Instr(action, "jsfunc_") && !Instr(action, ".exe")) {
+		action_key_arr := StrSplit(action, "_")
+		if (action_key_arr.Length() == 1) {
+			StringLower, action, action
+			action := (action == "win") ? "{LWin}": "{" . action . "}"
+		}
+		else {
+			action := ""
+			for _i, action_key in action_key_arr {
+				StringLower, action_key, action_key
+				if (hotkey_chart_map.HasKey(action_key)) {
+					action .= hotkey_chart_map[action_key]
+				}
+				else {
+					action .= "{" . action_key . "}"
+				}
+			}
+		}
+	}
+	return action
+}
+
+; 把两个字符串数组交叉连接起来
+str_array_concate(arr, app, deli="")
+{
+	ret := []
+	if(arr.MaxIndex()=="") {
+		arr := [arr]
+	}
+	if(app.MaxIndex()=="") {
+		app := [arr]
+	}
+	Loop, % arr.MaxIndex() {
+		idx1 := A_Index
+		Loop, % app.MaxIndex() {
+			idx2 := A_Index
+			ret.insert(arr[idx1] deli app[idx2])
+		}
+	}
+	return % ret
+}
 
 register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_mode=0)
 {
@@ -606,6 +651,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 	global MULTI_HIT_MAP
 	global HANDLE_SINGLE_DOUBLE_HIT_MODE_1
 	global HANDLE_SINGLE_DOUBLE_HIT_MODE_2
+	global hotkey_chart_map
 
 	StringLower, key_name, original_key_name
 	multi_hit_ltrimed_key := StrReplace(key_name, DOUBLE_HIT_KEY_PREFIX)
@@ -614,13 +660,6 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 	key_split_arr := StrSplit(multi_hit_ltrimed_key, "_")
 	excluede_single_key_map := {"hover": "", "wheeldown": "", "wheelup": "", "mbutton": "", "lbutton": "", "rbutton": ""}
 	
-	map1 := {"win": "#", "ctrl": "^", "shift": "+", "alt": "!"
-			,"hover": "hover", "capslock": "CapsLock"
-			,"lwin": "<#", "rwin": ">#"
-			,"lctrl": "<^", "rctrl": ">^"
-			,"lshift": "<+", "rshift": ">+"
-			,"lalt": "<!", "ralt": ">!"
-			,"lbutton": "LButton", "rbutton": "RButton", "mbutton": "MButton"}
 
 	if (key_split_arr.Length() == 1 && handle_single_double_hit_mode == 0 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
 	; if (handle_single_double_hit_mode == 0 && (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX))) {
@@ -632,25 +671,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		return
 	}
 
-	if (action != "_" && !IsRawUrl(action) && !IsFunc(action) && !IsLabel(action) && !Instr(action, "jsfunc_") && !Instr(action, ".exe")) {
-		action_key_arr := StrSplit(action, "_")
-		if (action_key_arr.Length() == 1) {
-			StringLower, action, action
-			action := action == "win" ? "{LWin}": "{" . action . "}"
-		}
-		else {
-			action := ""
-			for _i, action_key in action_key_arr {
-				StringLower, action_key, action_key
-				if (map1.HasKey(action_key)) {
-					action .= map1[action_key]
-				}
-				else {
-					action .= "{" . action_key . "}"
-				}
-			}
-		}
-	}
+	final_action := parse_conf_action_str(action)
 
 	; if Instr(key_name, "hover")
 	; if Instr(key_name, DOUBLE_HIT_KEY_PREFIX)
@@ -668,7 +689,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			; 	; m(multi_hit_ltrimed_key)
 			; 	if !MULTI_HIT_MAP.HasKey(multi_hit_ltrimed_key)
 			; 		MULTI_HIT_MAP[multi_hit_ltrimed_key] := {}
-			; 	MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := action
+			; 	MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := final_action
 			; 	return
 			; }
 			; else {
@@ -683,8 +704,8 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			; }
 		}
 		else { 
-		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : map1[cur_symbol] 
-			maped_symbol := map1[cur_symbol] 
+		; maped_symbol := (key_split_arr.Length() == 1) ? key_name : hotkey_chart_map[cur_symbol] 
+			maped_symbol := hotkey_chart_map[cur_symbol] 
 		}
 		if(maped_symbol=="") {
 			trans_key := str_array_concate(trans_key, [cur_symbol])
@@ -714,8 +735,8 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		}
 
 		; if (key_name == "rshift") {
-		; 	m(key "//" action)
-		; 	m(original_key "//" action)
+		; 	m(key "//" final_action)
+		; 	m(original_key "//" final_action)
 		; }
 		; if (key_name == "doublehit_rshift")
 		; 	m(handle_single_double_hit_mode)
@@ -725,7 +746,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		arr := StrSplit(key, "|")
 		if (handle_single_double_hit_mode == HANDLE_SINGLE_DOUBLE_HIT_MODE_2) {
 			; m(key_name)
-			; HOTKEY_REGISTER_MAP[key_name] := action
+			; HOTKEY_REGISTER_MAP[key_name] := final_action
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
 				Hotkey, % arr[2], SUB_MULTI_HIT
@@ -740,11 +761,11 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		; if (key_split_arr.Length() == 1 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
 			; if (key_name == "doublehit_rshift") {
 			; 	m(original_key)
-			; 	m(key "//" action)
+			; 	m(key "//" final_action)
 				; m(arr[2])
 			; }
 			; m(key_name)
-			HOTKEY_REGISTER_MAP[key_name] := action
+			HOTKEY_REGISTER_MAP[key_name] := final_action
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
 				Hotkey, % arr[2], SUB_ONLY_DOUBLE_HIT
@@ -755,7 +776,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			}
 		}
 		else {
-			HOTKEY_REGISTER_MAP[original_key] := action
+			HOTKEY_REGISTER_MAP[original_key] := final_action
 			if (arr[2] == "hover") {
 				Continue
 			}
