@@ -1,4 +1,5 @@
 
+
 <!-- [<i class="fa fa-fw fa-github fa-2x"></i>nox](https://github.com/no5ix/sux) 
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
@@ -12,7 +13,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 
 ![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
 
-`sux` 是一个只有700k大小的短小精悍的效率工具同时拥有
+`sux` 是一个只有800k大小的短小精悍的效率工具同时拥有
 - 翻译
 - 历史剪切板
 - 截图
@@ -54,7 +55,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 # 快捷搜索search-plus
 
 大多数时候其实都是 `shift+空格` 然后空格搜东西, 如果要取消菜单则按`alt`或者`esc`, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173722.png)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_plus.gif)
 
 也可以先选中某段文字然后`shift+空格`然后直接查询的.
 
@@ -69,16 +70,18 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 托盘菜单
 
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/tray_menu.gif)
+
 直接鼠标点击sux托盘图标可以快速禁用sux
 
 
-# 禁用win10系统的自动更新
+## 禁用win10系统的自动更新
 
 win10的自动更新经常会搞得电脑蓝屏或者各种崩溃或者长时间占用电脑, 十分恼人. win10的自动更新用win10本身自带的机制是无法禁止的, 即使关闭了win10的 `Windows Update`服务, 他隔一段时间后也会自动开启.  
 sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 
-# 窗口移动器-永远保持新窗口在鼠标所在的显示器打开
+## 窗口移动器-永远保持新窗口在鼠标所在的显示器打开
 
 对于多显示器的用户来说, 在2显示器上双击了某程序准备打开它, 很可能它这个程序窗口却会在1显示器上打开, sux的窗口移动器就是解决这个问题的
 
@@ -88,7 +91,8 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 # 类似macos的触发角hot-corner
 
 需要按照下图去sux托盘菜单里开启触发角功能
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509191356.png)
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/hot_corner.gif)
 
 当开启之后, 鼠标移动到屏幕左上/左下/右上右下都会触发不同的动作:
 - 左上: 跳到浏览器前一个标签页
@@ -119,6 +123,8 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 # 历史剪切板clipboard-plus
 
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/clipboard_plus.gif)
+
 这个历史粘贴板目前是不支持图片和其他的二进制文件, 支持一键粘贴所有历史剪切板记录和清空所有, 有时候需要去各种地方去一次性复制很多东西,  
 然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
 
@@ -129,12 +135,12 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 - 按`tab`是截图
 - 按`s`是贴图
 
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173705.png)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/snip_plus.gif)
 
 
 # 屏幕边缘触发器hot-edge
 
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173727.png)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/hot_edge.gif)
 
 - 你把鼠标放到左边缘, 然后滚轮, 你会发现可以调节音量
 - 你把鼠标放到右边缘, 然后滚轮, 你会发现可以 向上翻页 / 向下翻页
@@ -151,8 +157,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 这个工具其实很重磅的功能是 `hotkey`
 - 实现文本输入增强, 你可以通过 Capslock 键配合以下辅助按键实现大部分文本操作需求，不再需要在鼠标和键盘间来回切换
 - 也可以自定义各种快捷键来触发各种动作, 比如为笔记本的触摸板的`三指点击`设定为快捷键`ctrl_8`, 然后就可以模拟鼠标按下不放的操作了, 达到类似mac的`三指拖动`的效果
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173732.png)
 
 可以类似vim一样的, 各种光标移动都十分方便, 比如
 - `caps+e`是上
@@ -249,6 +253,8 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 # 文字替换器replace-text
 
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
+
 比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
 默认配置如下: 
 
@@ -267,13 +273,16 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 ```  
 
 
+# 文本变换器
+
+经常写代码的朋友应该经常会有把驼峰命名的文本 转换为 蛇形命名文本之类的需求, 或者把小写的文本转为大写的需求
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/transform_text.gif)
+
+
 # 自定义配置
 
 可以在托盘菜单里找到"编辑配置文件"的菜单的, 改了配置记得重启sux哈
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173641.png)
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173654.png)
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/WeChat%20Image_20210509173500.png)
 
 配置编写规则: 
 - action类型: 直接从下方的所有action里选即可
@@ -334,11 +343,11 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 * `sux` : sux official site
 
 
-# Features
+<!-- # Features
 
 * **personalized configuration** : u can modify `conf.user.json` to override all default configuration
-* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `hot-corner`-`hot-edge`
-* **hot corners** : just like mac hot cornes, see `hot-corner`-`hot-corner`
+* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `conf.user.json`-`hot-edge`
+* **hot corners** : just like mac hot cornes, see `conf.user.json`-`hot-corner`
 * **web search** : just like Wox/Listary/Alfred, see `conf.user.json`-`search-plus`
 * **enhanced capslock** : just like Capslock+, see `conf.user.json`-`capslock_plus`
 * **work with Everything**
@@ -348,7 +357,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 * **start sux with windows**
 * **custom command line**:  see `conf.user.json`-`command`
 * **custom hotkey**:  see `conf.user.json`-`hotkey`
-* **clipboard-plus**:  clipboard history, try `capslock+v`, see `conf.user.json`-`clipboard-plus`
+* **clipboard-plus**:  clipboard history -->
 <!-- * **auto selection copy** : just like linux terminal -->
 <!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
 <!-- * **game mode** : double Alt then input `game` -->
@@ -381,6 +390,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
   - ![微信](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_wechat.png)
 - 支付宝
   - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
+
 
 
 # TODO List
