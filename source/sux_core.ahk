@@ -326,7 +326,7 @@ sux 是一款效率提升工具同时拥有以下功能 :
 			
 		for i, guide_msg in guide_msg_arr {
 			; Msgbox,,% SuxCore.ProgramName, % guide_msg
-			SuxCore.SuxMsgBox(guide_msg)
+			SuxCore.SuxMsgBox(guide_msg, 22)
 		}
 	}
 
