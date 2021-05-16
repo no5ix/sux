@@ -944,6 +944,7 @@ border_event_evoke()
 
 ; event callback
 OnClipboardChange:
+Critical  ; If the clipboard changes while an OnClipboardChange function or label is already running, that notification event is lost. If this is undesirable, specify Critical as the label's first line. However, this will also buffer/defer other threads (such as the press of a hotkey) that occur while the OnClipboardChange thread is running.
 for key, func_name in ClipboardChangeCmdMgr.OnClipboardChangeCmd {
 	run(func_name)
 }

@@ -234,7 +234,10 @@ class ClipboardChangeCmdMgr
 
     enable_all_clip_change_func()
     {
-		SetTimer, enable_all_clip_change_func_impl, -1111
+        ; If the script itself changes the clipboard, its OnClipboardChange function or label is typically not executed immediately; that is, commands immediately below the command that changed the clipboard are likely to execute beforehand. To force the function or label to execute immediately, use a short delay such as Sleep 20 after changing the clipboard.
+        Sleep, 66  ; 根据上一行注释, 所以这一行 `Sleep 66` 就是让`OnClipboardChange`立即执行, 免得污染历史剪切板之类的东西
+        this.OnClipboardChangeCmd := this.OnClipboardChangeCmdBak
+		; SetTimer, enable_all_clip_change_func_impl, -3333
     }
 
     disable_all_clip_change_func()
