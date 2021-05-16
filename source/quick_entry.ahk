@@ -312,14 +312,21 @@ QuickEntry_TransformText_Detail_Menu_click:
 				Continue
 			}
 			last_start_i := 1
+			is_last_iter_char_upper := 0
 			Loop, parse, single_w
 			{
 				if (A_Index == 1)
 					Continue
 				if A_LoopField is upper
 				{
-					st_arr.Push(SubStr(single_w, last_start_i, A_Index-last_start_i))
-					last_start_i := A_Index
+					if (!is_last_iter_char_upper) {
+						st_arr.Push(SubStr(single_w, last_start_i, A_Index-last_start_i))
+						last_start_i := A_Index
+					}
+					is_last_iter_char_upper := 1
+				}
+				else {
+					is_last_iter_char_upper := 0
 				}
 			}
 			st_arr.Push(SubStr(single_w, last_start_i, StrLen(single_w)-last_start_i+1))
