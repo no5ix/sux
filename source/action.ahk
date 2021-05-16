@@ -127,7 +127,8 @@ GotoPreApp() {
 }
 
 JumpToPrevTab() {
-	ActivateWindowsUnderCursor()
+	if (!IsMouseActiveWindowAtSameMonitor())
+		ActivateWindowsUnderCursor()
 	Send {LControl Down}{LShift Down}
 	Send, {Tab}
 	Sleep, 111
@@ -135,7 +136,8 @@ JumpToPrevTab() {
 }
 
 JumpToNextTab() {
-	ActivateWindowsUnderCursor()
+	if (!IsMouseActiveWindowAtSameMonitor())
+		ActivateWindowsUnderCursor()
 	Send {LControl Down}
 	Send, {Tab}
 	Sleep, 111
