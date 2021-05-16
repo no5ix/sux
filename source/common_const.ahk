@@ -75,7 +75,11 @@ LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能
     ,"Zhihu": "知乎"
     ,"Douban": "豆瓣"
     ,"Youku": "优酷"
+    ,"New Release": "新版本"
+    ,"What's new?": "新版特性:"
+    ,"Download Page": "下载页"
     ,"please install Everything and set its path in conf.user.json": "请安装Everything并在conf.user.json里配置它的路径"
+    ,"- Improve the ease of use of the configuration file. Now even if you don’t know the ahk language, you can easily configure a single keyboard operation or a series of operation sequences - Optimize the logic of checking for updates": "- 提高配置文件的易用性, 现在即使不会ahk语言, 也能轻松配置单个键盘操作或者配一串操作序列 - 优化检查更新的逻辑"
     ,"Feedback": "反馈"}
 
 

@@ -182,8 +182,8 @@ class TrayMenu
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version v") remote_ver_str . " !" lang(" Click me to chekc it out!")
-			check_update_menu_func := SuxCore.remote_download_html
-			; check_update_menu_func := TrayMenu.ShowNewVerReleaseNote
+			; check_update_menu_func := SuxCore.remote_download_html
+			check_update_menu_func := "TrayMenu.ShowNewVerReleaseNote"
 		}
 		else {
 			check_update_menu_name := lang("Check Update")
@@ -244,20 +244,21 @@ class TrayMenu
 	}
 
 	ShowNewVerReleaseNote() {
-		m(1)
 		Gui, new_ver_release_note: New
 		Gui new_ver_release_note:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, new_ver_release_note:Font, s12
 
-		s := lang("New Release") . "sux v" . SuxCore.get_remote_ini_config("ver")
+		s := lang("New Release") . "! sux v" . SuxCore.get_remote_ini_config("ver")
 		Gui, new_ver_release_note:Add, Text,, % s
 		s := lang("What's new?")
 		Gui, new_ver_release_note:Add, Text,, % s
 
-		remote_ver_release_note_str := SuxCore.get_remote_ini_config("release_note")
-		_arr := StrSplit(remote_ver_release_note_str, "`n")
+		remote_ver_release_note_str := lang(SuxCore.get_remote_ini_config("release_note"))
+		_arr := StrSplit(remote_ver_release_note_str, "-")
 		for _i, _s in _arr {
-			Gui, new_ver_release_note:Add, Text,, % lang(_s)
+			if (!_s)
+				Continue
+			Gui, new_ver_release_note:Add, Text,, % "- " . lang(_s)
 		}
 
 		s := "<a href=""" SuxCore.remote_download_html """>" lang("Download Page") "</a>"
@@ -556,7 +557,7 @@ TICK_HOT_CORNERS:
 	if (InStr(border_code, "Corner")) {
 		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
 		; ToolTipWithTimer(border_code "|" "hover")
-		ToolTipWithTimer(action, 1111)
+		; ToolTipWithTimer(action, 1111)
 		run(action)
 		Loop 
 		{

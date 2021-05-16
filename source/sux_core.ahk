@@ -131,7 +131,7 @@ on_get_remote_ver_data_ini_ready() {
 	if (cur_http_req.status == 200) {
 		if FileExist(SuxCore.remote_ver_ini_file)
 			FileDelete, % SuxCore.remote_ver_ini_file
-		FileAppend, % cur_http_req.responseText, % SuxCore.remote_ver_ini_file
+		FileAppend, % cur_http_req.responseText, % SuxCore.remote_ver_ini_file, UTF-16
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
