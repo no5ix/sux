@@ -246,12 +246,14 @@ class TrayMenu
 	ShowNewVerReleaseNote() {
 		Gui, new_ver_release_note: New
 		Gui new_ver_release_note:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
-		Gui, new_ver_release_note:Font, s12
+		Gui, new_ver_release_note:Font, s16
 
 		s := lang("New Release") . "! sux v" . SuxCore.get_remote_ini_config("ver")
 		Gui, new_ver_release_note:Add, Text,, % s
 		s := lang("What's new?")
 		Gui, new_ver_release_note:Add, Text,, % s
+
+		Gui, new_ver_release_note:Font, s11
 
 		remote_ver_release_note_str := lang(SuxCore.get_remote_ini_config("release_note"))
 		_arr := StrSplit(remote_ver_release_note_str, "-")

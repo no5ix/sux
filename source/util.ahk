@@ -515,7 +515,7 @@ run(command, args*)
 
     ClickUpIfLbDown()
     
-    ToolTipWithTimer(command, 666)
+    ; ToolTipWithTimer(command, 666)
 
     if(IsLabel(command)) {
         Gosub, %command%
