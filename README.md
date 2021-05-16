@@ -1,5 +1,4 @@
 
-
 <!-- [<i class="fa fa-fw fa-github fa-2x"></i>nox](https://github.com/no5ix/sux) 
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+** .
@@ -14,19 +13,19 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 ![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
 
 `sux` 是一个只有800k大小的短小精悍的效率工具同时拥有
-- 翻译
-- 历史剪切板
-- 截图
-- 贴图
-- 类似listary/alfred/wox的快捷搜索: `shift+空格`
-- 类似macos的触发角
-- 屏幕边缘触发器
-- 全局自定义快捷键实现各种操作
-- 文本替换器
-- 文本变换器
+- [翻译](#翻译)
+- [历史剪切板](#历史剪切板clipboard-plus)
+- [截图 & 贴图](#截图和贴图)
+- [类似listary/alfred/wox的快捷搜索](#快捷搜索search-plus): `shift+空格`
+- [类似macos的触发角](#类似macos的触发角hot-corner)
+- [屏幕边缘触发器](#屏幕边缘触发器hot-edge)
+- [全局自定义快捷键实现各种操作](#快捷键完全自定义)
+- [文本替换器](#文字替换器replace-text)
+- [文本变换器](#文本变换器)
 - 自定义主题
-- 快捷指令
-- 可自定义的json配置
+- [托盘菜单](#托盘菜单)
+- [快捷指令](#cmds指令)
+- [可自定义的json配置](#自定义配置)
 - blabla...
 
 An alternative to **Alfred**/**Wox**/**Listary**/**Capslock+**/**OneQuick** .
@@ -59,9 +58,9 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 也可以先选中某段文字然后`shift+空格`然后直接查询的.
 
-所有的默认快捷键都是可以改的, 在conf.user.json里找到`QuickEntry.ShowQuickEntryMenu`改, 改成`capslock_q`或者`alt_space`或者`doublehit_ctrl`或者`triplehit_shift`或者其他的任何你喜欢的快捷键都行, 不过不建议`doublehit_alt`, 因为`alt`会丢失焦点.
+所有的默认快捷键都是可以改的, 在`conf.user.json`里找到`ShowSuxMenu`改, 改成`capslock_q`或者`alt_space`或者`doublehit_ctrl`或者`triplehit_shift`或者其他的任何你喜欢的快捷键都行, 不过不建议`doublehit_alt`, 因为`alt`会丢失焦点.
 
-为什么`shift+空格` 出来的不是搜索框?
+*为什么`shift+空格` 出来的不是搜索框?*
 
 原来是那样的, 后来我给一些用户(比如运营岗用户)用, 发现他们记不住key.
 比如百度是`bd`, 谷歌是`gg`这种对吧?
@@ -90,7 +89,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 # 类似macos的触发角hot-corner
 
-需要按照下图去sux托盘菜单里开启触发角功能
+若要用的话, 需要去sux托盘菜单里开启触发角功能
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/hot_corner.gif)
 
@@ -121,12 +120,19 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 ```
 
 
+# 翻译
+
+翻译集成在快捷菜单中了
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/translate_text.gif)
+
+
 # 历史剪切板clipboard-plus
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/clipboard_plus.gif)
 
-这个历史粘贴板目前是不支持图片和其他的二进制文件, 支持一键粘贴所有历史剪切板记录和清空所有, 有时候需要去各种地方去一次性复制很多东西,  
-然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
+这个历史粘贴板目前是不支持图片和其他的二进制文件, 支持一键粘贴所有历史剪切板记录和清空所有,   
+有时候需要去各种地方去一次性复制很多东西, 然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
 
 
 # 截图和贴图
@@ -280,6 +286,14 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/transform_text.gif)
 
 
+# CMDs指令
+
+* `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
+* `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
+* `Everything` : 打开Everything, 如果已经选中了文字, 则直接用everything搜索此文字
+* `sux` : sux official site
+
+
 # 自定义配置
 
 可以在托盘菜单里找到"编辑配置文件"的菜单的, 改了配置记得重启sux哈
@@ -334,13 +348,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `hover: 悬停 `, 只能用在触发角的配置里
     - `doublehit_: 双击 `, 比如`doublehit_alt`表示双击`alt`
     - `triplehit_: 三击 `
-
-# CMDs指令
-
-* `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
-* `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
-* `Everything` : 打开Everything, 如果已经选中了文字, 则直接用everything搜索此文字
-* `sux` : sux official site
 
 
 <!-- # Features
