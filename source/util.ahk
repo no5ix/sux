@@ -215,6 +215,13 @@ StringJoin(sep, params*) {
 }
 
 
+
+enable_all_clip_change_func_impl()
+{
+    ClipboardChangeCmdMgr.OnClipboardChangeCmd := ClipboardChangeCmdMgr.TempOnClipboardChangeCmd
+    ClipboardChangeCmdMgr.TempOnClipboardChangeCmd := []
+}
+
 class ClipboardChangeCmdMgr
 {
     static OnClipboardChangeCmd := []
@@ -227,14 +234,7 @@ class ClipboardChangeCmdMgr
 
     enable_all_clip_change_func()
     {
-		_func := ObjBindMethod(this, "enable_all_clip_change_func_impl")
-		SetTimer, % _func, -1111
-    }
-
-    enable_all_clip_change_func_impl()
-    {
-        this.OnClipboardChangeCmd := this.TempOnClipboardChangeCmd
-        this.TempOnClipboardChangeCmd := []
+		SetTimer, enable_all_clip_change_func_impl, -1111
     }
 
     disable_all_clip_change_func()
