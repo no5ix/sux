@@ -218,18 +218,18 @@ StringJoin(sep, params*) {
 
 enable_all_clip_change_func_impl()
 {
-    ClipboardChangeCmdMgr.OnClipboardChangeCmd := ClipboardChangeCmdMgr.TempOnClipboardChangeCmd
-    ClipboardChangeCmdMgr.TempOnClipboardChangeCmd := []
+    ClipboardChangeCmdMgr.OnClipboardChangeCmd := ClipboardChangeCmdMgr.OnClipboardChangeCmdBak
 }
 
 class ClipboardChangeCmdMgr
 {
     static OnClipboardChangeCmd := []
-    static TempOnClipboardChangeCmd := []
+    static OnClipboardChangeCmdBak := []
 
     register_clip_change_func(func_name)
     {
         this.OnClipboardChangeCmd.Push(func_name)
+        this.OnClipboardChangeCmdBak.Push(func_name)
     }
 
     enable_all_clip_change_func()
@@ -239,9 +239,6 @@ class ClipboardChangeCmdMgr
 
     disable_all_clip_change_func()
     {
-        ; for k, v in this.OnClipboardChangeCmd
-        ;     this.TempOnClipboardChangeCmd[k] := v
-        this.TempOnClipboardChangeCmd := this.OnClipboardChangeCmd
         this.OnClipboardChangeCmd := []
     }
 }
