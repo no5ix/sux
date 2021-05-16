@@ -70,12 +70,18 @@ lang(key)
 }
 
 
-check_update_from_launch()
+check_update_from_launch() {
+	check_update_millisec := -6666
+	SetTimer, check_update_from_launch_impl, % check_update_millisec
+}
+
+check_update_from_launch_impl()
 {
 	global CHECK_UPDATE_CALLER_LAUNCH
 	CheckUpdate(CHECK_UPDATE_CALLER_LAUNCH)
-
 }
+
+
 
 check_update_from_auto_check()
 {
@@ -129,10 +135,12 @@ on_get_remote_ver_data_ini_ready() {
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			TrayMenu.update_tray_menu()
-			MsgBox, 0x44, % SuxCore.ProgramName, % lang("There is a new version sux, would you like to open sux official website to download the new sux?")
-			IfMsgBox Yes
-			{
-				run, % SuxCore.remote_download_html
+			if (check_update_caller == CHECK_UPDATE_CALLER_TRAY) { ;; check_update_from_tray
+				MsgBox, 0x44, % SuxCore.ProgramName, % lang("There is a new version sux, would you like to open sux official website to download the new sux?")
+				IfMsgBox Yes
+				{
+					run, % SuxCore.remote_download_html
+				}
 			}
 		}
 		else {
@@ -268,6 +276,12 @@ class SuxCore
 		QuickEntry.init()
 		JsEval.init()
 		SnipPlus.init()
+		
+		check_update_from_launch()
+
+		check_update_interval_hour := 2
+		check_update_millisec := check_update_interval_hour * 3600 * 1000
+		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time)
 			SuxCore.ShowUserGuide()
@@ -436,11 +450,6 @@ sux 是一款效率提升工具同时拥有以下功能 :
 		FileRead, conf_json_str, % SuxCore.conf_user_json_file
 		SuxCore.UserJsonConfObj := json2obj(conf_json_str)
 		;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-		
-		; check_update_interval_hour := SuxCore.GetSuxCfg("check-update-interval-hour", 2)
-		; check_update_millisec := check_update_interval_hour * 3600 * 1000
-		; SetTimer, check_update_from_auto_check, % check_update_millisec
-
 		
 		if(SuxCore.GetSuxCfg("hotkey.enable", 0))
 		{

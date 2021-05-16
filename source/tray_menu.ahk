@@ -30,7 +30,7 @@ class TrayMenu
 		this.SetLimitModeInFullScreen("config")
 		this.SetDisableWin10AutoUpdate("config")
 		this.SetWindowMover("config", 1)
-		this.SetCheckUpdatesOnStartup("config", 1)
+		; this.SetCheckUpdatesOnStartup("config", 1)
 	}
 
 	SetCheckUpdatesOnStartup(act="toggle", from_launch=0)
@@ -41,8 +41,7 @@ class TrayMenu
 		switch := (act="toggle")? !cfg : switch
 		SuxCore.SetIniConfig(INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH, switch)
 		if (switch && from_launch) {
-			check_update_millisec := -6666
-			SetTimer, check_update_from_launch, % check_update_millisec
+			check_update_from_launch()
 		}
 	}
 
@@ -169,7 +168,7 @@ class TrayMenu
 	; Tray Menu
 	update_tray_menu()
 	{
-		global INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH
+		; global INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH
 		global INI_WINDOW_MOVER_SWITCH
 		global INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH
 		global INI_LIMIT_MODE_IN_FULL_SCREEN
@@ -179,11 +178,12 @@ class TrayMenu
 		global INI_LANG
 		version_str := lang("About") " sux v" SuxCore.version
 		autorun := SuxCore.GetIniConfig(INI_AUTORUN, 0)
-		check_updates_on_startup_switch := SuxCore.GetIniConfig(INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH, 0)
+		; check_updates_on_startup_switch := SuxCore.GetIniConfig(INI_SET_CHECK_UPDATES_ON_STARTUP_SWITCH, 0)
 		remote_ver_str := SuxCore.get_remote_ini_config("ver")
 		if (remote_ver_str != "ERROR" && get_version_sum(remote_ver_str) > get_version_sum(SuxCore.version)) {
 			check_update_menu_name := lang("A New Version v") remote_ver_str . " !" lang(" Click me to chekc it out!")
 			check_update_menu_func := SuxCore.remote_download_html
+			; check_update_menu_func := TrayMenu.ShowNewVerReleaseNote
 		}
 		else {
 			check_update_menu_name := lang("Check Update")
@@ -219,7 +219,7 @@ class TrayMenu
 			,[check_update_menu_name, check_update_menu_func]
 			,[]
 			,[lang("Start With Windows"), "TrayMenu.SetAutorun", {"check": autorun}]
-			,[lang("Check Updates On Startup"), "TrayMenu.SetCheckUpdatesOnStartup", {"check": check_updates_on_startup_switch}]
+			; ,[lang("Check Updates On Startup"), "TrayMenu.SetCheckUpdatesOnStartup", {"check": check_updates_on_startup_switch}]
 			,["Language",, {"sub": "TrayLanguage"}]
 			,[lang("Theme"),, {"sub": "SearchGuiTheme"}]
 			,[lang("Feature Switch"),, {"sub": "SensitiveFeatureSwitch"}]
@@ -241,6 +241,31 @@ class TrayMenu
 	{
 		SuxCore._switch_tray_standard_menu := (act="toggle")? !SuxCore._switch_tray_standard_menu :act
 		this.update_tray_menu()
+	}
+
+	ShowNewVerReleaseNote() {
+		m(1)
+		Gui, new_ver_release_note: New
+		Gui new_ver_release_note:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
+		Gui, new_ver_release_note:Font, s12
+
+		s := lang("New Release") . "sux v" . SuxCore.get_remote_ini_config("ver")
+		Gui, new_ver_release_note:Add, Text,, % s
+		s := lang("What's new?")
+		Gui, new_ver_release_note:Add, Text,, % s
+
+		remote_ver_release_note_str := SuxCore.get_remote_ini_config("release_note")
+		_arr := StrSplit(remote_ver_release_note_str, "`n")
+		for _i, _s in _arr {
+			Gui, new_ver_release_note:Add, Text,, % lang(_s)
+		}
+
+		s := "<a href=""" SuxCore.remote_download_html """>" lang("Download Page") "</a>"
+		Gui, new_ver_release_note:Add, Link,, % s
+		Gui, new_ver_release_note:Add, Text
+		GuiControl, Focus, Close
+		s := lang("New Release")
+		Gui, new_ver_release_note:Show,, % s
 	}
 
 	ShowDonatePic() {
