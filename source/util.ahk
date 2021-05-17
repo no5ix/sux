@@ -215,6 +215,24 @@ StringJoin(sep, params*) {
 }
 
 
+Is_Clipboard_As_File() {
+	Loop, parse, clipboard, `n, `r
+    {
+        if (FileExist(A_LoopField)) {
+            ClipSaved := ClipboardAll
+            size := StrLen(ClipSaved) * (A_IsUnicode ? 2 : 1)
+            
+            if (size < 1000) {  ; 大于1000说明已经是文件而不是路径了
+                return 0
+            }
+        }
+        else {
+            return 0
+        }
+    }
+    return 1
+}
+
 
 enable_all_clip_change_func_impl()
 {
