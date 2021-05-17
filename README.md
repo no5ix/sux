@@ -440,7 +440,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
 <!-- - clip_plus support img, 考虑把路径变成文件, 把其他more_click menu也完善 -->
-- copy file path shortcut
+<!-- - copy file path shortcut -->
 <!-- - 清空clipboard有bug -->
 <!-- - 单显示器 window mover 的menu没有disable -->
 <!-- - conf 排列组合, 如 `["https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm", "Win"]` 或者 `["ctrl_9", "sleep", "ctrl_8"]` , 或者自动加上sleep -->

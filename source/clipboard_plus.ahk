@@ -212,6 +212,10 @@ Return
 
 
 Sub_ClipboardPlus_AllClips_Click:
+if (A_ThisMenuItemPos == 1) {
+	SafePaste()
+	return
+}
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 pending_paste := ClipboardPlus.ClipboardHistoryArr[idx][1]
 ClipboardPlus.PasteClipPlusContent(pending_paste)
