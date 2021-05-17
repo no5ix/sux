@@ -94,7 +94,7 @@ global tick_detect_interval := 88
 ; ; millisecond, the smaller the value, the faster you have to double-click
 global keyboard_double_click_timeout := 222
 global keyboard_triple_click_timeout := 333
-global auto_destory_quick_entry_gui_period := -22222  ; millisecond
+global auto_destory_quick_entry_gui_period := -28222  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 

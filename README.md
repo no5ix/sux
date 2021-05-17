@@ -445,7 +445,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - msgbox 标题改成sux -->
 <!-- - add newbie tutorial -->
 <!-- - hot corner/edge/capslock switcher to tray menu -->
-- update chinese readme, add some gif/mp4
+<!-- - update chinese readme, add some gif/mp4 -->
 - add more action
 <!-- - 出现在和鼠标同一个屏幕做成选项 -->
 <!-- - 报一个bug，caps+q，q，用百度查询时，弹窗出现在另一个屏幕，因为我有2个显示器，建议设置一下默认的弹窗。

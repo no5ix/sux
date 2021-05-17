@@ -169,7 +169,13 @@ PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
 Return
 
 Sub_ClipboardPlus_OnClipboardChange:
-ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, Clipboard)
+if (A_EventInfo == 1) {
+	pending_add_content := Clipboard
+}
+else if (A_EventInfo == 2) {
+	pending_add_content := CB_hBMP_Get()
+}
+ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, pending_add_content)
 while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.ClipboardHistoryArr.MaxIndex() > ClipboardPlus.ClipsTotalNum)
 	ClipboardPlus.ClipboardHistoryArr.Remove(1)
 Return
