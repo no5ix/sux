@@ -1764,9 +1764,16 @@ GDIP(C:="Startup") {
 }
 
 ;;;;;;;;;;;
+; https://autohotkey.com/board/topic/23162-how-to-copy-a-file-to-the-clipboard/#entry150209
 ; https://autohotkey.com/board/topic/23162-how-to-copy-a-file-to-the-clipboard/page-4#entry463462
 FileToClipboard(PathToCopy,Method="copy")
 {
+    ; Expand to full paths:
+    Loop, Parse, PathToCopy, `n, `r
+        Loop, %A_LoopField%, 1
+            temp_list .= A_LoopFileLongPath "`n"
+    PathToCopy := SubStr(temp_list, 1, -1)
+
     FileCount:=0
     PathLength:=0
 
