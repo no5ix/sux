@@ -325,6 +325,17 @@ IndentCurrentLine() {
 }
 
 
+SaveSelectedFilePathToClipboard() {
+    Clipboard := ""
+    SendInput, ^{insert}
+    ClipWait, 0.1
+    if(!ErrorLevel) {
+		path := Clipboard
+		Clipboard := ""
+		Clipboard := path
+	}
+}
+
 SimulateClickDown() {
 	fake_lb_down = 1
 	Click Down
