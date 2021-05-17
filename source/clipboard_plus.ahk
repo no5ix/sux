@@ -104,12 +104,14 @@ class ClipboardPlus
 	PasteClipPlusContent(pending_paste)
 	{
 		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
-			hBM := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
-			GDIP("Startup")
 			img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
-			SavePicture(hBM, img_path)
-			GDIP("Shutdown")
-			DllCall( "DeleteObject", "Ptr",hBM )
+			if (!FileExist(img_path)) {
+				hBM := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
+				GDIP("Startup")
+				SavePicture(hBM, img_path)
+				GDIP("Shutdown")
+				DllCall( "DeleteObject", "Ptr", hBM )
+			}
 			if (FileExist(img_path)) {
 				PasteContent("FileToClipboard", img_path)
 			}
