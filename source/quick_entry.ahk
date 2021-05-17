@@ -180,7 +180,7 @@ class QuickEntry {
 
 			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop", "git" : "cd ~/Desktop"}
 			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(command_title)
-			IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
+			if (IsFileExplorerActive())
 			{
 				if (use_cur_path) {
 					Send, !d

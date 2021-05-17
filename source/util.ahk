@@ -215,20 +215,31 @@ StringJoin(sep, params*) {
 }
 
 
+IsFileExplorerActive() {
+    IfWinActive, ahk_exe explorer.exe ahk_class CabinetWClass  ; from file explorer
+    {
+        return 1
+    }
+    return 0
+}
+
 Is_Clipboard_As_File() {
+    ClipSaved := ClipboardAll
+    size := StrLen(ClipSaved) * (A_IsUnicode ? 2 : 1)
+    if (size < 1000) {  ; 大于1000说明已经是文件而不是路径了
+    	; ToolTipWithTimer(size)
+        return 0
+    }
+    max_i := 0
 	Loop, parse, clipboard, `n, `r
     {
-        if (FileExist(A_LoopField)) {
-            ClipSaved := ClipboardAll
-            size := StrLen(ClipSaved) * (A_IsUnicode ? 2 : 1)
-            
-            if (size < 1000) {  ; 大于1000说明已经是文件而不是路径了
-                return 0
-            }
-        }
-        else {
+        max_i := A_Index
+        if (!FileExist(A_LoopField)) {
             return 0
         }
+    }
+    if (max_i > 1 && !IsFileExplorerActive()) {
+        return 0
     }
     return 1
 }

@@ -99,6 +99,8 @@ class ClipboardPlus
 		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
 	}
 
+	
+
 	PasteClipPlusContent(pending_paste)
 	{
 		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
@@ -117,7 +119,15 @@ class ClipboardPlus
 		}
 		else if (ClipboardPlus.IsClipPlusFile(pending_paste)) {
 			pending_paste_file_path := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX)
-			PasteContent("FileToClipboard", pending_paste_file_path)
+			Loop, parse, pending_paste_file_path, `n, `r
+			{
+				if (FileExist(A_LoopField)) {
+					PasteContent("FileToClipboard", A_LoopField)
+				}
+				else {
+					PasteContent(A_LoopField)
+				}
+			}
 		}
 		else {
 			PasteContent(pending_paste)
@@ -217,15 +227,8 @@ Return
 
 Sub_ClipboardPlus_OnClipboardChange:
 if (A_EventInfo == 1) {
-	if (FileExist(Clipboard)) {
-		ClipSaved := ClipboardAll
-		size := StrLen(ClipSaved) * (A_IsUnicode ? 2 : 1)
-		if (size > 1000) {  ; 大于1000说明已经是文件而不是路径了
-			pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . Clipboard
-		}
-		else {
-			pending_add_content := Clipboard
-		}
+	if (Is_Clipboard_As_File()) {
+		pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . Clipboard
 	}
 	else {
 		pending_add_content := Clipboard
