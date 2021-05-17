@@ -1764,41 +1764,54 @@ GDIP(C:="Startup") {
 }
 
 ;;;;;;;;;;;
-; https://autohotkey.com/board/topic/23162-how-to-copy-a-file-to-the-clipboard/page-1#entry150209
-FileToClipboard(PathToCopy)
+; https://autohotkey.com/board/topic/23162-how-to-copy-a-file-to-the-clipboard/page-4#entry463462
+FileToClipboard(PathToCopy,Method="copy")
 {
-    ; Expand to full paths:
-    Loop, Parse, PathToCopy, `n, `r
-        Loop, %A_LoopField%, 1
-            temp_list .= A_LoopFileLongPath "`n"
-    PathToCopy := SubStr(temp_list, 1, -1)
-    
-    ; Allocate some movable memory to put on the clipboard.
-    ; This will hold a DROPFILES struct and a null-terminated list of
-    ; null-terminated strings.
-    ; 0x42 = GMEM_MOVEABLE(0x2) | GMEM_ZEROINIT(0x40)
-    hPath := DllCall("GlobalAlloc","uint",0x42,"uint",StrLen(PathToCopy)+22)
-    
-    ; Lock the moveable memory, retrieving a pointer to it.
-    pPath := DllCall("GlobalLock","uint",hPath)
-    
-    NumPut(20, pPath+0) ; DROPFILES.pFiles = offset of file list
-    
-    pPath += 20
-    ; Copy the list of files into moveable memory.
-    Loop, Parse, PathToCopy, `n, `r
+    FileCount:=0
+    PathLength:=0
+
+    ; Count files and total string length
+    Loop,Parse,PathToCopy,`n,`r
     {
-        DllCall("lstrcpy","uint",pPath+0,"str",A_LoopField)
-        pPath += StrLen(A_LoopField)+1
+        FileCount++
+        PathLength+=StrLen(A_LoopField)
     }
-    
-    ; Unlock the moveable memory.
-    DllCall("GlobalUnlock","uint",hPath)
-    
-    DllCall("OpenClipboard","uint",0)
-    ; Empty the clipboard, otherwise SetClipboardData may fail.
+
+    pid:=DllCall("GetCurrentProcessId","uint")
+    hwnd:=WinExist("ahk_pid " . pid)
+    ; 0x42 = GMEM_MOVEABLE(0x2) | GMEM_ZEROINIT(0x40)
+    hPath := DllCall("GlobalAlloc","uint",0x42,"uint",20 + (PathLength + FileCount + 1) * 2,"UPtr")
+    pPath := DllCall("GlobalLock","UPtr",hPath)
+    NumPut(20,pPath+0),pPath += 16 ; DROPFILES.pFiles = offset of file list
+    NumPut(1,pPath+0),pPath += 4 ; fWide = 0 -->ANSI,fWide = 1 -->Unicode
+    Offset:=0
+    Loop,Parse,PathToCopy,`n,`r ; Rows are delimited by linefeeds (`r`n).
+        offset += StrPut(A_LoopField,pPath+offset,StrLen(A_LoopField)+1,"UTF-16") * 2
+
+    DllCall("GlobalUnlock","UPtr",hPath)
+    DllCall("OpenClipboard","UPtr",hwnd)
     DllCall("EmptyClipboard")
-    ; Place the data on the clipboard. CF_HDROP=0xF
-    DllCall("SetClipboardData","uint",0xF,"uint",hPath)
+    DllCall("SetClipboardData","uint",0xF,"UPtr",hPath) ; 0xF = CF_HDROP
+
+    ; Write Preferred DropEffect structure to clipboard to switch between copy/cut operations
+    ; 0x42 = GMEM_MOVEABLE(0x2) | GMEM_ZEROINIT(0x40)
+    mem := DllCall("GlobalAlloc","uint",0x42,"uint",4,"UPtr")
+    str := DllCall("GlobalLock","UPtr",mem)
+
+    if (Method="copy")
+        DllCall("RtlFillMemory","UPtr",str,"uint",1,"UChar",0x05)
+    else if (Method="cut")
+        DllCall("RtlFillMemory","UPtr",str,"uint",1,"UChar",0x02)
+    else
+    {
+        DllCall("CloseClipboard")
+        return
+    }
+
+    DllCall("GlobalUnlock","UPtr",mem)
+
+    cfFormat := DllCall("RegisterClipboardFormat","Str","Preferred DropEffect")
+    DllCall("SetClipboardData","uint",cfFormat,"UPtr",mem)
     DllCall("CloseClipboard")
+    return
 }
