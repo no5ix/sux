@@ -272,7 +272,7 @@ PasteContent(pending_paste_content_or_cb, args*) {
 SafePaste() {
     ; Send, ^v
     Send, +{Insert}
-    Sleep, 111  ;; 这个sleeep是防止之后clipboard马上就被写入东西
+    Sleep, 66  ;; 这个sleeep是防止之后clipboard马上就被写入东西
 }
 
 GetCurSelectedText() {

@@ -435,7 +435,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
 - smart selection 双引号, 括号内, 单引号内
-- clip_plus support img
+<!-- - clip_plus support img, 考虑把路径变成文件, 把其他more_click menu也完善 -->
 - copy file path shortcut
 <!-- - 清空clipboard有bug -->
 <!-- - 单显示器 window mover 的menu没有disable -->

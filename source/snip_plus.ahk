@@ -44,12 +44,18 @@ class SnipPlus
 
 	AreaScreenShotAndSuspend(with_menu=0)
 	{
+    	ClipboardChangeCmdMgr.disable_all_clip_change_func()
 		SnipPlus.old_clipboard_content := ClipboardAll
 		Clipboard := ""
 
 		SnipPlus.AreaScreenShot()
 
 		hBM := CB_hBMP_Get()  
+		
+		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
+    	ClipboardChangeCmdMgr.enable_all_clip_change_func()
+
 		SnipPlus.temp_snip_img_index += 1
 		img_path := SnipPlus.GetCurSnipImgPath()
 		
@@ -86,9 +92,6 @@ class SnipPlus
 
 	SuspendLastScreenshot()
 	{
-		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
-
 		; if (FileExist(SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE)) {
 		; 	FileGetSize, _old_temp_clip_file_size, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE
 		; 	; FileDelete, % SnipPlus._TEMP_CLIPBOARD_CONTENT_FILE

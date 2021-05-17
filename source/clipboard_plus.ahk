@@ -24,7 +24,7 @@ Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 
 class ClipboardPlus
 {
-	static clipboard_img_suffix := " (sux-clipboard-img)"
+	static CLIPBOARD_IMG_SUFFIX := "[sux-clipboard-img] "
 	static ClipboardHistoryArr := []
 	static ClipsTotalNum = 
 
@@ -88,6 +88,32 @@ class ClipboardPlus
 		this.ClipboardHistoryArr := []
 	}
 
+	PasteClipboardPlusContent(pending_paste)
+	{
+		if (Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)) {
+			hBM := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
+			GDIP("Startup")
+			img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
+			SavePicture(hBM, img_path)
+			GDIP("Shutdown")
+			DllCall( "DeleteObject", "Ptr",hBM )
+			if (FileExist(img_path)) {
+				PasteContent("FileToClipboard", img_path)
+			}
+			else {
+				PasteContent(pending_paste)
+			}
+		}
+		else {
+			if (FileExist(pending_paste)) {
+				PasteContent("FileToClipboard", pending_paste)
+			}
+			else {
+				PasteContent(pending_paste)
+			}
+		}
+	}
+
 	_Trim(str_ori, add_time := 1)
 	{
 		_trimed_str := Trim(str_ori, " `t`r`n")
@@ -148,44 +174,36 @@ Return
 
 
 Sub_Menu_ClipboardPlus_PasteAll:
-ClipboardPasteAll =
-Loop, % ClipboardPlus.ClipboardHistoryArr.MaxIndex()
+max_i := ClipboardPlus.ClipboardHistoryArr.MaxIndex()
+Loop, % max_i
 {
-	ClipboardPasteAll := ClipboardPasteAll "`r`n" ClipboardPlus.ClipboardHistoryArr[A_Index][1]
+	pending_paste := ClipboardPlus.ClipboardHistoryArr[A_Index][1]
+	if (A_Index != max_i && !FileExist(pending_paste) && !Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)) {
+		pending_paste .= "`r`n"
+	}
+	ClipboardPlus.PasteClipboardPlusContent(pending_paste)
 }
-PasteContent(ClipboardPasteAll)
 Return
+
 
 Sub_Menu_ClipboardPlus_DeleteAll:
 ClipboardPlus.DeleteAllClips()
 Return
 
+
 Sub_ClipboardPlus_AllClips_Click:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 pending_paste := ClipboardPlus.ClipboardHistoryArr[idx][1]
-if (Instr(pending_paste, ClipboardPlus.clipboard_img_suffix)) {
-	hBM := StrReplace(pending_paste, ClipboardPlus.clipboard_img_suffix)
-	GDIP("Startup")
-	img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
-	SavePicture(hBM, img_path) 
-	if (FileExist(img_path)) {
-		GDIP("Shutdown")
-		DllCall( "DeleteObject", "Ptr",hBM )
-		PasteContent("FileToClipboard", img_path)
-	}
-	else {
-		PasteContent(pending_paste)
-	}
-}
-else {
-	PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
-}
+ClipboardPlus.PasteClipboardPlusContent(pending_paste)
 Return
+
 
 Sub_ClipboardPlus_AllClips_MoreClick:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR.Count()
-PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
+pending_paste := ClipboardPlus.ClipboardHistoryArr[idx][1]
+ClipboardPlus.PasteClipboardPlusContent(pending_paste)
 Return
+
 
 Sub_ClipboardPlus_OnClipboardChange:
 if (A_EventInfo == 1) {
@@ -193,7 +211,7 @@ if (A_EventInfo == 1) {
 }
 else if (A_EventInfo == 2) {
 	If (hBM := CB_hBMP_Get()) {
-		pending_add_content := hBM . ClipboardPlus.clipboard_img_suffix
+		pending_add_content := ClipboardPlus.CLIPBOARD_IMG_SUFFIX . hBM
 	}
 	else {
 		pending_add_content := Clipboard
