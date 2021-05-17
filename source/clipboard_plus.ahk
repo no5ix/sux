@@ -25,6 +25,7 @@ Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 class ClipboardPlus
 {
 	static CLIPBOARD_IMG_SUFFIX := "[sux-clipboard-img] "
+	static CLIPBOARD_FILE_SUFFIX := "[sux-clipboard-file] "
 	static ClipboardHistoryArr := []
 	static ClipsTotalNum = 
 
@@ -88,9 +89,19 @@ class ClipboardPlus
 		this.ClipboardHistoryArr := []
 	}
 
-	PasteClipboardPlusContent(pending_paste)
+	IsClipPlusFile(pending_paste)
 	{
-		if (Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)) {
+ 		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX) 
+	}
+
+	IsClipPlusImg(pending_paste)
+	{
+		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
+	}
+
+	PasteClipPlusContent(pending_paste)
+	{
+		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
 			hBM := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
 			GDIP("Startup")
 			img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
@@ -104,13 +115,12 @@ class ClipboardPlus
 				PasteContent(pending_paste)
 			}
 		}
+		else if (ClipboardPlus.IsClipPlusFile(pending_paste)) {
+			pending_paste_file_path := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX)
+			PasteContent("FileToClipboard", pending_paste_file_path)
+		}
 		else {
-			if (FileExist(pending_paste)) {
-				PasteContent("FileToClipboard", pending_paste)
-			}
-			else {
-				PasteContent(pending_paste)
-			}
+			PasteContent(pending_paste)
 		}
 	}
 
@@ -178,10 +188,10 @@ max_i := ClipboardPlus.ClipboardHistoryArr.MaxIndex()
 Loop, % max_i
 {
 	pending_paste := ClipboardPlus.ClipboardHistoryArr[A_Index][1]
-	if (A_Index != max_i && !FileExist(pending_paste) && !Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)) {
+	if (A_Index != max_i && !ClipboardPlus.IsClipPlusFile(pending_paste) && !ClipboardPlus.IsClipPlusImg(pending_paste)) {
 		pending_paste .= "`r`n"
 	}
-	ClipboardPlus.PasteClipboardPlusContent(pending_paste)
+	ClipboardPlus.PasteClipPlusContent(pending_paste)
 }
 Return
 
@@ -194,20 +204,32 @@ Return
 Sub_ClipboardPlus_AllClips_Click:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
 pending_paste := ClipboardPlus.ClipboardHistoryArr[idx][1]
-ClipboardPlus.PasteClipboardPlusContent(pending_paste)
+ClipboardPlus.PasteClipPlusContent(pending_paste)
 Return
 
 
 Sub_ClipboardPlus_AllClips_MoreClick:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1 - CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR.Count()
 pending_paste := ClipboardPlus.ClipboardHistoryArr[idx][1]
-ClipboardPlus.PasteClipboardPlusContent(pending_paste)
+ClipboardPlus.PasteClipPlusContent(pending_paste)
 Return
 
 
 Sub_ClipboardPlus_OnClipboardChange:
 if (A_EventInfo == 1) {
-	pending_add_content := Clipboard
+	if (FileExist(Clipboard)) {
+		ClipSaved := ClipboardAll
+		size := StrLen(ClipSaved) * (A_IsUnicode ? 2 : 1)
+		if (size > 1000) {  ; 大于1000说明已经是文件而不是路径了
+			pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . Clipboard
+		}
+		else {
+			pending_add_content := Clipboard
+		}
+	}
+	else {
+		pending_add_content := Clipboard
+	}
 }
 else if (A_EventInfo == 2) {
 	If (hBM := CB_hBMP_Get()) {
