@@ -175,6 +175,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 - `caps+f`是右
 - `caps+w`是选择当前单词
 - `caps+c`是模拟`ctrl+c`
+- `caps+alt_c`也是模拟复制, 但是当复制文件的时候会直接返回文件的路径
 - `caps+r`是模拟`ctrl+y`
 - `caps+v`是模拟`shift+insert`(终端爱好者的福音)
 - `caps+逗号`是光标移动到最左边
@@ -208,6 +209,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
       "capslock_alt_d": "shift_down",
       "ctrl_8": "SimulateClickDown",
       "ctrl_shift_alt_m": "MaxMinWindow",
+      "capslock_g": "SaveSelectedFilePathToClipboard",
       "capslock_w": ["ctrl_left", "ctrl_shift_right"],
       "capslock_shift_w": ["home", "shift_end"],
       "capslock_`": "SwitchCapsState",

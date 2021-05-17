@@ -179,6 +179,7 @@
       "capslock_alt_d": "shift_down",
       "ctrl_8": "SimulateClickDown",
       "ctrl_shift_alt_m": "MaxMinWindow",
+      "capslock_alt_c": "SaveSelectedFilePathToClipboard",
       "capslock_w": ["ctrl_left", "ctrl_shift_right"],
       "capslock_shift_w": ["home", "shift_end"],
       "capslock_`": "SwitchCapsState",
