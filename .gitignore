@@ -1,6 +1,6 @@
 .vscode/
 build/
-temp_snip_dir/
+temp_dir/
 
 conf.user.json
 remote_ver.ini

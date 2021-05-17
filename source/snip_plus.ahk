@@ -21,26 +21,17 @@ class SnipPlus
 {
 	static old_clipboard_content =
 	static temp_snip_img_index := 0
-	static _TEMP_SNIP_IMG_DIR := "app_data\temp_snip_dir\"
 	static _TEMP_SNIP_IMG_PREFIX := "temp_snip_"
-	; static _TEMP_CLIPBOARD_CONTENT_FILE := SnipPlus._TEMP_SNIP_IMG_DIR . "temp_clipboard_content.clip"
 
 
 	init()
 	{
-		SuxCore.OnExit("SnipPlus.ClearTempImg")
-		SnipPlus.ClearTempImg()
-	}
 
-	ClearTempImg()
-	{
-		FileRemoveDir, % SnipPlus._TEMP_SNIP_IMG_DIR, 1
-		FileCreateDir, % SnipPlus._TEMP_SNIP_IMG_DIR
 	}
 
 	GetCurSnipImgPath()
 	{
-		Return SnipPlus._TEMP_SNIP_IMG_DIR SnipPlus._TEMP_SNIP_IMG_PREFIX SnipPlus.temp_snip_img_index ".png"
+		Return SuxCore._TEMP_DIR . SnipPlus._TEMP_SNIP_IMG_PREFIX . SnipPlus.temp_snip_img_index . ".png"
 	}
 
 	AreaScreenShot()

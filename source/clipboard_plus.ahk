@@ -12,6 +12,7 @@ if(A_ScriptName=="clipboard_plus.ahk") {
 	ExitApp
 }
 
+
 ; with this label, you can include this file on top of the file
 Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 
@@ -23,6 +24,7 @@ Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 
 class ClipboardPlus
 {
+	static clipboard_img_suffix := " (sux-clipboard-img)"
 	static ClipboardHistoryArr := []
 	static ClipsTotalNum = 
 
@@ -160,7 +162,24 @@ Return
 
 Sub_ClipboardPlus_AllClips_Click:
 idx := ClipboardPlus.ClipboardHistoryArr.MaxIndex() - A_ThisMenuItemPos + 1
-PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
+pending_paste := ClipboardPlus.ClipboardHistoryArr[idx][1]
+if (Instr(pending_paste, ClipboardPlus.clipboard_img_suffix)) {
+	hBM := StrReplace(pending_paste, ClipboardPlus.clipboard_img_suffix)
+	GDIP("Startup")
+	img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
+	SavePicture(hBM, img_path) 
+	if (FileExist(img_path)) {
+		GDIP("Shutdown")
+		DllCall( "DeleteObject", "Ptr",hBM )
+		PasteContent("FileToClipboard", img_path)
+	}
+	else {
+		PasteContent(pending_paste)
+	}
+}
+else {
+	PasteContent(ClipboardPlus.ClipboardHistoryArr[idx][1])
+}
 Return
 
 Sub_ClipboardPlus_AllClips_MoreClick:
@@ -173,7 +192,12 @@ if (A_EventInfo == 1) {
 	pending_add_content := Clipboard
 }
 else if (A_EventInfo == 2) {
-	pending_add_content := CB_hBMP_Get()
+	If (hBM := CB_hBMP_Get()) {
+		pending_add_content := hBM . ClipboardPlus.clipboard_img_suffix
+	}
+	else {
+		pending_add_content := Clipboard
+	}
 }
 ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, pending_add_content)
 while (ClipboardPlus.ClipsTotalNum > 0 && ClipboardPlus.ClipboardHistoryArr.MaxIndex() > ClipboardPlus.ClipsTotalNum)

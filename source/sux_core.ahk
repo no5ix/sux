@@ -205,6 +205,7 @@ class SuxCore
 {
 	; dir
 	static _APP_DATA_DIR := "app_data/"
+	static _TEMP_DIR := "app_data\temp_dir\"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
@@ -277,6 +278,9 @@ class SuxCore
 		JsEval.init()
 		SnipPlus.init()
 		
+		SuxCore.OnExit("SuxCore.ClearTempDir")
+		SuxCore.ClearTempDir()
+
 		check_update_from_launch()
 
 		check_update_interval_hour := 2
@@ -285,6 +289,12 @@ class SuxCore
 
 		if (is_first_time)
 			SuxCore.ShowUserGuide()
+	}
+
+	ClearTempDir()
+	{
+		FileRemoveDir, % SuxCore._TEMP_DIR, 1
+		FileCreateDir, % SuxCore._TEMP_DIR
 	}
 
 	SuxMsgBox(msg, msg_type="", timeout=6)
