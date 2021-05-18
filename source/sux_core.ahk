@@ -221,7 +221,7 @@ class SuxCore
 	static Project_Issue_page := "https://github.com/no5ix/sux/issues"
 	static donate_page := "https://github.com/no5ix/sux#%E6%8D%90%E8%B5%A0"
 	static remote_download_html := "https://github.com/no5ix/sux/releases"
-	static help_addr := "https://github.com/no5ix/sux#features"
+	static help_addr := "https://github.com/no5ix/sux#readme"
 	; remote file path
 	static stable_branch := "master"
 	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
