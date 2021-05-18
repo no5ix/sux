@@ -113,7 +113,6 @@ class ClipboardPlus
 				DllCall( "DeleteObject", "Ptr", hBM )
 			}
 			if (FileExist(img_path)) {
-				ToolTipWithTimer(img_path, 6666)
 				PasteContent("FileToClipboard", img_path)
 			}
 			else {
@@ -125,8 +124,6 @@ class ClipboardPlus
 			Loop, parse, pending_paste_file_path, `n, `r
 			{
 				if (FileExist(A_LoopField)) {
-				ToolTipWithTimer(A_LoopField, 6666)
-
 					PasteContent("FileToClipboard", A_LoopField)
 				}
 				else {
