@@ -58,7 +58,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 也可以先选中某段文字然后`shift+空格`然后直接查询的.
 
-所有的默认快捷键都是可以改的, 在`conf.user.json`里找到`ShowSuxMenu`改, 改成`capslock_q`或者`alt_space`或者`doublehit_ctrl`或者`triplehit_shift`或者其他的任何你喜欢的快捷键都行, 不过不建议`doublehit_alt`, 因为`alt`会丢失焦点.
+所有的默认快捷键都是可以改的, 在`conf.user.json`里找到`ShowSuxMenu`改, 改成`capslock_q`或者`alt_space`或者`doublehit_ctrl` (双击ctrl) 或者`triplehit_shift` (三击shift) 或者其他的任何你喜欢的快捷键都行, 不过不建议`doublehit_alt` (双击alt), 因为`alt`会丢失焦点.
 
 *为什么`shift+空格` 出来的不是搜索框?*
 
@@ -67,24 +67,31 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 后来我就做了个这种快捷菜单, 用过几次熟悉快捷键之后也十分迅捷方便, 省去了每次都要输入什么`gg`/`bd`的烦恼
 
 
-# 托盘菜单
+# 翻译
 
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/tray_menu.gif)
+翻译集成在快捷菜单中了
 
-直接鼠标点击sux托盘图标可以快速禁用sux
-
-
-## 禁用win10系统的自动更新
-
-win10的自动更新经常会搞得电脑蓝屏或者各种崩溃或者长时间占用电脑, 十分恼人. win10的自动更新用win10本身自带的机制是无法禁止的, 即使关闭了win10的 `Windows Update`服务, 他隔一段时间后也会自动开启.  
-sux的这个功能就彻底解决了这个问题, 不再烦恼.
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/translate_text.gif)
 
 
-## 窗口移动器-永远保持新窗口在鼠标所在的显示器打开
+# 历史剪切板clipboard-plus
 
-对于多显示器的用户来说, 在2显示器上双击了某程序准备打开它, 很可能它这个程序窗口却会在1显示器上打开, sux的窗口移动器就是解决这个问题的
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/clipboard_plus.gif)
 
-注: 当检测到用户只有一个显示器的时候, 此选项会自动禁用(灰掉)
+这个历史粘贴板支持:  
+
+- 图片内容(在sux剪切板里会以`sux-clipboard-img`标识, sux支持从浏览器或者任何地方直接复制的图片)
+- 支持其他的二进制文件, 如图片文件, txt文件, 文件夹等等, 会以 `sux-clipboard-file`标识
+- 支持一键粘贴所有历史剪切板记录和清空所有,  有时候需要去各种地方去一次性复制很多东西, 然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
+
+
+# 截图和贴图
+
+`shift+空格` 弹出菜单之后: 
+- 按`tab`是截图
+- 按`s`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/snip_plus.gif)
 
 
 # 类似macos的触发角hot-corner
@@ -120,33 +127,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 ```
 
 
-# 翻译
-
-翻译集成在快捷菜单中了
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/translate_text.gif)
-
-
-# 历史剪切板clipboard-plus
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/clipboard_plus.gif)
-
-这个历史粘贴板支持:  
-
-- 图片内容(在sux剪切板里会以`sux-clipboard-img`标识, sux支持从浏览器或者任何地方直接复制的图片)
-- 支持其他的二进制文件, 如图片文件, txt文件, 文件夹等等, 会以 `sux-clipboard-file`标识
-- 支持一键粘贴所有历史剪切板记录和清空所有,  有时候需要去各种地方去一次性复制很多东西, 然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
-
-
-# 截图和贴图
-
-`shift+空格` 弹出菜单之后: 
-- 按`tab`是截图
-- 按`s`是贴图
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/snip_plus.gif)
-
-
 # 屏幕边缘触发器hot-edge
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/hot_edge.gif)
@@ -161,38 +141,103 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 - 放到屏幕右边缘, 然后按鼠标中键则可以把当前窗口移到屏幕右边
 
 
+# 文字替换器replace-text
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
+
+比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
+默认配置如下: 
+
+``` json
+  "replace-text": {
+    "enable": 1,
+    "buildin": {
+      "h/": "http://",
+      "hs/": "https://",
+      "qc@": "@qq.com",
+      "gc@": "@gmail.com",
+      "16@": "@163.com"
+    },
+    "custom": {}
+  },
+```  
+
+
+# 文本变换器
+
+经常写代码的朋友应该经常会有把驼峰命名的文本 转换为 蛇形命名文本之类的需求, 或者把小写的文本转为大写的需求
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/transform_text.gif)
+
+
+# CMDs指令
+
+* `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
+* `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
+* `Everything` : 打开Everything, 如果已经选中了文字, 则直接用everything搜索此文字(如果你也用Everything的话, sux可以配合Everything使用, [点击此处查看推荐配置](#设置Everything始终以运行次数排序))
+* `sux` : sux official site, sux官网
+
+
+# 托盘菜单
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/tray_menu.gif)
+
+直接鼠标点击sux托盘图标可以快速禁用sux
+
+
+## 禁用win10系统的自动更新
+
+win10的自动更新经常会搞得电脑蓝屏或者各种崩溃或者长时间占用电脑, 十分恼人. win10的自动更新用win10本身自带的机制是无法禁止的, 即使关闭了win10的 `Windows Update`服务, 他隔一段时间后也会自动开启.  
+sux的这个功能就彻底解决了这个问题, 不再烦恼.
+
+
+## 窗口移动器-永远保持新窗口在鼠标所在的显示器打开
+
+对于多显示器的用户来说, 在2显示器上双击了某程序准备打开它, 很可能它这个程序窗口却会在1显示器上打开, sux的窗口移动器就是解决这个问题的
+
+注: 当检测到用户只有一个显示器的时候, 此选项会自动禁用(灰掉)
+
+
 # 快捷键完全自定义
 
 这个工具其实很重磅的功能是 `hotkey`
 - 实现文本输入增强, 你可以通过 Capslock 键配合以下辅助按键实现大部分文本操作需求，不再需要在鼠标和键盘间来回切换
-- 也可以自定义各种快捷键来触发各种动作, 比如为笔记本的触摸板的`三指点击`设定为快捷键`ctrl_8`, 然后就可以模拟鼠标按下不放的操作了, 达到类似mac的`三指拖动`的效果
+- 也可以自定义各种快捷键来触发各种动作
 
-可以类似vim一样的, 各种光标移动都十分方便, 比如
-- `caps+e`是上
+预设快捷按键:  
+- `ctrl_8`: 模拟鼠标按下不放的操作. (建议笔记本的触摸板的`三指点击`设定为快捷键`ctrl_8`, 然后就可以模拟鼠标按下不放的操作了, 达到类似mac的`三指拖动`的效果)
+- `ctrl_shift_alt_m`:  最大化/最小化窗口. (建议笔记本的触摸板的`四指点击`设定为`ctrl_shift_alt_m`, 这样就可以快速最大/最小化窗口了)
+
+可以类似vim一样的, 各种光标移动都十分方便, 比如:    
 - `caps+h/j/k/l` 也可以来上下左右的
+- `caps+s`是左, 比如`caps+alt+s`就是往左选中哈, 以下相同, 加`alt`就是选中, 不加就是移动
+- `caps+e`是上
 - `caps+d`是下
-- `caps+s`是左, 比如`caps+alt+s`就是往左选中哈
 - `caps+f`是右
-- `caps+w`是选择当前单词
-- `caps+c`是模拟`ctrl+c`
-- `caps+alt_c`也是模拟复制, 但是当复制文件的时候会直接返回文件的路径
-- `caps+r`是模拟`ctrl+y`
-- `caps+v`是模拟`shift+insert`(终端爱好者的福音)
 - `caps+逗号`是光标移动到最左边
 - `caps+句号`是光标移动到最右边
 - `caps+i`就是往左跳一个单词
 - `caps+o`就是往右跳一个单词
-- `caps+tab`就是整行缩进, 不管光标在当前行的任何地方
 - `caps+alt+i`就是往左选中一个单词
 - `caps+alt+o`就是往右选中一个单词
+- 
+- `caps+w`是选择当前单词
+- `caps+alt+w`是选择当前行
+- 
+- `caps+c`是模拟`ctrl+c`
+- `caps+alt_c`也是模拟复制, 但是当复制文件的时候会直接返回文件的路径
+- 
+- `caps+r`是模拟`ctrl+y`
+- `caps+v`是模拟`shift+insert`(终端爱好者的福音)
+- `caps+tab`就是整行缩进, 不管光标在当前行的任何地方
 - `caps+backspace` : 删除光标所在行所有文字
 - `capslock+enter` : 无论光标是否在行末都能新起一个换行而不截断原句子
 - `capslock+alt+enter` : 无论光标是否在行末都能在上面新起一行而不截断原句子
-- 加`alt`就是选中, 不加就是移动
+-
+- 其他的待用户尝试, 也可以自行配置
 - ...
 
-默认配置概览: 
-
+默认配置概览:  
 ``` json
   "hotkey": {
     "enable": 1,
@@ -209,7 +254,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
       "capslock_alt_d": "shift_down",
       "ctrl_8": "SimulateClickDown",
       "ctrl_shift_alt_m": "MaxMinWindow",
-      "capslock_g": "SaveSelectedFilePathToClipboard",
+      "capslock_alt_c": "SaveSelectedFilePathToClipboard",
       "capslock_w": ["ctrl_left", "ctrl_shift_right"],
       "capslock_shift_w": ["home", "shift_end"],
       "capslock_`": "SwitchCapsState",
@@ -262,85 +307,48 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 ```
 
 
-# 文字替换器replace-text
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
-
-比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
-默认配置如下: 
-
-``` json
-  "replace-text": {
-    "enable": 1,
-    "buildin": {
-      "h/": "http://",
-      "hs/": "https://",
-      "qc@": "@qq.com",
-      "gc@": "@gmail.com",
-      "16@": "@163.com"
-    },
-    "custom": {}
-  },
-```  
-
-
-# 文本变换器
-
-经常写代码的朋友应该经常会有把驼峰命名的文本 转换为 蛇形命名文本之类的需求, 或者把小写的文本转为大写的需求
-
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/transform_text.gif)
-
-
-# CMDs指令
-
-* `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
-* `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
-* `Everything` : 打开Everything, 如果已经选中了文字, 则直接用everything搜索此文字
-* `sux` : sux official site
-
-
 # 自定义配置
 
 可以在托盘菜单里找到"编辑配置文件"的菜单的, 改了配置记得重启sux哈
 
 配置编写规则: 
 - action类型: 直接从下方的所有action里选即可
-    - ShowSuxMenu
-    - StartSuxAhkWithWin
-    - MoveWindowToLeftSide
-    - MoveWindowToRightSide
-    - OpenFileExplorer
-    - OpenActionCenter
-    - CloseCurrentWindow
-    - GoTop
-    - GoBottom
-    - GoBack
-    - GoForward
-    - LockPc
-    - OpenTaskView
-    - VolumeMute
-    - VolumeUp
-    - VolumeDown
-    - GotoNextDesktop
-    - GotoPreDesktop
-    - RefreshTab
-    - ReopenLastTab
-    - GotoPreApp
-    - JumpToPrevTab
-    - JumpToNextTab
-    - SwitchCapsState
-    - SwitchInputMethodAndDeleteLeft
-    - MaxMinWindow
-    - MaxWindow
-    - MinWindow
-    - ReloadSux
-    - SelectCurrentWord
-    - SelectCurrentLine
-    - InsertLineBelow
-    - InsertLineAbove
-    - DeleteCurrentLine
-    - IndentCurrentLine
-    - SimulateClickDown
+    - `ShowSuxMenu`
+    - `StartSuxAhkWithWin`
+    - `MoveWindowToLeftSide`
+    - `MoveWindowToRightSide`
+    - `OpenFileExplorer`
+    - `OpenActionCenter`
+    - `CloseCurrentWindow`
+    - `GoTop`
+    - `GoBottom`
+    - `GoBack`
+    - `GoForward`
+    - `LockPc`
+    - `OpenTaskView`
+    - `VolumeMute`
+    - `VolumeUp`
+    - `VolumeDown`
+    - `GotoNextDesktop`
+    - `GotoPreDesktop`
+    - `RefreshTab`
+    - `ReopenLastTab`
+    - `GotoPreApp`
+    - `JumpToPrevTab`
+    - `JumpToNextTab`
+    - `SwitchCapsState`
+    - `SwitchInputMethodAndDeleteLeft`
+    - `MaxMinWindow`
+    - `MaxWindow`
+    - `MinWindow`
+    - `ReloadSux`
+    - `SelectCurrentWord`
+    - `SelectCurrentLine`
+    - `InsertLineBelow`
+    - `InsertLineAbove`
+    - `DeleteCurrentLine`
+    - `IndentCurrentLine`
+    - `SimulateClickDown`
 - 发送的单个键盘操作: 比如要发送`shift+下` 就是`shift_down`
 - 发送一段键盘操作序列, 比如要实现`caps
 +w`选中当前单词, 首先得移动到词的左边, 然后往右选中单词, 则配置为: `"capslock_w": ["ctrl_left", "ctrl_shift_right"]`
@@ -355,28 +363,9 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `triplehit_: 三击 `
 
 
-<!-- # Features
-
-* **personalized configuration** : u can modify `conf.user.json` to override all default configuration
-* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `conf.user.json`-`hot-edge`
-* **hot corners** : just like mac hot cornes, see `conf.user.json`-`hot-corner`
-* **web search** : just like Wox/Listary/Alfred, see `conf.user.json`-`search-plus`
-* **enhanced capslock** : just like Capslock+, see `conf.user.json`-`capslock_plus`
-* **work with Everything**
-* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.json`-`theme`
-* **screen capture**
-* **disable win10 auto update**
-* **start sux with windows**
-* **custom command line**:  see `conf.user.json`-`command`
-* **custom hotkey**:  see `conf.user.json`-`hotkey`
-* **clipboard-plus**:  clipboard history -->
-<!-- * **auto selection copy** : just like linux terminal -->
-<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
-<!-- * **game mode** : double Alt then input `game` -->
-<!-- * **auto update when launch sux** : see `default_conf.ahk` : `auto_update_when_launch_sux` -->
-
-
 # 设置Everything始终以运行次数排序
+
+如果你也用Everything的话, sux可以配合Everything使用, 下面是推荐配置
 
 0. Everything设置如下:  
     * [ ] 保存设置和数据到%APPDATA%\Everything目录  
@@ -393,7 +382,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 3. 运行Everything
 
 
-
 # 捐赠
 
 捐赠! 让作者更有动力给sux加新功能! ^_^
@@ -404,9 +392,14 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
   - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
 
 
-
 # TODO List
 
+- add more action
+- ext ahk
+- search_plus失焦则销毁
+- auto update
+- smart selection 双引号, 括号内, 单引号内
+- translation gui change color to gray/ dpi / voice audio / soundmark encoding
 <!-- - refractor HandleMouseOnEdges -->
 <!-- - ini -->
 <!-- - clipboard history -->
@@ -438,7 +431,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - add donate gui pic -->
 <!-- - caps+f一键搜索并弹出菜单可选yd/gg等 -->
 <!-- - 删除记录, 把多条复制记录一次性粘贴到目标窗口 -->
-- smart selection 双引号, 括号内, 单引号内
 <!-- - clip_plus support img, 考虑把路径变成文件, 把其他more_click menu也完善 -->
 <!-- - copy file path shortcut -->
 <!-- - 清空clipboard有bug -->
@@ -453,7 +445,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - add newbie tutorial -->
 <!-- - hot corner/edge/capslock switcher to tray menu -->
 <!-- - update chinese readme, add some gif/mp4 -->
-- add more action
 <!-- - 出现在和鼠标同一个屏幕做成选项 -->
 <!-- - 报一个bug，caps+q，q，用百度查询时，弹窗出现在另一个屏幕，因为我有2个显示器，建议设置一下默认的弹窗。
 - 上述bug包括everything -->
@@ -471,7 +462,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 - Capslock + Enter（无论光标是否在行末都能新起一个换行而不截断原句子） -->
 <!-- - 截图后弹出贴图菜单 -->
 <!-- - bug:截图后保存则再也无法贴图 -->
-- trans gui change color to gray/ dpi / voice audio / soundmark encoding
 <!-- - 翻译如果没选, 则弹出提示没选 -->
 <!-- - 弄个build看看拿得到ver么 -->
 <!-- - 中文翻译 -->
@@ -494,21 +484,18 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 <!-- - click down 之后记得释放 -->
 <!-- - 浏览器中, click down之后双击就没选中了 -->
 <!-- - rshift双击和单击可以分开conf -->
-- auto update
 <!-- - fix bug: cant open conf.user.json with notepad -->
 <!-- - refactor tray menu code -->
 <!-- - fix lang logic: "Autorun" -> "Start with Windows" -->
 <!-- - modify default conf: disable win auto update -->
 <!-- - hot corner: check on same monitor  -->
 <!-- - occasional: fix web search gui window lost caret - make caret center -->
-- 失焦则销毁
 <!-- - 第二个屏幕就显示sux在第二个屏幕上 -->
 <!-- - fix default lang -->
 
 <!-- - 增加可供用户扩展的脚本, 方便用户配置各种自定义action -->
 <!-- - gitignore user conf -->
 <!-- - start with win -->
-- ext ahk
 <!-- - auto compile -->
 <!-- - fix 启动之后马上打开自动消失web-search窗口的bug: 已经找到, 是因为UpdateSuxImpl的锅 -->
 <!-- - internal Everything -->
@@ -528,3 +515,24 @@ start C:\Users\b\Desktop\A.lnk
 createobject("wscript.shell").run "D:\A.bat",0
 ```
 5. 打开“运行”输入“shell:startup”然后回车，然后将“A.vbs”剪切到打开的目录中 -->
+
+
+<!-- # Features
+
+* **personalized configuration** : u can modify `conf.user.json` to override all default configuration
+* **hot edges** : `Ctrl+8` on the edge (useful for touchpad user, set 3 fingers click to `Ctrl+8`), see `conf.user.json`-`hot-edge`
+* **hot corners** : just like mac hot cornes, see `conf.user.json`-`hot-corner`
+* **web search** : just like Wox/Listary/Alfred, see `conf.user.json`-`search-plus`
+* **enhanced capslock** : just like Capslock+, see `conf.user.json`-`capslock_plus`
+* **work with Everything**
+* **custom theme** : two default theme(dark/light), and u can add ur own theme, see `conf.user.json`-`theme`
+* **screen capture**
+* **disable win10 auto update**
+* **start sux with windows**
+* **custom command line**:  see `conf.user.json`-`command`
+* **custom hotkey**:  see `conf.user.json`-`hotkey`
+* **clipboard-plus**:  clipboard history -->
+<!-- * **auto selection copy** : just like linux terminal -->
+<!-- * **hot key to replace string** : copy this line (`my email is @@ “”  ‘’`) to address bar, then Capslock+Shift+F, now u know, see user_conf.ahk -->
+<!-- * **game mode** : double Alt then input `game` -->
+<!-- * **auto update when launch sux** : see `default_conf.ahk` : `auto_update_when_launch_sux` -->
