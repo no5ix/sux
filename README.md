@@ -89,7 +89,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 `shift+空格` 弹出菜单之后: 
 - 按`tab`是截图
-- 按`s`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明
+- 按`s`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/snip_plus.gif)
 
@@ -145,8 +145,11 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
 
-比如把`h/`替换为`http://`之类的, 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行, 
-默认配置如下: 
+填写电子邮箱的时候经常要敲很多字或者填写密码的时候总是需要重复输入一长串, 对于经常重复需要输入的文本, 这个时候就可以用文字替换器来,  
+比如密码是`abcd12349087234bghyymll`这么长的密码就可以定义为`abc::`, 或者比如把`h/`替换为`http://`之类的,  
+配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行,  
+
+默认配置如下:  
 
 ``` json
   "replace-text": {
@@ -394,7 +397,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 # TODO List
 
-- readme里添加贴图的作用, 文字替换的作用填密码email啥的
+<!-- - readme里添加贴图的作用, 文字替换的作用填密码email啥的 -->
 - 关于里加上"去知乎点赞" / "去github点亮小星星"
 - 新手引导加上英文, 且引导之前就要选语言
 - add more action
