@@ -19,7 +19,8 @@ class TrayMenu
 	static icon_disable := TrayMenu.ASSET_DIR "sux_disable.ico"
 	static donate_img_alipay := TrayMenu.ASSET_DIR "donate_alipay.png"
 	static donate_img_wechat := TrayMenu.ASSET_DIR "donate_wechat.png"
-
+	static last_tray_icon_x := 0
+	static last_tray_icon_y := 0
 
 	init()
 	{
@@ -233,6 +234,7 @@ class TrayMenu
 		this.SetMenu(TrayMenuList)
 		Menu, Tray, Default, % lang("Disable")
 		Menu, Tray, Click, 1
+		; OnMessage(0x404, "AHK_NOTIFYICON")		
 		this.Update_Icon()
 	}
 
@@ -492,6 +494,29 @@ class xMenu
 }
 
 
+; AHK_NOTIFYICON(wParam, lParam)
+; {
+;     if (lParam = 0x205) ; WM_RBUTTONUP
+;     {
+;         ; SetTimer, ShowRbuttonMenu, -1
+; 		MouseGetPos, mouse_x, mouse_y
+; 		TrayMenu.last_tray_icon_x := mouse_x
+; 		TrayMenu.last_tray_icon_y := mouse_y
+; 		ToolTipWithTimer(TrayMenu.last_tray_icon_x "  \\ " TrayMenu.last_tray_icon_y)
+; 		Menu, Tray, Show
+; 		; Menu, Tray, Show, % TrayMenu.last_tray_icon_x, % TrayMenu.last_tray_icon_y
+;         return 0
+;     }
+;     else if (lParam = 0x202) ; WM_LBUTTONUP
+;     {
+; 		; ToolTipWithTimer(111)
+; 		TrayMenu.SetDisable()
+; 		; TrayMenu.update_tray_menu()
+; 		return 0
+; 	}
+; }
+
+
 ShellMessage( wParam,lParam ) {
   	If ( wParam = 1 ) ;  HSHELL_WINDOWCREATED := 1
 	{
@@ -541,6 +566,8 @@ Sub_xMenu_Open:
 	;; 下面这两行不能调换顺序, 否则会有乱切换软件的bug
 	; Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
 	TrayMenu.update_tray_menu()
+	; 	ToolTipWithTimer(TrayMenu.last_tray_icon_x "  \\ " TrayMenu.last_tray_icon_y)
+	; Menu, Tray, Show, % TrayMenu.last_tray_icon_x, % TrayMenu.last_tray_icon_y+2
 
 	; WinActivate
 	; WinActivate, ahk_id %ActiveHwnd%	
