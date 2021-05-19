@@ -66,7 +66,7 @@ class TrayMenu
 	SetWindowMover(act="toggle", from_launch=0)
 	{
 	    SysGet, mon_cnt, MonitorCount
-		if (mon_cnt < 2)
+		if (mon_cnt <a 2)
 			Return
 		global INI_WINDOW_MOVER_SWITCH
 		cfg := SuxCore.GetIniConfig(INI_WINDOW_MOVER_SWITCH, SuxCore.Default_window_mover_switch)
@@ -293,15 +293,19 @@ class TrayMenu
 		Gui, sux_About: New
 		Gui sux_About:+Resize +AlwaysOnTop +MinSize400 -MaximizeBox -MinimizeBox
 		Gui, sux_About:Font, s12
-		s := "sux v" SuxCore.version
-		Gui, sux_About:Add, Text,, % s
+		sux_ver := "sux v" SuxCore.version
+		; Gui, sux_About:Add, Text,, % sux_ver
+		Gui, sux_About:Add, Text
+		
 		s := "<a href=""" SuxCore.Project_Home_Page """>" lang("Home Page") "</a>"
 		Gui, sux_About:Add, Link,, % s
 		s := "<a href=""" SuxCore.Project_Issue_page """>" lang("Feedback") "</a>"
 		Gui, sux_About:Add, Link,, % s
+		s := "<a href=""" SuxCore.Project_GitHub_Page """>" lang("Open GitHub to light up the little star!") "</a>"
+		Gui, sux_About:Add, Link,, % s
 		Gui, sux_About:Add, Text
 		GuiControl, Focus, Close
-		s := lang("About") . " sux"
+		s := lang("About") . " " . sux_ver
 		Gui, sux_About:Show,, % s
 	}
 
