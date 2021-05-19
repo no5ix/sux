@@ -398,13 +398,14 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 # TODO List
 
 <!-- - readme里添加贴图的作用, 文字替换的作用填密码email啥的 -->
-- 关于里加上"去知乎点赞" / "去github点亮小星星"
+- 关于里加上"去知乎点赞" 
+<!-- - "去github点亮小星星" -->
 <!-- - 新手引导之前就要选语言 -->
-- 点击tray menu 不消失menu
+- auto update
 - add more action
+- 点击tray menu 不消失menu
 - ext ahk
 - search_plus失焦则销毁
-- auto update
 - smart selection 双引号, 括号内, 单引号内
 - translation gui change color to gray/ dpi / voice audio / soundmark encoding
 <!-- - refractor HandleMouseOnEdges -->

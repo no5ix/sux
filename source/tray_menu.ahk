@@ -525,7 +525,7 @@ ShellMessage( wParam,lParam ) {
   	If ( wParam = 1 ) ;  HSHELL_WINDOWCREATED := 1
 	{
 		;; 让打开的窗口永远和鼠标在同一个屏幕
-		Sleep, 222
+		Sleep, 66
 
 		WinGetTitle, cur_title, ahk_id %lParam%
 	   	WinGet, maximized, MinMax, %cur_title%
@@ -549,7 +549,7 @@ ShellMessage( wParam,lParam ) {
 			WinRestore, %cur_title%
 			; WinMove, %cur_title%, , %mouse_X%, %mouse_Y%
 			WinMove, %cur_title%, , %mouse_X%, 111
-			Sleep, 222
+			; Sleep, 222
 			WinMaximize, %cur_title%
 		}
 		else if (maximized = 0)  ; 窗口既不处于最小化状态也不处于最大化状态.
