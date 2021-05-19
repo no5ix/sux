@@ -231,7 +231,7 @@ Is_Clipboard_As_File() {
         return 0
     }
     max_i := 0
-	Loop, parse, clipboard, `n, `r
+	  Loop, parse, clipboard, `n, `r
     {
         max_i := A_Index
         if (!FileExist(A_LoopField)) {
@@ -1821,4 +1821,12 @@ FileToClipboard(PathToCopy,Method="copy")
     DllCall("SetClipboardData","uint",cfFormat,"UPtr",mem)
     DllCall("CloseClipboard")
     return
+}
+
+
+GetFileNameFromFullPath(file_path_str) {
+    ; file_path_str just like: "C:\Program Files\Git\bin\bash.exe"
+    RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
+    ; file_name just like: "bash.exe""
+    return file_name
 }

@@ -99,8 +99,6 @@ class ClipboardPlus
 		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
 	}
 
-	
-
 	PasteClipPlusContent(pending_paste)
 	{
 		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
@@ -234,7 +232,13 @@ Return
 Sub_ClipboardPlus_OnClipboardChange:
 if (A_EventInfo == 1) {
 	if (Is_Clipboard_As_File()) {
-		pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . Clipboard
+		file_arr := StrSplit(Clipboard, "`n")
+		if (file_arr.Count() == 1) {
+			pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . GetFileNameFromFullPath(Clipboard)
+		}
+		else {
+			pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . GetFileNameFromFullPath(file_arr[1]) . " & ..."
+		}
 	}
 	else {
 		pending_add_content := Clipboard

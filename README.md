@@ -399,7 +399,8 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 <!-- - readme里添加贴图的作用, 文字替换的作用填密码email啥的 -->
 - 关于里加上"去知乎点赞" / "去github点亮小星星"
-- 新手引导加上英文, 且引导之前就要选语言
+- 新手引导之前就要选语言
+- 点击tray menu 不消失menu
 - add more action
 - ext ahk
 - search_plus失焦则销毁

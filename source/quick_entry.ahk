@@ -195,7 +195,8 @@ class QuickEntry {
 			if (use_cur_path) {
 				file_path_str := COMMAND_TITLE_2_ACTION_MAP[command_title]  ; just like: "C:\Program Files\Git\bin\bash.exe"
 				; m(file_path_str)
-				RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
+				; RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
+				file_name := GetFileNameFromFullPath(file_path_str)
 				; m(file_name)
 				WinWaitActive, ahk_exe %file_name%,, 2222
 				if !ErrorLevel {
