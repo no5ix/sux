@@ -4,6 +4,7 @@ if(A_ScriptName=="sux_core.ahk") {
 }
 ; with this label, you can include this file on top of the file
 
+LangChoice = 
 
 check_update_caller = 0
 CHECK_UPDATE_CALLER_TRAY = 0
@@ -288,7 +289,7 @@ class SuxCore
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time)
-			SuxCore.ShowUserGuide()
+			SuxCore.ChooseLang()
 	}
 
 	ClearTempDir()
@@ -306,8 +307,19 @@ class SuxCore
 			MsgBox, % msg_type_map[msg_type], % SuxCore.ProgramName, % msg, % timeout
 	}
 
+	ChooseLang()
+	{
+		global LangChoice
+		gui	lang_choice: New
+		gui	lang_choice: -MaximizeBox -MinimizeBox
+		Gui, lang_choice: Add, DropDownList, xm+22 ym+11 w88 vLangChoice, 中文||English
+		; Gui, lang_choice: Add, Button, x-10 y-10 w1 h1 +default gSub_HandleLangChoice ; hidden button
+		Gui, lang_choice: Add, Button, Default xm+122 ym+10 w44 gSub_HandleLangChoice, OK
+		Gui, lang_choice:Show, W211 H55
+	}
+
 	ShowUserGuide()
-	{		
+	{	
 		msg_hello := lang("Welcome to sux, `nsux is an efficiency improvement tool that also has the following functions: `n`n- translation`n- history clipboard`n- screenshots`n- stickers`n- quick search similar to Listary / Alfred / Wox `n- MacOS-like firing angle`n- Screen edge trigger`n- Global custom shortcut keys for various operations`n- Text replacer`n- Text converter`n- Custom theme`n- Shortcut instructions `n- Customizable json configuration `n- ...`n")
 		guide_msg_arr := [msg_hello
 			,lang("Try it: Move the mouse to the top half of the left edge of the screen and scroll the wheel, `n`n Effect: adjust the volume quickly")
@@ -790,6 +802,16 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		}
 	}
 }
+
+
+
+Sub_HandleLangChoice:
+	Gui, lang_choice:Submit, NoHide
+	Gui, lang_choice:Destroy
+	SuxCore.Default_lang := LangChoice == "中文" ? "cn" : "en"
+	TrayMenu.update_tray_menu()
+	SuxCore.ShowUserGuide()
+	return
 
 
 /*
