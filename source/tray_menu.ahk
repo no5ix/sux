@@ -280,11 +280,11 @@ class TrayMenu
 		s := lang("Donate")
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Text
-		s := "支付宝"
+		s := lang("Alipay")
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
 		; Gui, sux_donate:Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\donate_alipay.png
-		s := "微信"
+		s := lang("Wechat")
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
 		GuiControl, Focus, Close
