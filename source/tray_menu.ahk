@@ -277,6 +277,9 @@ class TrayMenu
 		Gui, sux_donate: New
 		Gui sux_donate: +AlwaysOnTop
 		Gui, sux_donate:Font, s12
+		s := lang("Donate")
+		Gui, sux_donate:Add, Text,, % s
+		Gui, sux_donate:Add, Text
 		s := "支付宝"
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
@@ -285,7 +288,7 @@ class TrayMenu
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
 		GuiControl, Focus, Close
-		s := lang("Donate")
+		s := "sux"
 		Gui, sux_donate:Show, w330, % s
 	}
 

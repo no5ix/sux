@@ -4,8 +4,8 @@
 
 
 
-LANGUAGE_CONF_MAP := {"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
-    ,"Tips: ": "小技巧: "
+LANGUAGE_CONF_MAP := {"Tips: ": "小技巧: "
+    ,"Donate": "捐赠! 让作者更有动力给sux加新功能! ^_^"
     ,"after selecting text, this menu can automatically process it": "选择文本后，此菜单可以自动处理它"
     ,"clipboard currently has no centent, please copy something...": "剪切板里目前没内容, 请复制点东西再试..."
     ,"There is a new version sux, would you like to open sux official website to download the new sux?": "sux有新版本, 您要打开sux官网去下载新sux吗?"
