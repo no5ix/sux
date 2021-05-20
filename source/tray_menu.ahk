@@ -164,6 +164,7 @@ class TrayMenu
 		}
 		global INI_LANG
 		SuxCore.SetIniConfig(INI_LANG, lang)
+		SuxCore.SetCurrentLang(lang)
 	}
 
 	; Tray Menu

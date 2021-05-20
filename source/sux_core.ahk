@@ -59,7 +59,8 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 lang(key)
 {
 	global LANGUAGE_CONF_MAP
-	lang := SuxCore.GetIniConfig("lang", SuxCore.Default_lang)
+	; lang := SuxCore.GetIniConfig("lang", SuxCore.Default_lang)
+	lang := SuxCore.CurrentLang
 	if (lang == SuxCore.Default_lang) {
 		ret := LANGUAGE_CONF_MAP[key]
 		if !ret
@@ -239,6 +240,7 @@ class SuxCore
 	; static var
 	static ProgramName := "sux"
 	static Default_lang := "cn"
+	static CurrentLang := "cn"
 	static Default_theme := "auto"
 	static Default_autorun_switch := 0
 	static Default_hot_corner_switch := 0
@@ -292,6 +294,11 @@ class SuxCore
 
 		if (is_first_time)
 			SuxCore.ChooseLang()
+	}
+
+	SetCurrentLang(lang)
+	{
+		SuxCore.CurrentLang := lang
 	}
 
 	ClearTempDir()

@@ -24,9 +24,12 @@ Goto, SUB_CLIPBOARD_PLUS_FILE_END_LABEL
 
 class ClipboardPlus
 {
-	static CLIPBOARD_IMG_SUFFIX := "[sux-clipboard-img] "
-	static CLIPBOARD_FILE_SUFFIX := "[sux-clipboard-file] "
-	static CLIPBOARD_FILES_SUFFIX := "[sux-clipboard-files] "
+	static CLIPBOARD_TEXT_SUFFIX := "[text] "
+	static CLIPBOARD_IMG_SUFFIX := "[img] "
+	static CLIPBOARD_FILE_SUFFIX := "[file] "
+	static CLIPBOARD_FILES_SUFFIX := "[files] "
+	static CLIPBOARD_FOLDER_SUFFIX := "[folder] "
+	static CLIPBOARD_FILES_DELIMITER := "|sux-clipboard-files-delimiter|"
 	static ClipboardHistoryArr := []
 	static ClipsTotalNum = 
 
@@ -92,12 +95,12 @@ class ClipboardPlus
 
 	IsClipPlusFile(pending_paste)
 	{
- 		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX) || Instr(pending_paste, ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
+ 		return Instr(pending_paste, lang(ClipboardPlus.CLIPBOARD_FILE_SUFFIX)) || Instr(pending_paste, lang(ClipboardPlus.CLIPBOARD_FILES_SUFFIX)) || Instr(pending_paste, lang(ClipboardPlus.CLIPBOARD_FOLDER_SUFFIX))
 	}
 
 	IsClipPlusImg(pending_paste)
 	{
-		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
+		return Instr(pending_paste, lang(ClipboardPlus.CLIPBOARD_IMG_SUFFIX))
 	}
 
 	PasteClipPlusContent(pending_paste)
@@ -105,7 +108,7 @@ class ClipboardPlus
 		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
 			img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
 			if (!FileExist(img_path)) {
-				hBM := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_IMG_SUFFIX)
+				hBM := StrReplace(pending_paste, lang(ClipboardPlus.CLIPBOARD_IMG_SUFFIX))
 				GDIP("Startup")
 				SavePicture(hBM, img_path)
 				GDIP("Shutdown")
@@ -119,9 +122,9 @@ class ClipboardPlus
 			}
 		}
 		else if (ClipboardPlus.IsClipPlusFile(pending_paste)) {
-			pending_paste_file_path := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX)
-			pending_paste_file_path := StrReplace(pending_paste_file_path, ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
-			Loop, parse, pending_paste_file_path, `n, `r
+			pending_paste_file_path := StrSplit(pending_paste, ClipboardPlus.CLIPBOARD_FILES_DELIMITER)
+			original_pending_paste_file_path := pending_paste_file_path[2]
+			Loop, parse, original_pending_paste_file_path, `n, `r
 			{
 				if (FileExist(A_LoopField)) {
 					PasteContent("FileToClipboard", A_LoopField)
@@ -132,6 +135,7 @@ class ClipboardPlus
 			}
 		}
 		else {
+			pending_paste := StrReplace(pending_paste, lang(ClipboardPlus.CLIPBOARD_TEXT_SUFFIX))
 			PasteContent(pending_paste)
 		}
 	}
@@ -235,7 +239,15 @@ Sub_ClipboardPlus_OnClipboardChange:
 if (A_EventInfo == 1) {
 	if (Is_Clipboard_As_File()) {
 		file_arr := StrSplit(Clipboard, "`r`n")
-		pending_add_content := (file_arr.Count() == 1 ? ClipboardPlus.CLIPBOARD_FILE_SUFFIX : ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
+		if (file_arr.Count() == 1) {
+			if (InStr(FileExist(file_arr[1]), "D"))
+				pending_add_content := lang(ClipboardPlus.CLIPBOARD_FOLDER_SUFFIX)
+			else
+				pending_add_content := lang(ClipboardPlus.CLIPBOARD_FILE_SUFFIX)
+		}
+		else {
+			pending_add_content := lang(ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
+		}
 		pending_add_content .= GetFileNameFromFullPath(file_arr[1])
 		; m(pending_add_content)
 		for _i, _v in file_arr {
@@ -244,17 +256,18 @@ if (A_EventInfo == 1) {
 			; m(_v)
 			pending_add_content .= " & " . GetFileNameFromFullPath(_v)
 		}
+		pending_add_content .= "                                               " . ClipboardPlus.CLIPBOARD_FILES_DELIMITER . Clipboard
 	}
 	else {
-		pending_add_content := Clipboard
+		pending_add_content := lang(ClipboardPlus.CLIPBOARD_TEXT_SUFFIX) . Clipboard
 	}
 }
 else if (A_EventInfo == 2) {
 	If (hBM := CB_hBMP_Get()) {
-		pending_add_content := ClipboardPlus.CLIPBOARD_IMG_SUFFIX . hBM
+		pending_add_content := lang(ClipboardPlus.CLIPBOARD_IMG_SUFFIX) . hBM
 	}
 	else {
-		pending_add_content := Clipboard
+		pending_add_content := lang(ClipboardPlus.CLIPBOARD_TEXT_SUFFIX) . Clipboard
 	}
 }
 ClipboardPlus._AddArrClip(ClipboardPlus.ClipboardHistoryArr, pending_add_content)
