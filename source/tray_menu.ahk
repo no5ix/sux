@@ -548,16 +548,17 @@ ShellMessage( wParam,lParam ) {
 		{ 
 			WinRestore, %cur_title%
 			; WinMove, %cur_title%, , %mouse_X%, %mouse_Y%
-			WinMove, %cur_title%, , %mouse_X%, 111
+			; WinMove, %cur_title%, , %mouse_X%, 111
 			; Sleep, 222
-			WinMaximize, %cur_title%
+			; WinMaximize, %cur_title%
 		}
-		else if (maximized = 0)  ; 窗口既不处于最小化状态也不处于最大化状态.
+		mid_x := GetMouseMonitorMidX()
+		mid_x -= cur_window_width / 2
+		yScrnOffset := 222
+		WinMove, %cur_title%, , %mid_x%, %yScrnOffset% 
+		if (maximized = 1)  ; 窗口处于最大化状态(使用 WinRestore 可以让它还原).
 		{
-			mid_x := GetMouseMonitorMidX()
-			mid_x -= cur_window_width / 2
-			yScrnOffset := 222
-			WinMove, %cur_title%, , %mid_x%, %yScrnOffset% 
+			WinMaximize, %cur_title%
 		}
 	}
 }
