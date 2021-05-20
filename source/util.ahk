@@ -1826,7 +1826,7 @@ FileToClipboard(PathToCopy,Method="copy")
 
 GetFileNameFromFullPath(file_path_str) {
     ; file_path_str just like: "C:\Program Files\Git\bin\bash.exe"
-    RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
+    RegExMatch(file_path_str, "([^<>/\\\|:""\*\?]+)\.\w+$", file_name)  ; file_name just like: "bash.exe""
     ; file_name just like: "bash.exe""
     return file_name
 }

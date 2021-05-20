@@ -26,6 +26,7 @@ class ClipboardPlus
 {
 	static CLIPBOARD_IMG_SUFFIX := "[sux-clipboard-img] "
 	static CLIPBOARD_FILE_SUFFIX := "[sux-clipboard-file] "
+	static CLIPBOARD_FILES_SUFFIX := "[sux-clipboard-files] "
 	static ClipboardHistoryArr := []
 	static ClipsTotalNum = 
 
@@ -91,7 +92,7 @@ class ClipboardPlus
 
 	IsClipPlusFile(pending_paste)
 	{
- 		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX) 
+ 		return Instr(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX) || Instr(pending_paste, ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
 	}
 
 	IsClipPlusImg(pending_paste)
@@ -119,6 +120,7 @@ class ClipboardPlus
 		}
 		else if (ClipboardPlus.IsClipPlusFile(pending_paste)) {
 			pending_paste_file_path := StrReplace(pending_paste, ClipboardPlus.CLIPBOARD_FILE_SUFFIX)
+			pending_paste_file_path := StrReplace(pending_paste_file_path, ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
 			Loop, parse, pending_paste_file_path, `n, `r
 			{
 				if (FileExist(A_LoopField)) {
@@ -232,12 +234,15 @@ Return
 Sub_ClipboardPlus_OnClipboardChange:
 if (A_EventInfo == 1) {
 	if (Is_Clipboard_As_File()) {
-		file_arr := StrSplit(Clipboard, "`n")
-		if (file_arr.Count() == 1) {
-			pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . GetFileNameFromFullPath(Clipboard)
-		}
-		else {
-			pending_add_content := ClipboardPlus.CLIPBOARD_FILE_SUFFIX . GetFileNameFromFullPath(file_arr[1]) . " & ..."
+		file_arr := StrSplit(Clipboard, "`r`n")
+		pending_add_content := (file_arr.Count() == 1 ? ClipboardPlus.CLIPBOARD_FILE_SUFFIX : ClipboardPlus.CLIPBOARD_FILES_SUFFIX)
+		pending_add_content .= GetFileNameFromFullPath(file_arr[1])
+		; m(pending_add_content)
+		for _i, _v in file_arr {
+			if (_i <= 1)
+				Continue
+			; m(_v)
+			pending_add_content .= " & " . GetFileNameFromFullPath(_v)
 		}
 	}
 	else {
