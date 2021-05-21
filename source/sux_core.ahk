@@ -59,7 +59,6 @@ Goto, SUB_SUX_CORE_FILE_END_LABEL
 lang(key)
 {
 	global LANGUAGE_CONF_MAP
-	; lang := SuxCore.GetIniConfig("lang", SuxCore.Default_lang)
 	lang := SuxCore.CurrentLang
 	if (lang == SuxCore.Default_lang) {
 		ret := LANGUAGE_CONF_MAP[key]
@@ -817,7 +816,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 Sub_HandleLangChoice:
 	Gui, lang_choice:Submit, NoHide
 	Gui, lang_choice:Destroy
-	SuxCore.Default_lang := LangChoice == "中文" ? "cn" : "en"
+	SuxCore.CurrentLang := LangChoice == "中文" ? "cn" : "en"
 	TrayMenu.update_tray_menu()
 	SuxCore.ShowUserGuide()
 	return

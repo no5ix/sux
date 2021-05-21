@@ -191,7 +191,7 @@ class TrayMenu
 			check_update_menu_name := lang("Check Update")
 			check_update_menu_func := "check_update_from_tray"
 		}
-		lang := SuxCore.GetIniConfig(INI_LANG, SuxCore.Default_lang)
+		lang := SuxCore.CurrentLang
 		cur_theme := SuxCore.GetIniConfig(INI_THEME, SuxCore.Default_theme)
 		hot_corner_switch := SuxCore.GetIniConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
 		limit_mode_in_full_screen_switch := SuxCore.GetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
