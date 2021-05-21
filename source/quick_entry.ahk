@@ -377,25 +377,23 @@ QuickEntry_ReplaceText_Menu_Click:
 	global STR_REPLACE_CONF_REGISTER_MAP
 	; store the number of replacements that occurred (0 if none).
 	replace_sum := 0
-	if(!ErrorLevel) {
-		for key, value in STR_REPLACE_CONF_REGISTER_MAP ; Enumeration is the recommended approach in most cases.
-		{
-			cur_replace_cnt := 0
-			; Using "Loop", indices must be consecutive numbers from 1 to the number
-			; of elements in the array (or they must be calculated within the loop).
-			; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
-			; Using "for", both the index (or "key") and its associated value
-			; are provided, and the index can be *any* value of your choosing.
-			; m(key "//" value)
-			st := StrReplace(st, key, value, cur_replace_cnt)
-			replace_sum += cur_replace_cnt
-		}
-		Sleep, 66
-		if replace_sum != 0
-			PasteContent(st)
-		else
-			Send, {Right}
+	for key, value in STR_REPLACE_CONF_REGISTER_MAP ; Enumeration is the recommended approach in most cases.
+	{
+		cur_replace_cnt := 0
+		; Using "Loop", indices must be consecutive numbers from 1 to the number
+		; of elements in the array (or they must be calculated within the loop).
+		; MsgBox % "Element number " . A_Index . " is " . Array[A_Index]
+		; Using "for", both the index (or "key") and its associated value
+		; are provided, and the index can be *any* value of your choosing.
+		; m(key "//" value)
+		st := StrReplace(st, key, value, cur_replace_cnt)
+		replace_sum += cur_replace_cnt
 	}
+	Sleep, 66
+	if replace_sum != 0
+		PasteContent(st)
+	else
+		Send, {Right}
 	Return
 
 
