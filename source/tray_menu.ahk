@@ -277,17 +277,22 @@ class TrayMenu
 	ShowDonatePic() {
 		Gui, sux_donate: New
 		Gui sux_donate: +AlwaysOnTop
-		Gui, sux_donate:Font, s12
+		Gui, sux_donate:Font, s11 wbold
+		Gui, sux_donate:Add, Text
 		s := lang("Donate")
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Text
+
+		Gui, sux_donate:Font, s10 wnorm
 		s := lang("Alipay")
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_alipay
 		; Gui, sux_donate:Add, Picture, w300 h-1, C:\Users\b\Documents\github\sux\app_data\donate_alipay.png
+		Gui, sux_donate:Add, Text
 		s := lang("Wechat")
 		Gui, sux_donate:Add, Text,, % s
 		Gui, sux_donate:Add, Picture, w300 h-1, % TrayMenu.donate_img_wechat
+		Gui, sux_donate:Add, Text
 		GuiControl, Focus, Close
 		s := "sux"
 		Gui, sux_donate:Show, w330, % s
