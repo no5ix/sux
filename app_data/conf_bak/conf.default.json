@@ -77,7 +77,7 @@
     "enable": 1,
     "buildin": {
       "cmd": "cmd.exe",
-      "git": "C:\\Program Files\\Git\\bin\\bash.exe --login",
+      "git": "C:\\Program Files\\Git\\bin\\bash.exe",
       "Everything": "C:\\Program Files\\Everything\\Everything.exe",
       "sux": "https://github.com/no5ix/sux"
     },
