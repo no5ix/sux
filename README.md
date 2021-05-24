@@ -69,7 +69,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 翻译
 
-翻译集成在快捷菜单中了
+翻译集成在快捷菜单中了, 
+`shift+空格` 弹出菜单之后, 按`f`  
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/translate_text.gif)
 
@@ -78,6 +79,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/clipboard_plus.gif)
 
+
+`shift+空格` 弹出菜单之后, 按`v`  
 这个历史粘贴板支持:  
 
 - 图片内容(在sux剪切板里会以`[图片]`标识, sux支持从浏览器或者任何地方直接复制的图片)
@@ -101,11 +104,16 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/hot_corner.gif)
 
+
+
 当开启之后, 鼠标移动到屏幕左上/左下/右上右下都会触发不同的动作:
-- 左上: 跳到浏览器前一个标签页
-- 右上: 跳到浏览器后一个标签页
-- 左下: 模拟按下`win`键
-- 右下: 模拟按下`alt+tab`
+
+| 触发角 | 操作 |
+| ----- | ---- |
+|左上 | 跳到浏览器前一个标签页 |
+|右上 | 跳到浏览器后一个标签页 |
+|左下 | 模拟按下`win`键 |
+|右下 | 模拟按下`alt+tab` |
 
 这些是默认动作, 你都可以改动自定义配置`conf.user.json`来更改
 ``` json
@@ -154,6 +162,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
 
+`shift+空格` 弹出菜单之后, 按`r`  
+
 填写电子邮箱的时候经常要敲很多字或者填写密码的时候总是需要重复输入一长串, 对于经常重复需要输入的文本, 这个时候就可以用文字替换器来,  
 比如密码是`abcd12349087234bghyymll`这么长的密码就可以定义为`abc::`, 或者比如把`h/`替换为`http://`之类的,  
 配置可以自由定义, 已经选中文字则是只替换选中文字, 否则替换整行,  
@@ -177,12 +187,16 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 文本变换器
 
+`shift+空格` 弹出菜单之后, 按`g`  
+
 经常写代码的朋友应该经常会有把驼峰命名的文本 转换为 蛇形命名文本之类的需求, 或者把小写的文本转为大写的需求
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/transform_text.gif)
 
 
 # CMDs指令
+
+`shift+空格` 弹出菜单之后, 按`c`  
 
 * `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
 * `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
@@ -377,7 +391,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `triplehit_: 三击 `
 
 
-# 设置Everything始终以运行次数排序
+# 备注-设置Everything始终以运行次数排序
 
 如果你也用Everything的话, sux可以配合Everything使用, 下面是推荐配置
 
