@@ -178,7 +178,7 @@ class QuickEntry {
 				return
 			}
 
-			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop", "git" : "cd ~/Desktop"}
+			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop`n", "git" : "cd ~/Desktop`n"}
 			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(command_title)
 			if (IsFileExplorerActive())
 			{
@@ -201,9 +201,9 @@ class QuickEntry {
 				WinWaitActive, ahk_exe %file_name%,, 2222
 				if !ErrorLevel {
 					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title]
-					; Send, {Blind}{Text}%cd_user_desktop_cmd_input%
-					PasteContent(cd_user_desktop_cmd_input)
-					Send, {Enter}
+					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
+					; PasteContent(cd_user_desktop_cmd_input)
+					; Send, {Enter}
 				}
 			}
 		}
