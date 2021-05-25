@@ -14,7 +14,7 @@ Goto, SUB_TRAY_MENU_FILE_END_LABEL
 
 class TrayMenu
 {
-	static ASSET_DIR := "app_data/img/"
+	static ASSET_DIR := "app_data\img\"
 	static icon_default := TrayMenu.ASSET_DIR "sux_default.ico"
 	static icon_disable := TrayMenu.ASSET_DIR "sux_disable.ico"
 	static donate_img_alipay := TrayMenu.ASSET_DIR "donate_alipay.png"
