@@ -10,6 +10,7 @@ __Webapp_wb =
 ; with this label, you can include this file on top of the file
 Goto, SUB_TRANSLATION_FILE_END_LABEL
 
+#Include %A_ScriptDir%\source\sux_core.ahk
 
 ;;;;;;;;;;;;;;;
 TranslateSeletedText(cur_sel_text)
@@ -67,7 +68,7 @@ on_webapp_gui_req_ready() {
 	if (webapp_gui_http_req.readyState != 4) {  ; 没有完成.
 		return
 	}
-	TEMP_TRANS_WEBAPP_GUI_HTML_HTML := "app_data/translation/TEMP_TRANS_WEBAPP_GUI.html"
+	TEMP_TRANS_WEBAPP_GUI_HTML_HTML := SuxCore._CACHE_DIR . "TEMP_TRANS_WEBAPP_GUI.html"
 	if (webapp_gui_http_req.status == 200) {
 		; yd_html_file := FileOpen(TEMP_TRANS_WEBAPP_GUI_HTML_HTML, "w")
 		if FileExist(TEMP_TRANS_WEBAPP_GUI_HTML_HTML)
@@ -78,10 +79,10 @@ on_webapp_gui_req_ready() {
 		<html>
 			<head>
 				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-				<link rel="stylesheet" href="min_trans_style.css">
-				<script type="text/javascript" src="jquery.min.js"></script>
-				<script type="text/javascript" src="autocomplete_json.js"></script>
-				<script type="text/javascript" src="result-min.js"></script>
+				<link rel="stylesheet" href="../../translate/min_trans_style.css">
+				<script type="text/javascript" src="../../translate/jquery.min.js"></script>
+				<script type="text/javascript" src="../../translate/autocomplete_json.js"></script>
+				<script type="text/javascript" src="../../translate/result-min.js"></script>
 			</head>
 			<body>
 		)

@@ -106,7 +106,7 @@ class ClipboardPlus
 	PasteClipPlusContent(pending_paste)
 	{
 		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
-			img_path := SuxCore._TEMP_DIR . pending_paste . ".png"
+			img_path := SuxCore._CACHE_DIR . pending_paste . ".png"
 			if (!FileExist(img_path)) {
 				hBM := StrReplace(pending_paste, lang(ClipboardPlus.CLIPBOARD_IMG_SUFFIX))
 				GDIP("Startup")

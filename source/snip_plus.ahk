@@ -31,7 +31,7 @@ class SnipPlus
 
 	GetCurSnipImgPath()
 	{
-		Return SuxCore._TEMP_DIR . SnipPlus._TEMP_SNIP_IMG_PREFIX . SnipPlus.temp_snip_img_index . ".png"
+		Return SuxCore._CACHE_DIR . SnipPlus._TEMP_SNIP_IMG_PREFIX . SnipPlus.temp_snip_img_index . ".png"
 	}
 
 	AreaScreenShot()

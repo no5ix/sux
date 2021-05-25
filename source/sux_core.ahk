@@ -206,16 +206,17 @@ class SuxCore
 {
 	; dir
 	static _APP_DATA_DIR := "app_data/"
-	static _TEMP_DIR := "app_data\temp_dir\"
+	static _TEMP_DIR := SuxCore._APP_DATA_DIR . "temp_dir/"
+	static _CACHE_DIR := SuxCore._TEMP_DIR . "cache/"
 	; file
-	static Launcher_Name := A_WorkingDir "\sux.exe"
+	static Launcher_Name := A_WorkingDir "/sux.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
 	static conf_user_json_file := "conf.user.json"
 	; static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"
 	static conf_default_json_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.json"
-	static data_ini_file := SuxCore._APP_DATA_DIR "data.ini"
-	static ver_ini_file := SuxCore._APP_DATA_DIR "ver/ver.ini"
-	static remote_ver_ini_file := SuxCore._APP_DATA_DIR "ver/remote_ver.ini"
+	static data_ini_file := SuxCore._TEMP_DIR "data.ini"
+	static ver_ini_file := SuxCore._APP_DATA_DIR "ver.ini"
+	static remote_ver_ini_file := SuxCore._TEMP_DIR "remote_ver.ini"
 	; update
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/sux"
@@ -282,8 +283,8 @@ class SuxCore
 		JsEval.init()
 		SnipPlus.init()
 		
-		SuxCore.OnExit("SuxCore.ClearTempDir")
-		SuxCore.ClearTempDir()
+		SuxCore.OnExit("SuxCore.ClearCacheDir")
+		SuxCore.ClearCacheDir()
 
 		check_update_from_launch()
 
@@ -291,8 +292,11 @@ class SuxCore
 		check_update_millisec := check_update_interval_hour * 3600 * 1000
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
-		if (is_first_time)
+		if (is_first_time) {
+			FileRemoveDir, % SuxCore._TEMP_DIR, 1
+			FileCreateDir, % SuxCore._TEMP_DIR
 			SuxCore.ChooseLang()
+		}
 	}
 
 	SetCurrentLang(lang)
@@ -300,10 +304,10 @@ class SuxCore
 		SuxCore.CurrentLang := lang
 	}
 
-	ClearTempDir()
+	ClearCacheDir()
 	{
-		FileRemoveDir, % SuxCore._TEMP_DIR, 1
-		FileCreateDir, % SuxCore._TEMP_DIR
+		FileRemoveDir, % SuxCore._CACHE_DIR, 1
+		FileCreateDir, % SuxCore._CACHE_DIR
 	}
 
 	SuxMsgBox(msg, msg_type="", timeout=6)
