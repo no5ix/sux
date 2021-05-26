@@ -70,7 +70,7 @@ on_webapp_gui_req_ready() {
 	}
 	TEMP_TRANS_WEBAPP_GUI_HTML_HTML := SuxCore._CACHE_DIR . "TEMP_TRANS_WEBAPP_GUI.html"
 	if (webapp_gui_http_req.status == 200) {
-		; yd_html_file := FileOpen(TEMP_TRANS_WEBAPP_GUI_HTML_HTML, "w")
+		yd_html_file := FileOpen(TEMP_TRANS_WEBAPP_GUI_HTML_HTML, "w")
 		if FileExist(TEMP_TRANS_WEBAPP_GUI_HTML_HTML)
 			FileDelete, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML
 		html_head_str = 
@@ -80,20 +80,35 @@ on_webapp_gui_req_ready() {
 			<head>
 				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
 				<link rel="stylesheet" href="../../translate/min_trans_style.css">
-				<script type="text/javascript" src="../../translate/jquery.min.js"></script>
-				<script type="text/javascript" src="../../translate/autocomplete_json.js"></script>
-				<script type="text/javascript" src="../../translate/result-min.js"></script>
+				<script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
 			</head>
 			<body>
+		
 		)
 
 		left_pos := InStr(webapp_gui_http_req.responseText, "<div id=""results"">")
 		right_pos := InStr(webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
+
+		html_center_str := SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) 
+
+		spell_left_pos := InStr(html_center_str, "<div class=""baav"">")
+		spell_right_pos := InStr(html_center_str, "<div class=""trans-container"">")
+		spell_right_pos := InStr(html_center_str, "<div id="wordArticle"")
+		spell_right_pos := InStr(html_center_str, "<script src="https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js"></script>")
+		spell_right_pos := InStr(html_center_str, "<a class="more-example"")
+		spell_right_pos := InStr(html_center_str, "更多双语例句</a>")
+		
+		html_center_left_str := SubStr(html_center_str, spell_left_pos, spell_right_pos-spell_left_pos+1) 
+		html_center_right_str := SubStr(html_center_str, left_pos, right_pos-left_pos+1) 
+
 		html_end_str =
 		(
-			</body> </html>
+					<script type="text/javascript" src="https://shared.ydstatic.com/dict/v2016/160525/autocomplete_json.js"></script>
+					<script type="text/javascript" src="https://c.youdao.com/dict/activity/ad/result-min.js"></script>
+				</body>
+			</html>
 		)
-		final_html_body_str := html_head_str . SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) . html_end_str
+		final_html_body_str := html_head_str . html_center_str . html_end_str
 		; yd_html_file.Write(final_html_body_str)
 		; yd_html_file.Close()
 		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML, UTF-8
