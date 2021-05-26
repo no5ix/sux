@@ -13,6 +13,13 @@ Goto, SUB_TRANSLATION_FILE_END_LABEL
 #Include %A_ScriptDir%\source\sux_core.ahk
 
 ;;;;;;;;;;;;;;;
+
+get_str_from_start_end_pos(original_str, start_pos, end_pos)
+{
+	
+	return 
+}
+
 TranslateSeletedText(cur_sel_text)
 {
 	; 	global __Webapp_wb
