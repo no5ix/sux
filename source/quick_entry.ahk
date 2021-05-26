@@ -23,7 +23,7 @@ Goto, SUB_QUICK_ENTRY_FILE_END_LABEL
 #Include %A_ScriptDir%\source\sux_core.ahk
 #Include %A_ScriptDir%\source\util.ahk
 #Include %A_ScriptDir%\source\snip_plus.ahk
-#Include %A_ScriptDir%\source\translation.ahk
+#Include %A_ScriptDir%\source\translate.ahk
 #Include %A_ScriptDir%\source\search_plus.ahk
 
 

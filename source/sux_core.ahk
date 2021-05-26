@@ -330,7 +330,7 @@ class SuxCore
 
 	ShowUserGuide()
 	{	
-		msg_hello := lang("Welcome to sux, `nsux is an efficiency improvement tool that also has the following functions: `n`n- translation`n- history clipboard`n- screenshots`n- stickers`n- quick search similar to Listary / Alfred / Wox `n- MacOS-like firing angle`n- Screen edge trigger`n- Global custom shortcut keys for various operations`n- Text replacer`n- Text converter`n- Custom theme`n- Shortcut instructions `n- Customizable json configuration `n- ...`n")
+		msg_hello := lang("Welcome to sux, `nsux is an efficiency improvement tool that also has the following functions: `n`n- translate`n- history clipboard`n- screenshots`n- stickers`n- quick search similar to Listary / Alfred / Wox `n- MacOS-like firing angle`n- Screen edge trigger`n- Global custom shortcut keys for various operations`n- Text replacer`n- Text converter`n- Custom theme`n- Shortcut instructions `n- Customizable json configuration `n- ...`n")
 		guide_msg_arr := [msg_hello
 			,lang("Try it: Move the mouse to the top half of the left edge of the screen and scroll the wheel, `n`n Effect: adjust the volume quickly")
 			,lang("Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the e key, `n`n Effect: open the shortcut menu, and then use Baidu search")

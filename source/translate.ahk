@@ -1,5 +1,5 @@
 ﻿
-if(A_ScriptName=="translation.ahk") {
+if(A_ScriptName=="translate.ahk") {
 	ExitApp
 }
 
