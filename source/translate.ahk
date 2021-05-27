@@ -14,10 +14,12 @@ Goto, SUB_TRANSLATION_FILE_END_LABEL
 
 ;;;;;;;;;;;;;;;
 
-get_str_from_start_end_pos(original_str, start_pos, end_pos)
+get_str_from_start_end_str(original_str, start_str, end_str)
 {
-	
-	return 
+	left_pos := InStr(original_str, start_str)
+	right_pos := InStr(original_str, end_str)
+	ret_str := SubStr(original_str, left_pos, right_pos-left_pos) 
+	return ret_str
 }
 
 TranslateSeletedText(cur_sel_text)
@@ -93,20 +95,10 @@ on_webapp_gui_req_ready() {
 		
 		)
 
-		left_pos := InStr(webapp_gui_http_req.responseText, "<div id=""results"">")
-		right_pos := InStr(webapp_gui_http_req.responseText, "<div id=""ads"" class=""ads"">")
-
-		html_center_str := SubStr(webapp_gui_http_req.responseText, left_pos, right_pos-left_pos+1) 
-
-		spell_left_pos := InStr(html_center_str, "<div class=""baav"">")
-		spell_right_pos := InStr(html_center_str, "<div class=""trans-container"">")
-		spell_right_pos := InStr(html_center_str, "<div id="wordArticle"")
-		spell_right_pos := InStr(html_center_str, "<script src="https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js"></script>")
-		spell_right_pos := InStr(html_center_str, "<a class="more-example"")
-		spell_right_pos := InStr(html_center_str, "更多双语例句</a>")
-		
-		html_center_left_str := SubStr(html_center_str, spell_left_pos, spell_right_pos-spell_left_pos+1) 
-		html_center_right_str := SubStr(html_center_str, left_pos, right_pos-left_pos+1) 
+		str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""baav"">")
+		str_a := " </h2>"
+		str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-container"">", "<div id=""wordArticle""")
+		str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 
 		html_end_str =
 		(
@@ -115,7 +107,8 @@ on_webapp_gui_req_ready() {
 				</body>
 			</html>
 		)
-		final_html_body_str := html_head_str . html_center_str . html_end_str
+		; final_html_body_str := html_head_str . html_center_str . html_end_str
+		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
 		; yd_html_file.Write(final_html_body_str)
 		; yd_html_file.Close()
 		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML, UTF-8
