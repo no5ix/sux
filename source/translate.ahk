@@ -55,15 +55,14 @@ TranslateSeletedText(cur_sel_text)
 	; 	Gui __Webapp_:Show, w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
 	; return
 
-	st := cur_sel_text
-	if (!st) {
+	if (!cur_sel_text) {
 		ToolTipWithTimer(lang("Please Select text and try again") . ".")
 		return
 	}
 	global webapp_gui_http_req
 	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
 	; 打开启用异步的请求.
-	url := "https://www.youdao.com/w/" . UriEncode(Trim(st))
+	url := "https://www.youdao.com/w/" . UriEncode(Trim(cur_sel_text))
 	; m(url)
 	webapp_gui_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
@@ -110,7 +109,7 @@ on_webapp_gui_req_ready() {
 		)
 		; final_html_body_str := html_head_str . html_center_str . html_end_str
 		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
-		
+
 		global current_selected_text
 		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . current_selected_text . "/#keyfrom=dict.main.moreauth"" title=""" . current_selected_text . "的权威例句"">更多权威例句</a>"
 		, "<a class=""more-example"" href=""/example/blng/eng/" . current_selected_text . "/#keyfrom=dict.main.moreblng"" title=""" . current_selected_text . "的双语例句"">更多双语例句</a>"
@@ -133,6 +132,12 @@ on_webapp_gui_req_ready() {
 		Gui __Webapp_:Margin, 0, 0
 		; Gui __Webapp_:Color, EEAA99, EEAA99
 		Gui __Webapp_:-DPIScale
+		
+		; Gui, __Webapp_:Font, s12
+		; url := "https://www.youdao.com/w/" . UriEncode(Trim(current_selected_text))
+		; s := "<a href=""" url """>" lang("Original Page") "</a>"
+		; Gui, __Webapp_:Add, Link,, % s
+
 		Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
 		__Webapp_wb.silent := true ;Surpress JS Error boxes
 		
