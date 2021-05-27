@@ -88,7 +88,7 @@ on_webapp_gui_req_ready() {
 		<html>
 			<head>
 				<meta http-equiv='X-UA-Compatible' content='IE=edge'>
-				<link rel="stylesheet" href="../../translate/min_trans_style.css">
+				<link rel="stylesheet" href="../../min_trans_style.css">
 				<script type="text/javascript" src="https://cdn.staticfile.org/jquery/1.9.1/jquery.min.js"></script>
 			</head>
 			<body>
