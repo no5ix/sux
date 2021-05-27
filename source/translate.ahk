@@ -11,6 +11,7 @@ __Webapp_wb =
 Goto, SUB_TRANSLATION_FILE_END_LABEL
 
 #Include %A_ScriptDir%\source\sux_core.ahk
+#Include %A_ScriptDir%\source\quick_entry.ahk
 
 ;;;;;;;;;;;;;;;
 
@@ -109,6 +110,16 @@ on_webapp_gui_req_ready() {
 		)
 		; final_html_body_str := html_head_str . html_center_str . html_end_str
 		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
+		
+		global current_selected_text
+		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . current_selected_text . "/#keyfrom=dict.main.moreauth"" title=""" . current_selected_text . "的权威例句"">更多权威例句</a>"
+		, "<a class=""more-example"" href=""/example/blng/eng/" . current_selected_text . "/#keyfrom=dict.main.moreblng"" title=""" . current_selected_text . "的双语例句"">更多双语例句</a>"
+		, "<a class=""more-example"" href=""/example/mdia/" . current_selected_text . "/#keyfrom=dict.main.moremedia"" title=""" . current_selected_text . "的原声例句"">更多原声例句</a>"]
+		
+		for _i, _v in pending_rm_str_arr {
+			final_html_body_str := StrReplace(final_html_body_str, _v, "")
+		}
+
 		; yd_html_file.Write(final_html_body_str)
 		; yd_html_file.Close()
 		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML, UTF-8
