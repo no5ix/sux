@@ -12,7 +12,9 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 ![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
 
 
-[知乎链接](https://www.zhihu.com/question/310110592/answer/1909948496)
+- [知乎链接](https://www.zhihu.com/question/310110592/answer/1909948496)
+- [下载链接](https://github.com/no5ix/sux/releases)
+
 
 `sux` 是一个只有700k+大小的强大效率工具同时拥有
 - [翻译](#翻译)
