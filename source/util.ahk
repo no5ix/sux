@@ -443,7 +443,7 @@ IsStandardRawUrl(user_input){
 IsRawUrl(user_input){
     if (Instr(user_input, " "))
         return 0
-    raw_url_str_arr := ["192.168", "http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
+    raw_url_str_arr := ["localhost:", "127.0.0.1", "192.168", "http://", "https://", ".com", ".net", ".cn", "www.", ".io", ".org", ".cc", ".tk", ".me", ".ru", ".xyz", ".tv"]
     Loop % raw_url_str_arr.Length() {
         if (InStr(user_input, raw_url_str_arr[A_Index])) {
             return 1
