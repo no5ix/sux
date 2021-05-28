@@ -16,7 +16,7 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 - [下载链接](https://github.com/no5ix/sux/releases)
 
 
-`sux` 是一个只有700k+大小的强大效率工具同时拥有
+`sux` 是一个只有500k+大小的强大效率工具同时拥有
 - [翻译](#翻译)
 - [历史剪切板](#历史剪切板clipboard-plus)
 - [截图 & 贴图](#截图和贴图)
