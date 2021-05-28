@@ -160,7 +160,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 文字替换器replace-text
 
-![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
+![](https://pic4.zhimg.com/50/v2-01c8c7230f5b7c440ea6f5c61182577b_b.gif)
+
 
 `shift+空格` 弹出菜单之后, 按`r`  
 
