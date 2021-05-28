@@ -77,7 +77,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 历史剪切板clipboard-plus
 
-![](https://pic4.zhimg.com/50/v2-3291747a0a213916ab1cd4acf456d7bd_hd.webp)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/clipboard_plus.gif)
 
 
 `shift+空格` 弹出菜单之后, 按`v`  
@@ -160,8 +160,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 文字替换器replace-text
 
-![](https://pic4.zhimg.com/50/v2-01c8c7230f5b7c440ea6f5c61182577b_b.gif)
-
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
 
 `shift+空格` 弹出菜单之后, 按`r`  
 
