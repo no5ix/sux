@@ -9,9 +9,10 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <source src="/img/sux/sux_intro.mp4" type="video/mp4" />
 </video> -->
 
-[知乎链接](https://www.zhihu.com/question/310110592/answer/1909948496)
-
 ![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
+
+
+[知乎链接](https://www.zhihu.com/question/310110592/answer/1909948496)
 
 `sux` 是一个只有700k+大小的强大效率工具同时拥有
 - [翻译](#翻译)
