@@ -221,7 +221,7 @@ class SuxCore
 	; online
 	static Project_Home_Page := "https://github.com/no5ix/sux"
 	static Project_GitHub_Page := "https://github.com/no5ix/sux"
-	static Project_Zhihu_Page := ""
+	static Project_Zhihu_Page := "https://www.zhihu.com/question/310110592/answer/1909948496"
 	static Project_Issue_page := "https://github.com/no5ix/sux/issues"
 	static donate_page := "https://github.com/no5ix/sux#%E6%8D%90%E8%B5%A0"
 	static remote_download_html := "https://github.com/no5ix/sux/releases"

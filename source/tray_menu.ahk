@@ -311,6 +311,8 @@ class TrayMenu
 		Gui, sux_About:Add, Link,, % s
 		s := "<a href=""" SuxCore.Project_GitHub_Page """>" lang("Open GitHub to light up the little star!") "</a>"
 		Gui, sux_About:Add, Link,, % s
+		s := "<a href=""" SuxCore.Project_Zhihu_Page """>" lang("Open Zhihu to like sux!") "</a>"
+		Gui, sux_About:Add, Link,, % s
 		Gui, sux_About:Add, Text
 		GuiControl, Focus, Close
 		s := lang("About") . " " . sux_ver
