@@ -77,7 +77,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 历史剪切板clipboard-plus
 
-![](https://pic4.zhimg.com/50/v2-3291747a0a213916ab1cd4acf456d7bd_hd.webp?source=1940ef5c)
+![](https://pic4.zhimg.com/50/v2-3291747a0a213916ab1cd4acf456d7bd_hd.webp)
 
 
 `shift+空格` 弹出菜单之后, 按`v`  
