@@ -257,8 +257,7 @@ class TrayMenu
 		Gui, new_ver_release_note:Add, Text,, % s
 
 		Gui, new_ver_release_note:Font, s11
-
-		remote_ver_release_note_str := lang(SuxCore.get_remote_ini_config("release_note"))
+		remote_ver_release_note_str := lang(SuxCore.get_remote_ini_config("release_note_" . SuxCore.CurrentLang))
 		_arr := StrSplit(remote_ver_release_note_str, "-")
 		for _i, _s in _arr {
 			if (!_s)
