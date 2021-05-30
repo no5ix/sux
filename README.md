@@ -58,7 +58,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 # 快捷搜索search-plus
 
 大多数时候其实都是 `shift+空格` 然后空格搜东西, 如果要取消菜单则按`alt`或者`esc`, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
-![](https://pic2.zhimg.com/50/v2-417d7dca02be51c743e72f42b61459ce_b.gif)
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_plus.gif)
 
 也可以先选中某段文字然后`shift+空格`然后直接查询的.
 
