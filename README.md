@@ -992,15 +992,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 3. 运行Everything
 
 
-# 捐赠
-
-捐赠! 让作者更有动力给sux加新功能! ^_^
-
-- 微信
-  - ![微信](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_wechat.png)
-- 支付宝
-  - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
-
 
 # TODO List
 
@@ -1012,3 +1003,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 - smart selection 双引号, 括号内, 单引号内
 - translation gui change color to gray/ dpi / voice audio / soundmark encoding
  -->
+
+
+<!-- sux 是一个只有500k+大小的免费开源的强大效率工具同时拥有翻译, 历史剪切板, 截图贴图, 类似wox的快捷搜索, 类似macos的触发角, 屏幕边缘触发器, 全局自定义快捷键, 文本替换器, -->
