@@ -111,9 +111,11 @@ on_webapp_gui_req_ready() {
 		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
 
 		global current_selected_text
-		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . current_selected_text . "/#keyfrom=dict.main.moreauth"" title=""" . current_selected_text . "的权威例句"">更多权威例句</a>"
-		, "<a class=""more-example"" href=""/example/blng/eng/" . current_selected_text . "/#keyfrom=dict.main.moreblng"" title=""" . current_selected_text . "的双语例句"">更多双语例句</a>"
-		, "<a class=""more-example"" href=""/example/mdia/" . current_selected_text . "/#keyfrom=dict.main.moremedia"" title=""" . current_selected_text . "的原声例句"">更多原声例句</a>"]
+		trimed_cst := Trim(current_selected_text)
+		trimed_snaked_cst := StrReplace(trimed_cst, " ", "_")
+		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreauth"" title=""" . trimed_cst . "的权威例句"">更多权威例句</a>"
+		, "<a class=""more-example"" href=""/example/blng/eng/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreblng"" title=""" . trimed_cst . "的双语例句"">更多双语例句</a>"
+		, "<a class=""more-example"" href=""/example/mdia/" . trimed_snaked_cst . "/#keyfrom=dict.main.moremedia"" title=""" . trimed_cst . "的原声例句"">更多原声例句</a>"]
 		
 		for _i, _v in pending_rm_str_arr {
 			final_html_body_str := StrReplace(final_html_body_str, _v, "")
