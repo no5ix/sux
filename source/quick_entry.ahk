@@ -202,6 +202,7 @@ class QuickEntry {
 				file_name := GetFileNameFromFullPath(file_path_str)
 				; m(file_name)
 				WinWaitActive, ahk_exe %file_name%,, 2222
+				Sleep, 888
 				if !ErrorLevel {
 					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title]
 					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
