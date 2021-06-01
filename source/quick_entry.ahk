@@ -178,6 +178,7 @@ class QuickEntry {
 				return
 			}
 
+
 			USE_CURRENT_DIRECTORY_PATH_CMDs := {"cmd" : "C: && cd %UserProfile%\Desktop`n", "git" : "cd ~/Desktop`n"}
 			use_cur_path := USE_CURRENT_DIRECTORY_PATH_CMDs.HasKey(command_title)
 			if (IsFileExplorerActive())
@@ -195,21 +196,20 @@ class QuickEntry {
 				}
 			}
 			run(COMMAND_TITLE_2_ACTION_MAP[command_title])
-			; if (use_cur_path) {
-			; 	file_path_str := COMMAND_TITLE_2_ACTION_MAP[command_title]  ; just like: "C:\Program Files\Git\bin\bash.exe"
-			; 	; m(file_path_str)
-			; 	; RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
-			; 	file_name := GetFileNameFromFullPath(file_path_str)
-			; 	; m(file_name)
-			; 	WinWaitActive, ahk_exe %file_name%,, 2222
-			; 	Sleep, 666
-			; 	if !ErrorLevel {
-			; 		cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title]
-			; 		Send, {Blind}{Text}%cd_user_desktop_cmd_input%
-			; 		; PasteContent(cd_user_desktop_cmd_input)
-			; 		; Send, {Enter}
-			; 	}
-			; }
+			if (IsDesktopActive() && use_cur_path) {
+				file_path_str := COMMAND_TITLE_2_ACTION_MAP[command_title]  ; just like: "C:\Program Files\Git\bin\bash.exe"
+				; m(file_path_str)
+				; RegExMatch(file_path_str, "([^<>\/\\|:""\*\?]+)\.\w+", file_name)  ; file_name just like: "bash.exe""
+				file_name := GetFileNameFromFullPath(file_path_str)
+				; m(file_name)
+				WinWaitActive, ahk_exe %file_name%,, 2222
+				if !ErrorLevel {
+					cd_user_desktop_cmd_input := USE_CURRENT_DIRECTORY_PATH_CMDs[command_title]
+					Send, {Blind}{Text}%cd_user_desktop_cmd_input%
+					; PasteContent(cd_user_desktop_cmd_input)
+					; Send, {Enter}
+				}
+			}
 		}
 	}
 

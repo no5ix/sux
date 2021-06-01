@@ -1830,3 +1830,12 @@ GetFileNameFromFullPath(file_path_str) {
     ; file_name just like: "bash.exe""
     return file_name
 }
+
+
+IsDesktopActive() { ; Modified.. orignal by HotKeyIt
+    MouseGetPos,,,win
+    WinGetClass, class, ahk_id %win%
+    If class in Progman,WorkerW
+        Return True
+    Return False
+}
