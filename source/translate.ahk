@@ -123,6 +123,7 @@ on_webapp_gui_req_ready() {
 		trimed_snaked_cst := StrReplace(trimed_cst, " ", "_")
 		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreauth"" title=""" . trimed_cst . "的权威例句"">更多权威例句</a>"
 		, "<a class=""more-example"" href=""/example/blng/eng/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreblng"" title=""" . trimed_cst . "的双语例句"">更多双语例句</a>"
+		, "<a class=""more-example"" href=""/example/blng/eng/" . UriEncode(trimed_snaked_cst) . "/#keyfrom=dict.main.moreblng"" title=""" . trimed_cst . "的双语例句"">更多双语例句</a>"
 		, "<a class=""more-example"" href=""/example/mdia/" . trimed_snaked_cst . "/#keyfrom=dict.main.moremedia"" title=""" . trimed_cst . "的原声例句"">更多原声例句</a>"
 		, "<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
 		
