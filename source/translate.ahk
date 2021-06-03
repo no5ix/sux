@@ -95,10 +95,18 @@ on_webapp_gui_req_ready() {
 		
 		)
 
-		str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""baav"">")
-		str_a := " </h2>"
-		str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-container"">", "<div id=""wordArticle""")
-		str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
+
+		if (InStr(webapp_gui_http_req.responseText, "<div class=""baav"">")) {
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""baav"">")
+			str_a := " </h2>"
+			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-container"">", "<div id=""wordArticle""")
+			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
+		}
+		else {		
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""ads"" class=""ads"">")
+			str_a := ""
+			str_2 := ""
+		}
 
 		html_end_str =
 		(
