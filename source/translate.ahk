@@ -103,9 +103,11 @@ on_webapp_gui_req_ready() {
 			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 		}
 		else {		
-			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""ads"" class=""ads"">")
+			; if (InStr(webapp_gui_http_req.responseText, "<div id=""examples""")) {
+			; }
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
 			str_a := ""
-			str_2 := ""
+			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
 		}
 
 		html_end_str =
@@ -123,7 +125,8 @@ on_webapp_gui_req_ready() {
 		trimed_snaked_cst := StrReplace(trimed_cst, " ", "_")
 		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreauth"" title=""" . trimed_cst . "的权威例句"">更多权威例句</a>"
 		, "<a class=""more-example"" href=""/example/blng/eng/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreblng"" title=""" . trimed_cst . "的双语例句"">更多双语例句</a>"
-		, "<a class=""more-example"" href=""/example/mdia/" . trimed_snaked_cst . "/#keyfrom=dict.main.moremedia"" title=""" . trimed_cst . "的原声例句"">更多原声例句</a>"]
+		, "<a class=""more-example"" href=""/example/mdia/" . trimed_snaked_cst . "/#keyfrom=dict.main.moremedia"" title=""" . trimed_cst . "的原声例句"">更多原声例句</a>"
+		, "<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
 		
 		for _i, _v in pending_rm_str_arr {
 			final_html_body_str := StrReplace(final_html_body_str, _v, "")
