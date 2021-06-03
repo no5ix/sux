@@ -95,7 +95,6 @@ on_webapp_gui_req_ready() {
 		
 		)
 
-
 		if (InStr(webapp_gui_http_req.responseText, "<div class=""baav"">")) {
 			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""baav"">")
 			str_a := " </h2>"
@@ -115,7 +114,6 @@ on_webapp_gui_req_ready() {
 				</body>
 			</html>
 		)
-		; final_html_body_str := html_head_str . html_center_str . html_end_str
 		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
 
 		global current_selected_text
