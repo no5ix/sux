@@ -103,8 +103,6 @@ on_webapp_gui_req_ready() {
 			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 		}
 		else {		
-			; if (InStr(webapp_gui_http_req.responseText, "<div id=""examples""")) {
-			; }
 			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
 			str_a := ""
 			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
