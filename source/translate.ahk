@@ -59,10 +59,13 @@ TranslateSeletedText(cur_sel_text)
 		ToolTipWithTimer(lang("Please Select text and try again") . ".")
 		return
 	}
+
 	global webapp_gui_http_req
 	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
+
 	; 打开启用异步的请求.
-	url := "https://www.youdao.com/w/" . UriEncode(Trim(cur_sel_text))
+	ToolTipWithTimer(lang("Translate Text") . " : " . TransformText(cur_sel_text, 18), 1111)
+	url := "https://www.youdao.com/w/" . UriEncode(TransformText(cur_sel_text, 18))
 	; m(url)
 	webapp_gui_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
@@ -101,10 +104,17 @@ on_webapp_gui_req_ready() {
 			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-container"">", "<div id=""wordArticle""")
 			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 		}
+		; else if (webapp_gui_http_req.responseText, "<div class=""error-wrapper"">"){
+		; 	str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""error-wrapper"">")
+		; 	str_a := ""
+		; 	str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-wrapper""", "<div id=""wordArticle""")
+		; 	str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
+		; }
 		else {		
 			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
 			str_a := ""
 			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
+			str_3 := ""
 		}
 
 		html_end_str =

@@ -127,6 +127,27 @@ global INI_THEME := "theme"
 global INI_LANG := "lang"
 
 
+global TRANSFORM_TEXT_MAP := {1: "Uppercase"
+    , 2: "Lowercase"
+    , 3: "|"
+    , 4: "AbCd"
+    , 5: "abCd"
+    , 6: "|"
+    , 7: "AB_CB"
+    , 8: "ab_cd"
+    , 9: "Ab_Cd"
+    , 10: "ab_Cd"
+    , 11: "|"
+    , 12: "AB-CD"
+    , 13: "ab-cd"
+    , 14: "Ab-Cd"
+    , 15: "ab-Cd"
+    , 16: "|"
+    , 17: "AB CB"
+    , 18: "ab cd"
+    , 19: "Ab Cd"}
+
+
 OnClipboardChangeCmd := {}
 
 ; 记录快捷键与对应操作
