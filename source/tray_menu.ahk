@@ -24,6 +24,7 @@ class TrayMenu
 
 	init()
 	{
+		this.SetLang("config")
 		this.update_tray_menu()
 		; this.SetAutorun("config")
 		this.SetTheme("config")
@@ -154,15 +155,18 @@ class TrayMenu
 
 	SetLang(act="itemname")
 	{
+		global INI_LANG
 		if(act="itemname")
 		{
 			lang_map := {"English": "en", "中文": "cn"}
 			lang := lang_map[A_ThisMenuItem]
 		}
+		else if (act="config") {
+			lang := SuxCore.GetIniConfig(INI_LANG, SuxCore.Default_lang)
+		}
 		else {
 			lang := act
 		}
-		global INI_LANG
 		SuxCore.SetIniConfig(INI_LANG, lang)
 		SuxCore.SetCurrentLang(lang)
 	}
