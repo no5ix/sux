@@ -354,7 +354,6 @@ class SuxCore
 			ev_intro_msg := lang("Try it: Locate files and folders by name.")
 			SuxCore.SuxMsgBox(guide_msg, "", 22)
 		}
-		
 		SetTimer, Sub_HandleSetEverythingToolbar, -6666
 	}
 
@@ -977,7 +976,6 @@ border_event_evoke()
 	if(action!="")
 		return true
 }
-
 
 
 Sub_HandleSetEverythingToolbar:
