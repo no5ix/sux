@@ -93,7 +93,7 @@ LANGUAGE_CONF_MAP := {"Tips: ": "小技巧: "
     ,"Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the e key, `n`n Effect: open the shortcut menu, and then use Baidu search": "尝试一下：按下 shift + 空格 , 然后按下任何菜单选项的快捷键, 比如按下 e 键,  `n效果：打开快捷菜单, 然后使用百度搜索"
     ,"Try it: right-click on the sux icon in the tray, you can `n `n- check for updates`n- donate`n- change theme`n- change language`n- let sux start on boot`n- open configuration file`n- open Various function switches, such as trigger angle/window mover, etc. `n- ...": "尝试一下: 右击托盘的 sux 图标，你可以`n `n- 检查更新 `n- 捐赠 `n- 更换主题 `n- 更换语言 `n- 让 sux 开机启动 `n- 打开配置文件 `n- 打开各种功能开关, 如 触发角 / 窗口移动器 等 `n- ..."
     ,"Try it: Locate files and folders by name.": "尝试一下: 按名称查找文件和文件夹."
-    ,"Do you want to set the Everything toolbar? If you want, click yes (will open its help page).": "你想要设置 Everything 工具栏吗? 如果要, 请点击确定(将会打开它的帮助页)"
+    ,"Open Everything toolbar help page now.": "现在打开Everything工具栏的帮助页.)"
     ,"Feedback": "反馈"}
 
 
@@ -112,10 +112,10 @@ global auto_destory_quick_entry_gui_period := -28222  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 
-global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "e", "a", "d", "z", "b", "l", "t", "h", "j", "k", "x", "y", "u", "i", "o", "p", "n", "m"]
+global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "a", "y", "d", "z", "b", "l", "t", "h", "j", "k", "x", "u", "i", "o", "p", "n", "m"]
 global CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR := ["a", " ", "`t", "q", "w", "e", "r", "s", "f", "z", "x", "c", "g", "b", "t"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
-global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
+global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "r", "e", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global TRANSFORM_TEXT_SHORTCUT_KEY_INDEX_ARR := [" ", "`t", "|", "q", "w", "|", "e", "r", "a", "s", "|", "d", "f", "z", "x", "|", "c", "v", "b", "g", "t", "j", "k", "l"]
 global SHORTCUT_KEY_INDEX_ARR_RIGHT := ["h", "j", "k", "l", "y", "u", "i", "o", "p", "n", "m"]
 

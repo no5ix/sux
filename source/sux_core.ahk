@@ -212,6 +212,7 @@ class SuxCore
 	static _EVERYTHING_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
+	static Everything_Launcher_Name := A_WorkingDir "\app_data\ev_sup\Everything.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
 	static conf_user_json_file := "conf.user.json"
 	; static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"
@@ -242,6 +243,7 @@ class SuxCore
 	static OnExitCmd := []
 	; static var
 	static ProgramName := "sux"
+	static EverythingProgramName := "Everything"
 	static Default_lang := "cn"
 	static CurrentLang := "cn"
 	static Default_theme := "auto"
@@ -347,10 +349,12 @@ class SuxCore
 		
 		install_ev_toolbar := SuxCore._EVERYTHING_TOOLBAR_DIR . "install.cmd"
 		run, %install_ev_toolbar%,,hide
+		Regedit.Autorun(1, SuxCore.EverythingProgramName, SuxCore.Everything_Launcher_Name)
 
 		run(SuxCore._EVERYTHING_DIR . "Everything.exe")
 		WinWaitActive, ahk_exe Everything.exe, , 2.222
 		if (!ErrorLevel) {
+			Sleep, 888
 			ev_intro_msg := lang("Try it: Locate files and folders by name.")
 			SuxCore.SuxMsgBox(ev_intro_msg, "", 22)
 		}
@@ -979,12 +983,13 @@ border_event_evoke()
 
 
 Sub_HandleSetEverythingToolbar:
-	ev_sup_msg := lang("Do you want to set the Everything toolbar? If you want, click yes (will open its help page).")
-	MsgBox, 0x44, % SuxCore.ProgramName, % ev_sup_msg
-	IfMsgBox Yes
-	{
+	ev_sup_msg := lang("Open Everything toolbar help page now.")
+	SuxCore.SuxMsgBox(ev_sup_msg, "", 22)
+	; MsgBox, 0x44, % SuxCore.ProgramName, % ev_sup_msg
+	; IfMsgBox Yes
+	; {
 		run, % SuxCore.everything_sup_help_url
-	}
+	; }
 	return
 
 

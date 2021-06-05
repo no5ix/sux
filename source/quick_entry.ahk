@@ -53,6 +53,7 @@ class QuickEntry {
 		dec_cnt += 1  ; 中间还有1个截图的菜单
 		dec_cnt += 1  ; 中间还有1个贴图的菜单
 		dec_cnt += 1  ; 1个分割线
+		dec_cnt += 1  ; 1个Everything的菜单
 		dec_cnt += 1  ; 1个翻译的菜单
 		dec_cnt += 1  ; 1个替换文本的菜单
 		dec_cnt += 1  ; 1个变换文本
@@ -116,6 +117,7 @@ class QuickEntry {
 		Menu, QuickEntry_Menu, Add, % lang("Screen Shot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Suspend Screenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
+		Menu, QuickEntry_Menu, Add, % lang("Everything") . "`t&e", QuickEntry_Everything_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Translate Text") . "`t&f", QuickEntry_Translation_Menu_Click
 		Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
 
@@ -262,6 +264,13 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 	}
 	Return
 
+
+
+QuickEntry_Everything_Menu_Click:
+	Send, #!s
+	Sleep, 222
+	PasteContent(current_selected_text)
+	Return
 
 
 QuickEntry_Translation_Menu_Click:
