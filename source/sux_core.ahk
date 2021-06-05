@@ -985,11 +985,12 @@ border_event_evoke()
 Sub_HandleSetEverythingToolbar:
 	ev_sup_msg := lang("Open Everything toolbar help page now.")
 	SuxCore.SuxMsgBox(ev_sup_msg, "", 22)
-	; MsgBox, 0x44, % SuxCore.ProgramName, % ev_sup_msg
-	; IfMsgBox Yes
-	; {
+	if (SuxCore.CurrentLang == "en") {
 		run, % SuxCore.everything_sup_help_url
-	; }
+	}
+	else {
+		run, % SuxCore.Project_Zhihu_Page
+	}
 	return
 
 
