@@ -338,7 +338,7 @@ class SuxCore
 		guide_msg_arr := [msg_hello
 			,lang("Try it: Move the mouse to the top half of the left edge of the screen and scroll the wheel, `n`n Effect: adjust the volume quickly")
 			,lang("Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the e key, `n`n Effect: open the shortcut menu, and then use Baidu search")
-			,lang("Finally, right-click on the sux icon in the tray, you can `n `n- check for updates`n- donate`n- change theme`n- change language`n- let sux start on boot`n- open configuration file`n- open Various function switches, such as trigger angle/window mover, etc. `n- ... `n`n Happy use~")]
+			,lang("Try it: right-click on the sux icon in the tray, you can `n `n- check for updates`n- donate`n- change theme`n- change language`n- let sux start on boot`n- open configuration file`n- open Various function switches, such as trigger angle/window mover, etc. `n- ...")]
 			
 		for i, guide_msg in guide_msg_arr {
 			; Msgbox,,% SuxCore.ProgramName, % guide_msg
@@ -352,7 +352,7 @@ class SuxCore
 		WinWaitActive, ahk_exe Everything.exe, , 2.222
 		if (!ErrorLevel) {
 			ev_intro_msg := lang("Try it: Locate files and folders by name.")
-			SuxCore.SuxMsgBox(guide_msg, "", 22)
+			SuxCore.SuxMsgBox(ev_intro_msg, "", 22)
 		}
 		SetTimer, Sub_HandleSetEverythingToolbar, -6666
 	}

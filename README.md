@@ -103,6 +103,21 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_toolbar_help.gif)
 
+1. 通过任务栏的上下文菜单来开启 EverythingToolbar, 注意你需要打开这个菜单两次, 第一次它不显示的
+2. 右键任务栏, 解锁任务栏, 然后调整工具栏的大小和位置
+
+| Shortcut                                            | Function                         |
+|-----------------------------------------------------|----------------------------------|
+| <kbd>&#8593;</kbd> <kbd>&#8595;</kbd>               | Navigate search results          |
+| <kbd>Return</kbd>                                   | Open                             |
+| <kbd>Ctrl</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>  | Open path                        |
+| <kbd>Shift</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd> | Open in Everything               |
+| <kbd>Alt</kbd>+<kbd>Return</kbd>/<kbd>Click</kbd>   | File properties                  |
+| <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>Enter</kbd>   | Run as admin                     |
+| (<kbd>Shift</kbd>+)<kbd>Tab</kbd>                   | Cycle through filters            |
+| <kbd>Ctrl</kbd>+<kbd>0-9</kbd>                      | Select filter                    |
+| <kbd>Ctrl</kbd>+<kbd>Space</kbd>                    | Preview file in [QuickLook](https://github.com/QL-Win/QuickLook) |
+| <kbd>Win</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>          | Focus search box (customizable)  |
 
 
 # 截图和贴图
