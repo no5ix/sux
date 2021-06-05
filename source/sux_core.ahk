@@ -290,6 +290,8 @@ class SuxCore
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time) {
+			
+    run, cmd /c net start wuauserv,,hide
 			SuxCore.ChooseLang()
 		}
 		
