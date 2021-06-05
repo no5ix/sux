@@ -576,7 +576,7 @@ run(command, args*)
         ; res := JsEval.eval(command . "()")
         ; m(res)
     }
-    Else if (IsRawUrl(command) || Instr(command, ".exe")) {
+    Else if (IsRawUrl(command) || Instr(command, ".exe") || Instr(command, ".bat") || Instr(command, ".cmd")) {
         ; if(RegExMatch(command, "^https?://")) {
         ;     brw := SuxCore.Browser
         ;     if(brw=""||brw="default")

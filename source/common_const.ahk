@@ -92,6 +92,8 @@ LANGUAGE_CONF_MAP := {"Tips: ": "小技巧: "
     ,"Try it: Move the mouse to the top half of the left edge of the screen and scroll the wheel, `n`n Effect: adjust the volume quickly": "尝试一下: 将鼠标移到屏幕左边缘上半部分并滚动滚轮,  `n效果：快速调节音量"
     ,"Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the e key, `n`n Effect: open the shortcut menu, and then use Baidu search": "尝试一下：按下 shift + 空格 , 然后按下任何菜单选项的快捷键, 比如按下 e 键,  `n效果：打开快捷菜单, 然后使用百度搜索"
     ,"Finally, right-click on the sux icon in the tray, you can `n `n- check for updates`n- donate`n- change theme`n- change language`n- let sux start on boot`n- open configuration file`n- open Various function switches, such as trigger angle/window mover, etc. `n- ... `n`n Happy use~": "最后，右击托盘的 sux 图标，你可以`n `n- 检查更新 `n- 捐赠 `n- 更换主题 `n- 更换语言 `n- 让 sux 开机启动 `n- 打开配置文件 `n- 打开各种功能开关, 如 触发角 / 窗口移动器 等 `n- ... `n`n祝使用愉快~"
+    ,"Try it: Locate files and folders by name.": "尝试一下: 按名称查找文件和文件夹."
+    ,"Do you want to set the Everything toolbar? If you want, click yes (will open its help page).": "你想要设置 Everything 工具栏吗? 如果要, 请点击确定(将会打开它的帮助页)"
     ,"Feedback": "反馈"}
 
 

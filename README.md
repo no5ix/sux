@@ -93,6 +93,18 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 - 支持一键粘贴所有历史剪切板记录和清空所有,  有时候需要去各种地方去一次性复制很多东西, 然后一次性粘贴, 那这时就可以先清空历史然后一键粘贴所有了
 
 
+# Everything搜索工具栏
+
+使用演示: 
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_toolbar_demo.gif)
+
+如何设置才能有这个功能呢? 请按照下图设置: 
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_toolbar_help.gif)
+
+
+
 # 截图和贴图
 
 `shift+空格` 弹出菜单之后: 
@@ -393,25 +405,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `hover: 悬停 `, 只能用在触发角的配置里
     - `doublehit_: 双击 `, 比如`doublehit_alt`表示双击`alt`
     - `triplehit_: 三击 `
-
-
-# 备注-设置Everything始终以运行次数排序
-
-如果你也用Everything的话, sux可以配合Everything使用, 下面是推荐配置
-
-0. Everything设置如下:  
-    * [ ] 保存设置和数据到%APPDATA%\Everything目录  
-    * [x] 随系统自启动  
-    * [x] 以管理员身份运行  
-    * [x] Everything服务  
-1. 退出Everything
-2. 找到其配置文件 Everything.ini , 并在其文件末尾添加
-    ```
-    sort=Run Count
-    sort_ascending=0
-    always_keep_sort=1
-    ```
-3. 运行Everything
 
 
 # 捐赠

@@ -208,6 +208,8 @@ class SuxCore
 	static _APP_DATA_DIR := "app_data\"
 	static _TEMP_DIR := SuxCore._APP_DATA_DIR . "temp_dir\"
 	static _CACHE_DIR := SuxCore._TEMP_DIR . "cache\"
+	static _EVERYTHING_TOOLBAR_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\EverythingToolbar\"
+	static _EVERYTHING_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
@@ -226,6 +228,7 @@ class SuxCore
 	static donate_page := "https://github.com/no5ix/sux#%E6%8D%90%E8%B5%A0"
 	static remote_download_html := "https://github.com/no5ix/sux/releases"
 	static help_addr := "https://github.com/no5ix/sux#readme"
+	static everything_sup_help_url := "https://github.com/no5ix/sux#Everything搜索工具栏"
 	; remote file path
 	static stable_branch := "master"
 	static remote_raw_addr := "https://raw.githubusercontent.com/no5ix/sux/" SuxCore.stable_branch "/"
@@ -290,11 +293,10 @@ class SuxCore
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time) {
-			
-    run, cmd /c net start wuauserv,,hide
 			SuxCore.ChooseLang()
 		}
 		
+		SuxCore.OnExit("SuxCore.ClearCacheDir")
 		SuxCore.OnExit("SuxCore.ClearCacheDir")
 		SuxCore.ClearCacheDir()
 	}
@@ -342,6 +344,18 @@ class SuxCore
 			; Msgbox,,% SuxCore.ProgramName, % guide_msg
 			SuxCore.SuxMsgBox(guide_msg, "", 22)
 		}
+		
+		install_ev_toolbar := SuxCore._EVERYTHING_TOOLBAR_DIR . "install.cmd"
+		run, %install_ev_toolbar%,,hide
+
+		run(SuxCore._EVERYTHING_DIR . "Everything.exe")
+		WinWaitActive, ahk_exe Everything.exe, , 2.222
+		if (!ErrorLevel) {
+			ev_intro_msg := lang("Try it: Locate files and folders by name.")
+			SuxCore.SuxMsgBox(guide_msg, "", 22)
+		}
+		
+		SetTimer, Sub_HandleSetEverythingToolbar, -6666
 	}
 
 	SetCurrentRealTheme(theme_type)
@@ -964,6 +978,16 @@ border_event_evoke()
 		return true
 }
 
+
+
+Sub_HandleSetEverythingToolbar:
+	ev_sup_msg := lang("Do you want to set the Everything toolbar? If you want, click yes (will open its help page).")
+	MsgBox, 0x44, % SuxCore.ProgramName, % ev_sup_msg
+	IfMsgBox Yes
+	{
+		run, % SuxCore.everything_sup_help_url
+	}
+	return
 
 
 ; event callback
