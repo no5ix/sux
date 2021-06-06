@@ -983,7 +983,7 @@ border_event_evoke()
 
 
 Sub_HandleSetEverythingToolbar:
-	ev_sup_msg := lang("Open Everything toolbar help page now.")
+	ev_sup_msg := lang("Open Everything toolbar help page now, then you can follow the tutorial")
 	SuxCore.SuxMsgBox(ev_sup_msg, "", 22)
 	if (SuxCore.CurrentLang == "en") {
 		run, % SuxCore.everything_sup_help_url
