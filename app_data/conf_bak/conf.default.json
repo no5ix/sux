@@ -141,7 +141,7 @@
         "ctrl_8": "OpenTaskView",
         "wheeldown": "VolumeDown",
         "wheelup": "VolumeUp",
-        "MButton": "MoveWindowToLeftSide"
+        "MButton": "MoveCurrentWindowToMouseMonitor"
       },
       "LeftHalfTopEdge": {
         "ctrl_8": "MoveWindowToLeftSide",
@@ -157,7 +157,7 @@
       },
       "RightHalfBottomEdge": {
         "ctrl_8": "OpenActionCenter",
-        "MButton": "MoveWindowToRightSide",
+        "MButton": "MoveCurrentWindowToMouseMonitor",
         "wheeldown": "PgDn",
         "wheelup": "PgUp"
       }

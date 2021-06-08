@@ -346,6 +346,11 @@ SimulateClickDown() {
 }
 
 
+MoveCurrentWindowToMouseMonitor() {
+	MoveWindowToMouseMonitor()
+}
+
+
 SUB_TEMP_RBUTTON:
 	ClickUpIfLbDown()
 	MouseClick, Right
