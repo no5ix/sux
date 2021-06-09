@@ -1866,13 +1866,13 @@ TransformText(selected_text, transform_text_map_index) { ; transform_text_map_in
 	else if (transform_text_map_index >= 4) {
 		if st is upper
 		{
-			ToolTipWithTimer(lang("Can not separate words") . ".")	
-			return
+			; ToolTipWithTimer(lang("Can not separate words") . ".")	
+			return st
 		}
 		else if st is lower
 		{
-			ToolTipWithTimer(lang("Can not separate words") . ".")	
-			return
+			; ToolTipWithTimer(lang("Can not separate words") . ".")	
+			return st
 		}
 
 		temp_st_arr := StrSplit(st, delimiters_arr)
