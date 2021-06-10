@@ -167,20 +167,27 @@ class SearchPlus {
 }
 
 
-
-search_gui_destroy() {
-	; Hide GUI
+; Hide GUI
+search_gui_destroy(from_timer=1) {
+    IfWinActive, ahk_exe AutoHotkey.exe ahk_class AutoHotkeyGUI
+	{
+		if (from_timer) {
+			global auto_destory_quick_entry_gui_period
+			SetTimer, search_gui_destroy, %auto_destory_quick_entry_gui_period%
+			Return
+		}
+	}
 	Gui, SearchGui_:Destroy
 }
 
 ; Automatically triggered on Escape key:
 SearchGui_GuiEscape:
-	search_gui_destroy()
+	search_gui_destroy(0)
 	return
 
 Sub_HandleSearchGuiUserInput:
 	Gui, Submit, NoHide
-	search_gui_destroy()
+	search_gui_destroy(0)
 	SearchPlus.HandleSearchGuiUserInput(GuiUserInput)
 	return
 
