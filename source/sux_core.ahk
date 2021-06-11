@@ -299,8 +299,8 @@ class SuxCore
 		}
 		
 		SuxCore.OnExit("SuxCore.ClearCacheDir")
-		SuxCore.OnExit("SuxCore.ClearCacheDir")
 		SuxCore.ClearCacheDir()
+
 	}
 
 	SetCurrentLang(lang)
@@ -349,7 +349,6 @@ class SuxCore
 		
 		install_ev_toolbar := SuxCore._EVERYTHING_TOOLBAR_DIR . "install.cmd"
 		run, %install_ev_toolbar%,,hide
-		Regedit.Autorun(1, SuxCore.EverythingProgramName, SuxCore.Everything_Launcher_Name)
 
 		run(SuxCore._EVERYTHING_DIR . "Everything.exe")
 		WinWaitActive, ahk_exe Everything.exe, , 2.222
@@ -358,7 +357,7 @@ class SuxCore
 			ev_intro_msg := lang("Try it: Locate files and folders by name.")
 			SuxCore.SuxMsgBox(ev_intro_msg, "", 22)
 		}
-		SetTimer, Sub_HandleSetEverythingToolbar, -6666
+		SetTimer, Sub_HandleSetEverythingConf, -6666
 	}
 
 	SetCurrentRealTheme(theme_type)
@@ -982,8 +981,8 @@ border_event_evoke()
 }
 
 
-Sub_HandleSetEverythingToolbar:
-	ev_sup_msg := lang("Open Everything toolbar help page now, then you can follow the tutorial")
+Sub_HandleSetEverythingConf:
+	ev_sup_msg := lang("Open Everything conf help page now, then you can follow the tutorial")
 	SuxCore.SuxMsgBox(ev_sup_msg, "", 22)
 	if (SuxCore.CurrentLang == "en") {
 		run, % SuxCore.everything_sup_help_url

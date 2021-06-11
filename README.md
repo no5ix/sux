@@ -106,10 +106,14 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_toolbar_demo.gif)
 
-如何设置才能有这个功能呢? 请按照下图设置: 
+如何设置才能有这个功能呢? 请按照下面两张图与以下步骤设置: 
+
+0. 进入Everything的设置, 勾上下图中这三个选项
+
+![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/everything_conf.gif)
 
 1. 检查 `.NET Framework` 是否 大于等于 `4.7` (`Win+r`然后输入`cmd`回车, 然后输入`reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP\v4" /s`查看`Version REG_SZ`那一行是否大于等于 `4.7`)
-2. 通过任务栏的上下文菜单来开启 EverythingToolbar, 注意你需要打开这个菜单两次, 第一次它不显示的
+2. 参考下图, 先通过任务栏的上下文菜单来开启 EverythingToolbar, 注意你需要打开这个菜单两次, 第一次它不显示的
 3. 右键任务栏, 解锁任务栏, 然后调整工具栏的大小和位置
 4. 设置完毕之后, 可以使用 `shift+空格` 弹出菜单之后, 按 `e` 来激活, 若已经选中文字的话, 则会自动输入该文字并搜索
 
