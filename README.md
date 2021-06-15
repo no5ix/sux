@@ -246,7 +246,6 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 * `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
 * `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
-* `Everything` : 打开Everything, 如果已经选中了文字, 则直接用everything搜索此文字(如果你也用Everything的话, sux可以配合Everything使用, [点击此处查看推荐配置](#设置Everything始终以运行次数排序))
 * `sux` : sux official site, sux官网
 
 
