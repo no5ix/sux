@@ -242,9 +242,11 @@ InsertLineBelow() {
 }
 
 InsertLineAbove() {
-	Send, {Up}
+	Send, {Home}
 	Sleep, 66
-	InsertLineBelow()
+	Send, {Enter}
+	Sleep, 66
+	Send, {Up}
 	Sleep, 66
 	Loop 8
 	{
