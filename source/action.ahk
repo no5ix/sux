@@ -353,6 +353,15 @@ MoveCurrentWindowToMouseMonitor() {
 }
 
 
+ScreenShot() {
+	SnipPlus.AreaScreenShot()
+}
+
+ScreenShotAndSuspend() {
+	SnipPlus.AreaScreenShotAndSuspend()
+}
+
+
 SUB_TEMP_RBUTTON:
 	ClickUpIfLbDown()
 	MouseClick, Right

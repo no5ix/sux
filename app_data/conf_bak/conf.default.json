@@ -166,6 +166,8 @@
   "hotkey": {
     "enable": 1,
     "buildin": {
+      "capslock_q": "ScreenShot",
+      "capslock_shift_q": "ScreenShotAndSuspend",
       "shift_space": "ShowSuxMenu",
       "capslock_c": "ctrl_c",
       "capslock_e": "up",
