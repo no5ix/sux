@@ -139,8 +139,8 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 - 按`tab`是截图
 - 按`s`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户 -->
 
-- 按`capslock_a`是截图
-- 按`capslock_shift_a`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户
+- 按`capslock_q`是截图
+- 按`capslock_shift_q`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/snip_plus.gif)
 
