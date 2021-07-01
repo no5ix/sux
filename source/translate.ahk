@@ -72,8 +72,8 @@ TranslateSeletedText(cur_sel_text)
 	
 
 	global __Webapp_wb
-	__Webapp_Width := 800
-	__Webapp_height := 600
+	__Webapp_Width := 1288
+	__Webapp_height := 800
 	__Webapp_Name := lang("Translation")
 	Gui __Webapp_:New
 	; Gui __Webapp_:+Resize +MinSize%__Webapp_Width% -MaximizeBox -MinimizeBox
