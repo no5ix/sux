@@ -6,6 +6,7 @@ if(A_ScriptName=="translate.ahk") {
 
 webapp_gui_http_req = 
 __Webapp_wb = 
+transformed_cur_seleted_txt =
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_TRANSLATION_FILE_END_LABEL
@@ -63,9 +64,11 @@ TranslateSeletedText(cur_sel_text)
 	global webapp_gui_http_req
 	webapp_gui_http_req := ComObjCreate("Msxml2.XMLHTTP")
 
+	global transformed_cur_seleted_txt
 	; 打开启用异步的请求.
-	ToolTipWithTimer(lang("Translate Text") . " : " . TransformText(cur_sel_text, 18), 1111)
-	url := "https://www.youdao.com/w/" . UriEncode(TransformText(cur_sel_text, 18))
+	transformed_cur_seleted_txt := TransformText(cur_sel_text, 18)
+	ToolTipWithTimer(lang("Translate Text") . " : " . transformed_cur_seleted_txt, 1111)
+	url := "https://www.youdao.com/w/" . UriEncode(transformed_cur_seleted_txt)
 	; m(url)
 	webapp_gui_http_req.open("GET", url, true)
 	; 设置回调函数 [需要 v1.1.17+].
@@ -77,6 +80,9 @@ TranslateSeletedText(cur_sel_text)
 
 on_webapp_gui_req_ready() {
 	global webapp_gui_http_req
+	global current_selected_text
+	global transformed_cur_seleted_txt
+
 	if (webapp_gui_http_req.readyState != 4) {  ; 没有完成.
 		return
 	}
@@ -98,20 +104,23 @@ on_webapp_gui_req_ready() {
 		
 		)
 
+		original_url := "https://www.youdao.com/w/" . UriEncode(transformed_cur_seleted_txt)
+		str_0 := "<div id=""results""> <a href=""" . original_url . """>" . lang("Related webpages") . "</a>"
+
 		if (InStr(webapp_gui_http_req.responseText, "<div class=""baav"">")) {
-			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results-contents", "<div id=""wordArticle""")
 			str_a := ""
 			str_2 := ""
 			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 		}
 		; else if (webapp_gui_http_req.responseText, "<div class=""error-wrapper"">"){
-		; 	str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""error-wrapper"">")
+		; 	str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results-contents", "<div class=""error-wrapper"">")
 		; 	str_a := ""
 		; 	str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-wrapper""", "<div id=""wordArticle""")
 		; 	str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
 		; }
 		else {		
-			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results-contents", "<div id=""wordArticle""")
 			str_a := ""
 			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
 			str_3 := ""
@@ -124,10 +133,9 @@ on_webapp_gui_req_ready() {
 				</body>
 			</html>
 		)
-		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
+		final_html_body_str := html_head_str . str_0 . str_1 . str_a . str_2 . str_3 . html_end_str
 		final_html_body_str := StrReplace(final_html_body_str, "wordbook", "rm_wordbook_button")  ; 为了去除`添加到单词本`的按钮
 
-		global current_selected_text
 		pending_rm_str_arr := ["<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
 
 		; yd_html_file.Write(final_html_body_str)
@@ -154,6 +162,7 @@ on_webapp_gui_req_ready() {
 		}
 
 		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML, UTF-8
+		; FileAppend, % webapp_gui_http_req.responseText, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML, UTF-8
 
 		global __Webapp_wb
 		__Webapp_Width := 700
