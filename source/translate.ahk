@@ -70,38 +70,39 @@ TranslateSeletedText(cur_sel_text)
 	ToolTipWithTimer(lang("Translate Text") . " : " . transformed_cur_seleted_txt, 1111)
 	url := "https://www.youdao.com/w/" . UriEncode(transformed_cur_seleted_txt)
 	
+	; 100% will be 96 dpi, 125% will be 120 dpi, 150% will be 144 dpi and so on
+	if (A_ScreenDPI <= 96) {
+		global __Webapp_wb
+		__Webapp_Width := 1288
+		__Webapp_height := 800
+		__Webapp_Name := lang("Translation")
+		Gui __Webapp_:New
+		; Gui __Webapp_:+Resize +MinSize%__Webapp_Width% -MaximizeBox -MinimizeBox
+		Gui __Webapp_:Margin, 0, 0
+		; Gui __Webapp_:Color, EEAA99, EEAA99
+		Gui __Webapp_:-DPIScale
 
-	global __Webapp_wb
-	__Webapp_Width := 1288
-	__Webapp_height := 800
-	__Webapp_Name := lang("Translation")
-	Gui __Webapp_:New
-	; Gui __Webapp_:+Resize +MinSize%__Webapp_Width% -MaximizeBox -MinimizeBox
-	Gui __Webapp_:Margin, 0, 0
-	; Gui __Webapp_:Color, EEAA99, EEAA99
-	Gui __Webapp_:-DPIScale
+		Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
+		__Webapp_wb.silent := true ;Surpress JS Error boxes
 
-	Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
-	__Webapp_wb.silent := true ;Surpress JS Error boxes
+		__Webapp_wb.Navigate(url)  ; 该句只适用于 web 浏览器控件.
+		
+		xMidScrn := GetMouseMonitorMidX()
+		xMidScrn -= __Webapp_Width / 2 
+		Gui __Webapp_:Show, x%xMidScrn% w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
+	}
+	else {
+		; global __Webapp_wb
+		; Gui Add, ActiveX, w980 h640 v__Webapp_wb, Shell.Explorer  ; 最后一个参数是 ActiveX 组件的名称.
+		; __Webapp_wb.Navigate(url)  ; 该句只适用于 web 浏览器控件.
+		; Gui Show
 
-	__Webapp_wb.Navigate(url)  ; 该句只适用于 web 浏览器控件.
-	
-	xMidScrn := GetMouseMonitorMidX()
-	xMidScrn -= __Webapp_Width / 2 
-	Gui __Webapp_:Show, x%xMidScrn% w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
-
-
-	; global __Webapp_wb
-	; Gui Add, ActiveX, w980 h640 v__Webapp_wb, Shell.Explorer  ; 最后一个参数是 ActiveX 组件的名称.
-	; __Webapp_wb.Navigate(url)  ; 该句只适用于 web 浏览器控件.
-	; Gui Show
-
-
-	; webapp_gui_http_req.open("GET", url, true)
-	; ; 设置回调函数 [需要 v1.1.17+].
-	; webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
-	; ; 发送请求. Ready() 将在其完成后被调用.
-	; webapp_gui_http_req.send()
+		webapp_gui_http_req.open("GET", url, true)
+		; 设置回调函数 [需要 v1.1.17+].
+		webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
+		; 发送请求. Ready() 将在其完成后被调用.
+		webapp_gui_http_req.send()
+	}
 }
 
 on_webapp_gui_req_ready() {
@@ -130,23 +131,20 @@ on_webapp_gui_req_ready() {
 		
 		)
 
-		original_url := "https://www.youdao.com/w/" . UriEncode(transformed_cur_seleted_txt)
-		str_0 := "<div id=""results""> <a href=""" . original_url . """>" . lang("Related webpages") . "</a>"
-
 		if (InStr(webapp_gui_http_req.responseText, "<div class=""baav"">")) {
-			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results-contents", "<div id=""wordArticle""")
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
 			str_a := ""
 			str_2 := ""
 			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 		}
 		; else if (webapp_gui_http_req.responseText, "<div class=""error-wrapper"">"){
-		; 	str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results-contents", "<div class=""error-wrapper"">")
+		; 	str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""error-wrapper"">")
 		; 	str_a := ""
 		; 	str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-wrapper""", "<div id=""wordArticle""")
 		; 	str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
 		; }
 		else {		
-			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results-contents", "<div id=""wordArticle""")
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
 			str_a := ""
 			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<script src=""https://shared.ydstatic.com/dict/v2016/result/160621/result-wordArticle.js""></script>", "<div id=""ads"" class=""ads"">")
 			str_3 := ""
@@ -159,7 +157,7 @@ on_webapp_gui_req_ready() {
 				</body>
 			</html>
 		)
-		final_html_body_str := html_head_str . str_0 . str_1 . str_a . str_2 . str_3 . html_end_str
+		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
 		final_html_body_str := StrReplace(final_html_body_str, "wordbook", "rm_wordbook_button")  ; 为了去除`添加到单词本`的按钮
 
 		pending_rm_str_arr := ["<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
@@ -168,9 +166,9 @@ on_webapp_gui_req_ready() {
 		; yd_html_file.Close()
 		
 		rm_str_start_arr := ["<a class=""more-example"
-		; , "class=""sp humanvoice humanvoice-js log-js"
-		; , "sp dictvoice voice-js log-js"
-		; , "<img src=""http://dict.youdao.com/pureimage?"
+		, "class=""sp humanvoice humanvoice-js log-js"
+		, "sp dictvoice voice-js log-js"
+		, "<img src=""http://dict.youdao.com/pureimage?"
 		, "<img src=""https://shared-https.ydstatic.com/dict/v5.16/images/play.png"]
 
 		; 去除所有的 多余的东西
