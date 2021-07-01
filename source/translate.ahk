@@ -128,9 +128,6 @@ on_webapp_gui_req_ready() {
 		final_html_body_str := StrReplace(final_html_body_str, "wordbook", "rm_wordbook_button")  ; 为了去除`添加到单词本`的按钮
 
 		global current_selected_text
-		; trimed_cst := Trim(current_selected_text)
-		; trimed_snaked_cst := StrReplace(trimed_cst, " ", "_")
-		; trimed_voice_cst := StrReplace(trimed_cst, " ", "+")
 		pending_rm_str_arr := ["<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
 
 		; yd_html_file.Write(final_html_body_str)
@@ -142,7 +139,7 @@ on_webapp_gui_req_ready() {
 		, "<img src=""http://dict.youdao.com/pureimage?"
 		, "<img src=""https://shared-https.ydstatic.com/dict/v5.16/images/play.png"]
 
-		; 去除所有的 voice 按钮
+		; 去除所有的 多余的东西
 		Loop, parse, final_html_body_str, `n, `r  ; 在 `r 之前指定 `n, 这样可以同时支持对 Windows 和 Unix 文件的解析.
 		{
 			for _i, _v in rm_str_start_arr {
