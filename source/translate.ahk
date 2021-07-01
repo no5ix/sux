@@ -99,9 +99,9 @@ on_webapp_gui_req_ready() {
 		)
 
 		if (InStr(webapp_gui_http_req.responseText, "<div class=""baav"">")) {
-			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div class=""baav"">")
-			str_a := " </h2>"
-			str_2 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div class=""trans-container"">", "<div id=""wordArticle""")
+			str_1 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""results"">", "<div id=""wordArticle""")
+			str_a := ""
+			str_2 := ""
 			str_3 := get_str_from_start_end_str(webapp_gui_http_req.responseText, "<div id=""examples""", "<div id=""ads"" class=""ads"">")
 		}
 		; else if (webapp_gui_http_req.responseText, "<div class=""error-wrapper"">"){
@@ -125,22 +125,37 @@ on_webapp_gui_req_ready() {
 			</html>
 		)
 		final_html_body_str := html_head_str . str_1 . str_a . str_2 . str_3 . html_end_str
+		final_html_body_str := StrReplace(final_html_body_str, "wordbook", "rm_wordbook_button")  ; 为了去除`添加到单词本`的按钮
 
 		global current_selected_text
-		trimed_cst := Trim(current_selected_text)
-		trimed_snaked_cst := StrReplace(trimed_cst, " ", "_")
-		pending_rm_str_arr := ["<a class=""more-example"" href=""/example/auth/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreauth"" title=""" . trimed_cst . "的权威例句"">更多权威例句</a>"
-		, "<a class=""more-example"" href=""/example/blng/eng/" . trimed_snaked_cst . "/#keyfrom=dict.main.moreblng"" title=""" . trimed_cst . "的双语例句"">更多双语例句</a>"
-		, "<a class=""more-example"" href=""/example/blng/eng/" . UriEncode(trimed_snaked_cst) . "/#keyfrom=dict.main.moreblng"" title=""" . trimed_cst . "的双语例句"">更多双语例句</a>"
-		, "<a class=""more-example"" href=""/example/mdia/" . trimed_snaked_cst . "/#keyfrom=dict.main.moremedia"" title=""" . trimed_cst . "的原声例句"">更多原声例句</a>"
-		, "<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
+		; trimed_cst := Trim(current_selected_text)
+		; trimed_snaked_cst := StrReplace(trimed_cst, " ", "_")
+		; trimed_voice_cst := StrReplace(trimed_cst, " ", "+")
+		pending_rm_str_arr := ["<p>以上为机器翻译结果，长、整句建议使用 <a class=""viaInner"" href=""http://f.youdao.com?keyfrom=dict.result"" target=_blank>人工翻译</a> 。</p>"]
+
+		; yd_html_file.Write(final_html_body_str)
+		; yd_html_file.Close()
 		
+		rm_str_start_arr := ["<a class=""more-example"
+		, "class=""sp humanvoice humanvoice-js log-js"
+		, "sp dictvoice voice-js log-js"
+		, "<img src=""http://dict.youdao.com/pureimage?"
+		, "<img src=""https://shared-https.ydstatic.com/dict/v5.16/images/play.png"]
+
+		; 去除所有的 voice 按钮
+		Loop, parse, final_html_body_str, `n, `r  ; 在 `r 之前指定 `n, 这样可以同时支持对 Windows 和 Unix 文件的解析.
+		{
+			for _i, _v in rm_str_start_arr {
+				if (InStr(A_LoopField, _v))  {
+					pending_rm_str_arr.Push(A_LoopField)
+				}
+			}
+		}
+
 		for _i, _v in pending_rm_str_arr {
 			final_html_body_str := StrReplace(final_html_body_str, _v, "")
 		}
 
-		; yd_html_file.Write(final_html_body_str)
-		; yd_html_file.Close()
 		FileAppend, % final_html_body_str, % TEMP_TRANS_WEBAPP_GUI_HTML_HTML, UTF-8
 
 		global __Webapp_wb
