@@ -69,13 +69,39 @@ TranslateSeletedText(cur_sel_text)
 	transformed_cur_seleted_txt := TransformText(cur_sel_text, 18)
 	ToolTipWithTimer(lang("Translate Text") . " : " . transformed_cur_seleted_txt, 1111)
 	url := "https://www.youdao.com/w/" . UriEncode(transformed_cur_seleted_txt)
-	; m(url)
-	webapp_gui_http_req.open("GET", url, true)
-	; 设置回调函数 [需要 v1.1.17+].
-	webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
-	; 发送请求. Ready() 将在其完成后被调用.
-	webapp_gui_http_req.send()
-	; SetTimer, handle_webapp_gui_req_failed, -6666
+	
+
+	global __Webapp_wb
+	__Webapp_Width := 800
+	__Webapp_height := 600
+	__Webapp_Name := lang("Translation")
+	Gui __Webapp_:New
+	; Gui __Webapp_:+Resize +MinSize%__Webapp_Width% -MaximizeBox -MinimizeBox
+	Gui __Webapp_:Margin, 0, 0
+	; Gui __Webapp_:Color, EEAA99, EEAA99
+	Gui __Webapp_:-DPIScale
+
+	Gui __Webapp_:Add, ActiveX, v__Webapp_wb w%__Webapp_Width% h%__Webapp_height%, Shell.Explorer
+	__Webapp_wb.silent := true ;Surpress JS Error boxes
+
+	__Webapp_wb.Navigate(url)  ; 该句只适用于 web 浏览器控件.
+	
+	xMidScrn := GetMouseMonitorMidX()
+	xMidScrn -= __Webapp_Width / 2 
+	Gui __Webapp_:Show, x%xMidScrn% w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
+
+
+	; global __Webapp_wb
+	; Gui Add, ActiveX, w980 h640 v__Webapp_wb, Shell.Explorer  ; 最后一个参数是 ActiveX 组件的名称.
+	; __Webapp_wb.Navigate(url)  ; 该句只适用于 web 浏览器控件.
+	; Gui Show
+
+
+	; webapp_gui_http_req.open("GET", url, true)
+	; ; 设置回调函数 [需要 v1.1.17+].
+	; webapp_gui_http_req.onreadystatechange := Func("on_webapp_gui_req_ready")
+	; ; 发送请求. Ready() 将在其完成后被调用.
+	; webapp_gui_http_req.send()
 }
 
 on_webapp_gui_req_ready() {
@@ -142,9 +168,9 @@ on_webapp_gui_req_ready() {
 		; yd_html_file.Close()
 		
 		rm_str_start_arr := ["<a class=""more-example"
-		, "class=""sp humanvoice humanvoice-js log-js"
-		, "sp dictvoice voice-js log-js"
-		, "<img src=""http://dict.youdao.com/pureimage?"
+		; , "class=""sp humanvoice humanvoice-js log-js"
+		; , "sp dictvoice voice-js log-js"
+		; , "<img src=""http://dict.youdao.com/pureimage?"
 		, "<img src=""https://shared-https.ydstatic.com/dict/v5.16/images/play.png"]
 
 		; 去除所有的 多余的东西
@@ -192,8 +218,8 @@ on_webapp_gui_req_ready() {
 		__Webapp_wb.Navigate("file://" . GetFullPathName(TEMP_TRANS_WEBAPP_GUI_HTML_HTML))
 
 		;Wait for IE to load the page, before we connect the event handlers
-		while __Webapp_wb.readystate != 4 or __Webapp_wb.busy
-			sleep 10
+		; while __Webapp_wb.readystate != 4 or __Webapp_wb.busy
+		; 	sleep 10
 		;Use DOM access just like javascript!
 		; MyButton1 := wb.document.getElementById("MyButton1")
 		; MyButton2 := wb.document.getElementById("MyButton2")
