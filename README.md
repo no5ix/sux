@@ -418,8 +418,8 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `MaxWindow`
     - `MinWindow`
     - `ReloadSux`
-    - `SelectCurrentWord`
-    - `SelectCurrentLine`
+    - `SelectCurrentWordAndCopy`
+    - `SelectCurrentLineAndCopy`
     - `InsertLineBelow`
     - `InsertLineAbove`
     - `DeleteCurrentLine`
@@ -977,8 +977,8 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `MaxWindow`
     - `MinWindow`
     - `ReloadSux`
-    - `SelectCurrentWord`
-    - `SelectCurrentLine`
+    - `SelectCurrentWordAndCopy`
+    - `SelectCurrentLineAndCopy`
     - `InsertLineBelow`
     - `InsertLineAbove`
     - `DeleteCurrentLine`

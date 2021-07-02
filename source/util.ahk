@@ -1844,7 +1844,7 @@ IsDesktopActive() { ; Modified.. orignal by HotKeyIt
 TransformText(selected_text, transform_text_map_index) { ; transform_text_map_index 指的是 common.ahk 的 TRANSFORM_TEXT_MAP 的 index
 	st := Trim(selected_text)
 	if (!st) {
-		; SelectCurrentWord()
+		; SelectCurrentWordAndCopy()
 		; st := GetCurSelectedText()
 		; if (!st) {
 			ToolTipWithTimer(lang("Please Select text and try again") . ".")

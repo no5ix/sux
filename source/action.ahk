@@ -217,17 +217,20 @@ ReloadSux() {
 }
 
 
-SelectCurrentWord() {
+SelectCurrentWordAndCopy() {
 	Send, ^{Left}
 	Sleep, 66
 	Send, ^+{Right}
-	; Send, ^c
+	Sleep, 66
+	Send, ^c
 }
 
-SelectCurrentLine() {
+SelectCurrentLineAndCopy() {
 	Send, {Home}
 	Sleep, 66
 	Send, +{End}
+	Sleep, 66
+	Send, ^c
 }
 
 InsertLineBelow() {
@@ -255,7 +258,7 @@ InsertLineAbove() {
 }
 
 DeleteCurrentLine() {
-	SelectCurrentLine()
+	SelectCurrentLineAndCopy()
 	Sleep, 66
 	Send, {BackSpace}
 }
