@@ -498,28 +498,18 @@ IsMouseActiveWindowAtSameMonitor(cur_active_window_X="") {
 
 GetMouseMonitorMidX() {
         MouseGetPos, Mouse_x
-        ; yScrnOffset := A_ScreenHeight / 4
         SysGet, mon_cnt, MonitorCount
-        ; if (mon_cnt == 1) {
-        ; 	Gui, Show, xCenter  y%yScrnOffset%, myGUI
-    ;   return 
-        ; }
-        ; else {
-            xMidScrn := 0
-            last_mon_width := 0
-            Loop, % mon_cnt
-            {
-                SysGet, Mon, Monitor, % A_Index
-                _mon_width := (MonRight - MonLeft)
-                xMidScrn += _mon_width
-                last_mon_width := _mon_width
-                if (Mouse_x >= MonLeft && Mouse_x < MonRight)
-                    break
+        xMidScrn := 0
+        last_mon_width := 0
+        Loop, % mon_cnt
+        {
+            SysGet, Mon, Monitor, % A_Index
+            _mon_width := (MonRight - MonLeft)
+            if (Mouse_x >= MonLeft && Mouse_x < MonRight) {
+                xMidScrn := MonLeft + (_mon_width / 2)
+                break
             }
-            xMidScrn -= last_mon_width / 2
-            ; xMidScrn -= cur_theme_info["sux_width"] / 2 
-            ; Gui, Show, x%xMidScrn% y%yScrnOffset%, myGUI
-        ; }
+        }
       return xMidScrn
 }
 
