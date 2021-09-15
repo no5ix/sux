@@ -449,6 +449,21 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
   - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
 
 
+# 如何打包
+
+0. 建立 `build` 文件夹
+1. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
+2. 拷贝 `app_data` 文件夹到 build 里
+3. 删除 `app_data` 里的 `temp_dir` 文件夹 和 `ev_sup` 里的 `Everything.db` 和 `Run History.csv`
+4. 使用 7zip 压缩参数如下: 
+    - 压缩格式: 7z / zip
+    - 压缩等级: 极限压缩
+    - 压缩方法: `LZMA2` / `LZMA`
+    - 字典大小: 256MB
+    - 单词大小: 256
+    - 固实数据大小: 4GB
+
+
 # TODO List
 
 <!-- - readme里添加贴图的作用, 文字替换的作用填密码email啥的 -->
