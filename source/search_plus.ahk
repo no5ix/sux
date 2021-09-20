@@ -113,6 +113,17 @@ class SearchPlus {
 
 		global is_gui_open
 		; m(is_gui_open)
+
+		global THEME_CONF_REGISTER_MAP
+		; cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
+		cur_theme_type := SuxCore.current_real_theme
+		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
+		
+		xMidScrn := GetMouseMonitorMidX()
+		xMidScrn -= cur_theme_info["sux_width"] / 2 
+		yScrnOffset := A_ScreenHeight / 4
+
+		ToolTipWithTimer(SearchPlus.cur_sel_search_title, 2222, xMidScrn, yScrnOffset-29)
 		if (is_gui_open == 1)  {
 			return
 		}
@@ -124,11 +135,6 @@ class SearchPlus {
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 		Gui, SearchGui_: -SysMenu +ToolWindow -caption +hWndhMyGUI
 		Gui, SearchGui_: Margin, 0, 0
-
-		global THEME_CONF_REGISTER_MAP
-		; cur_theme_type := SuxCore.GetIniConfig("theme", SuxCore.Default_theme)
-		cur_theme_type := SuxCore.current_real_theme
-		cur_theme_info := THEME_CONF_REGISTER_MAP[cur_theme_type]
 
 		sux_bg_color := cur_theme_info["sux_bg_color"] 
 		Gui, SearchGui_: Color, %sux_bg_color%, %sux_bg_color%
@@ -144,16 +150,15 @@ class SearchPlus {
 		gui_control_options := "-WantReturn xm+6 ym+8 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
-		pre_input_str := cur_sel_text ? cur_sel_text : SearchPlus.cur_sel_search_title
+		; pre_input_str := cur_sel_text ? cur_sel_text : SearchPlus.cur_sel_search_title
+
+		pre_input_str := cur_sel_text
 		Gui, SearchGui_: Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 
 		Gui, SearchGui_: Add, Button, x-10 y-10 w1 h1 +default gSub_HandleSearchGuiUserInput ; hidden button
 
-		xMidScrn := GetMouseMonitorMidX()
-		xMidScrn -= cur_theme_info["sux_width"] / 2 
-		yScrnOffset := A_ScreenHeight / 4
 		Gui, SearchGui_: Show, x%xMidScrn% y%yScrnOffset%, myGUI
 
 		global auto_destory_quick_entry_gui_period

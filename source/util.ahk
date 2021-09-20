@@ -14,9 +14,14 @@ m(str := "")
 }
 
 
-ToolTipWithTimer(msg, delay_for_remove=1111)
+ToolTipWithTimer(msg, delay_for_remove=1111, x=0, y=0)
 {
-    ToolTip, %msg%
+    if (x == 0 && y == 0) {
+        ToolTip, %msg%, 
+    }
+    else {
+        ToolTip, %msg%, %x%, %y%
+    }
     SetTimer, RemoveToolTip, -%delay_for_remove%
     return
 
