@@ -4,6 +4,8 @@ if(A_ScriptName=="search_plus.ahk") {
 }
 
 
+is_gui_open = 0
+
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_SEARCH_PLUS_FILE_END_LABEL
@@ -109,7 +111,16 @@ class SearchPlus {
 		; global last_search_str
 		; final_search_str := curr_select_text ? curr_select_text : last_search_str
 
+		global is_gui_open
+		; m(is_gui_open)
+		if (is_gui_open == 1)  {
+			return
+		}
+
+		is_gui_open = 1
+
 		Gui, SearchGui_: New
+
 		; Gui, +AlwaysOnTop -SysMenu +ToolWindow -caption +Border
 		Gui, SearchGui_: -SysMenu +ToolWindow -caption +hWndhMyGUI
 		Gui, SearchGui_: Margin, 0, 0
@@ -177,6 +188,8 @@ search_gui_destroy(from_timer=1) {
 			Return
 		}
 	}
+	global is_gui_open
+	is_gui_open = 0
 	Gui, SearchGui_:Destroy
 }
 
