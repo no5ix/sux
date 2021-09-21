@@ -41,8 +41,8 @@ class SearchPlus {
 	HandleSearch(search_str) {
 		search_title := SearchPlus.cur_sel_search_title
 		global WEB_SEARCH_TITLE_2_URL_MAP
-		if (search_str == "")
-			return
+		; if (search_str == "")
+		; 	return
 		; 当填了 url 的时候
 		if (IsRawUrl(search_str)) {
 			if not IsStandardRawUrl(search_str)
@@ -50,9 +50,11 @@ class SearchPlus {
 			Run %search_str%
 			return
 		}
+
 		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
 			; m(_index "//" search_url)
-			if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
+			; if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
+			if (search_str == "") {	;; 说明用户动原本search_gui里被默认就选中的的search_title
 				if !InStr(search_url, "REPLACEME") {
 					Run %search_url%
 					Continue
@@ -123,7 +125,7 @@ class SearchPlus {
 		xMidScrn -= cur_theme_info["sux_width"] / 2 
 		yScrnOffset := A_ScreenHeight / 4
 
-		ToolTipWithTimer(SearchPlus.cur_sel_search_title, 2222, xMidScrn, yScrnOffset-33)
+		ToolTipWithTimer(SearchPlus.cur_sel_search_title, 2222, xMidScrn-1, yScrnOffset-33)
 		if (is_gui_open == 1)  {
 			return
 		}
@@ -171,14 +173,14 @@ class SearchPlus {
 	HandleSearchGuiUserInput(gui_user_input)
 	{
 		trim_gui_user_input := Trim(gui_user_input)
-		if !trim_gui_user_input
-		{
-			return
-		}
-		else
-		{
+		; if !trim_gui_user_input
+		; {
+		; 	return
+		; }
+		; else
+		; {
 			SearchPlus.HandleSearch(trim_gui_user_input)
-		}
+		; }
 	}
 }
 
