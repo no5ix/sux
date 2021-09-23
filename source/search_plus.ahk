@@ -125,7 +125,7 @@ class SearchPlus {
 		xMidScrn -= cur_theme_info["sux_width"] / 2 
 		yScrnOffset := A_ScreenHeight / 4
 
-		ToolTipWithTimer(SearchPlus.cur_sel_search_title, 2222, xMidScrn-1, yScrnOffset-33)
+		ToolTipWithTimer(SearchPlus.cur_sel_search_title, 2222, xMidScrn, yScrnOffset-29)
 		if (is_gui_open == 1)  {
 			return
 		}
