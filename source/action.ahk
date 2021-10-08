@@ -369,3 +369,14 @@ SUB_TEMP_RBUTTON:
 	ClickUpIfLbDown()
 	MouseClick, Right
 	Return
+
+
+#If SuxCore.CurrentSwapWinCtrlShiftAltSwitch == 1
+
+LCtrl::LWin
+LWin::LCtrl
+
+LShift::LAlt
+LAlt::LShift
+
+#IF

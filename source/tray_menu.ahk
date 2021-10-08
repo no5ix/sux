@@ -31,6 +31,7 @@ class TrayMenu
 		this.SetHotCorner("config")
 		this.SetLimitModeInFullScreen("config")
 		this.SetDisableWin10AutoUpdate("config")
+		this.SetSwapWinCtrlShiftAlt("config")
 		this.SetWindowMover("config", 1)
 		; this.SetCheckUpdatesOnStartup("config", 1)
 	}
@@ -45,6 +46,16 @@ class TrayMenu
 		if (switch && from_launch) {
 			check_update_from_launch()
 		}
+	}
+
+	SetSwapWinCtrlShiftAlt(act="toggle")
+	{
+		global INI_SWAP_WIN_CTRL_SHIFT_ALT
+		cfg := SuxCore.GetIniConfig(INI_SWAP_WIN_CTRL_SHIFT_ALT, SuxCore.Default_swap_win_ctrl_shift_alt_switch)
+		switch := (act="config")? cfg : act
+		switch := (act="toggle")? !cfg : switch
+		SuxCore.SetIniConfig(INI_SWAP_WIN_CTRL_SHIFT_ALT, switch)
+		SuxCore.SetCurrentSwapWinCtrlShiftAltSwitch(switch)
 	}
 
 	SetDisableWin10AutoUpdate(act="toggle")
@@ -200,6 +211,7 @@ class TrayMenu
 		hot_corner_switch := SuxCore.GetIniConfig(INI_HOT_CORNER, SuxCore.Default_hot_corner_switch)
 		limit_mode_in_full_screen_switch := SuxCore.GetIniConfig(INI_LIMIT_MODE_IN_FULL_SCREEN, SuxCore.Default_limit_mode_in_full_screen_switch)
 		disable_win10_auto_update_switch := SuxCore.GetIniConfig(INI_DISABLE_WIN10_AUTO_UPDATE_SWITCH, SuxCore.Default_disable_win10_auto_update_switch)
+		swap_win_ctrl_shift_alt_switch := SuxCore.GetIniConfig(INI_SWAP_WIN_CTRL_SHIFT_ALT, SuxCore.Default_swap_win_ctrl_shift_alt_switch)
 		window_mover_switch := SuxCore.GetIniConfig(INI_WINDOW_MOVER_SWITCH, SuxCore.Default_window_mover_switch)
 
 		Menu, Tray, Tip, % SuxCore.ProgramName
@@ -215,6 +227,7 @@ class TrayMenu
 		xMenu.New("SensitiveFeatureSwitch", [[lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {"check": limit_mode_in_full_screen_switch==1}]
 			, [lang("Hot Corner"), "TrayMenu.SetHotCorner", {"check": hot_corner_switch==1}]
 			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {"check": disable_win10_auto_update_switch==1}]
+			, [lang("Swap Win/Ctrl Shift/Alt"), "TrayMenu.SetSwapWinCtrlShiftAlt", {"check": swap_win_ctrl_shift_alt_switch==1}]
 			, [lang("Window Mover"), "TrayMenu.SetWindowMover", mon_cnt==1 ? {"disable": 1}: {"check": window_mover_switch==1}]])
 
 		TrayMenuList := []

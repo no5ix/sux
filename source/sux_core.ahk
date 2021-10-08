@@ -246,11 +246,13 @@ class SuxCore
 	static EverythingProgramName := "Everything"
 	static Default_lang := "cn"
 	static CurrentLang := "cn"
+	static CurrentSwapWinCtrlShiftAltSwitch := 0
 	static Default_theme := "auto"
 	static Default_autorun_switch := 0
 	static Default_hot_corner_switch := 0
 	static Default_limit_mode_in_full_screen_switch := 1
 	static Default_disable_win10_auto_update_switch := 0
+	static Default_swap_win_ctrl_shift_alt_switch := 0
 	static Default_window_mover_switch := 0
 	static Default_check_updates_on_startup_switch := 0
 	static Browser := "default"
@@ -306,6 +308,11 @@ class SuxCore
 	SetCurrentLang(lang)
 	{
 		SuxCore.CurrentLang := lang
+	}
+
+	SetCurrentSwapWinCtrlShiftAltSwitch(switch)
+	{
+		SuxCore.CurrentSwapWinCtrlShiftAltSwitch := switch
 	}
 
 	ClearCacheDir()
