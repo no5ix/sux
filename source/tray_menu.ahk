@@ -227,7 +227,7 @@ class TrayMenu
 		xMenu.New("SensitiveFeatureSwitch", [[lang("Auto Disable sux In Full Screen"), "TrayMenu.SetLimitModeInFullScreen", {"check": limit_mode_in_full_screen_switch==1}]
 			, [lang("Hot Corner"), "TrayMenu.SetHotCorner", {"check": hot_corner_switch==1}]
 			, [lang("Disable Win10 Auto Update"), "TrayMenu.SetDisableWin10AutoUpdate", {"check": disable_win10_auto_update_switch==1}]
-			, [lang("Swap Win/Ctrl Shift/Alt"), "TrayMenu.SetSwapWinCtrlShiftAlt", {"check": swap_win_ctrl_shift_alt_switch==1}]
+			, [lang("Swap Win/Ctrl Shift/Alt (beta)"), "TrayMenu.SetSwapWinCtrlShiftAlt", {"check": swap_win_ctrl_shift_alt_switch==1}]
 			, [lang("Window Mover"), "TrayMenu.SetWindowMover", mon_cnt==1 ? {"disable": 1}: {"check": window_mover_switch==1}]])
 
 		TrayMenuList := []
