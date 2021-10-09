@@ -380,3 +380,13 @@ LShift::LAlt
 LAlt::LShift
 
 #IF
+
+
+#IfWinActive ahk_exe Code.exe || #IfWinActive ahk_exe sublime_text.exe
+
+MButton::
+Click
+Send, {F12}
+return
+
+#IF
