@@ -384,7 +384,9 @@ LAlt::LShift
 
 #IfWinActive ahk_exe Code.exe || #IfWinActive ahk_exe sublime_text.exe
 
-MButton::
+~MButton::
+Sleep, 166  ; 不sleep则wgesture中键手势画不出来
+; MouseClick , Middle, , , , , U, 
 Click
 Send, {F12}
 return
