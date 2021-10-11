@@ -238,26 +238,6 @@ Is_Clipboard_As_File() {
     else
         ; MsgBox Clipboard does not contain files or text.
         return 0
-
-    ; 下面这个实现会导致 excel复制整列的时候报错: "图片太大, 超过部分将被截去"
-    ; ClipSaved := ClipboardAll
-    ; size := StrLen(ClipSaved) * (A_IsUnicode ? 2 : 1)
-    ; if (size < 1000) {  ; 大于1000说明已经是文件而不是路径了
-    ; 	; ToolTipWithTimer(size)
-    ;     return 0
-    ; }
-    ; max_i := 0
-	  ; Loop, parse, clipboard, `n, `r
-    ; {
-    ;     max_i := A_Index
-    ;     if (!FileExist(A_LoopField)) {
-    ;         return 0
-    ;     }
-    ; }
-    ; if (max_i > 1 && !IsFileExplorerActive()) {
-    ;     return 0
-    ; }
-    ; return 1
 }
 
 
