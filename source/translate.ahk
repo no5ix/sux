@@ -57,7 +57,7 @@ TranslateSeletedText(cur_sel_text)
 	; return
 
 	if (!cur_sel_text) {
-		ToolTipWithTimer(lang("Please Select text and try again") . ".")
+		tt(lang("Please Select text and try again") . ".")
 		return
 	}
 
@@ -67,7 +67,7 @@ TranslateSeletedText(cur_sel_text)
 	global transformed_cur_seleted_txt
 	; 打开启用异步的请求.
 	transformed_cur_seleted_txt := TransformText(cur_sel_text, 18)
-	ToolTipWithTimer(lang("Translate Text") . " : " . transformed_cur_seleted_txt, 1111)
+	tt(lang("Translate Text") . " : " . transformed_cur_seleted_txt, 1111)
 	url := "https://www.youdao.com/w/" . UriEncode(transformed_cur_seleted_txt)
 	
 	; 100% will be 96 dpi, 125% will be 120 dpi, 150% will be 144 dpi and so on

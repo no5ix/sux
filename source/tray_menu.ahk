@@ -533,14 +533,14 @@ class xMenu
 ; 		MouseGetPos, mouse_x, mouse_y
 ; 		TrayMenu.last_tray_icon_x := mouse_x
 ; 		TrayMenu.last_tray_icon_y := mouse_y
-; 		ToolTipWithTimer(TrayMenu.last_tray_icon_x "  \\ " TrayMenu.last_tray_icon_y)
+; 		tt(TrayMenu.last_tray_icon_x "  \\ " TrayMenu.last_tray_icon_y)
 ; 		Menu, Tray, Show
 ; 		; Menu, Tray, Show, % TrayMenu.last_tray_icon_x, % TrayMenu.last_tray_icon_y
 ;         return 0
 ;     }
 ;     else if (lParam = 0x202) ; WM_LBUTTONUP
 ;     {
-; 		; ToolTipWithTimer(111)
+; 		; tt(111)
 ; 		TrayMenu.SetDisable()
 ; 		; TrayMenu.update_tray_menu()
 ; 		return 0
@@ -563,7 +563,7 @@ Sub_xMenu_Open:
 	;; 下面这两行不能调换顺序, 否则会有乱切换软件的bug
 	; Send, !{esc}  ; GotoNextApp,  没有这一行的话, 点击了菜单之后双击alt没反应, 还得点击一下其他地方才有反应
 	TrayMenu.update_tray_menu()
-	; 	ToolTipWithTimer(TrayMenu.last_tray_icon_x "  \\ " TrayMenu.last_tray_icon_y)
+	; 	tt(TrayMenu.last_tray_icon_x "  \\ " TrayMenu.last_tray_icon_y)
 	; Menu, Tray, Show, % TrayMenu.last_tray_icon_x, % TrayMenu.last_tray_icon_y+2
 
 	; WinActivate
@@ -579,11 +579,11 @@ TICK_HOT_CORNERS:
 	}
 	global HOTKEY_REGISTER_MAP
 	border_code := get_border_code()
-	; ToolTipWithTimer(border_code)
+	; tt(border_code)
 	if (InStr(border_code, "Corner")) {
 		action := HOTKEY_REGISTER_MAP[border_code "|" "hover"]
-		; ToolTipWithTimer(border_code "|" "hover")
-		; ToolTipWithTimer(action, 1111)
+		; tt(border_code "|" "hover")
+		; tt(action, 1111)
 		run(action)
 		Loop 
 		{
@@ -598,18 +598,18 @@ HANDLE_LIMIT_MODE_IN_FULL_SCREEN:
 	global LIMIT_MODE
 	if (IsFullscreen()) {
 		; WinGetClass, class, A
-		; ToolTipWithTimer(class)
+		; tt(class)
 		if (WinActive("ahk_class #32770")) {  ;; #32770是截图的ahk_class, 因为截图也是全屏模式, 所以要避免截图的时候进入limit_mode
 			Return
 		}
 		if (LIMIT_MODE == 0) {
-			; ToolTipWithTimer(lang("sux limit mode auto enable in full screen mode") . ".", 1111)
+			; tt(lang("sux limit mode auto enable in full screen mode") . ".", 1111)
 			LIMIT_MODE := 1
 		}
 	}
 	else {
 		if (LIMIT_MODE == 1) {
-			; ToolTipWithTimer(lang("sux limit mode auto disable not in full screen mode") . ".", 1111)
+			; tt(lang("sux limit mode auto disable not in full screen mode") . ".", 1111)
 			LIMIT_MODE := 0
 		}
 	}

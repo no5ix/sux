@@ -77,7 +77,7 @@ class ClipboardPlus
 			Menu, QuickEntry_Menu, Add, % lang("Clipboard Plus") . "`t&v", :Clipborad_Plus_Menu
 		}
 		else {
-			; ToolTipWithTimer(lang("clipboard currently has no centent, please copy something..."), 2222)
+			; tt(lang("clipboard currently has no centent, please copy something..."), 2222)
 			empty_menu_str := lang("clipboard currently has no centent, please copy something...")
 			Menu, Clipborad_Plus_Menu, Add, % empty_menu_str, Clipborad_Plus_Sub_Nothing
 			Menu, Clipborad_Plus_Menu, Disable, % empty_menu_str

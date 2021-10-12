@@ -909,8 +909,8 @@ SUB_ONLY_DOUBLE_HIT:
 
 	if (LIMIT_MODE)
 		return
-	; ToolTipWithTimer(A_TimeSincePriorHotkey)
-	; ToolTipWithTimer(A_ThisHotkey)
+	; tt(A_TimeSincePriorHotkey)
+	; tt(A_ThisHotkey)
 	global keyboard_double_click_timeout
 	; cur_key := StrReplace(A_ThisHotkey, "~")
 	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
@@ -918,18 +918,18 @@ SUB_ONLY_DOUBLE_HIT:
 	; if (A_PriorHotkey != "~Alt" or A_TimeSincePriorHotkey > keyboard_double_click_timeout)
 	{
 		; Too much time between presses, so this isn't a double-press.
-		; ToolTipWithTimer(A_PriorKey)  ; LAlt
-		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
-		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
+		; tt(A_PriorKey)  ; LAlt
+		; tt(A_ThisHotkey)  ; ~alt
+		; tt(A_PriorHotkey)  ; ~alt
 		; run(HOTKEY_REGISTER_MAP[cur_key])  ; single hit key action
 		KeyWait, % cur_key ; Wait for the key to be released.
 		; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
 		; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
 		; KeyWait, Alt  ; Wait for the key to be released.
-		; ToolTipWithTimer(A_PriorKey)
+		; tt(A_PriorKey)
 		return
 	}
-	; ToolTipWithTimer(A_ThisHotkey)
+	; tt(A_ThisHotkey)
 	; cur_key := StrReplace(A_ThisHotkey, "~")
 	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . cur_key]
 	; m(action)
@@ -976,10 +976,10 @@ border_event_evoke()
 		return
 	global HOTKEY_REGISTER_MAP
 	border_code := get_border_code()
-	; ToolTipWithTimer(border_code)
+	; tt(border_code)
 
 	key := border_code "|" A_ThisHotkey
-	; ToolTipWithTimer(key)
+	; tt(key)
 
 	; StringUpper, key, key
 	action := HOTKEY_REGISTER_MAP[key]

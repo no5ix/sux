@@ -189,7 +189,7 @@ class QuickEntry {
 					Send, !d
 					final_cmd_str := StringJoin(" ", COMMAND_TITLE_2_ACTION_MAP[command_title])
 					Send, {Blind}{Text}%final_cmd_str%
-					; ToolTipWithTimer(final_cmd_str, 2222)
+					; tt(final_cmd_str, 2222)
 					Sleep, 66
 					; PasteContent(final_cmd_str)
 					; Sleep, 66

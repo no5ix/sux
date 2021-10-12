@@ -79,7 +79,7 @@ class SnipPlus
 		}
 		else
 		{
-			; ToolTipWithTimer(lang("Nothing snipped") . ".")
+			; tt(lang("Nothing snipped") . ".")
 		}
 		
 		; Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
@@ -106,7 +106,7 @@ class SnipPlus
 		; SnipPlus.AreaScreenshot()
 		; Sleep, 222
 		; if (SnipPlus.is_clipboard_changed == 0) {
-			; ToolTipWithTimer("Nothing snipped.")
+			; tt("Nothing snipped.")
 			; Return
 		; }
 
@@ -119,7 +119,7 @@ class SnipPlus
 		; {
 		; 	; m(_new_temp_clip_file_size)
 		; 	; m(_old_temp_clip_file_size)
-		; 	ToolTipWithTimer("Nothing snipped.")
+		; 	tt("Nothing snipped.")
 		; 	Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		; 	clipboardOld := ""   ; Free the memory in case the clipboard was very large.
 		; 	return

@@ -166,14 +166,14 @@ SwitchInputMethodAndDeleteLeft() {
 	{
 		; Too much time between presses, so this isn't a double-press.
 		Send, ^{Space}
-		; ToolTipWithTimer(A_PriorKey)  ; LAlt
-		; ToolTipWithTimer(A_ThisHotkey)  ; ~alt
-		; ToolTipWithTimer(A_PriorHotkey)  ; ~alt
+		; tt(A_PriorKey)  ; LAlt
+		; tt(A_ThisHotkey)  ; ~alt
+		; tt(A_PriorHotkey)  ; ~alt
 		KeyWait, % cur_key ; Wait for the key to be released.
 		; KeyWait, % A_ThisHotkey ; Wait for the key to be released.
 		; KeyWait, %A_PriorHotkey%  ; Wait for the key to be released.
 		; KeyWait, Alt  ; Wait for the key to be released.
-		; ToolTipWithTimer(A_PriorKey)
+		; tt(A_PriorKey)
 		return
 	}
 	; Send, ^{Space}
@@ -212,7 +212,7 @@ MinWindow() {
 }
 
 ReloadSux() {
-	ToolTipWithTimer("reloading sux ...")
+	tt("reloading sux ...")
 	Reload
 }
 

@@ -14,7 +14,8 @@ m(str := "")
 }
 
 
-ToolTipWithTimer(msg, delay_for_remove=1111, x=0, y=0)
+; tt(msg, delay_for_remove=1111, x=0, y=0)
+tt(msg, delay_for_remove=1111, x=0, y=0)
 {
     if (x == 0 && y == 0) {
         ToolTip, %msg%, 
@@ -74,7 +75,7 @@ ClickUpIfLbDown()
         Hotkey, RButton, Off  ;; 防止wgesture这类右键手势软件失效
         fake_lb_down = 0
         Click Up
-        ; ToolTipWithTimer("simulate click UP.", 1111)
+        ; tt("simulate click UP.", 1111)
     }
 }
 
@@ -422,7 +423,7 @@ MaximizeWindow(timeout=2222, exe_name="") {
     {
         WinWaitActive, ahk_exe %exe_name%, , %timeout%
         if ErrorLevel
-            ToolTipWithTimer("WinWaitActive " . %exe_name% . " timed out.")
+            tt("WinWaitActive " . %exe_name% . " timed out.")
         else
             WinMaximize
     }
@@ -537,7 +538,7 @@ run(command, args*)
 
     ClickUpIfLbDown()
     
-    ; ToolTipWithTimer(command, 666)
+    ; tt(command, 666)
 
     if(IsLabel(command)) {
         Gosub, %command%
@@ -715,7 +716,7 @@ get_border_code(X := "", Y := "", cornerPix = "")
     ; m(MonLeft)
     ; m(MonTop)
     ; m(MonBottom)
-    ; ToolTipWithTimer(MonTop)
+    ; tt(MonTop)
         cur_mon_width := MonRight - MonLeft
         cur_mon_height := MonBottom - MonTop
         ; m(A_Index)
@@ -774,7 +775,7 @@ get_border_code(X := "", Y := "", cornerPix = "")
 
 
 ; UpdateSuxWithGit(from_launch) {
-; 	; ToolTipWithTimer("sux background updating, please wait...", 2222)
+; 	; tt("sux background updating, please wait...", 2222)
 ; 	; RunWait, cmd.exe /c git pull origin master,,hide
 ; 	run_result := RunWaitOne("git pull origin master", from_launch)
 ; 	; if (InStr(run_result, "Already up to date")) {
@@ -1833,7 +1834,7 @@ TransformText(selected_text, transform_text_map_index) { ; transform_text_map_in
 		; SelectCurrentWordAndCopy()
 		; st := GetCurSelectedText()
 		; if (!st) {
-			ToolTipWithTimer(lang("Please Select text and try again") . ".")
+			tt(lang("Please Select text and try again") . ".")
 		; 	Return
 		; }
 	}
@@ -1852,12 +1853,12 @@ TransformText(selected_text, transform_text_map_index) { ; transform_text_map_in
 	else if (transform_text_map_index >= 4) {
 		if st is upper
 		{
-			; ToolTipWithTimer(lang("Can not separate words") . ".")	
+			; tt(lang("Can not separate words") . ".")	
 			return st
 		}
 		else if st is lower
 		{
-			; ToolTipWithTimer(lang("Can not separate words") . ".")	
+			; tt(lang("Can not separate words") . ".")	
 			return st
 		}
 
