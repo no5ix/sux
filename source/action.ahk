@@ -1,8 +1,9 @@
 ﻿#Include %A_ScriptDir%\source\common_const.ahk
-#Include %A_ScriptDir%\source\quick_entry.ahk
-#Include %A_ScriptDir%\source\js_eval.ahk
-#Include %A_ScriptDir%\source\snip_plus.ahk
 #Include %A_ScriptDir%\source\util.ahk
+#Include %A_ScriptDir%\source\js_eval.ahk
+#Include %A_ScriptDir%\source\quick_entry.ahk
+#Include %A_ScriptDir%\source\snip_plus.ahk
+#Include %A_ScriptDir%\source\tray_menu.ahk
 
 
 
@@ -362,6 +363,11 @@ ScreenShot() {
 
 ScreenShotAndSuspend() {
 	SnipPlus.AreaScreenShotAndSuspend()
+}
+
+SwapWinCtrlShiftAlt() {
+	TrayMenu.SetSwapWinCtrlShiftAlt()
+	TrayMenu.update_tray_menu()()
 }
 
 
