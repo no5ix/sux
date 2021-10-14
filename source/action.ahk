@@ -388,13 +388,14 @@ LAlt::LShift
 #IF
 
 
-#IfWinActive ahk_exe Code.exe || #IfWinActive ahk_exe sublime_text.exe
+; #IfWinActive ahk_exe Code.exe || #IfWinActive ahk_exe sublime_text.exe
 
-~MButton::
-Sleep, 222  ; 不sleep则wgesture中键手势画不出来
-; MouseClick , Middle, , , , , U, 
-Click
-Send, {F12}
-return
+; ~MButton::
+; m(1)
+; Sleep, 222  ; 不sleep则wgesture中键手势画不出来
+; ; MouseClick , Middle, , , , , U, 
+; Click
+; Send, {F12}
+; return
 
-#IF
+; #IF
