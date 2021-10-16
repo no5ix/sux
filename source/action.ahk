@@ -388,14 +388,27 @@ LAlt::LShift
 #IF
 
 
-; #IfWinActive ahk_exe Code.exe || #IfWinActive ahk_exe sublime_text.exe
+#IfWinActive ahk_exe idea64.exe
 
-; ~MButton::
-; m(1)
-; Sleep, 222  ; 不sleep则wgesture中键手势画不出来
-; ; MouseClick , Middle, , , , , U, 
-; Click
-; Send, {F12}
-; return
+MButton::
+MouseGetPos, StartVarX, StartVarY
+loop
+{
+	sleep, 66
+	MouseGetPos, CheckVarX, CheckVarY
+	If ((StartVarX != CheckVarX) or (StartVarY != CheckVarY)) {
+		; tt("Y U MOVE MY MOUSE!?")
+		Click, Down Middle
+		sleep, 222
+		Click, Up Middle
+		return
+	}
+	else {
+		break
+	}
+}
+Click, 2
+Send, !+s
+return
 
-; #IF
+#IF
