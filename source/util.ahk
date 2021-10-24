@@ -474,12 +474,13 @@ ActivateWindowsUnderCursor() {
 IsMouseActiveWindowAtSameMonitor(cur_active_window_X="") {
     if (cur_active_window_X == "") {
         WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
+        tt(cur_active_window_X "//" cur_active_window_Y)
     }
     MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
     ; m(cur_active_window_X "//" mouse_X)
     ; MsgBox, The Mouse_ is at %Mouse_x%`,%Mouse_y%
     ; MsgBox, The active window is at %cur_active_window_X%`,%cur_active_window_Y%
-    real_cur_active_window_X := cur_active_window_X + 8  ; 经测试, 实际上全屏后也总是会加8
+    real_cur_active_window_X := cur_active_window_X + 22  ; 经测试, cur_active_window_X 会比真实的数据少一些, 所以我们加上22来补偿
     SysGet, mon_cnt, MonitorCount
     Loop, % mon_cnt
     {
