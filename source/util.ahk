@@ -474,7 +474,7 @@ ActivateWindowsUnderCursor() {
 IsMouseActiveWindowAtSameMonitor(cur_active_window_X="") {
     if (cur_active_window_X == "") {
         WinGetPos, cur_active_window_X, cur_active_window_Y,,, A
-        tt(cur_active_window_X "//" cur_active_window_Y)
+        ; tt(cur_active_window_X "//" cur_active_window_Y)
     }
     MouseGetPos, Mouse_x, Mouse_y 							; Function MouseGetPos retrieves the current position of the mouse cursor
     ; m(cur_active_window_X "//" mouse_X)
