@@ -120,7 +120,7 @@ RefreshTab() {
 }
 
 ReopenLastTab() {
-	send ^+t
+	SendPlay, ^+t
 }
 
 GotoPreApp() {
