@@ -116,7 +116,7 @@ GotoPreDesktop() {
 }
 
 RefreshTab() {
-	send {F5}
+	send, {F5}
 }
 
 ReopenLastTab() {
@@ -369,7 +369,21 @@ ScreenShotAndSuspend() {
 
 SwapWinCtrlShiftAlt() {
 	TrayMenu.SetSwapWinCtrlShiftAlt()
-	TrayMenu.update_tray_menu()()
+	TrayMenu.update_tray_menu()
+}
+
+SelectCurrentWord() {
+	send, ^{Right}
+	Sleep, 66
+	send, ^+{Left}
+	Sleep, 66
+	st := GetCurSelectedText()
+	first_char := SubStr(st, 0, 1)
+	if (!RegExMatch(first_char, "[a-zA-Z]") && !RegExMatch(first_char, "[\u4e00-\u9fa5]")) {
+		send, {Left}
+		sleep, 66
+		send, ^+{Right}
+	}
 }
 
 
