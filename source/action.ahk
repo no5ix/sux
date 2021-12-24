@@ -376,10 +376,11 @@ SelectCurrentWord() {
 	Sleep, 66
 	st := GetCurSelectedText()
 	first_char := SubStr(st, 1, 1)
-	if (!RegExMatch(first_char, "[a-zA-Z]") && !RegExMatch(first_char, "[\u4e00-\u9fa5]")) {
+	if (!RegExMatch(first_char, "[0-9a-zA-Z]") && !RegExMatch(first_char, "[^\x00-\xff]") && first_char != "_") {
 		send, {Right}
 	}
 	else {
+		send, {Right} ; 没有这一句的话, 如果初始光标在当前word的第二个字符后面的时候会有问题
 		send, ^{Left}
 	}
 	sleep, 66
