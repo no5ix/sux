@@ -395,6 +395,8 @@ SelectCurrentWord() {
 }
 
 
+
+
 SUB_TEMP_RBUTTON:
 	ClickUpIfLbDown()
 	MouseClick, Right
@@ -409,12 +411,21 @@ LWin::LCtrl
 LShift::LAlt
 LAlt::LShift
 
-#IF
+
+#If WinActive("ahk_exe MyPopo.exe") or WinActive("ahk_exe WeChat.exe")
+; #IfWinActive ahk_exe MyPopo.exe
+; #IfWinActive ahk_exe WeChat.exe
+
+CapsLock::
+return
+
+Esc::
+return
 
 
-; #IfWinActive ahk_exe idea64.exe
+#IfWinActive ahk_exe idea64.exe
 
-; MButton::
+MButton::
 ; MouseGetPos, StartVarX, StartVarY
 ; loop
 ; {
@@ -431,8 +442,6 @@ LAlt::LShift
 ; 		break
 ; 	}
 ; }
-; Click, 2
-; Send, !+s
-; return
-
-; #IF
+Click, 2
+Send, !+s
+return
