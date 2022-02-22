@@ -771,8 +771,8 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 		key := prefix_trans_keys[A_Index]
 		; StringUpper, key, key
 		original_key := key
-		if !(original_key = "|CapsLock") {
-			; m(original_key)
+
+		if (original_key != "|capsLock" && original_key != "|~capsLock") {
 			key := StrReplace(key, "CapsLock", CAPS_REPLACER)
 			key := StrReplace(key, "CapsLock & +", CAPS_REPLACER)
 			key := StrReplace(key, "CapsLock & !", CAPS_REPLACER)

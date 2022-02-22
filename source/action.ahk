@@ -368,7 +368,14 @@ ScreenShotAndSuspend() {
 }
 
 SwapWinCtrlShiftAlt() {
+	if (InStr(A_ThisHotkey, "#")) {
+		cur_key := StrReplace(A_ThisHotkey, "#", "^")
+		SendInput, % cur_key
+	}
+
 	TrayMenu.SetSwapWinCtrlShiftAlt()
+	TrayMenu.update_tray_menu()
+	tt(lang("Swap Win/Ctrl Shift/Alt (beta)") . ", SuxCore.CurrentSwapWinCtrlShiftAltSwitch == " . SuxCore.CurrentSwapWinCtrlShiftAltSwitch)
 }
 
 SelectCurrentWord() {
