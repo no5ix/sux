@@ -395,6 +395,25 @@ SelectCurrentWord() {
 }
 
 
+;; 在 hotkey.capslock_disable_exe_list 里的软件内部会屏蔽单独敲击capslock键,
+;; 避免如果capslock配成esc, 然后在微信里直接不小心按到了然后就关闭微信界面了的这种情况
+CheckDisableCapslockList() {
+	if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) == 0) {
+		return 0
+	}
+	for _index, exe_name in SuxCore.GetSuxCfg("hotkey.capslock_disable_exe_list", []) {
+		if (WinActive("ahk_exe" exe_name)) {
+			return 1
+		}
+	}
+	return 0
+}
+
+
+
+CheckEnableMiddleMouseButtonInIdea() {
+	return SuxCore.GetSuxCfg("enable_middle_mouse_button_in_idea", 0) && WinActive("ahk_exe idea64.exe")
+}
 
 
 SUB_TEMP_RBUTTON:
@@ -412,18 +431,17 @@ LShift::LAlt
 LAlt::LShift
 
 
-#If WinActive("ahk_exe MyPopo.exe") or WinActive("ahk_exe WeChat.exe")
+#If CheckDisableCapslockList()
+; #If WinActive("ahk_exe MyPopo.exe") or WinActive("ahk_exe WeChat.exe")
 ; #IfWinActive ahk_exe MyPopo.exe
 ; #IfWinActive ahk_exe WeChat.exe
 
 CapsLock::
 return
 
-Esc::
-return
 
-
-#IfWinActive ahk_exe idea64.exe
+#If CheckEnableMiddleMouseButtonInIdea()
+; #IfWinActive ahk_exe idea64.exe
 
 MButton::
 ; MouseGetPos, StartVarX, StartVarY
