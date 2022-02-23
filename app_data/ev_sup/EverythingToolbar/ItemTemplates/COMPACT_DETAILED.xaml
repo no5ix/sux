@@ -2,10 +2,12 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:EverythingToolbar;assembly=EverythingToolbar">
     <DataTemplate x:Key="searchResultsListTemplate">
-        <Grid x:Name="ListViewItem" Margin="0, 0, 0, 4">
+        <Grid x:Name="ListViewItem" Margin="3">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="40" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1.5*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="56" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
@@ -15,17 +17,27 @@
             <Image Source="{Binding Icon, IsAsync=True}"
                    Width="16"
                    Height="16"
-                   Margin="0, 5, 0, 0" />
+                   Margin="0, 0, 2, 0" />
             <ContentControl Content="{Binding HighlightedFileName, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
                             Grid.Column="1"
-                            VerticalAlignment="Bottom"
-                            Margin="0, 7, 0, 4"
-                            FontSize="12pt"
+                            FontSize="9pt"
+                            Margin="2, 0"
                             Foreground="{DynamicResource SearchResultFileName}" />
-            <TextBlock Grid.Column="2"
-                       VerticalAlignment="Bottom"
-                       Margin="10, 5, 10, 6"
-                       FontSize="10pt"
+            <ContentControl Content="{Binding HighlightedPath, Converter={local:HighlightedTextConverter}, Mode=OneTime}"
+                            ToolTip="{Binding Path}"
+                            Grid.Column="2"
+                            FontSize="9pt"
+                            Margin="2, 0"
+                            Foreground="{DynamicResource SearchResultPath}" />
+            <TextBlock Grid.Column="3"
+                       FontSize="9pt"
+                       Margin="2, 0"
+                       Foreground="{DynamicResource SearchResultFileSize}"
+                       TextAlignment="Right"
+                       Text="{Binding FileSize}" />
+            <TextBlock Grid.Column="4"
+                       FontSize="9pt"
+                       Margin="2, 0"
                        Foreground="{DynamicResource SearchResultDateModified}"
                        Text="{Binding DateModified}" />
         </Grid>
