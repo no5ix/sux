@@ -267,19 +267,23 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 
 QuickEntry_Everything_Menu_Click:
+	st := current_selected_text
+	if (!current_selected_text) {
+		st := GetCurSelectedText()
+	}
 	Send, #!s
 	Sleep, 222
-	PasteContent(current_selected_text)
+	PasteContent(st)
 	Return
 
 
 QuickEntry_Translation_Menu_Click:
-	TranslateSeletedText(current_selected_text)
+	TranslateSeletedText(GetCurSelectedText())
 	Return
 
 
 QuickEntry_TransformText_Detail_Menu_click:
-	st := TransformText(current_selected_text, A_ThisMenuItemPos)
+	st := TransformText(GetCurSelectedText(), A_ThisMenuItemPos)
 	PasteContent(st)
 	Return
 

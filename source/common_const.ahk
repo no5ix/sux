@@ -115,7 +115,8 @@ global auto_destory_quick_entry_gui_period := -28222  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 
-global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "a", "y", "d", "z", "b", "l", "t", "h", "j", "k", "x", "u", "i", "o", "p", "n", "m"]
+global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "q", "w", "a", "y", "d", "z", "b", "l", "t", "h", "s", "k", "x", "j", "u", "i", "o", "p", "n", "m"]
+; global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "a", "s", "d", "z", "x", "q", "w", "", "b", "l", "t", "h", "j", "k", "u", "i", "o", "p", "n", "m"]
 global CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR := ["a", " ", "`t", "q", "w", "e", "r", "s", "f", "z", "x", "c", "g", "b", "t"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB := [" ", "`t", "q", "w", "r", "e", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
