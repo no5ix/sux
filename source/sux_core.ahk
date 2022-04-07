@@ -212,7 +212,6 @@ class SuxCore
 	static _EVERYTHING_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
-	static Everything_Launcher_Name := A_WorkingDir "\app_data\ev_sup\Everything.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
 	static conf_user_json_file := "conf.user.json"
 	; static conf_default_yaml_file := SuxCore._APP_DATA_DIR "conf_bak/conf.default.yaml"

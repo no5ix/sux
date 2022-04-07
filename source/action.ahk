@@ -371,8 +371,9 @@ SwapWinCtrlShiftAlt() {
 	if (InStr(A_ThisHotkey, "#")) {
 		cur_key := StrReplace(A_ThisHotkey, "#", "^")
 		SendInput, % cur_key
+		Send {LWin up}  ;; 不晓得为何, 如果不加这一句就会导致win键没抬起来
 	}
-
+	
 	TrayMenu.SetSwapWinCtrlShiftAlt()
 	TrayMenu.update_tray_menu()
 	tt(lang("Swap Win/Ctrl Shift/Alt (beta)") . ", SuxCore.CurrentSwapWinCtrlShiftAltSwitch == " . SuxCore.CurrentSwapWinCtrlShiftAltSwitch)
