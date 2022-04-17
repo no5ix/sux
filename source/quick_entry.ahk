@@ -270,8 +270,10 @@ QuickEntry_Everything_Menu_Click:
 	st := current_selected_text
 	if (!st) {
 		st := GetCurSelectedText()
+		if (st) {
+			Sleep, 222
+		}
 	}
-	Sleep, 222
 	Send, #!s
 	if (st) {
 		Sleep, 666
