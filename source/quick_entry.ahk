@@ -268,12 +268,15 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 QuickEntry_Everything_Menu_Click:
 	st := current_selected_text
-	if (!current_selected_text) {
+	if (!st) {
 		st := GetCurSelectedText()
 	}
-	Send, #!s
 	Sleep, 222
-	PasteContent(st)
+	Send, #!s
+	if (st) {
+		Sleep, 666
+		PasteContent(st)
+	}
 	Return
 
 
