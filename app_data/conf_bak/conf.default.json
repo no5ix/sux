@@ -169,6 +169,7 @@
       "capslock_q": "ScreenShot",
       "capslock_shift_q": "ScreenShotAndSuspend",
       "shift_space": "ShowSuxMenu",
+      "doublehit_capslock": "ShowSuxMenu",
       "capslock_c": "ctrl_c",
       "capslock_e": "up",
       "capslock_alt_e": "shift_up",

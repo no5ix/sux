@@ -21,7 +21,7 @@ MULTI_HIT_DECORATOR := "~"
 
 MULTI_HIT_MAP := {}
 
-HANDLE_SINGLE_DOUBLE_HIT_MODE_1 := 1
+HANDLE_SINGLE_DOUBLE_HIT_MODE_1 := 1  ; 普通模式
 HANDLE_SINGLE_DOUBLE_HIT_MODE_2 := 2
 
 MULTI_HIT_CNT := 0
@@ -571,6 +571,8 @@ class SuxCore
 		global MULTI_HIT_DECORATOR
 		global TRIPLE_HIT_KEY_PREFIX
 		for ltrimed_key_name, original_key_2_action_map in MULTI_HIT_MAP {
+				; m("ltrimed_key_name: "  "// " ltrimed_key_name)
+				; m("original_key_2_action_map.Count(): "  "// " original_key_2_action_map.Count())
 			if (original_key_2_action_map.Count() == 1 && !original_key_2_action_map.HasKey(TRIPLE_HIT_KEY_PREFIX . ltrimed_key_name)) {
 				for key, action in original_key_2_action_map {
 					register_hotkey(key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_1)
@@ -578,15 +580,17 @@ class SuxCore
 			}
 			else {
 				;; 核心思想就是: 比如 alt有单击也有双击则用`alt`, 如果没有单击则用`~alt`
-				if (original_key_2_action_map.HasKey(ltrimed_key_name)) {
+				if (original_key_2_action_map.HasKey(ltrimed_key_name)) { ; 说明有单击的情况
 					final_key := ltrimed_key_name
 				}
 				else {
 					final_key := MULTI_HIT_DECORATOR . ltrimed_key_name
 				}
-				register_hotkey(final_key, "", "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
+				
+				; m("final_key: "  "// " final_key)
+				register_hotkey(final_key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
 				for key, action in original_key_2_action_map {
-					HOTKEY_REGISTER_MAP[key] := action
+					HOTKEY_REGISTER_MAP[key] := parse_conf_action_str(action)
 				}
 			}
 		}
@@ -685,8 +689,8 @@ str_array_concate(arr, app, deli="")
 
 register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_mode=0)
 {
-	if (!action)
-		Return
+	; if (!action)  ; 
+	; 	Return
 
 	global HOTKEY_REGISTER_MAP
 	global MULTI_HIT_DECORATOR
@@ -707,11 +711,18 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 	
 
 	if (key_split_arr.Length() == 1 && handle_single_double_hit_mode == 0 && !excluede_single_key_map.HasKey(multi_hit_ltrimed_key)) {
-	; if (handle_single_double_hit_mode == 0 && (Instr(key_name, DOUBLE_HIT_KEY_PREFIX) || Instr(key_name, TRIPLE_HIT_KEY_PREFIX))) {
-		; m(original_key_name)
-		; m(key_name)
-		if !MULTI_HIT_MAP.HasKey(multi_hit_ltrimed_key)
+		; 比如像 original_key_name 为 "rctrl", "doublehit_RCtrl", "triplehit_rctrl" 这种, 
+		; 则 multi_hit_ltrimed_key 为 rctrl , key_name为 "rctrl", "doublehit_rctrl" , "triplehit_rctrl"
+		; 把他存到 MULTI_HIT_MAP 里, 然后等调用 HandleConfParse 函数的时候再调用本函数 register_hotkey 来注册
+		; 主要是为了解决以下类似的问题
+		;; 核心思想就是: 比如 rctrl有单击也有双击则用`rctrl`, 如果没有单击则用`~rctrl`
+
+			; m("original_key_name: "  "// " original_key_name)
+			; m("multi_hit_ltrimed_key: "  "// " multi_hit_ltrimed_key)
+			; m("key_name: "  "// " key_name)
+		if !MULTI_HIT_MAP.HasKey(multi_hit_ltrimed_key) {
 			MULTI_HIT_MAP[multi_hit_ltrimed_key] := {}
+		}
 		MULTI_HIT_MAP[multi_hit_ltrimed_key][key_name] := action
 		return
 	}
@@ -765,6 +776,9 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 	}
 	prefix_arr := StrSplit(prefix, "/")
 	prefix_trans_keys := str_array_concate(prefix_arr, trans_key, "|")
+
+
+
 	Loop, % prefix_trans_keys.MaxIndex()
 	{
 		key := prefix_trans_keys[A_Index]
@@ -790,9 +804,10 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 
 		arr := StrSplit(key, "|")
 		if (handle_single_double_hit_mode == HANDLE_SINGLE_DOUBLE_HIT_MODE_2) {
-			; m(key_name)
-			; HOTKEY_REGISTER_MAP[key_name] := final_action
-			if(arr[1]!="") {
+			; m("arr[1]: " "//" arr[1])
+			; m("arr[2]: " "//" arr[2])
+			; HOTKEY_REGISTER_MAP[key_name] := action
+			if(arr[1] != "") {
 				Hotkey, IF, border_event_evoke()
 				Hotkey, % arr[2], SUB_MULTI_HIT
 			}
@@ -811,7 +826,7 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			; }
 			; m(key_name)
 			HOTKEY_REGISTER_MAP[key_name] := final_action
-			if(arr[1]!="") {
+			if(arr[1] != "") {
 				Hotkey, IF, border_event_evoke()
 				Hotkey, % arr[2], SUB_ONLY_DOUBLE_HIT
 			}
@@ -855,10 +870,13 @@ SUB_MULTI_HIT:
 	if (LIMIT_MODE)
 		return
 	cur_key := StrReplace(A_ThisHotkey, MULTI_HIT_DECORATOR)
-	if HOTKEY_REGISTER_MAP.HasKey(TRIPLE_HIT_KEY_PREFIX . cur_key)
+	
+			; m("cur_key: " "//" cur_key)
+	if HOTKEY_REGISTER_MAP.HasKey(TRIPLE_HIT_KEY_PREFIX . cur_key) {
 		final_timeout := keyboard_triple_click_timeout
-	else
+	} else {
 		final_timeout := keyboard_double_click_timeout
+	}
 	if (MULTI_HIT_CNT > 0) ; SetTimer 已经启动, 所以我们记录键击.
 	{
 		MULTI_HIT_CNT += 1
@@ -894,6 +912,8 @@ MULTI_HIT_TIMER_CB:
 	}
 	; 不论触发了上面的哪个动作, 都对 count 进行重置
 	; 为下一个系列的按下做准备:
+	
+		; m(action)
 	run(action)
 	MULTI_HIT_CNT := 0
 	Return
@@ -931,7 +951,7 @@ SUB_ONLY_DOUBLE_HIT:
 	; tt(A_ThisHotkey)
 	; cur_key := StrReplace(A_ThisHotkey, "~")
 	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . cur_key]
-	; m(action)
+	m(action)
 	; if(action="") {
 	; 	return
 	; }
