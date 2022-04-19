@@ -6,6 +6,7 @@ if(A_ScriptName=="search_plus.ahk") {
 
 is_gui_open = 0
 
+last_search_str = ""
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_SEARCH_PLUS_FILE_END_LABEL
@@ -43,6 +44,7 @@ class SearchPlus {
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		; if (search_str == "")
 		; 	return
+
 		; 当填了 url 的时候
 		if (IsRawUrl(search_str)) {
 			if not IsStandardRawUrl(search_str)
@@ -54,6 +56,7 @@ class SearchPlus {
 		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
 			; m(_index "//" search_url)
 			; if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
+
 			if (search_str == "") {	;; 说明用户动原本search_gui里被默认就选中的的search_title
 				if !InStr(search_url, "REPLACEME") {
 					Run %search_url%
@@ -68,6 +71,9 @@ class SearchPlus {
 				Continue
 			}
 
+			global last_search_str
+			last_search_str := search_str
+			
 			safe_query := UriEncode(Trim(search_str))
 			StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 			if not IsStandardRawUrl(search_final_url)
@@ -110,8 +116,6 @@ class SearchPlus {
 		; curr_select_text := GetCurSelectedText()
 		; if (StrLen(curr_select_text) >= 60 || str)
 		; 	curr_select_text := ""
-		; global last_search_str
-		; final_search_str := curr_select_text ? curr_select_text : last_search_str
 
 		global is_gui_open
 		; m(is_gui_open)
@@ -151,11 +155,16 @@ class SearchPlus {
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput gSub_HandleSearchGuiUserInput
 		gui_control_options := "-WantReturn xm+6 ym+8 w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . " -E0x200"
 		; gui_control_options := "w" . cur_theme_info["sux_width"] . " c" . cur_theme_info["sux_text_color"] . "  -E0x800000"
-		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %final_search_str%
+		
+		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %cur_sel_text%
 		; pre_input_str := cur_sel_text ? cur_sel_text : SearchPlus.cur_sel_search_title
 
-		pre_input_str := cur_sel_text
-		Gui, SearchGui_: Add, Edit, %gui_control_options% vGuiUserInput, % pre_input_str
+		global last_search_str
+		if (!cur_sel_text) {
+			cur_sel_text := last_search_str
+		}
+		; pre_input_str := cur_sel_text
+		Gui, SearchGui_: Add, Edit, %gui_control_options% vGuiUserInput, % cur_sel_text
 		; Gui, Add, Edit, %gui_control_options% vGuiUserInput, %curr_select_text%
 		; Gui, Add, Edit, xm w620 ccBlack -E0x200 vGuiUserInput, %final_search_str%
 

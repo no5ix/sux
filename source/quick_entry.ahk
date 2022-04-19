@@ -83,8 +83,8 @@ class QuickEntry {
 
 		global current_selected_text
 		current_selected_text := GetCurSelectedText()
-		if current_selected_text {
-			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 2) . "..."
+		if (current_selected_text) {
+			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 6) . "..."
 			; m(tips_msg)
 			Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
 			Menu, QuickEntry_Menu, Disable, % tips_msg
@@ -92,6 +92,7 @@ class QuickEntry {
 		}
 		else {
 			; tips_msg := lang("Tips: ") . lang("after selecting text, this menu can automatically process it") . "."
+			
 		}
 		
 		; global WEB_SEARCH_TITLE_LIST
