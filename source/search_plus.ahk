@@ -7,6 +7,8 @@ if(A_ScriptName=="search_plus.ahk") {
 is_gui_open = 0
 
 last_search_str = ""
+last_search_ts = 0
+
 
 ; with this label, you can include this file on top of the file
 Goto, SUB_SEARCH_PLUS_FILE_END_LABEL
@@ -40,11 +42,6 @@ class SearchPlus {
 	}
 
 	HandleSearch(search_str) {
-		search_title := SearchPlus.cur_sel_search_title
-		global WEB_SEARCH_TITLE_2_URL_MAP
-		; if (search_str == "")
-		; 	return
-
 		; 当填了 url 的时候
 		if (IsRawUrl(search_str)) {
 			if not IsStandardRawUrl(search_str)
@@ -53,11 +50,20 @@ class SearchPlus {
 			return
 		}
 
-		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
-			; m(_index "//" search_url)
-			; if (search_str == search_title) {	;; 说明用户动原本search_gui里被默认就选中的的search_title
+		global WEB_SEARCH_TITLE_2_URL_MAP
+		global last_search_str
+		global last_search_ts
 
-			if (search_str == "") {	;; 说明用户动原本search_gui里被默认就选中的的search_title
+		search_title := SearchPlus.cur_sel_search_title
+
+		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
+
+			;; 逻辑是: 
+			;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
+			;; 2. 如果这一次的 search_str 和上次一样, 
+			;; 		- 如果两次搜索的时间间隔大于 6 秒, 那就直接去 search_title 的官网
+			;; 		- 如果两次搜索的时间间隔小于等于 6 秒, 那就正常搜索
+			if (search_str == "" || (search_str == last_search_str && A_Now > last_search_ts + 6)) {
 				if !InStr(search_url, "REPLACEME") {
 					Run %search_url%
 					Continue
@@ -71,8 +77,8 @@ class SearchPlus {
 				Continue
 			}
 
-			global last_search_str
 			last_search_str := search_str
+			last_search_ts := A_Now
 			
 			safe_query := UriEncode(Trim(search_str))
 			StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
