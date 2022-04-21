@@ -61,9 +61,9 @@ class SearchPlus {
 			;; 逻辑是: 
 			;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
 			;; 2. 如果这一次的 search_str 和上次一样, 
-			;; 		- 如果两次搜索的时间间隔大于 6 秒, 那就直接去 search_title 的官网
-			;; 		- 如果两次搜索的时间间隔小于等于 6 秒, 那就正常搜索
-			if (search_str == "" || (search_str == last_search_str && A_Now > last_search_ts + 6)) {
+			;; 		- 如果两次搜索的时间间隔大于 88 秒, 那就直接去 search_title 的官网
+			;; 		- 如果两次搜索的时间间隔小于等于 88 秒, 那就正常搜索
+			if (search_str == "" || (search_str == last_search_str && A_Now > last_search_ts + 88)) {
 				if !InStr(search_url, "REPLACEME") {
 					Run %search_url%
 					Continue
