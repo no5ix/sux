@@ -951,7 +951,7 @@ SUB_ONLY_DOUBLE_HIT:
 	; tt(A_ThisHotkey)
 	; cur_key := StrReplace(A_ThisHotkey, "~")
 	action := HOTKEY_REGISTER_MAP[DOUBLE_HIT_KEY_PREFIX . cur_key]
-	m(action)
+	; m(action)
 	; if(action="") {
 	; 	return
 	; }
