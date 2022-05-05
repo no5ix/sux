@@ -279,6 +279,8 @@ QuickEntry_Everything_Menu_Click:
 	if (st) {
 		Sleep, 666
 		PasteContent(st)
+		Sleep, 66
+		Send, ^a
 	}
 	Return
 
