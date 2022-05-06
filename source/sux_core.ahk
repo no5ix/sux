@@ -529,11 +529,11 @@ class SuxCore
 
 		if(SuxCore.GetSuxCfg("search-plus.enable", 0))
 		{
-			For title, url_arr in SuxCore.GetSuxCfg("search-plus.buildin", {}) {
-				register_web_search(title, url_arr)
+			For title, shortcut_2_urls in SuxCore.GetSuxCfg("search-plus.buildin", {}) {
+				register_web_search(title, shortcut_2_urls)
 			}
-			For title, url_arr in SuxCore.GetSuxCfg("search-plus.custom", {}) {
-				register_web_search(title, url_arr)
+			For title, shortcut_2_urls in SuxCore.GetSuxCfg("search-plus.custom", {}) {
+				register_web_search(title, shortcut_2_urls)
 			}
 		}
 
@@ -608,11 +608,11 @@ register_command(title, action)
 	COMMAND_TITLE_LIST.Push(title)
 }
 
-register_web_search(title, url_array)
+register_web_search(title, shortcut_2_urls)
 {
 	global WEB_SEARCH_TITLE_2_URL_MAP
 	global WEB_SEARCH_TITLE_LIST
-	WEB_SEARCH_TITLE_2_URL_MAP[title] := url_array
+	WEB_SEARCH_TITLE_2_URL_MAP[title] := shortcut_2_urls
 	WEB_SEARCH_TITLE_LIST.Push(title)
 }
 

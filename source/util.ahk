@@ -32,10 +32,8 @@ tt(msg, delay_for_remove=1111, x=0, y=0)
 }
 
 
-get_menu_shortcut_str(shortcut_key_index_arr, index, text_str)
-{
-    _cur_shortcut_str := shortcut_key_index_arr[A_Index]
-    if (_cur_shortcut_str == " ") {
+gen_menu_str(_cur_shortcut_str, text_str) {
+  if (_cur_shortcut_str == " " || _cur_shortcut_str == "space") {
         ;; 如果快捷键为空格的话, 得特殊处理
         ; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
         ; if (dot_space_str)
@@ -44,7 +42,7 @@ get_menu_shortcut_str(shortcut_key_index_arr, index, text_str)
         ; else
             menu_shortcut_str := StrReplace(text_str, "&", "&&") . " `t& (" . lang("space") . ")"
     }
-    else if (_cur_shortcut_str == "`t") {
+    else if (_cur_shortcut_str == "`t" || _cur_shortcut_str == "tab") {
         ;; 如果快捷键为空格的话, 得特殊处理
         ; _cur_shortcut_str := _cur_shortcut_str == " " ? _cur_shortcut_str . "(" . lang("space") . ")" : _cur_shortcut_str
         ; if (dot_space_str)
@@ -66,6 +64,10 @@ get_menu_shortcut_str(shortcut_key_index_arr, index, text_str)
     return menu_shortcut_str
 }
 
+get_menu_shortcut_str(shortcut_key_index_arr, index, text_str) {
+    _cur_shortcut_str := shortcut_key_index_arr[index]
+    return gen_menu_str(_cur_shortcut_str, text_str)
+}
 
 ClickUpIfLbDown()
 {

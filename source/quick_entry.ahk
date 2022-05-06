@@ -53,9 +53,9 @@ class QuickEntry {
 		; dec_cnt += 1  ; 中间还有1个截图的菜单
 		; dec_cnt += 1  ; 中间还有1个贴图的菜单
 		; dec_cnt += 1  ; 1个分割线
-		dec_cnt += 1  ; 1个Everything的菜单
-		dec_cnt += 1  ; 1个翻译的菜单
-		dec_cnt += 1  ; 1个替换文本的菜单
+		; dec_cnt += 1  ; 1个Everything的菜单
+		; dec_cnt += 1  ; 1个翻译的菜单
+		; dec_cnt += 1  ; 1个替换文本的菜单
 		dec_cnt += 1  ; 1个变换文本
 		dec_cnt += 1  ; 1个历史剪切板的菜单
 		QuickEntry.command_menu_pos_offset := dec_cnt
@@ -113,14 +113,16 @@ class QuickEntry {
 
 		SearchPlus.AddSearchPlusSubMenu()
 
+		;; 改了下面这些记得改 init 方法里的 dec_cnt 相关逻辑
 		;;;;;; Screen Shot
 		Menu, QuickEntry_Menu, Add  ;; 加个分割线
 		; Menu, QuickEntry_Menu, Add, % lang("Screen Shot") . "`t&`t(" . lang("tab") . ")", QuickEntry_ScreenShot_Suspend_Menu_Click
 		; Menu, QuickEntry_Menu, Add, % lang("Suspend Screenshot") . "`t&s", QuickEntry_ScreenShot_Suspend_Menu_Click
+
 		; Menu, QuickEntry_Menu, Add  ;; 加个分割线
-		Menu, QuickEntry_Menu, Add, % lang("Everything") . "`t&e", QuickEntry_Everything_Menu_Click
-		Menu, QuickEntry_Menu, Add, % lang("Translate Text") . "`t&f", QuickEntry_Translation_Menu_Click
-		Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
+		; Menu, QuickEntry_Menu, Add, % lang("Everything") . "`t&e", QuickEntry_Everything_Menu_Click
+		; Menu, QuickEntry_Menu, Add, % lang("Translate Text") . "`t&f", QuickEntry_Translation_Menu_Click
+		; Menu, QuickEntry_Menu, Add, % lang("Replace Text") . "`t&r", QuickEntry_ReplaceText_Menu_Click
 
 		;;; clipboard_plus
 		ClipboardPlus.ShowAllClips()

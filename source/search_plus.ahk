@@ -26,19 +26,25 @@ class SearchPlus {
 		global WEB_SEARCH_TITLE_LIST
 		global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR
 		shortcut_cnt_left := SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR.Count()
-		for index, title in WEB_SEARCH_TITLE_LIST {
-			if (index <= shortcut_cnt_left) {
-				menu_shortcut_str := get_menu_shortcut_str(SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR, index, lang(title))
-				;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
-				Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Search_Menu_Click
-			}
-			Else {
-				Menu, QuickEntry_Search_Menu_More, Add, % lang(title), QuickEntry_Search_Menu_MoreClick
+		; for index, title in WEB_SEARCH_TITLE_LIST {
+		; 	if (index <= shortcut_cnt_left) {
+		; 		menu_shortcut_str := get_menu_shortcut_str(SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR, index, lang(title))
+		; 		;; 要为菜单项名称的某个字母加下划线, 在这个字母前加一个 & 符号. 当菜单显示出来时, 此项可以通过按键盘上对应的按键来选中.
+		; 		Menu, QuickEntry_Menu, Add, % menu_shortcut_str, QuickEntry_Search_Menu_Click
+		; 	}
+		; 	Else {
+		; 		Menu, QuickEntry_Search_Menu_More, Add, % lang(title), QuickEntry_Search_Menu_MoreClick
+		; 	}
+		; }
+		; if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
+		; 	Menu, QuickEntry_Menu, Add, % lang("More Search"), :QuickEntry_Search_Menu_More
+
+		global WEB_SEARCH_TITLE_2_URL_MAP
+		for index, search_title in WEB_SEARCH_TITLE_LIST {
+			for _shortcut_str, search_url_arr in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
+				Menu, QuickEntry_Menu, Add, % gen_menu_str(_shortcut_str, lang(search_title)), QuickEntry_Search_Menu_Click
 			}
 		}
-		if (WEB_SEARCH_TITLE_LIST.Count() > shortcut_cnt_left)
-			Menu, QuickEntry_Menu, Add, % lang("More Search"), :QuickEntry_Search_Menu_More
-
 	}
 
 	HandleSearch(search_str) {
@@ -56,37 +62,38 @@ class SearchPlus {
 
 		search_title := SearchPlus.cur_sel_search_title
 
-		for _index, search_url in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
-
-			;; 逻辑是: 
-			;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
-			;; 2. 如果这一次的 search_str 和上次一样, 
-			;; 		- 如果两次搜索的时间间隔大于 88 秒, 那就直接去 search_title 的官网
-			;; 		- 如果两次搜索的时间间隔小于等于 88 秒, 那就正常搜索
-			if (search_str == "" || (search_str == last_search_str && A_Now > last_search_ts + 88)) {
-				if !InStr(search_url, "REPLACEME") {
-					Run %search_url%
+		for _shortcut_str, search_url_arr in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
+			for _i, search_url in search_url_arr {
+				;; 逻辑是: 
+				;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
+				;; 2. 如果这一次的 search_str 和上次一样, 
+				;; 		- 如果两次搜索的时间间隔大于 88 秒, 那就直接去 search_title 的官网
+				;; 		- 如果两次搜索的时间间隔小于等于 88 秒, 那就正常搜索
+				if (search_str == "" || (search_str == last_search_str && A_Now > last_search_ts + 88)) {
+					if !InStr(search_url, "REPLACEME") {
+						Run %search_url%
+						Continue
+					} 
+					; domain_url just like: "https://www.google.com"
+					; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+					RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
+					if not IsStandardRawUrl(domain_url)
+						domain_url := StringJoin("", ["http://", domain_url]*)
+					Run %domain_url%
 					Continue
-				} 
-				; domain_url just like: "https://www.google.com"
-				; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-				RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-				if not IsStandardRawUrl(domain_url)
-					domain_url := StringJoin("", ["http://", domain_url]*)
-				Run %domain_url%
-				Continue
+				}
+
+				last_search_str := search_str
+				last_search_ts := A_Now
+				
+				safe_query := UriEncode(Trim(search_str))
+				StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
+				if not IsStandardRawUrl(search_final_url)
+					search_final_url := StringJoin("", ["http://", search_final_url]*)
+				Run, %search_final_url%
+
+				Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 			}
-
-			last_search_str := search_str
-			last_search_ts := A_Now
-			
-			safe_query := UriEncode(Trim(search_str))
-			StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
-			if not IsStandardRawUrl(search_final_url)
-				search_final_url := StringJoin("", ["http://", search_final_url]*)
-			Run, %search_final_url%
-
-			Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 		}
 	}
 
