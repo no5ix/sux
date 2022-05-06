@@ -156,7 +156,7 @@ class QuickEntry {
 				Menu, QuickEntry_TransformText_Detail_Menu, Add, % menu_shortcut_str, QuickEntry_TransformText_Detail_Menu_click
 			}
 		}
-		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&g", :QuickEntry_TransformText_Detail_Menu
+		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&t", :QuickEntry_TransformText_Detail_Menu
 		
 		;;;
 		Menu, QuickEntry_Menu, Show
@@ -218,6 +218,18 @@ class QuickEntry {
 		}
 	}
 
+	GetQuickEntrySelectedText() {
+		global current_selected_text
+		st := current_selected_text
+		if (!st) {
+			st := GetCurSelectedText()
+			; if (st) {
+			; 	Sleep, 222
+			; }
+		}
+		return st
+	}
+
 }
 
 
@@ -270,41 +282,41 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 
 QuickEntry_Everything_Menu_Click:
-	st := current_selected_text
-	if (!st) {
-		st := GetCurSelectedText()
-		if (st) {
-			Sleep, 222
-		}
-	}
+	st := QuickEntry.GetQuickEntrySelectedText()
 	Send, #!s
 	if (st) {
 		Sleep, 666
 		PasteContent(st)
-		Sleep, 66
 		Send, ^a
 	}
 	Return
 
 
 QuickEntry_Translation_Menu_Click:
-	TranslateSeletedText(GetCurSelectedText())
+	st := QuickEntry.GetQuickEntrySelectedText()
+	TranslateSeletedText(st)
 	Return
 
 
 QuickEntry_TransformText_Detail_Menu_click:
-	st := TransformText(GetCurSelectedText(), A_ThisMenuItemPos)
+	st := QuickEntry.GetQuickEntrySelectedText()
+	st := TransformText(st, A_ThisMenuItemPos)
 	PasteContent(st)
 	Return
 
 
 QuickEntry_ReplaceText_Menu_Click:
-	st := current_selected_text
-	if (!current_selected_text) {
+	st := QuickEntry.GetQuickEntrySelectedText()
+	if (!st) {
 		send, {Home}
 		Sleep, 66
 		send, +{End}
 		st := GetCurSelectedText()
+
+		if (!st) {
+			tt(lang("Please Select text and try again") . ".")
+			return
+		}
 	}
 	
 	global STR_REPLACE_CONF_REGISTER_MAP
@@ -323,10 +335,13 @@ QuickEntry_ReplaceText_Menu_Click:
 		replace_sum += cur_replace_cnt
 	}
 	Sleep, 66
-	if replace_sum != 0
+	if (replace_sum != 0) {
 		PasteContent(st)
-	else
+	}
+	else {
+		tt(lang("No preset replacement words found") . ".")
 		Send, {Right}
+	}
 	Return
 
 

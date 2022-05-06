@@ -50,6 +50,7 @@ LANGUAGE_CONF_MAP := {"Tips: ": "小技巧: "
     ,"Home Page": "主页"
     ,"Selected": "当前选择"
     ,"Please Select text and try again": "请选中文本后重试"
+    ,"No preset replacement words found": "没有找到预设的可替换的词句"
     ,"Nothing snipped": "没有截任何图"
     ,"Suspend": "悬浮"
     ,"Screen Shot && Suspend": "截图 && 贴图"
@@ -112,6 +113,9 @@ global tick_detect_interval := 88
 global keyboard_double_click_timeout := 222
 global keyboard_triple_click_timeout := 333
 global auto_destory_quick_entry_gui_period := -28222  ; millisecond
+
+global clipboard_old := ""
+global restore_the_original_clipboard_period := -888  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 

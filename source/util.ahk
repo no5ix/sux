@@ -274,11 +274,24 @@ class ClipboardChangeCmdMgr
     }
 }
 
+TimerRestoreTheOriginalClipboard() {
+    global clipboard_old
+    Clipboard := clipboard_old   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
+    clipboard_old := ""   ; Free the memory in case the clipboard-plus was very large.
+    ClipboardChangeCmdMgr.enable_all_clip_change_func()
+}
+
+SafePaste() {
+    ; Send, ^v
+    Send, +{Insert}
+    ; Sleep, 666  ;; 这个sleep是防止之后clipboard马上就被写入东西
+}
 
 PasteContent(pending_paste_content_or_cb, args*) {
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
-    ClipSaved := ClipboardAll 
+    global clipboard_old
+    clipboard_old := ClipboardAll 
     if (IsFunc(pending_paste_content_or_cb)) {
         %pending_paste_content_or_cb%(args*)
         SafePaste()
@@ -292,28 +305,20 @@ PasteContent(pending_paste_content_or_cb, args*) {
             SafePaste()
         }
     }
-    Clipboard := ClipSaved   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
-    ClipSaved := ""   ; Free the memory in case the clipboard-plus was very large.
-    ClipboardChangeCmdMgr.enable_all_clip_change_func()
-}
 
-SafePaste() {
-    ; Send, ^v
-    Send, +{Insert}
-    Sleep, 888  ;; 这个sleep是防止之后clipboard马上就被写入东西
+		global auto_restore_the_original_clipboard_period
+		SetTimer, TimerRestoreTheOriginalClipboard, %restore_the_original_clipboard_period%
 }
 
 GetCurSelectedText() {
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
-    clipboardOld := ClipboardAll            ; backup clipboard
+    clipboardSaved := ClipboardAll            ; backup clipboard
     ; Send, ^c
     Clipboard := ""
     SendInput, ^{insert}
-    ClipWait, 0.1
+    ClipWait, 0.8, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
     ; Sleep, 66
-    ; Read from the array:
-    ; Loop % Array.MaxIndex()   ; More traditional approach.
     cur_selected_text := ""
     if(!ErrorLevel) {
         ; Sleep, 66                             ; copy selected text to clipboard
@@ -324,8 +329,8 @@ GetCurSelectedText() {
             cur_selected_text := ""
         }
     }
-    Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-    clipboardOld := ""   ; Free the memory in case the clipboard was very large.
+    Clipboard := clipboardSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+    clipboardSaved := ""   ; Free the memory in case the clipboard was very large.
     ClipboardChangeCmdMgr.enable_all_clip_change_func()
     return cur_selected_text
 }
