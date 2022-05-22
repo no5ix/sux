@@ -300,7 +300,8 @@ PasteContent(pending_paste_content_or_cb, args*) {
         Clipboard := ""
         Clipboard := pending_paste_content_or_cb
         ; m(Clipboard)
-        ClipWait, 0.8, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
+        ; ClipWait, 0.6, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
+        Sleep, 88  ;; ClipWait 似乎有bug, 经常会等很久
         if (!ErrorLevel) {
             SafePaste()
         }
@@ -317,8 +318,8 @@ GetCurSelectedText() {
     ; Send, ^c
     Clipboard := ""
     SendInput, ^{insert}
-    ClipWait, 0.06, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
-    ; Sleep, 66
+    ; ClipWait, 0.06, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
+    Sleep, 22  ;; ClipWait 似乎有bug, 经常会等很久
     cur_selected_text := ""
     if(!ErrorLevel) {
         ; Sleep, 66                             ; copy selected text to clipboard
