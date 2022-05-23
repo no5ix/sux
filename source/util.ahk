@@ -301,7 +301,7 @@ PasteContent(pending_paste_content_or_cb, args*) {
         Clipboard := pending_paste_content_or_cb
         ; m(Clipboard)
         ; ClipWait, 0.6, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
-        Sleep, 88  ;; ClipWait 似乎有bug, 经常会等很久
+        Sleep, 66  ;; ClipWait 似乎有bug, 经常会等很久
         if (!ErrorLevel) {
             SafePaste()
         }
@@ -314,12 +314,13 @@ PasteContent(pending_paste_content_or_cb, args*) {
 GetCurSelectedText() {
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
-    clipboardSaved := ClipboardAll            ; backup clipboard
+    global clipboard_old
+    clipboard_old := ClipboardAll             ; backup clipboard
     ; Send, ^c
     Clipboard := ""
     SendInput, ^{insert}
     ; ClipWait, 0.06, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
-    Sleep, 22  ;; ClipWait 似乎有bug, 经常会等很久
+    Sleep, 8  ;; ClipWait 似乎有bug, 经常会等很久
     cur_selected_text := ""
     if(!ErrorLevel) {
         ; Sleep, 66                             ; copy selected text to clipboard
@@ -330,9 +331,8 @@ GetCurSelectedText() {
             cur_selected_text := ""
         }
     }
-    Clipboard := clipboardSaved   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-    clipboardSaved := ""   ; Free the memory in case the clipboard was very large.
-    ClipboardChangeCmdMgr.enable_all_clip_change_func()
+		global auto_restore_the_original_clipboard_period
+		SetTimer, TimerRestoreTheOriginalClipboard, %restore_the_original_clipboard_period%
     return cur_selected_text
 }
 
