@@ -82,7 +82,7 @@ class QuickEntry {
 		}
 
 		global current_selected_text
-		current_selected_text := GetCurSelectedText()
+		current_selected_text := GetCurSelectedText(88)
 		if (current_selected_text) {
 			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 6) . "..."
 			; m(tips_msg)

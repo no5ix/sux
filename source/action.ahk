@@ -382,7 +382,7 @@ SwapWinCtrlShiftAlt() {
 SelectCurrentWord() {
 	send, +{Left}
 	Sleep, 66
-	st := GetCurSelectedText()
+	st := GetCurSelectedText(111)
 	first_char := SubStr(st, 1, 1)
 	if (!RegExMatch(first_char, "[0-9a-zA-Z]") && !RegExMatch(first_char, "[^\x00-\xff]") && first_char != "_") {
 		send, {Right}
