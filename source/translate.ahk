@@ -56,7 +56,7 @@ TranslateSeletedText(cur_sel_text)
 	; 	Gui __Webapp_:Show, w%__Webapp_Width% h%__Webapp_height%, %__Webapp_Name%
 	; return
 
-	if (!cur_sel_text) {
+	if (cur_sel_text == "") {
 		tt(lang("Please Select text and try again") . ".")
 		return
 	}

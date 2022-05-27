@@ -218,6 +218,11 @@ class QuickEntry {
 		}
 	}
 
+	ResetCurrentSelectText() {
+		global current_selected_text
+		current_selected_text := ""
+	}
+
 	GetQuickEntrySelectedText() {
 		global current_selected_text
 		st := current_selected_text
@@ -244,6 +249,7 @@ QuickEntry_Search_Menu_Click:
 	; 	SearchPlus.HandleSearch(current_selected_text)
 	; else
 		SearchPlus.search_gui_spawn(current_selected_text)
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 QuickEntry_Search_Menu_MoreClick:
@@ -252,6 +258,7 @@ QuickEntry_Search_Menu_MoreClick:
 	; 	SearchPlus.HandleSearch(current_selected_text)
 	; else
 		SearchPlus.search_gui_spawn(current_selected_text)
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
@@ -260,12 +267,14 @@ QuickEntry_Command_Menu_Click:
 	; search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos]
 	QuickEntry.HandleCommand(search_title, current_selected_text)
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
 QuickEntry_Command_Menu_MoreClick:
 	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB.Count() + A_ThisMenuItemPos]
 	QuickEntry.HandleCommand(search_title, current_selected_text)
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
@@ -277,6 +286,7 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 	else {
 		SnipPlus.AreaScreenShotAndSuspend()
 	}
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
@@ -289,12 +299,14 @@ QuickEntry_Everything_Menu_Click:
 		PasteContent(st)
 		Send, ^a
 	}
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
 QuickEntry_Translation_Menu_Click:
 	st := QuickEntry.GetQuickEntrySelectedText()
 	TranslateSeletedText(st)
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
@@ -302,6 +314,7 @@ QuickEntry_TransformText_Detail_Menu_click:
 	st := QuickEntry.GetQuickEntrySelectedText()
 	st := TransformText(st, A_ThisMenuItemPos)
 	PasteContent(st)
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
@@ -342,6 +355,7 @@ QuickEntry_ReplaceText_Menu_Click:
 		tt(lang("No preset replacement words found") . ".")
 		Send, {Right}
 	}
+	QuickEntry.ResetCurrentSelectText()
 	Return
 
 
