@@ -7,7 +7,6 @@ if(A_ScriptName=="search_plus.ahk") {
 is_gui_open = 0
 
 last_search_str = ""
-last_search_ts = 0
 
 
 ; with this label, you can include this file on top of the file
@@ -58,7 +57,6 @@ class SearchPlus {
 
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		global last_search_str
-		global last_search_ts
 
 		search_title := SearchPlus.cur_sel_search_title
 
@@ -67,9 +65,9 @@ class SearchPlus {
 				;; 逻辑是: 
 				;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
 				;; 2. 如果这一次的 search_str 和上次一样, 
-				;; 		- 如果两次搜索的时间间隔大于 88 秒, 那就直接去 search_title 的官网
-				;; 		- 如果两次搜索的时间间隔小于等于 88 秒, 那就正常搜索
-				if (search_str == "" || (search_str == last_search_str && A_Now > last_search_ts + 88)) {
+				;; 		- 如果两次搜索的待搜索网站与上次不同 , 那就直接去 search_title 的官网
+				;; 		- 否则那就正常搜索
+				if (search_str == "") {
 					if !InStr(search_url, "REPLACEME") {
 						Run %search_url%
 						Continue
@@ -84,7 +82,6 @@ class SearchPlus {
 				}
 
 				last_search_str := search_str
-				last_search_ts := A_Now
 				
 				safe_query := UriEncode(Trim(search_str))
 				StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
@@ -95,6 +92,7 @@ class SearchPlus {
 				Sleep, 88  ; 为了给浏览器开tab的时候可以几个tab挨在一起
 			}
 		}
+		
 	}
 
 

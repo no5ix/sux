@@ -311,7 +311,7 @@ PasteContent(pending_paste_content_or_cb, args*) {
 		SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
 }
 
-GetCurSelectedText(sleep_duration_ms=666) {
+GetCurSelectedText(sleep_duration_ms=222) {
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
     global clipboard_old
@@ -319,8 +319,15 @@ GetCurSelectedText(sleep_duration_ms=666) {
     ; Send, ^c
     Clipboard := ""
     SendInput, ^{insert}
-    ; ClipWait, 0.06, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
-    Sleep, %sleep_duration_ms%  ;; ClipWait 似乎有bug, 经常会等很久
+  
+    ;; ClipWait 似乎有bug, 如果 sleep_duration_ms 很小的花, 也会等很久, 所以小于 111 的时候 走sleep
+    if (sleep_duration_ms > 111) {
+        clipwait_timeout := sleep_duration_ms / 1000
+        ClipWait, %clipwait_timeout%, 0  ;; 如果最后的这个参数省略或为 0(false), 此命令会更有选择性, 明确地等待剪贴板中出现文本或文件("文本" 包含任何当您粘贴到记事本时会产生文本的内容). 如果此参数为 1(true)(可以为表达式), 此命令会等待剪贴板中出现任何类型的数据.
+    } else {
+        Sleep, %sleep_duration_ms%
+    }
+ 
     cur_selected_text := ""
     if(!ErrorLevel) {
         ; Sleep, 66                             ; copy selected text to clipboard
