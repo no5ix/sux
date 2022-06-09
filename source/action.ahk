@@ -395,6 +395,15 @@ SelectCurrentWord() {
 	send, ^+{Right}
 }
 
+SetWindowOnTop() {
+	WinSet AlwaysOnTop,On,A
+	tt(lang("Set the current window to always on top"))
+}
+
+CancelSetWindowOnTop() {
+	WinSet AlwaysOnTop,Off,A
+	tt(lang("Set the current window to not always on top"))
+}
 
 ;; 在 hotkey.capslock_disable_exe_list 里的软件内部会屏蔽单独敲击capslock键,
 ;; 避免如果capslock配成esc, 然后在微信里直接不小心按到了然后就关闭微信界面了的这种情况
