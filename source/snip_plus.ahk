@@ -154,7 +154,7 @@ class SnipPlus
 		GuiControl, Focus, Close
 		MouseGetPos, Mouse_x, Mouse_y
 		final_x := Mouse_x - 88
-		final_y := Mouse_y - 8
+		final_y := Mouse_y - 11
 		Gui, %cur_gui_name%:Show, x%final_x% y%final_y%, % "img-" . SnipPlus.temp_snip_img_index . "  ( " . lang("Tips: ") . lang("click img to make it transparent") . " )"
 		; Gui, Show
 
