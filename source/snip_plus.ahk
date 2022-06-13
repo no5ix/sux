@@ -9,6 +9,8 @@ if(A_ScriptName=="snip_plus.ahk") {
 }
 
 
+SnipSuspendScreenShotImage =
+
 ; with this label, you can include this file on top of the file
 Goto, SUB_SNIP_PLUS_FILE_END_LABEL
 
@@ -23,6 +25,7 @@ class SnipPlus
 	static temp_snip_img_index := 0
 	static _TEMP_SNIP_IMG_PREFIX := "temp_snip_"
 
+	static IMG_PATH_2_RATIO_MAP := {}  ;; 截图路径: 截图长宽比例
 
 	init()
 	{
@@ -125,10 +128,49 @@ class SnipPlus
 		; 	return
 		; }
 
-		cur_gui_name := "sux_snipshot_" . SnipPlus.temp_snip_img_index
-		Gui, %cur_gui_name%: New
-		; Gui %cur_gui_name%:+Resize +AlwaysOnTop -MaximizeBox -MinimizeBox +ToolWindow
-		Gui %cur_gui_name%: +AlwaysOnTop +Resize -MaximizeBox
+
+;;;;;;;;;;;;;;;; 带名字版本
+
+		; cur_gui_name := "sux_snipshot_" . SnipPlus.temp_snip_img_index
+		; Gui, %cur_gui_name%: New
+		; ; Gui %cur_gui_name%:+Resize +AlwaysOnTop -MaximizeBox -MinimizeBox +ToolWindow
+		; Gui %cur_gui_name%: +AlwaysOnTop +Resize -MaximizeBox
+		; Gui, Margin, 0, 0
+
+		; ; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
+		; ; ; CustomColor := "White"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
+		; ; Gui +LastFound  ; 避免显示任务栏按钮和 alt-tab 菜单项.
+		; ; Gui, Color, %CustomColor%
+		; ; WinSet, TransColor, Off
+		; ; WinSet, TransColor, %CustomColor% 150
+
+		; ; Gui +LastFound  ; 
+		; ; WinSet, Transparent, 50
+
+		; img_path := SnipPlus.GetCurSnipImgPath()
+		; Gui, %cur_gui_name%:Add, Picture, v%cur_gui_name%, gSUB_CLICK_SNIP_IMG, %img_path%
+		
+		; ; Menu, FileMenu, Add, &Open`tCtrl+O, Sub_xMenu_Open  ; 关于 Ctrl+O 请参阅后面的备注.
+		; ; Menu, FileMenu, Add, E&xit, Sub_xMenu_Open
+		; ; Menu, HelpMenu, Add, &About, Sub_xMenu_Open
+		; ; Menu, MyMenuBar, Add, &File, :FileMenu  ; 附加上面的两个子菜单.
+		; ; Menu, MyMenuBar, Add, &Help, :HelpMenu
+		; ; Gui, Menu, MyMenuBar
+
+		; GuiControl, Focus, Close
+		; MouseGetPos, Mouse_x, Mouse_y
+		; final_x := Mouse_x - 88
+		; final_y := Mouse_y - 11
+		; Gui, %cur_gui_name%:Show, x%final_x% y%final_y%, % "img-" . SnipPlus.temp_snip_img_index . "  ( " . lang("Tips: ") . lang("click img to make it transparent") . " )"
+		; ; Gui, Show
+
+		
+
+;;;;;;;;;;;;;;;; 不带名字版本
+
+		Gui, New
+		; Gui +Resize +AlwaysOnTop -MaximizeBox -MinimizeBox +ToolWindow
+		Gui, +AlwaysOnTop +Resize
 		Gui, Margin, 0, 0
 
 		; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
@@ -142,8 +184,12 @@ class SnipPlus
 		; WinSet, Transparent, 50
 
 		img_path := SnipPlus.GetCurSnipImgPath()
-		Gui, %cur_gui_name%:Add, Picture, gSUB_CLICK_SNIP_IMG, % img_path
-		
+		Gui, Add, Picture, gSUB_CLICK_SNIP_IMG vSnipSuspendScreenShotImage, %img_path%
+
+		GuiControlGet, pic_name, , SnipSuspendScreenShotImage
+		GuiControlGet, PicInfo, Pos, SnipSuspendScreenShotImage  ; Stores the position and size in PicInfoX, PicInfoY, PicInfoW, and PicInfoH.
+		SnipPlus.IMG_PATH_2_RATIO_MAP[pic_name] := PicInfoW / PicInfoH
+
 		; Menu, FileMenu, Add, &Open`tCtrl+O, Sub_xMenu_Open  ; 关于 Ctrl+O 请参阅后面的备注.
 		; Menu, FileMenu, Add, E&xit, Sub_xMenu_Open
 		; Menu, HelpMenu, Add, &About, Sub_xMenu_Open
@@ -154,11 +200,8 @@ class SnipPlus
 		GuiControl, Focus, Close
 		MouseGetPos, Mouse_x, Mouse_y
 		final_x := Mouse_x - 88
-		final_y := Mouse_y - 8
-		Gui, %cur_gui_name%:Show, x%final_x% y%final_y%, % "img-" . SnipPlus.temp_snip_img_index . "  ( " . lang("Tips: ") . lang("click img to make it transparent") . " )"
-		; Gui, Show
-
-		
+		final_y := Mouse_y - 11
+		Gui, Show, x%final_x% y%final_y%, % "img-" . SnipPlus.temp_snip_img_index . "  ( " . lang("Tips: ") . lang("click img to make it transparent") . " )"
 	}
 }
 
@@ -171,10 +214,12 @@ Return
 SUB_CLICK_SNIP_IMG:
 	Gui +LastFound  ; 
 	WinGet, cur_transparent_level, Transparent
-	if (cur_transparent_level < 255)
+	if (cur_transparent_level < 255) {
 		WinSet, Transparent, 255
-	else
+	}
+	else {
 		WinSet, Transparent, 22
+	}
 
 	; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
 	; ; CustomColor := "White"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
@@ -198,6 +243,31 @@ SUB_CLICK_SNIP_IMG:
 
 	Return
 
+
+; 让贴图能够跟着窗口的大小变化而同时变化
+GuiSize(GuiHwnd, EventInfo, Width, Height) {
+	;; 1. 跟着窗口同比例变化
+    ; GuiControl, MoveDraw, SnipSuspendScreenShotImage, % "w" . (A_GuiWidth) . " h" . (A_GuiHeight)
+
+	;; 2. 保留图片本身的比例
+	GuiControlGet, pic_name, , SnipSuspendScreenShotImage
+	GuiControlGet, PicInfo, Pos, SnipSuspendScreenShotImage  ; Stores the position and size in PicInfoX, PicInfoY, PicInfoW, and PicInfoH.
+	pic_ratio := SnipPlus.IMG_PATH_2_RATIO_MAP[pic_name]
+	gui_ratio := Width / Height
+	final_w =
+	final_h =
+	if (gui_ratio < pic_ratio) {
+		; 说明gui纵向太长
+		final_w := Width
+		final_h := Width/pic_ratio
+	} else {
+		; 说明gui横向太长
+		final_w := pic_ratio*Height
+		final_h := Height
+	}
+	GuiControl, MoveDraw, SnipSuspendScreenShotImage, % "w" . final_w . " h" . final_h  ; 把图的比例按照算好的长宽设置一下
+	GuiControl, Move, SnipSuspendScreenShotImage, % "x" . (Width/2 - final_w/2) . " y" . (Height/2 - final_h/2)  ;; 把图上下都居中
+}
 	
 ; //////////////////////////////////////////////////////////////////////////
 SUB_SNIP_PLUS_FILE_END_LABEL:
