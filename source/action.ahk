@@ -399,16 +399,15 @@ SwitchWindowAlwaysOnTop() {
 	; MouseGetPos, MouseX, MouseY, MouseWin
     WinGet, ExStyle, ExStyle, A
     if (ExStyle & 0x8) { ; 0x8 is WS_EX_TOPMOST. 
-        ; MsgBox The window is always-on-top.
-        WinSet AlwaysOnTop,Off, A
-        WinSet, Transparent, 255, A
-        WinSet, ExStyle, -0x20, A
+        WinSet AlwaysOnTop,Off, A  ;; 不置顶
+        WinSet, Transparent, 255, A  ;; 不透明
+        WinSet, ExStyle, -0x20, A  ;; 不穿透
         tt(lang("Set the current window to not always on top"))
     } else {
         ; CancelSetWindowOnTop
-        WinSet AlwaysOnTop,On, A
-        WinSet, Transparent, 222, A
-        WinSet, ExStyle, +0x20, A
+        WinSet AlwaysOnTop,On, A  ;; 置顶
+        WinSet, Transparent, 222, A  ;; 半透明
+        WinSet, ExStyle, +0x20, A  ;; 穿透
         tt(lang("Set the current window to always on top"))
     }
 }
