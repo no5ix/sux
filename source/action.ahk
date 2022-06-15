@@ -395,14 +395,22 @@ SelectCurrentWord() {
 	send, ^+{Right}
 }
 
-SetWindowOnTop() {
-	WinSet AlwaysOnTop,On,A
-	tt(lang("Set the current window to always on top"))
-}
-
-CancelSetWindowOnTop() {
-	WinSet AlwaysOnTop,Off,A
-	tt(lang("Set the current window to not always on top"))
+SwitchWindowAlwaysOnTop() {
+	; MouseGetPos, MouseX, MouseY, MouseWin
+    WinGet, ExStyle, ExStyle, A
+    if (ExStyle & 0x8) { ; 0x8 is WS_EX_TOPMOST. 
+        ; MsgBox The window is always-on-top.
+        WinSet AlwaysOnTop,Off, A
+        WinSet, Transparent, 255, A
+        WinSet, ExStyle, -0x20, A
+        tt(lang("Set the current window to not always on top"))
+    } else {
+        ; CancelSetWindowOnTop
+        WinSet AlwaysOnTop,On, A
+        WinSet, Transparent, 222, A
+        WinSet, ExStyle, +0x20, A
+        tt(lang("Set the current window to always on top"))
+    }
 }
 
 ;; 在 hotkey.capslock_disable_exe_list 里的软件内部会屏蔽单独敲击capslock键,
