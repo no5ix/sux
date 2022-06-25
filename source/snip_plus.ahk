@@ -216,17 +216,9 @@ SUB_CLICK_SNIP_IMG:
 	WinGet, cur_transparent_level, Transparent
 	if (cur_transparent_level < 255) {
 		WinSet, Transparent, 255
-<<<<<<< HEAD
 	}
 	else {
 		WinSet, Transparent, 22
-=======
-        ; WinSet, ExStyle, -0x20, A
-	}
-	else {
-		WinSet, Transparent, 200
-        ; WinSet, ExStyle, +0x20, A
->>>>>>> 969259288ab08badb43ab71e492591f6740a2cc6
 	}
 
 	; CustomColor := "EEAA99"  ; 可以为任意 RGB 颜色(在下面会被设置为透明).
