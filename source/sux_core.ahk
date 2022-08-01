@@ -466,8 +466,9 @@ class SuxCore
 			obj := obj[cur_key]
 		}
 		cur_key := keyArray[keyArray.MaxIndex()]
-		if(obj[cur_key]=="")
+		if(obj[cur_key] == "")
 		{
+			obj.Delete(cur_key)  ;; 不删除的话, obj[cur_key] 的值就是 "" (一个空字符串, 不利于之后的遍历, 容易滋生bug)
 			return default
 		}
 		return obj[cur_key]
@@ -489,8 +490,11 @@ class SuxCore
 		
 		if(SuxCore.GetSuxCfg("hotkey.enable", 0))
 		{
-			if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) == 0) {
-				SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
+			if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) != 0) {
+				; SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
+				SetCapsLockState, AlwaysOff
+			}
+			else {
 			}
 
 			For key, value in SuxCore.GetSuxCfg("hotkey.buildin", {}) {
@@ -500,7 +504,7 @@ class SuxCore
 				register_hotkey(key, value, "")
 		}
 		else {
-			SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
+			; SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
 		}
 		
 		if(SuxCore.GetSuxCfg("hot-corner", {}))
@@ -586,7 +590,6 @@ class SuxCore
 				else {
 					final_key := MULTI_HIT_DECORATOR . ltrimed_key_name
 				}
-				
 				; m("final_key: "  "// " final_key)
 				register_hotkey(final_key, action, "", HANDLE_SINGLE_DOUBLE_HIT_MODE_2)  ;; 只用不带doublehit/triplehit的注册, 免得
 				for key, action in original_key_2_action_map {
@@ -691,6 +694,9 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 {
 	; if (!action)  ; 
 	; 	Return
+	
+	if (action == "nil")  ;; 等于 nil 的意思就是这个键不要触发任何效果了
+		action = ""
 
 	global HOTKEY_REGISTER_MAP
 	global MULTI_HIT_DECORATOR
@@ -840,6 +846,13 @@ register_hotkey(original_key_name, action, prefix="", handle_single_double_hit_m
 			if (arr[2] == "hover") {
 				Continue
 			}
+			; if (key_name == "capslock") {
+			; 	m(original_key_name)
+			; 	m(original_key)
+			; 	m(key "//" final_action)
+			; 	m(arr[1])
+			; 	m(arr[2])
+			; }
 			if(arr[1]!="") {
 				Hotkey, IF, border_event_evoke()
 				Hotkey, % arr[2], SUB_NORMAL_HIT
@@ -963,7 +976,7 @@ SUB_NORMAL_HIT:
 	global LIMIT_MODE
 	global HOTKEY_REGISTER_MAP
 	global CAPS_REPLACER
-
+	
 	if (LIMIT_MODE)
 		return
 	border_code := get_border_code()
@@ -1002,7 +1015,7 @@ border_event_evoke()
 
 	; StringUpper, key, key
 	action := HOTKEY_REGISTER_MAP[key]
-	if(action!="")
+	if(action != "")
 		return true
 }
 
