@@ -11,7 +11,6 @@ if(A_ScriptName=="quick_entry.ahk") {
 }
 
 
-; last_search_str = ""
 ; trim_gui_user_input = ""
 current_selected_text = ""
 

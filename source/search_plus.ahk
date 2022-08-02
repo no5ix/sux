@@ -7,6 +7,7 @@ if(A_ScriptName=="search_plus.ahk") {
 is_gui_open = 0
 
 last_search_str = ""
+last_search_title = ""
 
 
 ; with this label, you can include this file on top of the file
@@ -57,6 +58,7 @@ class SearchPlus {
 
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		global last_search_str
+		global last_search_title
 
 		search_title := SearchPlus.cur_sel_search_title
 
@@ -65,24 +67,34 @@ class SearchPlus {
 				;; 逻辑是: 
 				;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
 				;; 2. 如果这一次的 search_str 和上次一样, 
-				;; 		- 如果两次搜索的待搜索网站与上次不同 , 那就直接去 search_title 的官网
-				;; 		- 否则那就正常搜索
-				if (search_str == "") {
+				;; 		- 如果这次搜索的待搜索网站与上次相同 , 那就直接去 search_title 的官网
+				;; 		- 否则正常搜索
+				; m(search_str)
+				; m(last_search_str)
+				; m(search_title)
+				; m(last_search_title)
+
+				should_continue := 0
+				if (search_str == "" || (search_str == last_search_str && search_title == last_search_title)) {
 					if !InStr(search_url, "REPLACEME") {
 						Run %search_url%
-						Continue
-					} 
-					; domain_url just like: "https://www.google.com"
-					; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
-					RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
-					if not IsStandardRawUrl(domain_url)
-						domain_url := StringJoin("", ["http://", domain_url]*)
-					Run %domain_url%
-					Continue
+						should_continue := 1
+					} else {
+						; domain_url just like: "https://www.google.com"
+						; 建议到 https://c.runoob.com/front-end/854 去测试这个正则
+						RegExMatch(search_url, "((\w)+://)?(\w+(-)*(\.)?)+(:(\d)+)?", domain_url)
+						if not IsStandardRawUrl(domain_url)
+							domain_url := StringJoin("", ["http://", domain_url]*)
+						Run %domain_url%
+						should_continue := 1
+					}
 				}
 
 				last_search_str := search_str
-				
+				last_search_title := search_title
+				if (should_continue == 1) {
+					Continue
+				}
 				safe_query := UriEncode(Trim(search_str))
 				StringReplace, search_final_url, search_url, REPLACEME, %safe_query%
 				if not IsStandardRawUrl(search_final_url)
