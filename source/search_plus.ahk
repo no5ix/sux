@@ -7,7 +7,7 @@ if(A_ScriptName=="search_plus.ahk") {
 is_gui_open = 0
 
 last_search_str = ""
-last_search_title = ""
+last_search_url = ""
 
 
 ; with this label, you can include this file on top of the file
@@ -58,24 +58,19 @@ class SearchPlus {
 
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		global last_search_str
-		global last_search_title
+		global last_search_url
 
 		search_title := SearchPlus.cur_sel_search_title
 
 		for _shortcut_str, search_url_arr in WEB_SEARCH_TITLE_2_URL_MAP[search_title] {
 			for _i, search_url in search_url_arr {
 				;; 逻辑是: 
-				;; 1. 如果用户没有填写 search_str , 那就直接去 search_title 的官网
+				;; 1. 如果用户没有填写 search_str , 那就直接去 search_url 的官网
 				;; 2. 如果这一次的 search_str 和上次一样, 
-				;; 		- 如果这次搜索的待搜索网站与上次相同 , 那就直接去 search_title 的官网
+				;; 		- 如果这次搜索的待搜索网站的 search_url 与上次相同 , 那就直接去 search_url 的官网
 				;; 		- 否则正常搜索
-				; m(search_str)
-				; m(last_search_str)
-				; m(search_title)
-				; m(last_search_title)
-
 				should_continue := 0
-				if (search_str == "" || (search_str == last_search_str && search_title == last_search_title)) {
+				if (search_str == "" || (search_str == last_search_str && search_url == last_search_url)) {
 					if !InStr(search_url, "REPLACEME") {
 						Run %search_url%
 						should_continue := 1
@@ -91,7 +86,7 @@ class SearchPlus {
 				}
 
 				last_search_str := search_str
-				last_search_title := search_title
+				last_search_url := search_url
 				if (should_continue == 1) {
 					Continue
 				}
