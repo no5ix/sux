@@ -74,8 +74,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 翻译
 
-翻译集成在快捷菜单中了, 
-`shift+空格` 弹出菜单之后, 按`f`  
+选中文字然后 `capslock+t`
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/translate_text.gif)
 
@@ -115,7 +114,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 1. 检查 `.NET Framework` 是否 大于等于 `4.7` (`Win+r`然后输入`cmd`回车, 然后输入`reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP\v4" /s`查看`Version REG_SZ`那一行是否大于等于 `4.7`)
 2. 参考下图, 先通过任务栏的上下文菜单来开启 EverythingToolbar, 注意你需要打开这个菜单两次, 第一次它不显示的
 3. 右键任务栏, 解锁任务栏, 然后调整工具栏的大小和位置
-4. 设置完毕之后, 可以使用 `shift+空格` 弹出菜单之后, 按 `e` 来激活, 若已经选中文字的话, 则会自动输入该文字并搜索
+4. 设置完毕之后, 可以使用 `capslock+f` 来激活, 若已经选中文字的话, 则会自动输入该文字并搜索
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_toolbar_help.gif)
 
@@ -211,7 +210,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/replace_text.gif)
 
-`shift+空格` 弹出菜单之后, 按`r`  
+`capslock+r`
 
 填写电子邮箱的时候经常要敲很多字或者填写密码的时候总是需要重复输入一长串, 对于经常重复需要输入的文本, 这个时候就可以用文字替换器来,  
 比如密码是`abcd12349087234bghyymll`这么长的密码就可以定义为`abc::`, 或者比如把`h/`替换为`http://`之类的,  
