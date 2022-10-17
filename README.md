@@ -236,7 +236,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 文本变换器
 
-`shift+空格` 弹出菜单之后, 按`g`  
+`shift+空格` 弹出菜单之后, 按`t`  
 
 经常写代码的朋友应该经常会有把驼峰命名的文本 转换为 蛇形命名文本之类的需求, 或者把小写的文本转为大写的需求
 
