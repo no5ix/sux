@@ -452,9 +452,10 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 0. 建立 `build` 文件夹
 1. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
-2. 拷贝 `app_data` 文件夹到 build 里
-3. 删除 `app_data` 里的 `temp_dir` 文件夹 和 `ev_sup` 里的 `Everything.db` 和 `Run History.csv`
-4. 使用 7zip 压缩参数如下: 
+2. 拷贝 `app_data` 文件夹到 `build` 里
+3. 删除 `build` 里的`app_data` 里的 `temp_dir` 文件夹
+4. 删除 `build` 里的`app_data` 里的 `ev_sup` 里的 `Everything.db` 和 `Run History.csv`
+5. 使用 7zip 压缩 `build`文件夹, 压缩参数如下: 
     - 压缩格式: 7z / zip
     - 压缩等级: 极限压缩
     - 压缩方法: `LZMA2` / `LZMA`
