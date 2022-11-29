@@ -299,9 +299,10 @@ class SuxCore
 			SuxCore.ChooseLang()
 		}
 		
-		SuxCore.OnExit("SuxCore.ClearCacheDir")
-		SuxCore.ClearCacheDir()
-
+		if (SuxCore.GetSuxCfg("enable_clear_cache_on_exit", 0)) {
+			SuxCore.OnExit("SuxCore.ClearCacheDir")
+			; SuxCore.ClearCacheDir()
+		}
 	}
 
 	SetCurrentLang(lang)

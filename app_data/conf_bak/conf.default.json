@@ -1,5 +1,6 @@
 ﻿{
   "File-Description": "你可以在custom块里覆盖所有的buildin(内置)配置或者直接修改buildin配置, 改了之后重启sux生效.You can override all the buildin conf at custom block or buildin conf itself, take effect after sux restart. ",
+  "enable_clear_cache_on_exit": 1,
   "theme": {
     "dark": {
       "sux_width": 620,
@@ -23,7 +24,6 @@
     "buildin": {
       "Default": {
         "space": [
-          "https://www.google.com.hk/search?safe=off&site=&source=hp&q=REPLACEME&btnG=Search&oq=&gs_l=",
           "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"
         ]
       },
@@ -74,18 +74,9 @@
     "enable": 1,
     "buildin": {
       "cmd": "cmd.exe",
-      "git": "C:\\Program Files\\Git\\bin\\bash.exe",
       "sux": "https://github.com/no5ix/sux"
     },
     "custom": {
-      "sw": "StartSuxAhkWithWin",
-      "rd": "ReloadSux",
-      "ahk": "https://wyagd001.github.io/zh-cn/docs/AutoHotkey.htm",
-      "blog": "C:\\Program Files\\Microsoft VS Code\\Code.exe D:\\Documents\\github\\no5ix.github.io",
-      "proj": "C:\\Program Files\\Microsoft VS Code\\Code.exe D:\\Documents\\github\\sux",
-      "test.py": "C:\\Program Files\\Microsoft VS Code\\Code.exe C:\\Users\\Administrator\\Desktop\\test.py",
-      "test.go": "C:\\Program Files\\Microsoft VS Code\\Code.exe C:\\Users\\Administrator\\Desktop\\test.go",
-      "test.cpp": "C:\\Program Files\\Microsoft VS Code\\Code.exe C:\\Users\\Administrator\\Desktop\\test.cpp"
     }
   },
   "replace-text": {
@@ -122,12 +113,14 @@
       "TopHalfLeftEdge": {
         "ctrl_8": "C:\\Program Files (x86)\\Netease\\CloudMusic\\cloudmusic.exe",
         "wheeldown": "GoBottom",
-        "wheelup": "GoTop"
+        "wheelup": "GoTop",
+        "MButton": "MinWindow"
       },
       "TopHalfRightEdge": {
         "ctrl_8": "OpenFileExplorer",
         "wheeldown": "PgDn",
-        "wheelup": "PgUp"
+        "wheelup": "PgUp",
+        "MButton": "MaxWindow"
       },
       "BottomHalfLeftEdge": {
         "ctrl_8": "ReopenLastTab",
@@ -167,89 +160,77 @@
       }
     }
   },
-  "enable_middle_mouse_button_in_idea": 0,
   "hotkey": {
     "enable": 1,
     "capslock_disable_exe_list": [
     ],
     "buildin": {
-      "capslock": "nil",
-      "alt_space": "ShowSuxMenu",
       "capslock_q": "ScreenShot",
-      "capslock_shift_q": "ScreenShotAndSuspend",
-      "rshift": "SwitchInputMethodAndDeleteLeft",
-      "wheeldown": "wheelup",
-      "wheelup": "wheeldown",
-      "doublehit_rctrl": "SwapWinCtrlShiftAlt",
-      "capslock_c": "ctrl_/",
-      "capslock_s": "SwitchWindowAlwaysOnTop",
-      "capslock_e": "Enter",
-      "capslock_shift_e": "up",
+      "capslock_alt_q": "ScreenShotAndSuspend",
+      "shift_space": "ShowSuxMenu",
+      "doublehit_capslock": "ShowSuxMenu",
       "capslock_t": "QuickEntry_Translation_Menu_Click",
-      "capslock_shift_s": "WheelRight",
-      "capslock_f": "QuickEntry_Everything_Menu_Click",
-      "capslock_shift_f": "ctrl_shift_End",
-      "capslock_d": "Del",
-      "capslock_shift_d": "BS",
-      "capslock_shift_c": "SaveSelectedFilePathToClipboard",
+      "capslock_c": "ctrl_c",
+      "capslock_e": "up",
+      "capslock_alt_e": "shift_up",
+      "capslock_s": "left",
+      "capslock_alt_s": "shift_left",
+      "capslock_f": "right",
+      "capslock_alt_f": "shift_right",
+      "capslock_d": "down",
+      "capslock_alt_d": "shift_down",
       "ctrl_8": "SimulateClickDown",
       "ctrl_shift_alt_m": "MaxMinWindow",
-      "capslock_w": "SelectCurrentWord",
-      "capslock_shift_w": [
-        "home",
-        "shift_end"
-      ],
+      "capslock_alt_c": "SaveSelectedFilePathToClipboard",
+      "capslock_w": ["ctrl_left", "ctrl_shift_right", "ctrl_c"],
+      "capslock_shift_w": ["home", "shift_end", "ctrl_c"],
       "capslock_`": "SwitchCapsState",
-      "capslock_tab": [
-        "home",
-        "tab"
-      ],
+      "capslock_tab": ["home", "tab"],
       "capslock_v": "shift_ins",
       "capslock_shift_v": "shift_6",
       "capslock_g": "ctrl_y",
       "capslock_r": "QuickEntry_ReplaceText_Menu_Click",
-      "capslock_backspace": [
-        "home",
-        "shift_end",
-        "backspace"
-      ],
+      "capslock_enter": "InsertLineBelow",
+      "capslock_shift_enter": "InsertLineAbove",
+      "capslock_backspace": ["home", "shift_end", "backspace"],
       "capslock_y": "shift_8",
-      "capslock_shift_y": "shift_5",
+      "capslock_alt_y": "shift_5",
       "capslock_u": "shift_1",
-      "capslock_shift_u": "shift_2",
+      "capslock_alt_u": "shift_2",
       "capslock_h": "left",
-      "capslock_shift_h": "shift_left",
+      "capslock_alt_h": "shift_left",
       "capslock_j": "down",
-      "capslock_shift_j": "shift_down",
+      "capslock_alt_j": "shift_down",
       "capslock_k": "up",
-      "capslock_shift_k": "shift_up",
+      "capslock_alt_k": "shift_up",
       "capslock_l": "right",
-      "capslock_shift_l": "shift_right",
+      "capslock_alt_l": "shift_right",
       "capslock_p": "shift_7",
-      "capslock_shift_p": "shift_3",
+      "capslock_alt_p": "shift_3",
       "capslock_i": "ctrl_left",
-      "capslock_shift_i": "shift_ctrl_left",
+      "capslock_alt_i": "shift_ctrl_left",
       "capslock_o": "ctrl_right",
-      "capslock_shift_o": "shift_ctrl_right",
+      "capslock_alt_o": "shift_ctrl_right",
       "capslock_9": "[",
-      "capslock_shift_9": "{",
+      "capslock_alt_9": "{",
       "capslock_0": "]",
-      "capslock_shift_0": "}",
+      "capslock_alt_0": "}",
       "capslock_n": "ctrl_bs",
-      "capslock_shift_n": "shift_home_del",
+      "capslock_alt_n": "shift_home_del",
       "capslock_m": "ctrl_del",
-      "capslock_shift_m": "shift_end_del",
+      "capslock_alt_m": "shift_end_del",
       "capslock_,": "home",
-      "capslock_shift_,": "shift_home",
+      "capslock_alt_,": "shift_home",
       "capslock_.": "end",
-      "capslock_shift_.": "shift_end",
+      "capslock_alt_.": "shift_end",
       "capslock_;": "_",
-      "capslock_shift_;": "-",
+      "capslock_alt_;": "-",
       "capslock_'": "=",
-      "capslock_shift_'": "shift_=",
+      "capslock_alt_'": "shift_=",
       "capslock_/": "\\",
-      "capslock_shift_/": "shift_\\"
+      "capslock_alt_/": "shift_\\"
     },
     "custom": {}
-  }
+  },
+  "enable_middle_mouse_button_in_idea": 0
 }

@@ -139,7 +139,7 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 - 按`s`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户 -->
 
 - 按`capslock_q`是截图
-- 按`capslock_shift_q`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户
+- 按`capslock_alt_q`是贴图, 贴图窗口出来之后, 点击一下贴图图片则可以让他变得半透明, 贴图还是比较有用的, 对于有时候需要对照着贴图写代码或者对照画图等的需求的用户
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/snip_plus.gif)
 
@@ -247,7 +247,6 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 `shift+空格` 弹出菜单之后, 按`c`  
 
 * `cmd` : open a command prompt window on the current explorer path, 打开命令行窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
-* `git` : open a git bash window on the current explorer path, 打开git窗口, 如果当前在文件管理器则打开后会立即进入当前文件管理器路径
 * `sux` : sux official site, sux官网
 
 
@@ -281,6 +280,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 | 快捷键 | 操作 |
 | ----   | --- |
+|`caps+g` | 是`Ctrl`+`Y` |
 | `ctrl+8` |  模拟鼠标按下不放的操作. (建议笔记本的触摸板的`三指点击`设定为快捷键`ctrl+8`, 然后就可以模拟鼠标按下不放的操作了, 达到类似mac的`三指拖动`的效果) |
 | `ctrl+shift+alt+m` |   最大化/最小化窗口. (建议笔记本的触摸板的`四指点击`设定为`ctrl+shift+alt+m`, 这样就可以快速最大/最小化窗口了) |
 |`caps+h/j/k/l` | 也可以来上下左右的, 比如`caps+alt+h`就是往左选中哈, 以下相同 |
@@ -310,75 +310,74 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 |`capslock+alt+enter` | 无论光标是否在行末都能在上面新起一行而不截断原句子  | 
 
 
-其他的待用户尝试, 也可以自行配置
+其他的待用户尝试, 也可以自行配置, 我自己用的配置是`conf.no5ix.json`也在项目中的`app_data/conf_bak`文件夹里, 你也可以参考
 
 默认配置概览:  
 ``` json
-  "hotkey": {
-    "enable": 1,
-    "buildin": {
-      "shift_space": "ShowSuxMenu",
-      "capslock_c": "ctrl_c",
-      "capslock_e": "up",
-      "capslock_alt_e": "shift_up",
-      "capslock_s": "left",
-      "capslock_alt_s": "shift_left",
-      "capslock_f": "right",
-      "capslock_alt_f": "shift_right",
-      "capslock_d": "down",
-      "capslock_alt_d": "shift_down",
-      "ctrl_8": "SimulateClickDown",
-      "ctrl_shift_alt_m": "MaxMinWindow",
-      "capslock_alt_c": "SaveSelectedFilePathToClipboard",
-      "capslock_w": ["ctrl_left", "ctrl_shift_right"],
-      "capslock_shift_w": ["home", "shift_end"],
-      "capslock_`": "SwitchCapsState",
-      "capslock_tab": ["home", "tab"],
-      "capslock_v": "shift_ins",
-      "capslock_shift_v": "shift_6",
-      "capslock_r": "ctrl_y",
-      "capslock_enter": "InsertLineBelow",
-      "capslock_shift_enter": "InsertLineAbove",
-      "capslock_backspace": ["home", "shift_end", "backspace"],
-      "capslock_y": "shift_8",
-      "capslock_alt_y": "shift_5",
-      "capslock_u": "shift_1",
-      "capslock_alt_u": "shift_2",
-      "capslock_h": "left",
-      "capslock_alt_h": "shift_left",
-      "capslock_j": "down",
-      "capslock_alt_j": "shift_down",
-      "capslock_k": "up",
-      "capslock_alt_k": "shift_up",
-      "capslock_l": "right",
-      "capslock_alt_l": "shift_right",
-      "capslock_p": "shift_7",
-      "capslock_alt_p": "shift_3",
-      "capslock_i": "ctrl_left",
-      "capslock_alt_i": "shift_ctrl_left",
-      "capslock_o": "ctrl_right",
-      "capslock_alt_o": "shift_ctrl_right",
-      "capslock_9": "[",
-      "capslock_alt_9": "{",
-      "capslock_0": "]",
-      "capslock_alt_0": "}",
-      "capslock_n": "ctrl_bs",
-      "capslock_alt_n": "shift_home_del",
-      "capslock_m": "ctrl_del",
-      "capslock_alt_m": "shift_end_del",
-      "capslock_,": "home",
-      "capslock_alt_,": "shift_home",
-      "capslock_.": "end",
-      "capslock_alt_.": "shift_end",
-      "capslock_;": "_",
-      "capslock_alt_;": "-",
-      "capslock_'": "=",
-      "capslock_alt_'": "shift_=",
-      "capslock_/": "\\",
-      "capslock_alt_/": "shift_\\"
-    },
-    "custom": {}
-  }
+    "capslock_q": "ScreenShot",
+    "capslock_alt_q": "ScreenShotAndSuspend",
+    "shift_space": "ShowSuxMenu",
+    "doublehit_capslock": "ShowSuxMenu",
+    "capslock_t": "QuickEntry_Translation_Menu_Click",
+    "capslock_c": "ctrl_c",
+    "capslock_e": "up",
+    "capslock_alt_e": "shift_up",
+    "capslock_s": "left",
+    "capslock_alt_s": "shift_left",
+    "capslock_f": "right",
+    "capslock_alt_f": "shift_right",
+    "capslock_d": "down",
+    "capslock_alt_d": "shift_down",
+    "ctrl_8": "SimulateClickDown",
+    "ctrl_shift_alt_m": "MaxMinWindow",
+    "capslock_alt_c": "SaveSelectedFilePathToClipboard",
+    "capslock_w": ["ctrl_left", "ctrl_shift_right", "ctrl_c"],
+    "capslock_shift_w": ["home", "shift_end", "ctrl_c"],
+    "capslock_`": "SwitchCapsState",
+    "capslock_tab": ["home", "tab"],
+    "capslock_v": "shift_ins",
+    "capslock_shift_v": "shift_6",
+    "capslock_g": "ctrl_y",
+    "capslock_r": "QuickEntry_ReplaceText_Menu_Click",
+    "capslock_enter": "InsertLineBelow",
+    "capslock_shift_enter": "InsertLineAbove",
+    "capslock_backspace": ["home", "shift_end", "backspace"],
+    "capslock_y": "shift_8",
+    "capslock_alt_y": "shift_5",
+    "capslock_u": "shift_1",
+    "capslock_alt_u": "shift_2",
+    "capslock_h": "left",
+    "capslock_alt_h": "shift_left",
+    "capslock_j": "down",
+    "capslock_alt_j": "shift_down",
+    "capslock_k": "up",
+    "capslock_alt_k": "shift_up",
+    "capslock_l": "right",
+    "capslock_alt_l": "shift_right",
+    "capslock_p": "shift_7",
+    "capslock_alt_p": "shift_3",
+    "capslock_i": "ctrl_left",
+    "capslock_alt_i": "shift_ctrl_left",
+    "capslock_o": "ctrl_right",
+    "capslock_alt_o": "shift_ctrl_right",
+    "capslock_9": "[",
+    "capslock_alt_9": "{",
+    "capslock_0": "]",
+    "capslock_alt_0": "}",
+    "capslock_n": "ctrl_bs",
+    "capslock_alt_n": "shift_home_del",
+    "capslock_m": "ctrl_del",
+    "capslock_alt_m": "shift_end_del",
+    "capslock_,": "home",
+    "capslock_alt_,": "shift_home",
+    "capslock_.": "end",
+    "capslock_alt_.": "shift_end",
+    "capslock_;": "_",
+    "capslock_alt_;": "-",
+    "capslock_'": "=",
+    "capslock_alt_'": "shift_=",
+    "capslock_/": "\\",
+    "capslock_alt_/": "shift_\\"
 ```
 
 
@@ -387,6 +386,7 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 可以在托盘菜单里找到"编辑配置文件"的菜单的, 改了配置记得重启sux哈
 
 配置编写规则: 
+- 让一个键按了之后啥也不做是配一个`nil`, 比如 `"capslock": "nil"` 就是让capslock按了之后不做任何事
 - action类型: 直接从下方的所有action里选即可
     - `ShowSuxMenu`
     - `StartSuxAhkWithWin`
