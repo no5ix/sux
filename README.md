@@ -58,10 +58,10 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 # 快捷搜索search-plus
 
-大多数时候其实都是 `shift+空格` 然后空格搜东西, 如果要取消菜单则按`alt`或者`esc`, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
+大多数时候其实都是 `shift+空格`或者双击`Capslock` 然后空格搜东西, 如果要取消菜单则按`alt`或者`esc`, 所有的菜单都是可以选中某段文字然后直接查询的, 右边这一排`q/w/e/r`啥的都是快捷键
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_plus.gif)
 
-也可以先选中某段文字然后`shift+空格`然后直接查询的.
+也可以先选中某段文字然后`shift+空格`或者双击`Capslock`然后直接查询的.
 
 所有的默认快捷键都是可以改的, 在`conf.user.json`里找到`ShowSuxMenu`改, 改成`capslock_q`或者`alt_space`或者`doublehit_ctrl` (双击ctrl) 或者`triplehit_shift` (三击shift) 或者其他的任何你喜欢的快捷键都行, 不过不建议`doublehit_alt` (双击alt), 因为`alt`会丢失焦点.
 
