@@ -448,20 +448,23 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
   - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
 
 
-# 如何打包
+# 如何发布
 
-0. 建立 `build` 文件夹
-1. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
-2. 拷贝 `app_data` 文件夹到 `build` 里
-3. 删除 `build` 里的`app_data` 里的 `temp_dir` 文件夹
-4. 删除 `build` 里的`app_data` 里的 `ev_sup` 里的 `Everything.db` 和 `Run History.csv`
-5. 使用 7zip 压缩 `build`文件夹, 压缩参数如下: 
-    - 压缩格式: 7z / zip
-    - 压缩等级: 极限压缩
-    - 压缩方法: `LZMA2` / `LZMA`
-    - 字典大小: 256MB
-    - 单词大小: 256
-    - 固实数据大小: 4GB
+1. 打包
+   1. 建立 `build` 文件夹
+   2. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
+   3. 拷贝 `app_data` 文件夹到 `build` 里
+   4. 删除 `build` 里的`app_data` 里的 `temp_dir` 文件夹
+   5. 删除 `build` 里的`app_data` 里的 `ev_sup` 里的 `Everything.db` 和 `Run History.csv`
+   6. 使用 7zip 压缩 `build`文件夹, 压缩参数如下: 
+       - 压缩格式: 7z / zip
+       - 压缩等级: 极限压缩
+       - 压缩方法: `LZMA2` / `LZMA`
+       - 字典大小: 256MB
+       - 单词大小: 256
+       - 固实数据大小: 4GB
+2. 改 `ver.ini`, 然后提交
+3. 打 git tag
 
 
 # TODO List
