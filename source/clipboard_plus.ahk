@@ -207,6 +207,7 @@ Loop, % max_i
 	if (A_Index != max_i && !ClipboardPlus.IsClipPlusFile(pending_paste) && !ClipboardPlus.IsClipPlusImg(pending_paste)) {
 		pending_paste .= "`r`n"
 	}
+	Sleep, 88
 	ClipboardPlus.PasteClipPlusContent(pending_paste)
 }
 Return

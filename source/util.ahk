@@ -282,6 +282,7 @@ TimerRestoreTheOriginalClipboard() {
 }
 
 SafePaste() {
+    Sleep, 222  ;; 得等一下, 因为有时候可能sux还没切回到原来的软件输入框里
     ; Send, ^v
     Send, +{Insert}
     ; Sleep, 666  ;; 这个sleep是防止之后clipboard马上就被写入东西
@@ -338,8 +339,12 @@ GetCurSelectedText(sleep_duration_ms=222) {
             cur_selected_text := ""
         }
     }
-		global auto_restore_the_original_clipboard_period
-		SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
+		; global auto_restore_the_original_clipboard_period
+		; SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
+    global clipboard_old
+    Clipboard := clipboard_old   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
+    clipboard_old := ""   ; Free the memory in case the clipboard-plus was very large.
+    ClipboardChangeCmdMgr.enable_all_clip_change_func()
     return cur_selected_text
 }
 
