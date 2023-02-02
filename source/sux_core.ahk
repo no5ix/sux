@@ -528,8 +528,9 @@ class SuxCore
 		{
 			For key, value in SuxCore.GetSuxCfg("command.buildin", {})
 				register_command(key, value)
-			For key, value in SuxCore.GetSuxCfg("command.custom", {})
+			For key, value in SuxCore.GetSuxCfg("command.custom", {}) {
 				register_command(key, value)
+			}
 		}
 
 		if(SuxCore.GetSuxCfg("search-plus.enable", 0))
@@ -649,7 +650,7 @@ parse_conf_action_str(action) {
 parse_conf_action_str_impl(action)
 {
 	global hotkey_chart_map
-	if (action != "_" && !IsRawUrl(action) && !IsFunc(action) && !IsLabel(action) && !Instr(action, "jsfunc_") && !Instr(action, ".exe")) {
+	if (action != "_" && !IsRawUrl(action) && !IsFunc(action) && !IsLabel(action) && !Instr(action, "jsfunc_") && !Instr(action, ".exe") && !Instr(action, ".bat")) {
 		action_key_arr := StrSplit(action, "_")
 		if (action_key_arr.Length() == 1) {
 			StringLower, action, action
