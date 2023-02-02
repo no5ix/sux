@@ -450,7 +450,9 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 
 # 如何发布
 
-1. 打包
+1. 改 `ver.ini`, 然后提交
+2. 打 git tag
+3. 打包
    1. 建立 `build` 文件夹
    2. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
    3. 拷贝 `app_data` 文件夹到 `build` 里
@@ -463,8 +465,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
        - 字典大小: 256MB
        - 单词大小: 256
        - 固实数据大小: 4GB
-2. 改 `ver.ini`, 然后提交
-3. 打 git tag
 
 
 # TODO List
