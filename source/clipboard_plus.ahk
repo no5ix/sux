@@ -105,7 +105,21 @@ class ClipboardPlus
 
 	PasteClipPlusContent(pending_paste)
 	{
-		if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
+		if (ClipboardPlus.IsClipPlusFile(pending_paste)) {  ;; 这里先判断 file, 因为有可能文件名里刚好有 [img] 标记
+			pending_paste_file_path := StrSplit(pending_paste, ClipboardPlus.CLIPBOARD_FILES_DELIMITER)
+			original_pending_paste_file_path := pending_paste_file_path[2]
+			Loop, parse, original_pending_paste_file_path, `n, `r
+			{
+				if (FileExist(A_LoopField)) {
+					PasteContent("FileToClipboard", A_LoopField)
+				}
+				else {
+					PasteContent(A_LoopField)
+				}
+				Sleep, 88
+			}
+		}
+		else if (ClipboardPlus.IsClipPlusImg(pending_paste)) {
 			img_path := SuxCore._CACHE_DIR . pending_paste . ".png"
 			if (!FileExist(img_path)) {
 				hBM := StrReplace(pending_paste, lang(ClipboardPlus.CLIPBOARD_IMG_SUFFIX))
@@ -121,23 +135,11 @@ class ClipboardPlus
 				PasteContent(pending_paste)
 			}
 		}
-		else if (ClipboardPlus.IsClipPlusFile(pending_paste)) {
-			pending_paste_file_path := StrSplit(pending_paste, ClipboardPlus.CLIPBOARD_FILES_DELIMITER)
-			original_pending_paste_file_path := pending_paste_file_path[2]
-			Loop, parse, original_pending_paste_file_path, `n, `r
-			{
-				if (FileExist(A_LoopField)) {
-					PasteContent("FileToClipboard", A_LoopField)
-				}
-				else {
-					PasteContent(A_LoopField)
-				}
-			}
-		}
 		else {
 			pending_paste := StrReplace(pending_paste, lang(ClipboardPlus.CLIPBOARD_TEXT_SUFFIX))
 			PasteContent(pending_paste)
 		}
+		Sleep, 88
 	}
 
 	_Trim(str_ori, add_time := 1)
