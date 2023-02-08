@@ -83,19 +83,24 @@ class QuickEntry {
 		global current_selected_text
 		current_selected_text := GetCurSelectedText(66)
 		if (current_selected_text) {
-			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 8) . "..."
-			; m(tips_msg)
+			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 11) . "..."
 			Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
 			; 当填了 url 的时候
 			if (IsRawUrl(current_selected_text)) {
-				Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_URL
+				Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_Selected_URL
 			}
 			Menu, QuickEntry_Menu, Disable, % tips_msg
 			Menu, QuickEntry_Menu, Add
 		}
 		else {
-			; tips_msg := lang("Tips: ") . lang("after selecting text, this menu can automatically process it") . "."
-			
+			; 当复制了 url 的时候
+			if (IsRawUrl(Clipboard)) {
+				tips_msg := lang("Copied") . ": " . SubStr(Clipboard, 1, 11) . "..."
+				Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
+				Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_Copied_URL
+				Menu, QuickEntry_Menu, Disable, % tips_msg
+				Menu, QuickEntry_Menu, Add
+			}
 		}
 		
 		; global WEB_SEARCH_TITLE_LIST
@@ -245,16 +250,22 @@ QuickEntry_Sub_Nothing:
 	Return
 
 
-QuickEntry_Sub_Open_URL:
-	; 当填了 url 的时候
+QuickEntry_Sub_Open_Selected_URL:
+	; 当填了url 的时候
 	OpenUrlIfIsUrl(current_selected_text)
+	Return
+
+
+QuickEntry_Sub_Open_Copied_URL:
+	; 当复制了url 的时候
+	OpenUrlIfIsUrl(Clipboard)
 	Return
 
 
 QuickEntry_Search_Menu_Click:
 	dec_cnt := current_selected_text ? 2 : 0
 	; 当填了 url 的时候
-	if (IsRawUrl(current_selected_text)) {
+	if (IsRawUrl(current_selected_text) || IsRawUrl(Clipboard)) {
 		dec_cnt := dec_cnt + 1
 	}
 	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
@@ -278,7 +289,7 @@ QuickEntry_Search_Menu_MoreClick:
 QuickEntry_Command_Menu_Click:
 	; dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.command_menu_pos_offset
 	; ; 当填了 url 的时候
-	; if (IsRawUrl(current_selected_text)) {
+	; if (IsRawUrl(current_selected_text) || IsRawUrl(Clipboard)) {
 	; 	dec_cnt = dec_cnt + 1
 	; }
 	; search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
@@ -298,7 +309,7 @@ QuickEntry_Command_Menu_MoreClick:
 QuickEntry_ScreenShot_Suspend_Menu_Click:
 	dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
 	; 当填了 url 的时候
-	if (IsRawUrl(current_selected_text)) {
+	if (IsRawUrl(current_selected_text) || IsRawUrl(Clipboard)) {
 		dec_cnt = dec_cnt + 1
 	}
 	if (A_ThisMenuItemPos - dec_cnt == 1) {

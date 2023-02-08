@@ -472,9 +472,10 @@ IsRawUrl(user_input){
 OpenUrlIfIsUrl(user_input) {
 		; 当填了 url 的时候, 就直接用浏览器打开
 		if (IsRawUrl(user_input)) {
-			if not IsStandardRawUrl(user_input)
-				pendingOpenUrl := StringJoin("", ["http://", user_input]*)
-			Run %pendingOpenUrl%
+      pending_open_url := user_input
+			if not IsStandardRawUrl(pending_open_url)
+				pending_open_url := StringJoin("", ["http://", pending_open_url]*)
+			Run %pending_open_url%
 			return 1
 		}
     return 0
