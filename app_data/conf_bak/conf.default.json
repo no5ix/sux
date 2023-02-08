@@ -42,11 +42,6 @@
           "https://www.youtube.com/results?search_query=REPLACEME"
         ]
       },
-      "Google Translate": {
-        "g": [
-          "https://translate.google.cn/?hl=zh-CN&tab=TT&sl=auto&tl=en&text=REPLACEME&op=translate"
-        ]
-      },
       "Douban": {
         "d": [
           "https://www.douban.com/search?q=REPLACEME"

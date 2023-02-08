@@ -92,6 +92,7 @@ LANGUAGE_CONF_MAP := {"Tips: ": "小技巧: "
 	,"[files] ": "[多文件] "
 	,"[folder] ": "[文件夹] "
 	,"Click to go to the original page": "点击前往原网页"
+	,"Open link in browser": "在浏览器中打开链接"
 	,"Related webpages": "相关网页"
     ,"please install Everything and set its path in conf.user.json": "请安装Everything并在conf.user.json里配置它的路径"
     ,"Welcome to sux, `nsux is an efficiency improvement tool that also has the following functions: `n`n- translate`n- history clipboard`n- screenshots`n- stickers`n- quick search similar to Listary / Alfred / Wox `n- MacOS-like firing angle`n- Screen edge trigger`n- Global custom shortcut keys for various operations`n- Text replacer`n- Text converter`n- Custom theme`n- Shortcut instructions `n- Customizable json configuration `n- ...`n": "欢迎使用 sux ,`nsux 是一款效率提升工具同时拥有以下功能 :`n`n- 翻译`n- 历史剪切板`n- 截图`n- 贴图`n- 类似 Listary / Alfred / Wox 的快捷搜索`n- 类似 MacOS 的触发角`n- 屏幕边缘触发器`n- 全局自定义快捷键实现各种操作`n- 文本替换器`n- 文本变换器`n- 自定义主题`n- 快捷指令`n- 可自定义的 json 配置`n- ...`n"
@@ -121,7 +122,7 @@ global auto_restore_the_original_clipboard_period := -88  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 
-global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "`t", "q", "w", "e", "r", "t", "a", "s", "d", "f", "g", "z", "x", "b", "y", "u", "i", "o", "p", "h", "k", "j", "l", "n", "m"]
+global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "`t", "q", "w", "e", "r", "t", "a", "s", "d", "f", "z", "x", "b", "y", "u", "i", "o", "p", "h", "k", "j", "l", "n", "m"]
 ; global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "a", "s", "d", "z", "x", "q", "w", "", "b", "l", "t", "h", "j", "k", "u", "i", "o", "p", "n", "m"]
 global CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR := ["a", " ", "`t", "q", "w", "e", "r", "s", "f", "z", "x", "c", "g", "b", "t"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]

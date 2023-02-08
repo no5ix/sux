@@ -83,9 +83,13 @@ class QuickEntry {
 		global current_selected_text
 		current_selected_text := GetCurSelectedText(66)
 		if (current_selected_text) {
-			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 6) . "..."
+			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 8) . "..."
 			; m(tips_msg)
 			Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
+			; 当填了 url 的时候
+			if (IsRawUrl(current_selected_text)) {
+				Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_URL
+			}
 			Menu, QuickEntry_Menu, Disable, % tips_msg
 			Menu, QuickEntry_Menu, Add
 		}
@@ -241,8 +245,18 @@ QuickEntry_Sub_Nothing:
 	Return
 
 
+QuickEntry_Sub_Open_URL:
+	; 当填了 url 的时候
+	OpenUrlIfIsUrl(current_selected_text)
+	Return
+
+
 QuickEntry_Search_Menu_Click:
 	dec_cnt := current_selected_text ? 2 : 0
+	; 当填了 url 的时候
+	if (IsRawUrl(current_selected_text)) {
+		dec_cnt := dec_cnt + 1
+	}
 	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	; if current_selected_text
 	; 	SearchPlus.HandleSearch(current_selected_text)
@@ -263,6 +277,10 @@ QuickEntry_Search_Menu_MoreClick:
 
 QuickEntry_Command_Menu_Click:
 	; dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.command_menu_pos_offset
+	; ; 当填了 url 的时候
+	; if (IsRawUrl(current_selected_text)) {
+	; 	dec_cnt = dec_cnt + 1
+	; }
 	; search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	search_title := COMMAND_TITLE_LIST[A_ThisMenuItemPos]
 	QuickEntry.HandleCommand(search_title, current_selected_text)
@@ -279,6 +297,10 @@ QuickEntry_Command_Menu_MoreClick:
 
 QuickEntry_ScreenShot_Suspend_Menu_Click:
 	dec_cnt := (current_selected_text ? 2 : 0) + QuickEntry.screenshot_menu_pos_offset
+	; 当填了 url 的时候
+	if (IsRawUrl(current_selected_text)) {
+		dec_cnt = dec_cnt + 1
+	}
 	if (A_ThisMenuItemPos - dec_cnt == 1) {
 		SnipPlus.AreaScreenShot()
 	}

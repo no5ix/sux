@@ -469,6 +469,17 @@ IsRawUrl(user_input){
     return 0
 }
 
+OpenUrlIfIsUrl(user_input) {
+		; 当填了 url 的时候, 就直接用浏览器打开
+		if (IsRawUrl(user_input)) {
+			if not IsStandardRawUrl(user_input)
+				pendingOpenUrl := StringJoin("", ["http://", user_input]*)
+			Run %pendingOpenUrl%
+			return 1
+		}
+    return 0
+}
+
 EnableWin10AutoUpdate(){
     run, cmd /c sc config wuauserv start= auto,,hide
     run, cmd /c net start wuauserv,,hide

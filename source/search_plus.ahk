@@ -48,13 +48,10 @@ class SearchPlus {
 	}
 
 	HandleSearch(search_str) {
-		; 当填了 url 的时候
-		if (IsRawUrl(search_str)) {
-			if not IsStandardRawUrl(search_str)
-				search_str := StringJoin("", ["http://", search_str]*)
-			Run %search_str%
-			return
-		}
+		; if (OpenUrlIfIsUrl(search_str)) {
+		; 	; 当填了 url 的时候
+		; 	return
+		; }
 
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		global last_search_str
