@@ -137,11 +137,11 @@ class QuickEntry {
 
 		;;;;;; command
 		global COMMAND_TITLE_LIST
-		global SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB
-		cur_shortcut_cnt := SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB.Count()
+		global SHORTCUT_KEY_INDEX_ARR
+		cur_shortcut_cnt := SHORTCUT_KEY_INDEX_ARR.Count()
 		for index, title in COMMAND_TITLE_LIST {
 			if (index <= cur_shortcut_cnt) {
-				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB, index, title)
+				menu_shortcut_str := get_menu_shortcut_str(SHORTCUT_KEY_INDEX_ARR, index, title)
 				Menu, QuickEntry_Command_Menu, Add, % menu_shortcut_str, QuickEntry_Command_Menu_Click
 			}
 			Else {
@@ -300,7 +300,7 @@ QuickEntry_Command_Menu_Click:
 
 
 QuickEntry_Command_Menu_MoreClick:
-	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR_LEFT_HAS_SPACE_TAB.Count() + A_ThisMenuItemPos]
+	search_title := COMMAND_TITLE_LIST[SHORTCUT_KEY_INDEX_ARR.Count() + A_ThisMenuItemPos]
 	QuickEntry.HandleCommand(search_title, current_selected_text)
 	QuickEntry.ResetCurrentSelectText()
 	Return
