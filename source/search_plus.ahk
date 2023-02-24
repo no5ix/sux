@@ -48,10 +48,10 @@ class SearchPlus {
 	}
 
 	HandleSearch(search_str) {
-		; if (OpenUrlIfIsUrl(search_str)) {
-		; 	; 当填了 url 的时候
-		; 	return
-		; }
+		if (OpenUrlIfIsUrl(search_str)) {
+			; 当填了 url 的时候
+			return
+		}
 
 		global WEB_SEARCH_TITLE_2_URL_MAP
 		global last_search_str
