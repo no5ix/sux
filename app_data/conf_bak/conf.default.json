@@ -163,7 +163,7 @@
     "capslock_disable_exe_list": [
     ],
     "buildin": {
-      "capslock_q": "ScreenShot",
+      "capslock_q": "ctrl_alt_a",
       "capslock_alt_q": "ScreenShotAndSuspend",
       "shift_space": "ShowSuxMenu",
       "doublehit_capslock": "ShowSuxMenu",

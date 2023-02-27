@@ -336,6 +336,7 @@ class SuxCore
 		; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
 		Sleep, 1111
 		run(SuxCore._QQSCREENSHOT_DIR . "bin\QQScreenShot.exe")
+		SuxCore.OnExit("SuxCore.CloseSubProc")
 		
 		SetTimer, hide_tray_icons, -2222
 
