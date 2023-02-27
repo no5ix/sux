@@ -361,6 +361,11 @@ class SuxCore
 		FileCreateDir, % SuxCore._CACHE_DIR
 	}
 
+	CloseSubProc()
+	{
+		run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
+	}
+
 	SuxMsgBox(msg, msg_type="", timeout=6)
 	{
 		msg_type_map := {"info": 0x40, "error": 0x10, "warning": 0x30, "question": 0x20}
