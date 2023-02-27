@@ -71,6 +71,37 @@ lang(key)
 }
 
 
+
+hide_tray_icons()
+{
+	AllList := []
+	pendingRemoveList := []
+	for index, element in TrayIcon_GetInfo()
+		AllList.Push([element.hicon, element.process, element.tooltip, element.tray, element.idcmd, element.class, False, element.msgid, element.uid, element.hwnd])
+		
+	; tt("hide_tray_icons begin")
+	global HIDE_TRAY_ICON_LIST
+	for index, element in AllList {
+		; m(index "//" element[2])
+		for _index, proc_name in HIDE_TRAY_ICON_LIST {
+			; m(_index "//" proc_name)
+			if element[2] == proc_name
+			{
+				; m("pendingRemoveList proc_name:" proc_name)
+				; element[7] := True
+				pendingRemoveList.Push([element[10], element[9], element[2]])
+				break
+			}
+		}
+	}
+			
+	for index, pa in pendingRemoveList {
+		; m("pendingRemoveList:" index "//" pa[3])
+		; TrayIcon_Hide(pa[5], pa[4], pa[7])
+		TrayIcon_Remove(pa[1], pa[2])
+	}
+}
+
 check_update_from_launch() {
 	check_update_millisec := -6666
 	SetTimer, check_update_from_launch_impl, % check_update_millisec
@@ -81,7 +112,6 @@ check_update_from_launch_impl()
 	global CHECK_UPDATE_CALLER_LAUNCH
 	CheckUpdate(CHECK_UPDATE_CALLER_LAUNCH)
 }
-
 
 
 check_update_from_auto_check()
@@ -210,6 +240,7 @@ class SuxCore
 	static _CACHE_DIR := SuxCore._TEMP_DIR . "cache\"
 	static _EVERYTHING_TOOLBAR_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\EverythingToolbar\"
 	static _EVERYTHING_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\"
+	static _QQSCREENSHOT_DIR := SuxCore._APP_DATA_DIR . "\QQScreenShot\"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
@@ -296,9 +327,18 @@ class SuxCore
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time) {
+			run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
 			SuxCore.ChooseLang()
 		}
 		
+		; run("taskkill /f /t /im QQScreenShot.exe")
+		run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
+		; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
+		Sleep, 1111
+		run(SuxCore._QQSCREENSHOT_DIR . "bin\QQScreenShot.exe")
+		
+		SetTimer, hide_tray_icons, -2222
+
 		if (SuxCore.GetSuxCfg("enable_clear_cache_on_exit", 0)) {
 			SuxCore.OnExit("SuxCore.ClearCacheDir")
 			; SuxCore.ClearCacheDir()
@@ -346,7 +386,7 @@ class SuxCore
 		msg_hello := lang("Welcome to sux, `nsux is an efficiency improvement tool that also has the following functions: `n`n- translate`n- history clipboard`n- screenshots`n- stickers`n- quick search similar to Listary / Alfred / Wox `n- MacOS-like firing angle`n- Screen edge trigger`n- Global custom shortcut keys for various operations`n- Text replacer`n- Text converter`n- Custom theme`n- Shortcut instructions `n- Customizable json configuration `n- ...`n")
 		guide_msg_arr := [msg_hello
 			,lang("Try it: Move the mouse to the top half of the left edge of the screen and scroll the wheel, `n`n Effect: adjust the volume quickly")
-			,lang("Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the y key, `n`n Effect: open the shortcut menu, and then use Bing search")
+			,lang("Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the a key, `n`n Effect: open the shortcut menu, and then use Baidu search")
 			,lang("Try it: right-click on the sux icon in the tray, you can `n `n- check for updates`n- donate`n- change theme`n- change language`n- let sux start on boot`n- open configuration file`n- open Various function switches, such as trigger angle/window mover, etc. `n- ...")]
 			
 		for i, guide_msg in guide_msg_arr {
@@ -523,6 +563,11 @@ class SuxCore
 					register_hotkey(key, value, border_key)
 		}
 
+		For index, proc_name in SuxCore.GetSuxCfg("hide_tray_icons", [])
+		{
+			register_hide_tray_icons(proc_name)
+		}
+
 		; comma_delimiters_arr := ["','", "', '", "'，'", "'， '"]
 		if(SuxCore.GetSuxCfg("command.enable", 0))
 		{
@@ -611,6 +656,12 @@ register_command(title, action)
 	global COMMAND_TITLE_LIST
 	COMMAND_TITLE_2_ACTION_MAP[title] := parse_conf_action_str(action)
 	COMMAND_TITLE_LIST.Push(title)
+}
+
+register_hide_tray_icons(proc_name)
+{
+	global HIDE_TRAY_ICON_LIST
+	HIDE_TRAY_ICON_LIST.Push(proc_name)
 }
 
 register_web_search(title, shortcut_2_urls)

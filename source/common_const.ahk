@@ -98,7 +98,7 @@ LANGUAGE_CONF_MAP := {"Tips: ": "小技巧: "
     ,"please install Everything and set its path in conf.user.json": "请安装Everything并在conf.user.json里配置它的路径"
     ,"Welcome to sux, `nsux is an efficiency improvement tool that also has the following functions: `n`n- translate`n- history clipboard`n- screenshots`n- stickers`n- quick search similar to Listary / Alfred / Wox `n- MacOS-like firing angle`n- Screen edge trigger`n- Global custom shortcut keys for various operations`n- Text replacer`n- Text converter`n- Custom theme`n- Shortcut instructions `n- Customizable json configuration `n- ...`n": "欢迎使用 sux ,`nsux 是一款效率提升工具同时拥有以下功能 :`n`n- 翻译`n- 历史剪切板`n- 截图`n- 贴图`n- 类似 Listary / Alfred / Wox 的快捷搜索`n- 类似 MacOS 的触发角`n- 屏幕边缘触发器`n- 全局自定义快捷键实现各种操作`n- 文本替换器`n- 文本变换器`n- 自定义主题`n- 快捷指令`n- 可自定义的 json 配置`n- ...`n"
     ,"Try it: Move the mouse to the top half of the left edge of the screen and scroll the wheel, `n`n Effect: adjust the volume quickly": "尝试一下: 将鼠标移到屏幕左边缘上半部分并滚动滚轮,  `n效果：快速调节音量"
-    ,"Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the y key, `n`n Effect: open the shortcut menu, and then use Bing search": "尝试一下：按下 shift + 空格 , 然后按下任何菜单选项的快捷键, 比如按下 y 键,  `n效果：打开快捷菜单, 然后使用必应搜索"
+    ,"Try it: press shift + space, and then press the shortcut key of any menu option, such as pressing the y key, `n`n Effect: open the shortcut menu, and then use Bing search": "尝试一下：按下 shift + 空格 , 然后按下任何菜单选项的快捷键, 比如按下 a 键,  `n效果：打开快捷菜单, 然后使用百度搜索"
     ,"Try it: right-click on the sux icon in the tray, you can `n `n- check for updates`n- donate`n- change theme`n- change language`n- let sux start on boot`n- open configuration file`n- open Various function switches, such as trigger angle/window mover, etc. `n- ...": "尝试一下: 右击托盘的 sux 图标，你可以`n `n- 检查更新 `n- 捐赠 `n- 更换主题 `n- 更换语言 `n- 让 sux 开机启动 `n- 打开配置文件 `n- 打开各种功能开关, 如 触发角 / 窗口移动器 等 `n- ..."
     ,"Try it: Locate files and folders by name.": "尝试一下: 按名称查找文件和文件夹."
     ,"Open Everything conf help page now, then you can follow the tutorial": "现在打开Everything工具栏的帮助页, 然后你可以按照教程操作"
@@ -183,3 +183,5 @@ THEME_CONF_REGISTER_MAP := {}
 ; 记录replace-string与对应操作
 STR_REPLACE_CONF_REGISTER_MAP := {}
 
+; 记录应该隐藏的托盘图标
+HIDE_TRAY_ICON_LIST := []
