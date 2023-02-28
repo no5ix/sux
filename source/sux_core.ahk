@@ -327,16 +327,16 @@ class SuxCore
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time) {
-			run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
+			; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
 			SuxCore.ChooseLang()
 		}
 		
-		; run("taskkill /f /t /im QQScreenShot.exe")
-		run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
-		; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
-		Sleep, 1111
-		run(SuxCore._QQSCREENSHOT_DIR . "bin\QQScreenShot.exe")
-		SuxCore.OnExit("SuxCore.CloseSubProc")
+		; ; run("taskkill /f /t /im QQScreenShot.exe")
+		; run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
+		; ; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
+		; Sleep, 1111
+		; run(SuxCore._QQSCREENSHOT_DIR . "bin\QQScreenShot.exe")
+		; SuxCore.OnExit("SuxCore.CloseSubProc")
 		
 		SetTimer, hide_tray_icons, -2222
 
