@@ -359,6 +359,22 @@ MoveCurrentWindowToMouseMonitor() {
 }
 
 
+BootQQScreenShotStandalone() {
+	run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
+
+	; run("taskkill /f /t /im QQScreenShot.exe")
+	run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
+	; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
+	Sleep, 1111
+	run(SuxCore._QQSCREENSHOT_DIR . "bin\QQScreenShot.exe")
+	SuxCore.OnExit("SuxCore.CloseSubProc")
+	
+	SetTimer, hide_tray_icons, -2222
+	Sleep, 888
+	tt("QQScreenShot boot success")
+}
+
+
 ScreenShot() {
 	SnipPlus.AreaScreenShot()
 }

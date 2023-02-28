@@ -22,7 +22,7 @@ Goto, SUB_SNIP_PLUS_FILE_END_LABEL
 class SnipPlus
 {
 	static old_clipboard_content =
-	static temp_snip_img_index := 0
+	static temp_snip_img_index := A_Now
 	static _TEMP_SNIP_IMG_PREFIX := "temp_snip_"
 
 	static IMG_PATH_2_RATIO_MAP := {}  ;; 截图路径: 截图长宽比例
@@ -58,32 +58,33 @@ class SnipPlus
 		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
     	ClipboardChangeCmdMgr.enable_all_clip_change_func()
-
-		SnipPlus.temp_snip_img_index += 1
-		img_path := SnipPlus.GetCurSnipImgPath()
 		
 		If (hBM) {
+			SnipPlus.temp_snip_img_index += 1
+			img_path := SnipPlus.GetCurSnipImgPath()
+
 			GDIP("Startup")
 			SavePicture(hBM, img_path) 
 			GDIP("Shutdown")
-			DllCall( "DeleteObject", "Ptr",hBM )
-		}       
-		if (FileExist(img_path)) {
-			if (with_menu) {
-				try {
-					Menu, SnipPlus_Menu, DeleteAll
+			DllCall( "DeleteObject", "Ptr",hBM )    
+
+			if (FileExist(img_path)) {
+				if (with_menu) {
+					try {
+						Menu, SnipPlus_Menu, DeleteAll
+					}
+					Menu, SnipPlus_Menu, Add, % lang("Suspend"), Sub_SnipPlus_Menu_clik
+					Menu, SnipPlus_Menu, Show
 				}
-				Menu, SnipPlus_Menu, Add, % lang("Suspend"), Sub_SnipPlus_Menu_clik
-				Menu, SnipPlus_Menu, Show
+				else {
+					SnipPlus.SuspendLastScreenshot()
+				}
 			}
-			else {
-				SnipPlus.SuspendLastScreenshot()
+			else
+			{
+				; tt(lang("Nothing snipped") . ".")
 			}
-		}
-		else
-		{
-			; tt(lang("Nothing snipped") . ".")
-		}
+		}   
 		
 		; Clipboard := clipboardOld   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		; clipboardOld := ""   ; Free the memory in case the clipboard was very large.
