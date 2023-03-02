@@ -22,7 +22,7 @@ Goto, SUB_SNIP_PLUS_FILE_END_LABEL
 class SnipPlus
 {
 	static old_clipboard_content =
-	static temp_snip_img_index := A_Now
+	static temp_snip_img_index := 0
 	static _TEMP_SNIP_IMG_PREFIX := "temp_snip_"
 
 	static IMG_PATH_2_RATIO_MAP := {}  ;; 截图路径: 截图长宽比例
@@ -60,7 +60,7 @@ class SnipPlus
     	ClipboardChangeCmdMgr.enable_all_clip_change_func()
 		
 		If (hBM) {
-			SnipPlus.temp_snip_img_index += 1
+			SnipPlus.temp_snip_img_index = A_Now
 			img_path := SnipPlus.GetCurSnipImgPath()
 
 			GDIP("Startup")
