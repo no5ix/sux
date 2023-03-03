@@ -60,7 +60,7 @@ class SnipPlus
     	ClipboardChangeCmdMgr.enable_all_clip_change_func()
 		
 		If (hBM) {
-			SnipPlus.temp_snip_img_index = A_Now
+			SnipPlus.temp_snip_img_index := A_Now
 			img_path := SnipPlus.GetCurSnipImgPath()
 
 			GDIP("Startup")
