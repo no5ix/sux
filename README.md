@@ -448,6 +448,11 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
   - ![支付宝](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/donate_alipay.png)
 
 
+# 交流群
+
+862925073, 加群备注来意
+
+
 # 如何发布
 
 1. 改 `ver.ini`, 然后提交
