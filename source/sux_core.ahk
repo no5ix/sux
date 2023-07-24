@@ -537,12 +537,13 @@ class SuxCore
 		
 		if(SuxCore.GetSuxCfg("hotkey.enable", 0))
 		{
-			if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) != 0) {
-				; SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
-				SetCapsLockState, AlwaysOff
-			}
-			else {
-			}
+			; if (SuxCore.GetSuxCfg("hotkey.buildin.capslock", 0) != 0) {
+			; 	; SetCapsLockState,  ; 如果省略SetCapsLockState后面的参数, 则清除按键的 AlwaysOn/Off 状态(如果存在). 
+			; 	SetCapsLockState, AlwaysOff
+			; }
+			; else {
+			; }
+			SetCapsLockState, AlwaysOff
 
 			For key, value in SuxCore.GetSuxCfg("hotkey.buildin", {}) {
 				register_hotkey(key, value, "")

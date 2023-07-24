@@ -163,6 +163,7 @@
     "capslock_disable_exe_list": [
     ],
     "buildin": {
+      "capslock": "SwitchCapsState",
       "capslock_q": "ctrl_alt_a",
       "capslock_alt_q": "ScreenShotAndSuspend",
       "shift_space": "ShowSuxMenu",
@@ -182,7 +183,6 @@
       "capslock_alt_c": "SaveSelectedFilePathToClipboard",
       "capslock_w": ["ctrl_left", "ctrl_shift_right", "ctrl_c"],
       "capslock_shift_w": ["home", "shift_end", "ctrl_c"],
-      "capslock_`": "SwitchCapsState",
       "capslock_tab": ["home", "tab"],
       "capslock_v": "shift_ins",
       "capslock_shift_v": "shift_6",
