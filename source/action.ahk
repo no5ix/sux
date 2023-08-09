@@ -457,42 +457,43 @@ SUB_TEMP_RBUTTON:
 
 #If SuxCore.CurrentSwapWinCtrlShiftAltSwitch == 1
 
-LCtrl::LWin
-LWin::LCtrl
+	LCtrl::LWin
+	LWin::LCtrl
 
-LShift::LAlt
-LAlt::LShift
+	LShift::LAlt
+	LAlt::LShift
+	return
 
 
 #If CheckDisableCapslockList()
-; #If WinActive("ahk_exe MyPopo.exe") or WinActive("ahk_exe WeChat.exe")
-; #IfWinActive ahk_exe MyPopo.exe
-; #IfWinActive ahk_exe WeChat.exe
+	; #If WinActive("ahk_exe MyPopo.exe") or WinActive("ahk_exe WeChat.exe")
+	; #IfWinActive ahk_exe MyPopo.exe
+	; #IfWinActive ahk_exe WeChat.exe
 
-CapsLock::
-return
+	CapsLock::
+	return
 
 
 #If CheckEnableMiddleMouseButtonInIdea()
 ; #IfWinActive ahk_exe idea64.exe
 
-MButton::
-; MouseGetPos, StartVarX, StartVarY
-; loop
-; {
-; 	sleep, 66
-; 	MouseGetPos, CheckVarX, CheckVarY
-; 	If ((StartVarX != CheckVarX) or (StartVarY != CheckVarY)) {
-; 		; tt("Y U MOVE MY MOUSE!?")
-; 		Click, Down Middle
-; 		sleep, 222
-; 		Click, Up Middle
-; 		return
-; 	}
-; 	else {
-; 		break
-; 	}
-; }
-Click, 2
-Send, !+s
-return
+	MButton::
+	; MouseGetPos, StartVarX, StartVarY
+	; loop
+	; {
+	; 	sleep, 66
+	; 	MouseGetPos, CheckVarX, CheckVarY
+	; 	If ((StartVarX != CheckVarX) or (StartVarY != CheckVarY)) {
+	; 		; tt("Y U MOVE MY MOUSE!?")
+	; 		Click, Down Middle
+	; 		sleep, 222
+	; 		Click, Up Middle
+	; 		return
+	; 	}
+	; 	else {
+	; 		break
+	; 	}
+	; }
+	Click, 2
+	Send, !+s
+	return
