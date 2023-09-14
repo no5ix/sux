@@ -85,22 +85,22 @@ class QuickEntry {
 		if (current_selected_text) {
 			tips_msg := lang("Selected") . ": " . SubStr(current_selected_text, 1, 11) . "..."
 			Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
-			; 当填了 url 的时候
-			if (IsRawUrl(current_selected_text)) {
-				Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_Selected_URL
-			}
+			; ; 当填了 url 的时候
+			; if (IsRawUrl(current_selected_text)) {
+			; 	Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_Selected_URL
+			; }
 			Menu, QuickEntry_Menu, Disable, % tips_msg
 			Menu, QuickEntry_Menu, Add
 		}
 		else {
-			; 当复制了 url 的时候
-			if (IsRawUrl(Clipboard)) {
-				tips_msg := lang("Copied") . ": " . SubStr(Clipboard, 1, 11) . "..."
-				Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
-				Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_Copied_URL
-				Menu, QuickEntry_Menu, Disable, % tips_msg
-				Menu, QuickEntry_Menu, Add
-			}
+			; ; 当复制了 url 的时候
+			; if (IsRawUrl(Clipboard)) {
+			; 	tips_msg := lang("Copied") . ": " . SubStr(Clipboard, 1, 11) . "..."
+			; 	Menu, QuickEntry_Menu, Add, % tips_msg, QuickEntry_Sub_Nothing
+			; 	Menu, QuickEntry_Menu, Add, % lang("Open link in browser") . "`t&g", QuickEntry_Sub_Open_Copied_URL
+			; 	Menu, QuickEntry_Menu, Disable, % tips_msg
+			; 	Menu, QuickEntry_Menu, Add
+			; }
 		}
 		
 		; global WEB_SEARCH_TITLE_LIST
@@ -165,6 +165,17 @@ class QuickEntry {
 			}
 		}
 		Menu, QuickEntry_Menu, Add, % lang("Transform Text") . "`t&t", :QuickEntry_TransformText_Detail_Menu
+
+		; 当 填了 或者 复制了 url 的时候
+		if (IsRawUrl(current_selected_text) ) {
+			tips_msg := " [" . SubStr(current_selected_text, 1, 16) . "...]"
+			Menu, QuickEntry_Menu, Add, % lang("Open link") . tips_msg . "`t&g", QuickEntry_Sub_Open_Selected_URL
+		} else {
+			if (IsRawUrl(Clipboard)) {
+				tips_msg := " [" . SubStr(Clipboard, 1, 16) . "...]"
+				Menu, QuickEntry_Menu, Add, % lang("Open link") . tips_msg . "`t&g", QuickEntry_Sub_Open_Copied_URL
+			}
+		}
 		
 		;;;
 		Menu, QuickEntry_Menu, Show
@@ -264,10 +275,10 @@ QuickEntry_Sub_Open_Copied_URL:
 
 QuickEntry_Search_Menu_Click:
 	dec_cnt := current_selected_text ? 2 : 0
-	; 当填了 url 的时候
-	if (IsRawUrl(current_selected_text) || IsRawUrl(Clipboard)) {
-		dec_cnt := dec_cnt + 1
-	}
+	; ; 当填了 url 的时候
+	; if (IsRawUrl(current_selected_text) || IsRawUrl(Clipboard)) {
+	; 	dec_cnt := dec_cnt + 1
+	; }
 	SearchPlus.cur_sel_search_title := WEB_SEARCH_TITLE_LIST[A_ThisMenuItemPos - dec_cnt]
 	; if current_selected_text
 	; 	SearchPlus.HandleSearch(current_selected_text)
