@@ -111,10 +111,10 @@ Just download [<i class="fa fa-download fa-2x fa-fw"></i>sux.zip](https://github
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/everything_conf.gif)
 
-1. 检查 `.NET Framework` 是否 大于等于 `4.7` (`Win+r`然后输入`cmd`回车, 然后输入`reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP\v4" /s`查看`Version REG_SZ`那一行是否大于等于 `4.7`)
-2. 参考下图, 先通过任务栏的上下文菜单来开启 EverythingToolbar, 注意你需要打开这个菜单两次, 第一次它不显示的
+1. 检查 `.NET Framework` 是否 大于等于 `4.7` (`Win+r`然后输入`cmd`回车, 然后输入`reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP\v4" /s`查看`Version REG_SZ`那一行是否大于等于 `4.7`), 小于4.7的话则不用继续了
+2. 如果大于等于4.7的话, 则可参考下图, 先通过任务栏的上下文菜单来开启 EverythingToolbar, 注意你需要打开这个菜单两次, 第一次它不显示的
 3. 右键任务栏, 解锁任务栏, 然后调整工具栏的大小和位置
-4. 设置完毕之后, 可以使用 `capslock+f` 来激活, 若已经选中文字的话, 则会自动输入该文字并搜索
+4. 设置完毕之后, 可以使用 `capslock + T` 来激活, 若已经选中文字的话, 则会自动输入该文字并搜索
 
 ![](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/search_toolbar_help.gif)
 
@@ -456,9 +456,10 @@ QQ群: 862925073, 加群备注来意
 
 # 如何发布
 
-1. 改 `ver.ini`, 然后提交
-2. 打 git tag
-3. 打包
+1. 安装AutoHotKey 1.1.37 版本的 ASNI 32-bit
+2. 改 `ver.ini`, 然后提交
+3. 打 git tag
+4. 打包
    1. 建立 `build` 文件夹
    2. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
    3. 拷贝 `app_data` 文件夹到 `build` 里

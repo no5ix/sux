@@ -379,6 +379,15 @@ ScreenShot() {
 	SnipPlus.AreaScreenShot()
 }
 
+
+TryWechatScreenShot() {
+	if (WinExist("ahk_exe WeChat.exe")) {
+		Send, ^+!q
+	} else {
+		SnipPlus.AreaScreenShot()
+	}
+}
+
 ScreenShotAndSuspend() {
 	SnipPlus.AreaScreenShotAndSuspend()
 }
