@@ -458,7 +458,7 @@ QQ群: 862925073, 加群备注来意
 
 1. 安装AutoHotKey 1.1.37 版本的 ASNI 32-bit
 2. 改 `ver.ini`, 然后提交
-3. 打 git tag
+3. 打 git tag, 如: `git tag -a v0.1.2 -m "v0.1.2"`
 4. 打包
    1. 建立 `build` 文件夹
    2. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
