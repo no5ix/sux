@@ -20,6 +20,7 @@ MULTI_HIT_DECORATOR := "~"
 ; MULTI_HIT_DECORATOR := " Up"
 
 MULTI_HIT_MAP := {}
+SUB_PROC_LIST := {}
 
 HANDLE_SINGLE_DOUBLE_HIT_MODE_1 := 1  ; 普通模式
 HANDLE_SINGLE_DOUBLE_HIT_MODE_2 := 2
@@ -84,6 +85,16 @@ hide_tray_icons()
 	for index, element in AllList {
 		; m(index "//" element[2])
 		for _index, proc_name in HIDE_TRAY_ICON_LIST {
+			; m(_index "//" proc_name)
+			if element[2] == proc_name
+			{
+				; m("pendingRemoveList proc_name:" proc_name)
+				; element[7] := True
+				pendingRemoveList.Push([element[10], element[9], element[2]])
+				break
+			}
+		}
+		for _index, proc_name in SUB_PROC_LIST {
 			; m(_index "//" proc_name)
 			if element[2] == proc_name
 			{
@@ -240,7 +251,7 @@ class SuxCore
 	static _CACHE_DIR := SuxCore._TEMP_DIR . "cache\"
 	static _EVERYTHING_TOOLBAR_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\EverythingToolbar\"
 	static _EVERYTHING_DIR := SuxCore._APP_DATA_DIR . "\ev_sup\"
-	static _QQSCREENSHOT_DIR := SuxCore._APP_DATA_DIR . "\QQScreenShot\"
+	static _SS_DIR := SuxCore._APP_DATA_DIR . "\ss\"
 	; file
 	static Launcher_Name := A_WorkingDir "\sux.exe"
 	; static conf_user_yaml_file := "conf.user.yaml"
@@ -327,18 +338,10 @@ class SuxCore
 		SetTimer, check_update_from_auto_check, % check_update_millisec
 
 		if (is_first_time) {
-			; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
 			SuxCore.ChooseLang()
 		}
-		
-		; ; run("taskkill /f /t /im QQScreenShot.exe")
-		; run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
-		; ; run(SuxCore._QQSCREENSHOT_DIR . "make_compatible.bat")
-		; Sleep, 1111
-		; run(SuxCore._QQSCREENSHOT_DIR . "bin\QQScreenShot.exe")
-		; SuxCore.OnExit("SuxCore.CloseSubProc")
-		
-		SetTimer, hide_tray_icons, -2222
+
+		SuxCore.BootSubProc()
 
 		if (SuxCore.GetSuxCfg("enable_clear_cache_on_exit", 0)) {
 			SuxCore.OnExit("SuxCore.ClearCacheDir")
@@ -362,9 +365,28 @@ class SuxCore
 		FileCreateDir, % SuxCore._CACHE_DIR
 	}
 
+	BootSubProc()
+	{
+		global SUB_PROC_LIST
+		SUB_PROC_LIST.Push("PixPin.exe")
+		
+		; for index, sub_proc_name in SUB_PROC_LIST {
+		; 	run, %comspec% /c taskkill /f /t /im %sub_proc_name%,,hide
+		; }
+		
+		; Sleep, 1111
+		
+		for index, sub_proc_name in SUB_PROC_LIST {
+			run(SuxCore._SS_DIR . sub_proc_name)
+		}
+
+		; SetTimer, hide_tray_icons, -888
+		SuxCore.OnExit("SuxCore.CloseSubProc")
+	}
+
 	CloseSubProc()
 	{
-		run, %comspec% /c taskkill /f /t /im QQScreenShot.exe,,hide
+		run, %comspec% /c taskkill /f /t /im PixPin.exe,,hide
 	}
 
 	SuxMsgBox(msg, msg_type="", timeout=6)
