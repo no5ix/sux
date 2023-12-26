@@ -1,0 +1,78 @@
+{
+    "customActions": [
+    ],
+    "systemActions": {
+        "Close all pin window": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.closeAllPin()",
+            "shortCut": "",
+            "showOnTray": true,
+            "title": "Close all pin window",
+            "type": 256
+        },
+        "Custom screenshot": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.openCustomScreenShot()",
+            "shortCut": "",
+            "showOnTray": true,
+            "title": "Custom screenshot",
+            "type": 256
+        },
+        "Hide/Show all pin window": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.hideOrShowAllPin()",
+            "shortCut": "",
+            "showOnTray": true,
+            "title": "Hide/Show all pin window",
+            "type": 256
+        },
+        "Open/Close mouse Penetration": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.trigMousePenetration()",
+            "shortCut": "",
+            "showOnTray": false,
+            "title": "Open/Close mouse Penetration",
+            "type": 256
+        },
+        "Pin": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.pinFromCilpBoard()",
+            "shortCut": "",
+            "showOnTray": true,
+            "title": "Pin",
+            "type": 256
+        },
+        "Restore last closed": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.restoreLastClosedPin()",
+            "shortCut": "",
+            "showOnTray": true,
+            "title": "Restore last closed",
+            "type": 256
+        },
+        "Screenshot": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.screenShotAndEdit()",
+            "shortCut": "Ctrl+Alt+Shift+Q",
+            "showOnTray": true,
+            "title": "Screenshot",
+            "type": 256
+        },
+        "Screenshot and copy": {
+            "ignoreProgramList": "",
+            "isSystemAction": true,
+            "script": "pixpin.screenShotAndCopy()",
+            "shortCut": "",
+            "showOnTray": true,
+            "title": "Screenshot and copy",
+            "type": 256
+        }
+    }
+}

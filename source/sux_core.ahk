@@ -82,6 +82,7 @@ hide_tray_icons()
 		
 	; tt("hide_tray_icons begin")
 	global HIDE_TRAY_ICON_LIST
+	global SUB_PROC_LIST
 	for index, element in AllList {
 		; m(index "//" element[2])
 		for _index, proc_name in HIDE_TRAY_ICON_LIST {
@@ -370,23 +371,21 @@ class SuxCore
 		global SUB_PROC_LIST
 		SUB_PROC_LIST.Push("PixPin.exe")
 		
-		; for index, sub_proc_name in SUB_PROC_LIST {
-		; 	run, %comspec% /c taskkill /f /t /im %sub_proc_name%,,hide
-		; }
-		
-		; Sleep, 1111
-		
+		SuxCore.CloseSubProc()
+		Sleep, 666
 		for index, sub_proc_name in SUB_PROC_LIST {
 			run(SuxCore._SS_DIR . sub_proc_name)
 		}
-
-		; SetTimer, hide_tray_icons, -888
+		SetTimer, hide_tray_icons, -666
 		SuxCore.OnExit("SuxCore.CloseSubProc")
 	}
 
 	CloseSubProc()
 	{
-		run, %comspec% /c taskkill /f /t /im PixPin.exe,,hide
+		global SUB_PROC_LIST
+		for index, sub_proc_name in SUB_PROC_LIST {
+			run, %comspec% /c taskkill /f /t /im %sub_proc_name%,,hide
+		}
 	}
 
 	SuxMsgBox(msg, msg_type="", timeout=6)
