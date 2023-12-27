@@ -1,4 +1,63 @@
 {
     "builtInShortcutList": [
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 2,
+            "name": "Copy",
+            "script": {
+                "PinWindow": "pinwindow.copy()",
+                "ScreenShot": "shotview.copyImage()"
+            },
+            "shortcut": "C"
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 3,
+            "name": "Save To File",
+            "script": {
+                "PinWindow": "pinwindow.saveToFile()",
+                "ScreenShot": "shotview.saveImage(false)"
+            },
+            "shortcut": "S"
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 10,
+            "name": "Copy Color",
+            "script": {
+                "PinWindow": "pinwindow.copyMagnifierColor()",
+                "ScreenShot": "shotview.copyColor()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 13,
+            "name": "Move Cursor Down",
+            "script": {
+                "PinWindow": "pixpin.moveCursorBy(0, 1)",
+                "ScreenShot": "pixpin.moveCursorBy(0, 1)"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 16,
+            "name": "Pin Image",
+            "script": {
+                "ScreenShot": "shotview.pinImage()"
+            },
+            "shortcut": "T"
+        }
     ]
 }

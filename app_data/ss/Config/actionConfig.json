@@ -34,7 +34,7 @@
             "isSystemAction": true,
             "script": "pixpin.trigMousePenetration()",
             "shortCut": "",
-            "showOnTray": false,
+            "showOnTray": true,
             "title": "Open/Close mouse Penetration",
             "type": 256
         },

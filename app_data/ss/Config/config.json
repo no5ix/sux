@@ -1,9 +1,12 @@
 {
     "Appearance.Screenshot.SelectionBorderWidth": 2,
+    "Mark.UseTheSameColorForAllTools": false,
     "Pin.ConfirmOnCloseByDoubleClick": false,
     "Pin.ConfirmOnCloseByKey": false,
+    "Pin.DefaultTransparency": 88,
     "Pin.MaxHistoryCount": 18,
     "Pin.MouseWheelScaleMode": 2,
+    "Pin.maxOpacityMousePenetration": 50,
     "Save.QuickSave": {
         "subConf": {
             "showNotification": true,
