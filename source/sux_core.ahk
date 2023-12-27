@@ -372,11 +372,11 @@ class SuxCore
 		SUB_PROC_LIST.Push("PixPin.exe")
 		
 		SuxCore.CloseSubProc()
-		Sleep, 666
+		Sleep, 888
 		for index, sub_proc_name in SUB_PROC_LIST {
 			run(SuxCore._SS_DIR . sub_proc_name)
 		}
-		SetTimer, hide_tray_icons, -666
+		SetTimer, hide_tray_icons, -888
 		SuxCore.OnExit("SuxCore.CloseSubProc")
 	}
 
