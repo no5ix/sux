@@ -359,6 +359,32 @@ MoveCurrentWindowToMouseMonitor() {
 }
 
 
+ReplaceTextCommaComma() {
+	send, {Home}
+	Sleep, 66
+	send, +{End}
+	cst := GetCurSelectedText()
+
+	if (!cst) {
+		tt(lang("Please Select text and try again") . ".")
+		return
+	}
+	ReplaceText(",," cst)
+}
+
+ReplaceTextSlashSlash() {
+	send, {Home}
+	Sleep, 66
+	send, +{End}
+	cst := GetCurSelectedText()
+
+	if (!cst) {
+		tt(lang("Please Select text and try again") . ".")
+		return
+	}
+	ReplaceText("//" cst)
+}
+
 ScreenShot() {
 	SnipPlus.AreaScreenShot()
 }

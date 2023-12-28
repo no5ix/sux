@@ -361,17 +361,21 @@ QuickEntry_TransformText_Detail_Menu_click:
 	Return
 
 
-QuickEntry_ReplaceText_Menu_Click:
-	st := QuickEntry.GetQuickEntrySelectedText()
-	if (!st) {
-		send, {Home}
-		Sleep, 66
-		send, +{End}
-		st := GetCurSelectedText()
-
+ReplaceText(pending_replace_str="")
+{
+	st := pending_replace_str
+	if(pending_replace_str="") {
+		st := QuickEntry.GetQuickEntrySelectedText()
 		if (!st) {
-			tt(lang("Please Select text and try again") . ".")
-			return
+			send, {Home}
+			Sleep, 66
+			send, +{End}
+			st := GetCurSelectedText()
+
+			if (!st) {
+				tt(lang("Please Select text and try again") . ".")
+				return
+			}
 		}
 	}
 	
@@ -399,6 +403,10 @@ QuickEntry_ReplaceText_Menu_Click:
 		Send, {Right}
 	}
 	QuickEntry.ResetCurrentSelectText()
+}
+
+QuickEntry_ReplaceText_Menu_Click:
+	ReplaceText()
 	Return
 
 
