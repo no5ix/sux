@@ -5,7 +5,7 @@
     "Pin.ConfirmOnCloseByKey": false,
     "Pin.DefaultTransparency": 88,
     "Pin.MaxHistoryCount": 18,
-    "Pin.MouseWheelScaleMode": 2,
+    "Pin.MouseWheelScaleMode": 1,
     "Pin.maxOpacityMousePenetration": 50,
     "Save.QuickSave": {
         "subConf": {
