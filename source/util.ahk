@@ -308,8 +308,8 @@ PasteContent(pending_paste_content_or_cb, args*) {
         }
     }
 
-		global auto_restore_the_original_clipboard_period
-		SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
+		; global auto_restore_the_original_clipboard_period
+		; SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
 }
 
 GetCurSelectedText(sleep_duration_ms=222) {
