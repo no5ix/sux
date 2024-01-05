@@ -364,7 +364,7 @@ SendWait3Min() {
 }
 
 SendReviewApplyMsg() {
-	PasteContent("review一下这个哈")
+	PasteContent("求review一下这个哈")
 }
 
 ReplaceTextCommaComma() {
