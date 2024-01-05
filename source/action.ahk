@@ -359,6 +359,14 @@ MoveCurrentWindowToMouseMonitor() {
 }
 
 
+SendWait3Min() {
+	PasteContent("发了哈, 3分钟左右阿拉丁会有流程")
+}
+
+SendReviewApplyMsg() {
+	PasteContent("review一下这个哈")
+}
+
 ReplaceTextCommaComma() {
 	send, {Home}
 	Sleep, 66
