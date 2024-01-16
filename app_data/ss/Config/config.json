@@ -3,6 +3,13 @@
     "Pin.DefaultTransparency": 80,
     "Pin.MaxHistoryCount": 20,
     "Pin.MouseWheelScaleMode": 1,
+    "Save.AutoSave": {
+        "subConf": {
+            "enable": true,
+            "whenConflict": 1
+        },
+        "value": "../temp_dir/cache/PixPin_$yyyy-MM-dd_HH-mm-ss$.png"
+    },
     "Screenshot.ConfirmOnCloseByKey": false,
     "Screenshot.showShortCutTips": false,
     "System.Update.AutoCheckUpdate": {
