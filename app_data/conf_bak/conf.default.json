@@ -163,7 +163,8 @@
     ],
     "buildin": {
       "capslock": "SwitchCapsState",
-      "capslock_q": "ctrl_shift_alt_q",
+      "capslock_q": "ctrl_alt_q",
+      "capslock_shift_q": "ctrl_shift_q",
       "shift_space": "ShowSuxMenu",
       "doublehit_capslock": "ShowSuxMenu",
       "capslock_t": "QuickEntry_Translation_Menu_Click",

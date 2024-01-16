@@ -24,7 +24,7 @@
             "ignoreProgramList": "",
             "isSystemAction": true,
             "script": "pixpin.hideOrShowAllPin()",
-            "shortCut": "",
+            "shortCut": "Ctrl+Shift+Q",
             "showOnTray": true,
             "title": "Hide/Show all pin window",
             "type": 256
@@ -60,7 +60,7 @@
             "ignoreProgramList": "",
             "isSystemAction": true,
             "script": "pixpin.screenShotAndEdit()",
-            "shortCut": "Ctrl+Alt+Shift+Q",
+            "shortCut": "Ctrl+Alt+Q",
             "showOnTray": true,
             "title": "Screenshot",
             "type": 256

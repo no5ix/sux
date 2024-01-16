@@ -1,21 +1,9 @@
 {
-    "Appearance.Screenshot.SelectionBorderWidth": 2,
-    "Mark.UseTheSameColorForAllTools": false,
-    "Pin.ConfirmOnCloseByDoubleClick": false,
     "Pin.ConfirmOnCloseByKey": false,
-    "Pin.DefaultTransparency": 88,
-    "Pin.MaxHistoryCount": 18,
+    "Pin.DefaultTransparency": 80,
+    "Pin.MaxHistoryCount": 20,
     "Pin.MouseWheelScaleMode": 1,
-    "Pin.maxOpacityMousePenetration": 50,
-    "Save.QuickSave": {
-        "subConf": {
-            "showNotification": true,
-            "whenConflict": 0
-        },
-        "value": "C:/Users/hulinhong/Desktop/PixPin_$yyyy-MM-dd_HH-mm-ss$.png"
-    },
     "Screenshot.ConfirmOnCloseByKey": false,
-    "Screenshot.ShowAuxiliaryTiming": 0,
     "Screenshot.showShortCutTips": false,
     "System.Update.AutoCheckUpdate": {
         "subConf": {

@@ -4,6 +4,18 @@
             "desc": "",
             "enable": true,
             "execOnPress": true,
+            "id": 1,
+            "name": "Close",
+            "script": {
+                "PinWindow": "pinwindow.close()",
+                "ScreenShot": "shotview.close()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
             "id": 2,
             "name": "Copy",
             "script": {
@@ -28,11 +40,119 @@
             "desc": "",
             "enable": true,
             "execOnPress": true,
+            "id": 4,
+            "name": "Quick Save",
+            "script": {
+                "PinWindow": "pinwindow.quickSave()",
+                "ScreenShot": "shotview.saveImage(true)"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 59,
+            "name": "Detect Text And Copy",
+            "script": {
+                "PinWindow": "pinwindow.copyOcrText()",
+                "ScreenShot": "shotview.copyOcrText()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 5,
+            "name": "Undo Mark",
+            "script": {
+                "PinWindow": "pinwindow.undoMark()",
+                "ScreenShot": "shotview.undoMark()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 6,
+            "name": "Redo Mark",
+            "script": {
+                "PinWindow": "pinwindow.redoMark()",
+                "ScreenShot": "shotview.redoMark()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 7,
+            "name": "Clear All Mark",
+            "script": {
+                "PinWindow": "pinwindow.clearAllMark()",
+                "ScreenShot": "shotview.clearAllMark()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 8,
+            "name": "Enable/Disable Mark Reoperate",
+            "script": {
+                "PinWindow": "pinwindow.setMarkItemReoperateEnable(!pinwindow.isMarkItemReoperateEnable())",
+                "ScreenShot": "shotview.setMarkItemReoperateEnable(!shotview.isMarkItemReoperateEnable())"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": false,
+            "id": 9,
+            "name": "Show Magnifier/Auxiliary",
+            "script": {
+                "PinWindow": "pinwindow.setMagnifierVisible(!pinwindow.isMagnifierVisible())",
+                "ScreenShot": "shotview.setShowAuxiliary(!shotview.isShowAuxiliary())"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
             "id": 10,
             "name": "Copy Color",
             "script": {
                 "PinWindow": "pinwindow.copyMagnifierColor()",
                 "ScreenShot": "shotview.copyColor()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": false,
+            "id": 11,
+            "name": "Switch Color Format",
+            "script": {
+                "PinWindow": "pinwindow.switchMagnifierColorFormat()",
+                "ScreenShot": "shotview.switchColorFormat()"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 12,
+            "name": "Move Cursor Up",
+            "script": {
+                "PinWindow": "pixpin.moveCursorBy(0, -1)",
+                "ScreenShot": "pixpin.moveCursorBy(0, -1)"
             },
             "shortcut": ""
         },
@@ -52,12 +172,47 @@
             "desc": "",
             "enable": true,
             "execOnPress": true,
+            "id": 14,
+            "name": "Move Cursor Left",
+            "script": {
+                "PinWindow": "pixpin.moveCursorBy(-1, 0)",
+                "ScreenShot": "pixpin.moveCursorBy(-1, 0)"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 15,
+            "name": "Move Cursor Right",
+            "script": {
+                "PinWindow": "pixpin.moveCursorBy(1, 0)",
+                "ScreenShot": "pixpin.moveCursorBy(1, 0)"
+            },
+            "shortcut": ""
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
             "id": 16,
             "name": "Pin Image",
             "script": {
                 "ScreenShot": "shotview.pinImage()"
             },
             "shortcut": "T"
+        },
+        {
+            "desc": "",
+            "enable": true,
+            "execOnPress": true,
+            "id": 20,
+            "name": "Select Screen Or All",
+            "script": {
+                "ScreenShot": "shotview.selectScreenOrAll()"
+            },
+            "shortcut": "A"
         }
     ]
 }
