@@ -376,7 +376,7 @@ class SuxCore
 		for index, sub_proc_name in SUB_PROC_LIST {
 			run(SuxCore._SS_DIR . sub_proc_name)
 		}
-		; SetTimer, hide_tray_icons, -888
+		SetTimer, hide_tray_icons, -888
 		SuxCore.OnExit("SuxCore.CloseSubProc")
 	}
 
