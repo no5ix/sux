@@ -3,6 +3,7 @@ build/
 temp_dir/
 _ScreenshotRecord/
 app_data/ss/Data/
+app_data/ss/History/
 
 conf.user.json
 remote_ver.ini

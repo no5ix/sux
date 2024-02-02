@@ -394,7 +394,12 @@ ReplaceTextSlashSlash() {
 }
 
 ScreenShot() {
-	SnipPlus.AreaScreenShot()
+	if (SuxCore.GetSuxCfg("enable_pixpin_to_screenshot", 0)) {
+		Send, ^!q
+	}
+	else {
+		TryWechatScreenShot()
+	}
 }
 
 
@@ -419,7 +424,12 @@ TryWechatScreenShot() {
 }
 
 ScreenShotAndSuspend() {
-	SnipPlus.AreaScreenShotAndSuspend()
+	if (SuxCore.GetSuxCfg("enable_pixpin_to_screenshot", 0)) {
+		Send, ^!q
+	}
+	else {
+		SnipPlus.AreaScreenShotAndSuspend()
+	}
 }
 
 SwapWinCtrlShiftAlt() {

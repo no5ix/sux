@@ -157,14 +157,15 @@
       }
     }
   },
+  "enable_pixpin_to_screenshot": 0,
   "hotkey": {
     "enable": 1,
     "capslock_disable_exe_list": [
     ],
     "buildin": {
       "capslock": "SwitchCapsState",
-      "capslock_q": "ctrl_alt_q",
-      "capslock_shift_q": "ctrl_shift_q",
+      "capslock_q": "ScreenShot",
+      "capslock_shift_q": "ScreenShotAndSuspend",
       "shift_space": "ShowSuxMenu",
       "doublehit_capslock": "ShowSuxMenu",
       "capslock_t": "QuickEntry_Translation_Menu_Click",

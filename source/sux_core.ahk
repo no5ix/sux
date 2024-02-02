@@ -369,7 +369,9 @@ class SuxCore
 	BootSubProc()
 	{
 		global SUB_PROC_LIST
-		SUB_PROC_LIST.Push("PixPin.exe")
+		if (SuxCore.GetSuxCfg("enable_pixpin_to_screenshot", 0)) {
+			SUB_PROC_LIST.Push("PixPin.exe")
+		}
 		
 		SuxCore.CloseSubProc()
 		Sleep, 888
