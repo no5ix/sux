@@ -398,29 +398,8 @@ ScreenShot() {
 		Send, ^!q
 	}
 	else {
-		TryWechatScreenShot()
+		SnipPlus.TryWechatScreenShot()
 	}
-}
-
-
-TryWechatScreenShot() {
-	Process, Exist, WeChat.exe  ;; 判断wechat进程是否存在
-	If ErrorLevel
-	{
-		; MsgBox, The program is running.
-		Send, ^+!q
-	}
-	Else
-	{
-		; MsgBox, The program is not running.
-		SnipPlus.AreaScreenShot()
-	}
-
-	; if (WinExist("ahk_exe WeChat.exe")) {  ;; 这个是判断wechat这个窗口是否存在, 并不是判断wechat进程是否存在
-	; 	Send, ^+!q
-	; } else {
-	; 	SnipPlus.AreaScreenShot()
-	; }
 }
 
 ScreenShotAndSuspend() {

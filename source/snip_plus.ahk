@@ -44,6 +44,40 @@ class SnipPlus
 		; prscrn_param = %A_ScriptDir%\app_data\PrScrn2.dll\PrScrn
 		DllCall(prscrn_param)
 	}
+	
+	TryWechatScreenShot()
+	{
+		Process, Exist, WeChat.exe  ;; 判断wechat进程是否存在
+		If ErrorLevel
+		{
+			; MsgBox, The program is running.
+			Send, ^+!q
+			Sleep, 1666  ;; 给wechat截图启动一点时间
+
+			; ; 获取当前活动窗口的ahk_class
+			; WinGetClass, class, A
+			; MsgBox, The active window's class is "%class%".
+
+			
+			Loop 
+			{
+				if (!WinExist("ahk_class SnapshotWnd")) {  ;; SnapshotWnd 是微信截图的ahk_class
+					break ; exits loop
+				}
+			}
+		}
+		Else
+		{
+			; MsgBox, The program is not running.
+			SnipPlus.AreaScreenShot()
+		}
+
+		; if (WinExist("ahk_exe WeChat.exe")) {  ;; 这个是判断wechat这个窗口是否存在, 并不是判断wechat进程是否存在
+		; 	Send, ^+!q
+		; } else {
+		; 	SnipPlus.AreaScreenShot()
+		; }
+	}
 
 	AreaScreenShotAndSuspend(with_menu=0)
 	{
@@ -51,8 +85,8 @@ class SnipPlus
 		SnipPlus.old_clipboard_content := ClipboardAll
 		Clipboard := ""
 
-		SnipPlus.AreaScreenShot()
-
+		; SnipPlus.AreaScreenShot()
+		SnipPlus.TryWechatScreenShot()
 		hBM := CB_hBMP_Get()  
 		
 		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
@@ -91,7 +125,6 @@ class SnipPlus
 
 		; Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
 		; SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
-
 	}
 
 	SuspendLastScreenshot()
