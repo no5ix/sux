@@ -369,7 +369,7 @@ class SuxCore
 	BootSubProc()
 	{
 		global SUB_PROC_LIST
-		if (SuxCore.GetSuxCfg("enable_pixpin_to_screenshot", 0)) {
+		if (SuxCore.GetSuxCfg("third_screenshot_app", 0) == 2) {
 			SUB_PROC_LIST.Push("PixPin.exe")
 		}
 		

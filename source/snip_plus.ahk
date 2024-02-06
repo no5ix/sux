@@ -57,7 +57,6 @@ class SnipPlus
 			; ; 获取当前活动窗口的ahk_class
 			; WinGetClass, class, A
 			; MsgBox, The active window's class is "%class%".
-
 			
 			Loop 
 			{
@@ -79,18 +78,21 @@ class SnipPlus
 		; }
 	}
 
-	AreaScreenShotAndSuspend(with_menu=0)
+	AreaScreenShotAndSuspend(with_menu=0, use_wechat=0)
 	{
     	ClipboardChangeCmdMgr.disable_all_clip_change_func()
-		SnipPlus.old_clipboard_content := ClipboardAll
+		; SnipPlus.old_clipboard_content := ClipboardAll
 		Clipboard := ""
 
-		; SnipPlus.AreaScreenShot()
-		SnipPlus.TryWechatScreenShot()
+		if (use_wechat) {
+			SnipPlus.TryWechatScreenShot()
+		} else {
+			SnipPlus.AreaScreenShot()
+		}
 		hBM := CB_hBMP_Get()  
 		
-		Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
-		SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
+		; Clipboard := SnipPlus.old_clipboard_content   ; Restore the original clipboard. Note the use of Clipboard (not ClipboardAll).
+		; SnipPlus.old_clipboard_content := ""   ; Free the memory in case the clipboard was very large.
     	ClipboardChangeCmdMgr.enable_all_clip_change_func()
 		
 		If (hBM) {

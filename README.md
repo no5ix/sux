@@ -302,7 +302,6 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
 |`caps+alt+w` | 是选择当前行 | 
 |`caps+c` | 是模拟`ctrl+c`  | 
 |`caps+alt+c` | 也是模拟复制, 但是当复制文件的时候会直接返回文件的路径  | 
-|`caps+r` | 是模拟`ctrl+y`  | 
 |`caps+v` | 是模拟`shift+insert`(终端爱好者的福音)  | 
 |`caps+tab` | 就是整行缩进, 不管光标在当前行的任何地方  | 
 |`caps+backspace`  | 删除光标所在行所有文字  | 
@@ -424,9 +423,9 @@ sux的这个功能就彻底解决了这个问题, 不再烦恼.
     - `DeleteCurrentLine`
     - `IndentCurrentLine`
     - `SimulateClickDown`
+    - `SwitchWindowAlwaysOnTop`
 - 发送的单个键盘操作: 比如要发送`shift+下` 就是`shift_down`
-- 发送一段键盘操作序列, 比如要实现`caps
-+w`选中当前单词, 首先得移动到词的左边, 然后往右选中单词, 则配置为: `"capslock_w": ["ctrl_left", "ctrl_shift_right"]`
+- 发送一段键盘操作序列, 比如要实现`caps+w`选中当前单词, 首先得移动到词的左边, 然后往右选中单词, 则配置为: `"capslock_w": ["ctrl_left", "ctrl_shift_right"]`
 - 一些特殊的热键定义对照表:
     - `lbutton:  左键单击 `
     - `rbutton:  右键单击 `

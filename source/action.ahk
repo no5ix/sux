@@ -394,17 +394,23 @@ ReplaceTextSlashSlash() {
 }
 
 ScreenShot() {
-	if (SuxCore.GetSuxCfg("enable_pixpin_to_screenshot", 0)) {
+	if (SuxCore.GetSuxCfg("third_screenshot_app", 0) == 2) { ;; trigger pixpin shortcut
 		Send, ^!q
 	}
-	else {
+	else if (SuxCore.GetSuxCfg("third_screenshot_app", 0) == 1){
 		SnipPlus.TryWechatScreenShot()
+	}
+	else {
+		SnipPlus.AreaScreenShot()
 	}
 }
 
 ScreenShotAndSuspend() {
-	if (SuxCore.GetSuxCfg("enable_pixpin_to_screenshot", 0)) {
+	if (SuxCore.GetSuxCfg("third_screenshot_app", 0) == 2) { ;; trigger pixpin shortcut
 		Send, ^!q
+	}
+	else if (SuxCore.GetSuxCfg("third_screenshot_app", 0) == 1){
+		SnipPlus.AreaScreenShotAndSuspend(0, 1)
 	}
 	else {
 		SnipPlus.AreaScreenShotAndSuspend()

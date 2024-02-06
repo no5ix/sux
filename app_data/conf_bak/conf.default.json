@@ -1,234 +1,214 @@
 ﻿{
-  "File-Description": "你可以在custom块里覆盖所有的buildin(内置)配置或者直接修改buildin配置, 改了之后重启sux生效.You can override all the buildin conf at custom block or buildin conf itself, take effect after sux restart. ",
-  "enable_clear_cache_on_exit": 1,
-  "hide_tray_icons": [
-  ],
-  "theme": {
-    "dark": {
-      "sux_width": 620,
-      "sux_text_color": "ffffff",
-      "sux_bg_color": "424242",
-      "sux_border_shadow_type": ""
+    "File-Description": "你可以在custom块里覆盖所有的buildin(内置)配置或者直接修改buildin配置, 改了之后重启sux生效.You can override all the buildin conf at custom block or buildin conf itself, take effect after sux restart. ",
+    "enable_clear_cache_on_exit": 1,
+    "hide_tray_icons": [],
+    "theme": {
+        "dark": {
+            "sux_width": 620,
+            "sux_text_color": "ffffff",
+            "sux_bg_color": "424242",
+            "sux_border_shadow_type": ""
+        },
+        "light": {
+            "sux_width": 620,
+            "sux_text_color": "000000",
+            "sux_bg_color": "ececec",
+            "sux_border_shadow_type": "modern_shadow_type"
+        }
     },
-    "light": {
-      "sux_width": 620,
-      "sux_text_color": "000000",
-      "sux_bg_color": "ececec",
-      "sux_border_shadow_type": "modern_shadow_type"
-    }
-  },
-  "clipboard-plus": {
-    "enable": 1,
-    "ClipsTotalNum": 50
-  },
-  "search-plus": {
-    "enable": 1,
-    "buildin": {
-      "Default": {
-        "space": [
-          "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"
-        ]
-      },
-      "Youdao": {
-        "tab": [
-          "https://www.youdao.com/w/REPLACEME"
-        ]
-      },
-      "Baidu": {
-        "a": [
-          "https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"
-        ]
-      },
-      "Youtube": {
-        "e": [
-          "https://www.youtube.com/results?search_query=REPLACEME"
-        ]
-      },
-      "Douban": {
-        "d": [
-          "https://www.douban.com/search?q=REPLACEME"
-        ]
-      },
-      "Github": {
-        "h": [
-          "https://github.com/search?q=REPLACEME"
-        ]
-      },
-      "Zhihu": {
-        "z": [
-          "https://www.zhihu.com/search?type=content&q=REPLACEME"
-        ]
-      },
-      "Bilibili": {
-        "b": [
-          "search.bilibili.com/all?keyword=REPLACEME"
-        ]
-      }
+    "clipboard-plus": {
+        "enable": 1,
+        "ClipsTotalNum": 50
     },
-    "custom": {}
-  },
-  "command": {
-    "enable": 1,
-    "buildin": {
-      "cmd": "cmd.exe",
-      "sux": "https://github.com/no5ix/sux"
+    "search-plus": {
+        "enable": 1,
+        "buildin": {
+            "Default": {
+                "space": ["https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"]
+            },
+            "Youdao": {
+                "tab": ["https://www.youdao.com/w/REPLACEME"]
+            },
+            "Baidu": {
+                "a": ["https://www.baidu.com/#ie=UTF-8&wd=REPLACEME"]
+            },
+            "Youtube": {
+                "e": ["https://www.youtube.com/results?search_query=REPLACEME"]
+            },
+            "Douban": {
+                "d": ["https://www.douban.com/search?q=REPLACEME"]
+            },
+            "Github": {
+                "h": ["https://github.com/search?q=REPLACEME"]
+            },
+            "Zhihu": {
+                "z": ["https://www.zhihu.com/search?type=content&q=REPLACEME"]
+            },
+            "Bilibili": {
+                "b": ["search.bilibili.com/all?keyword=REPLACEME"]
+            }
+        },
+        "custom": {}
     },
-    "custom": {
-    }
-  },
-  "replace-text": {
-    "enable": 1,
-    "buildin": {
-      "h/": "http://",
-      "hs/": "https://",
-      "qc@": "@qq.com",
-      "gc@": "@gmail.com",
-      "16@": "@163.com"
+    "command": {
+        "enable": 1,
+        "buildin": {
+            "cmd": "cmd.exe",
+            "sux": "https://github.com/no5ix/sux"
+        },
+        "custom": {}
     },
-    "custom": {
-    }
-  },
-  "hot-corner": {
-    "action": {
-      "LeftTopCorner": {
-        "hover": "JumpToPrevTab"
-      },
-      "RightTopCorner": {
-        "hover": "JumpToNextTab"
-      },
-      "LeftBottomCorner": {
-        "hover": "Win"
-      },
-      "RightBottomCorner": {
-        "hover": "GotoPreApp"
-      }
-    }
-  },
-  "hot-edge": {
-    "enable": 1,
-    "action": {
-      "TopHalfLeftEdge": {
-        "ctrl_8": "C:\\Program Files (x86)\\Netease\\CloudMusic\\cloudmusic.exe",
-        "wheeldown": "GoBottom",
-        "wheelup": "GoTop",
-        "MButton": "MinWindow"
-      },
-      "TopHalfRightEdge": {
-        "ctrl_8": "OpenFileExplorer",
-        "wheeldown": "PgDn",
-        "wheelup": "PgUp",
-        "MButton": "MaxWindow"
-      },
-      "BottomHalfLeftEdge": {
-        "ctrl_8": "ReopenLastTab",
-        "MButton": "OpenTaskView",
-        "wheeldown": "GotoNextDesktop",
-        "wheelup": "GotoPreDesktop"
-      },
-      "BottomHalfRightEdge": {
-        "ctrl_8": "RefreshTab",
-        "MButton": "OpenTaskView",
-        "wheeldown": "GotoNextDesktop",
-        "wheelup": "GotoPreDesktop"
-      },
-      "LeftHalfBottomEdge": {
-        "ctrl_8": "OpenTaskView",
-        "wheeldown": "VolumeDown",
-        "wheelup": "VolumeUp",
-        "MButton": "MoveCurrentWindowToMouseMonitor"
-      },
-      "LeftHalfTopEdge": {
-        "ctrl_8": "MoveWindowToLeftSide",
-        "wheeldown": "VolumeDown",
-        "wheelup": "VolumeUp",
-        "MButton": "MoveWindowToLeftSide"
-      },
-      "RightHalfTopEdge": {
-        "ctrl_8": "MoveWindowToRightSide",
-        "MButton": "MoveWindowToRightSide",
-        "wheeldown": "PgDn",
-        "wheelup": "PgUp"
-      },
-      "RightHalfBottomEdge": {
-        "ctrl_8": "OpenActionCenter",
-        "MButton": "MoveCurrentWindowToMouseMonitor",
-        "wheeldown": "PgDn",
-        "wheelup": "PgUp"
-      }
-    }
-  },
-  "enable_pixpin_to_screenshot": 0,
-  "hotkey": {
-    "enable": 1,
-    "capslock_disable_exe_list": [
-    ],
-    "buildin": {
-      "capslock": "SwitchCapsState",
-      "capslock_q": "ScreenShot",
-      "capslock_shift_q": "ScreenShotAndSuspend",
-      "shift_space": "ShowSuxMenu",
-      "doublehit_capslock": "ShowSuxMenu",
-      "capslock_t": "QuickEntry_Translation_Menu_Click",
-      "capslock_c": "ctrl_c",
-      "capslock_e": "up",
-      "capslock_alt_e": "shift_up",
-      "capslock_s": "left",
-      "capslock_alt_s": "shift_left",
-      "capslock_f": "right",
-      "capslock_alt_f": "shift_right",
-      "capslock_d": "down",
-      "capslock_alt_d": "shift_down",
-      "ctrl_8": "SimulateClickDown",
-      "ctrl_shift_alt_m": "MaxMinWindow",
-      "capslock_alt_c": "SaveSelectedFilePathToClipboard",
-      "capslock_w": ["ctrl_left", "ctrl_shift_right", "ctrl_c"],
-      "capslock_shift_w": ["home", "shift_end", "ctrl_c"],
-      "capslock_tab": ["home", "tab"],
-      "capslock_v": "shift_ins",
-      "capslock_shift_v": "shift_6",
-      "capslock_g": "ctrl_y",
-      "capslock_r": "QuickEntry_ReplaceText_Menu_Click",
-      "capslock_enter": "InsertLineBelow",
-      "capslock_shift_enter": "InsertLineAbove",
-      "capslock_backspace": ["home", "shift_end", "backspace"],
-      "capslock_y": "shift_8",
-      "capslock_alt_y": "shift_5",
-      "capslock_u": "shift_1",
-      "capslock_alt_u": "shift_2",
-      "capslock_h": "left",
-      "capslock_alt_h": "shift_left",
-      "capslock_j": "down",
-      "capslock_alt_j": "shift_down",
-      "capslock_k": "up",
-      "capslock_alt_k": "shift_up",
-      "capslock_l": "right",
-      "capslock_alt_l": "shift_right",
-      "capslock_p": "shift_7",
-      "capslock_alt_p": "shift_3",
-      "capslock_i": "ctrl_left",
-      "capslock_alt_i": "shift_ctrl_left",
-      "capslock_o": "ctrl_right",
-      "capslock_alt_o": "shift_ctrl_right",
-      "capslock_9": "[",
-      "capslock_alt_9": "{",
-      "capslock_0": "]",
-      "capslock_alt_0": "}",
-      "capslock_n": "ctrl_bs",
-      "capslock_alt_n": "shift_home_del",
-      "capslock_m": "ctrl_del",
-      "capslock_alt_m": "shift_end_del",
-      "capslock_,": "home",
-      "capslock_alt_,": "shift_home",
-      "capslock_.": "end",
-      "capslock_alt_.": "shift_end",
-      "capslock_;": "_",
-      "capslock_alt_;": "-",
-      "capslock_'": "=",
-      "capslock_alt_'": "shift_=",
-      "capslock_/": "\\",
-      "capslock_alt_/": "shift_\\"
+    "replace-text": {
+        "enable": 1,
+        "buildin": {
+            "h/": "http://",
+            "hs/": "https://",
+            "qc@": "@qq.com",
+            "gc@": "@gmail.com",
+            "16@": "@163.com"
+        },
+        "custom": {}
     },
-    "custom": {}
-  },
-  "enable_middle_mouse_button_in_idea": 0
+    "hot-corner": {
+        "action": {
+            "LeftTopCorner": {
+                "hover": "JumpToPrevTab"
+            },
+            "RightTopCorner": {
+                "hover": "JumpToNextTab"
+            },
+            "LeftBottomCorner": {
+                "hover": "Win"
+            },
+            "RightBottomCorner": {
+                "hover": "GotoPreApp"
+            }
+        }
+    },
+    "hot-edge": {
+        "enable": 1,
+        "action": {
+            "TopHalfLeftEdge": {
+                "ctrl_8": "C:\\Program Files (x86)\\Netease\\CloudMusic\\cloudmusic.exe",
+                "wheeldown": "GoBottom",
+                "wheelup": "GoTop",
+                "MButton": "MinWindow"
+            },
+            "TopHalfRightEdge": {
+                "ctrl_8": "OpenFileExplorer",
+                "wheeldown": "PgDn",
+                "wheelup": "PgUp",
+                "MButton": "MaxWindow"
+            },
+            "BottomHalfLeftEdge": {
+                "ctrl_8": "ReopenLastTab",
+                "MButton": "OpenTaskView",
+                "wheeldown": "GotoNextDesktop",
+                "wheelup": "GotoPreDesktop"
+            },
+            "BottomHalfRightEdge": {
+                "ctrl_8": "RefreshTab",
+                "MButton": "OpenTaskView",
+                "wheeldown": "GotoNextDesktop",
+                "wheelup": "GotoPreDesktop"
+            },
+            "LeftHalfBottomEdge": {
+                "ctrl_8": "OpenTaskView",
+                "wheeldown": "VolumeDown",
+                "wheelup": "VolumeUp",
+                "MButton": "MoveCurrentWindowToMouseMonitor"
+            },
+            "LeftHalfTopEdge": {
+                "ctrl_8": "MoveWindowToLeftSide",
+                "wheeldown": "VolumeDown",
+                "wheelup": "VolumeUp",
+                "MButton": "MoveWindowToLeftSide"
+            },
+            "RightHalfTopEdge": {
+                "ctrl_8": "MoveWindowToRightSide",
+                "MButton": "MoveWindowToRightSide",
+                "wheeldown": "PgDn",
+                "wheelup": "PgUp"
+            },
+            "RightHalfBottomEdge": {
+                "ctrl_8": "OpenActionCenter",
+                "MButton": "MoveCurrentWindowToMouseMonitor",
+                "wheeldown": "PgDn",
+                "wheelup": "PgUp"
+            }
+        }
+    },
+    "third_screenshot_app": 0,
+    "hotkey": {
+        "enable": 1,
+        "capslock_disable_exe_list": [],
+        "buildin": {
+            "capslock": "SwitchCapsState",
+            "capslock_q": "ScreenShot",
+            "capslock_shift_q": "ScreenShotAndSuspend",
+            "shift_space": "ShowSuxMenu",
+            "doublehit_capslock": "ShowSuxMenu",
+            "capslock_t": "QuickEntry_Translation_Menu_Click",
+            "capslock_c": "ctrl_c",
+            "capslock_e": "up",
+            "capslock_alt_e": "shift_up",
+            "capslock_s": "left",
+            "capslock_alt_s": "shift_left",
+            "capslock_f": "right",
+            "capslock_alt_f": "shift_right",
+            "capslock_d": "down",
+            "capslock_alt_d": "shift_down",
+            "ctrl_8": "SimulateClickDown",
+            "ctrl_shift_alt_m": "MaxMinWindow",
+            "capslock_alt_c": "SaveSelectedFilePathToClipboard",
+            "capslock_w": "SelectCurrentWord",
+            "capslock_shift_w": ["home", "shift_end"],
+            "capslock_tab": "IndentCurrentLine",
+            "capslock_v": "shift_ins",
+            "capslock_shift_v": "shift_6",
+            "capslock_g": "ctrl_y",
+            "capslock_r": "QuickEntry_ReplaceText_Menu_Click",
+            "capslock_enter": "InsertLineBelow",
+            "capslock_shift_enter": "InsertLineAbove",
+            "capslock_backspace": ["home", "shift_end", "backspace"],
+            "capslock_y": "shift_8",
+            "capslock_alt_y": "shift_5",
+            "capslock_u": "shift_1",
+            "capslock_alt_u": "shift_2",
+            "capslock_h": "left",
+            "capslock_alt_h": "shift_left",
+            "capslock_j": "down",
+            "capslock_alt_j": "shift_down",
+            "capslock_k": "up",
+            "capslock_alt_k": "shift_up",
+            "capslock_l": "right",
+            "capslock_alt_l": "shift_right",
+            "capslock_p": "shift_7",
+            "capslock_alt_p": "shift_3",
+            "capslock_i": "ctrl_left",
+            "capslock_alt_i": "shift_ctrl_left",
+            "capslock_o": "ctrl_right",
+            "capslock_alt_o": "shift_ctrl_right",
+            "capslock_9": "[",
+            "capslock_alt_9": "{",
+            "capslock_0": "]",
+            "capslock_alt_0": "}",
+            "capslock_n": "ctrl_bs",
+            "capslock_alt_n": "shift_home_del",
+            "capslock_m": "ctrl_del",
+            "capslock_alt_m": "shift_end_del",
+            "capslock_,": "home",
+            "capslock_alt_,": "shift_home",
+            "capslock_.": "end",
+            "capslock_alt_.": "shift_end",
+            "capslock_;": "_",
+            "capslock_alt_;": "-",
+            "capslock_'": "=",
+            "capslock_alt_'": "shift_=",
+            "capslock_/": "\\",
+            "capslock_alt_/": "shift_\\"
+        },
+        "custom": {}
+    },
+    "enable_middle_mouse_button_in_idea": 0
 }
