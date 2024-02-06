@@ -462,7 +462,7 @@ QQ群: 862925073, 加群备注来意
    1. 建立 `build` 文件夹
    2. compile `sux.ahk` 成为 `sux.exe`, 放到 `build` 里
    3. 拷贝 `app_data` 文件夹到 `build` 里
-   4. 删除 `build` 里的`app_data` 里的 `temp_dir` 文件夹
+   4. 删除 `build` 里的`app_data` 里的 `temp_dir` 和 `ss` 文件夹
    5. 删除 `build` 里的`app_data` 里的 `ev_sup` 里的 `Everything.db` 和 `Run History.csv`
    6. 使用 7zip 压缩 `build`文件夹, 压缩参数如下: 
        - 压缩格式: 7z / zip
