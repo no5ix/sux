@@ -358,6 +358,10 @@ MoveCurrentWindowToMouseMonitor() {
 	MoveWindowToMouseMonitor()
 }
 
+ToggleNetEaseMusicAndSetSound30() {
+	SoundSet, 30
+	Send, ^+!3
+}
 
 SendWait3Min() {
 	PasteContent("发了哈, 3分钟左右阿拉丁会有流程")
