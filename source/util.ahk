@@ -2314,3 +2314,24 @@ TrayIcon_Button(msgid, uid, hwnd, sButton:="L", bDouble:=False, nIdx:=1) {
     DetectHiddenWindows, %d%
     Return
 }
+
+GetActiveWindowAhkClassName() {
+    ; ; 获取当前活动窗口的 ahk_class
+    WinGetClass, class, A
+    MsgBox, The active window's class is "%class%".
+}
+
+WaitWindowOpenAndClose(ahk_class_name) {
+    Loop 
+    {
+      if (WinExist("ahk_class " . ahk_class_name)) {
+        break ; exits loop
+      }
+    }
+    Loop 
+    {
+      if (!WinExist("ahk_class " . ahk_class_name)) {
+        break ; exits loop
+      }
+    }
+}

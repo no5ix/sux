@@ -52,18 +52,10 @@ class SnipPlus
 		{
 			; MsgBox, The program is running.
 			Send, ^+!q
-			Sleep, 1666  ;; 给wechat截图启动一点时间
+			; Sleep, 1666  ;; 给wechat截图启动一点时间
 
-			; ; 获取当前活动窗口的ahk_class
-			; WinGetClass, class, A
-			; MsgBox, The active window's class is "%class%".
-			
-			Loop 
-			{
-				if (!WinExist("ahk_class SnapshotWnd")) {  ;; SnapshotWnd 是微信截图的ahk_class
-					break ; exits loop
-				}
-			}
+			; GetActiveWindowAhkClassName();  ;; 拿微信截图的 ahk_class
+			WaitWindowOpenAndClose("SnapshotWnd")  ;; SnapshotWnd 是微信截图的ahk_class
 		}
 		Else
 		{
