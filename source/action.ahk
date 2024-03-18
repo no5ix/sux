@@ -216,7 +216,17 @@ MinWindow() {
 
 ReloadSux() {
 	tt("reloading sux ...")
-	Reload
+	
+	if (WinExist("ahk_class " . "AutoHotkeyGUI")) {
+		; m("Warning!! There are some ScreenShotAndSuspend Windows Opening! Do u wanna still Reload?")
+		MsgBox, 0x44, % SuxCore.ProgramName, % lang("Warning!! There are some ScreenShotAndSuspend Windows Opening! Do u wanna still Reload?")
+		IfMsgBox Yes
+		{
+			Reload
+		}
+	} else {
+		Reload
+	}
 }
 
 
