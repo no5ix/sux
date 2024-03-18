@@ -312,13 +312,15 @@ PasteContent(pending_paste_content_or_cb, args*) {
 		; SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
 }
 
-GetCurSelectedText(sleep_duration_ms=222) {
+GetCurSelectedText(sleep_duration_ms=222, back_up=0) {  ;; 这个back_up谨慎打开, 因为当剪切板里有很大的文件或者图片的时候, 这个函数执行得会很慢
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
     global clipboard_old
-    clipboard_old := ClipboardAll             ; backup clipboard
-    ; Send, ^c
-    Clipboard := ""
+    if (back_up == 1) {
+        clipboard_old := ClipboardAll             ; backup clipboard
+        ; Send, ^c
+        Clipboard := ""
+    }
     SendInput, ^{insert}
   
     ;; ClipWait 似乎有bug, 如果 sleep_duration_ms 很小的花, 也会等很久, 所以小于 111 的时候 走sleep
@@ -341,9 +343,12 @@ GetCurSelectedText(sleep_duration_ms=222) {
     }
 		; global auto_restore_the_original_clipboard_period
 		; SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
-    global clipboard_old
-    Clipboard := clipboard_old   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
-    clipboard_old := ""   ; Free the memory in case the clipboard-plus was very large.
+    
+    if (back_up == 1) {
+        global clipboard_old
+        Clipboard := clipboard_old   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
+        clipboard_old := ""   ; Free the memory in case the clipboard-plus was very large.
+    }
     ClipboardChangeCmdMgr.enable_all_clip_change_func()
     return cur_selected_text
 }
