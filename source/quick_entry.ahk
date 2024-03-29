@@ -174,6 +174,15 @@ class QuickEntry {
 			if (IsRawUrl(Clipboard)) {
 				tips_msg := " [" . SubStr(Clipboard, 1, 16) . "...]"
 				Menu, QuickEntry_Menu, Add, % lang("Open link") . tips_msg . "`t&g", QuickEntry_Sub_Open_Copied_URL
+			} else {
+				if (FileExist(Clipboard) != "") {  ;; if it's a folder or a file
+					tips_msg := " [" . SubStr(Clipboard, 1, 16) . "...]"
+					Menu, QuickEntry_Menu, Add, % lang("Open folder") . tips_msg . "`t&g", QuickEntry_Sub_Open_Copied_folder
+				}
+				if (FileExist(current_selected_text) != "") {  ;; if it's a folder or a file
+					tips_msg := " [" . SubStr(current_selected_text, 1, 16) . "...]"
+					Menu, QuickEntry_Menu, Add, % lang("Open folder") . tips_msg . "`t&g", QuickEntry_Sub_Open_Selected_folder
+				}
 			}
 		}
 		
@@ -270,6 +279,16 @@ QuickEntry_Sub_Open_Selected_URL:
 QuickEntry_Sub_Open_Copied_URL:
 	; 当复制了url 的时候
 	OpenUrlIfIsUrl(Clipboard)
+	Return
+
+
+QuickEntry_Sub_Open_Selected_folder:
+	AutoOpenFolderAndSelectFile(current_selected_text)
+	Return
+
+
+QuickEntry_Sub_Open_Copied_folder:
+	AutoOpenFolderAndSelectFile(Clipboard)
 	Return
 
 

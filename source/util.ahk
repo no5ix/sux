@@ -147,6 +147,15 @@ OpenFolder(folder_path_str) {
     Run %COMSPEC% /c explorer.exe "%folder_path_str%",, Hide
 }
 
+AutoOpenFolderAndSelectFile(path_str) {
+	  if InStr(FileExist(path_str), "D") {
+        OpenFolder(path_str)
+    } else {
+        OpenFolderAndSelectFile(path_str)
+    }
+}
+
+
 EditFile(filename, admin := 0)
 {
     if not FileExist(filename)
