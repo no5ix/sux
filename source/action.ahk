@@ -374,11 +374,15 @@ ToggleNetEaseMusicAndSetSound30() {
 }
 
 SendWait3Min() {
-	PasteContent("发了哈, 3分钟左右阿拉丁会有流程")
+	PasteContent("发了哈, 3分钟左右阿拉丁会有流程喔, 如果我等下忙其他的去了没注意到阿拉丁有流程了, 你也可以阿拉丁找到对应流程点一波的呢, 辛苦啦~")
 }
 
 SendReviewApplyMsg() {
 	PasteContent("求review一下这个哈")
+}
+
+SendAskTeseDataMerge() {
+	PasteContent("好的呀, 包括特色服吗? 有server data要 merge 吗?")
 }
 
 ReplaceTextCommaComma() {
