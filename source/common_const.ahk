@@ -125,7 +125,7 @@ global auto_restore_the_original_clipboard_period := -888  ; millisecond
 global tick_disable_win10_auto_interval := 66666
 
 global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "`t", "q", "w", "e", "r", "t", "a", "s", "d", "f", "z", "x", "b", "y", "u", "i", "o", "p", "h", "k", "j", "l", "n", "m"]
-global SHORTCUT_KEY_INDEX_ARR := [" ", "`t", "q", "w", "e", "r", "t", "a", "s", "d", "f", "z", "x", "b", "y", "u", "i", "o", "p", "h", "k", "j", "l", "n", "m"]
+global SHORTCUT_KEY_INDEX_ARR := [" ", "`t", "q", "w", "r", "e", "t", "a", "s", "d", "f", "z", "x", "c", "v", "b", "y", "u", "i", "o", "p", "h", "k", "j", "l", "n", "m"]
 ; global SEARCH_PLUS_SHORTCUT_KEY_INDEX_ARR := [" ", "a", "s", "d", "z", "x", "q", "w", "", "b", "l", "t", "h", "j", "k", "u", "i", "o", "p", "n", "m"]
 global CLIPBOARD_PLUS_SHORTCUT_KEY_INDEX_ARR := ["a", " ", "`t", "q", "w", "e", "r", "s", "f", "z", "x", "c", "g", "b", "t"]
 global SHORTCUT_KEY_INDEX_ARR_LEFT := ["q", "w", "e", "r", "a", "s", "d", "f", "z", "x", "c", "v", "b", "g", "t"]
