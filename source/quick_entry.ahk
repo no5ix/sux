@@ -354,7 +354,7 @@ QuickEntry_ScreenShot_Suspend_Menu_Click:
 
 
 QuickEntry_Everything_Menu_Click:
-	st := QuickEntry.GetQuickEntrySelectedText()
+	st := GetCurSelectedText()
 	Send, #!s
 	if (st) {
 		Sleep, 666
@@ -366,7 +366,7 @@ QuickEntry_Everything_Menu_Click:
 
 
 QuickEntry_Translation_Menu_Click:
-	st := QuickEntry.GetQuickEntrySelectedText()
+	st := GetCurSelectedText()
 	TranslateSeletedText(st)
 	QuickEntry.ResetCurrentSelectText()
 	Return
@@ -384,7 +384,7 @@ ReplaceText(pending_replace_str="")
 {
 	st := pending_replace_str
 	if(pending_replace_str="") {
-		st := QuickEntry.GetQuickEntrySelectedText()
+		st := GetCurSelectedText()
 		if (!st) {
 			send, {Home}
 			Sleep, 66

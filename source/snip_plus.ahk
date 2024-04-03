@@ -74,7 +74,7 @@ class SnipPlus
 	{
     	ClipboardChangeCmdMgr.disable_all_clip_change_func()
 		; SnipPlus.old_clipboard_content := ClipboardAll
-		Clipboard := ""
+		; Clipboard := ""
 
 		if (use_wechat) {
 			SnipPlus.TryWechatScreenShot()

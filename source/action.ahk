@@ -345,12 +345,12 @@ IndentCurrentLine() {
 
 SaveSelectedFilePathToClipboard() {
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
-    Clipboard := ""
+    ; Clipboard := ""
     SendInput, ^{insert}
     ClipWait, 0.1
     if(!ErrorLevel) {
 		path := Clipboard
-		Clipboard := ""
+		; Clipboard := ""
    		ClipboardChangeCmdMgr.enable_all_clip_change_func()
 		Clipboard := path
 	}
