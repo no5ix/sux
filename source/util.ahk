@@ -284,6 +284,11 @@ class ClipboardChangeCmdMgr
 }
 
 TimerRestoreTheOriginalClipboard() {
+    global dont_restore_the_original_clipboard_this_time
+    if (dont_restore_the_original_clipboard_this_time == 1) {
+        dont_restore_the_original_clipboard_this_time := 0
+        return
+    }
     global clipboard_old
     Clipboard := clipboard_old   ; Restore the original clipboard-plus. Note the use of Clipboard (not ClipboardAll).
     clipboard_old := ""   ; Free the memory in case the clipboard-plus was very large.
@@ -301,7 +306,12 @@ PasteContent(pending_paste_content_or_cb, args*) {
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
     global clipboard_old
-    clipboard_old := ClipboardAll 
+    if (clipboard_old != "") {
+        global dont_restore_the_original_clipboard_this_time
+        dont_restore_the_original_clipboard_this_time := 1
+    } else {
+        clipboard_old := ClipboardAll 
+    }
     if (IsFunc(pending_paste_content_or_cb)) {
         %pending_paste_content_or_cb%(args*)
         SafePaste()
@@ -317,16 +327,23 @@ PasteContent(pending_paste_content_or_cb, args*) {
         }
     }
 
-		global auto_restore_the_original_clipboard_period
-		SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
+    global auto_restore_the_original_clipboard_period
+    SetTimer, TimerRestoreTheOriginalClipboard, %auto_restore_the_original_clipboard_period%
 }
 
 GetCurSelectedText(sleep_duration_ms=222, back_up=0) {  ;; 这个back_up谨慎打开, 因为当剪切板里有很大的文件或者图片的时候, 这个函数执行得会很慢
     ClipboardChangeCmdMgr.disable_all_clip_change_func()
 
     global clipboard_old
+    if (clipboard_old != "") {
+        global dont_restore_the_original_clipboard_this_time
+        dont_restore_the_original_clipboard_this_time := 1
+    } else {
+        clipboard_old := ClipboardAll 
+    }
+    
     ; if (back_up == 1) {
-        clipboard_old := ClipboardAll             ; backup clipboard
+        ; clipboard_old := ClipboardAll             ; backup clipboard
         ; Send, ^c
         ; Clipboard := ""
     ; }

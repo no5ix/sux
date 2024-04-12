@@ -120,7 +120,8 @@ global keyboard_triple_click_timeout := 333
 global auto_destory_quick_entry_gui_period := -28222  ; millisecond
 
 global clipboard_old := ""
-global auto_restore_the_original_clipboard_period := -888  ; millisecond
+global dont_restore_the_original_clipboard_this_time := 0
+global auto_restore_the_original_clipboard_period := -666  ; millisecond
 
 global tick_disable_win10_auto_interval := 66666
 
