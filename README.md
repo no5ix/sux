@@ -9,8 +9,11 @@ Inspired by Alfred/Wox/Listary/Capslock+/utools, thank u.
 <source src="/img/sux/sux_intro.mp4" type="video/mp4" />
 </video> -->
 
-![sux](https://github.com/no5ix/no5ix.github.io/blob/source/source/img/sux/sux.svg)
 
+![sux](/app_data/img/sux.svg)
+
+
+- 本工具只适合 Windows 端, Mac 端的在这里 [sux-mac](https://github.com/no5ix/sux-mac)
 
 - [知乎链接](https://www.zhihu.com/question/310110592/answer/1909948496)
 - [下载链接](https://github.com/no5ix/sux/releases)
